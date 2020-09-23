@@ -1,0 +1,624 @@
+env:
+# TERM env customization.
+#
+# if this property is not set, alacritty will set it to xterm-256color.
+#
+# Note that some xterm terminfo databases don't declare support for italics.
+# TERM: xterm-256color
+  TERM: alacritty
+
+window:
+  # Window dimensions in character columns and lines (changes require restart)
+  dimensions:
+    columns: 120
+    lines: 80
+
+  # Adds this many blank pixels of padding around the window
+  # Units are physical pixels; this is not dpi aware.
+  # (Change requires restart)
+  padding:
+    x: 25
+    y: 25
+
+  dynamic_padding: true
+  # Window decorations
+  #
+  # Values for `decorations`:
+  #     - full: borders and title bar
+  #     - none: neither borders nor title bar
+  #     - buttonless: title bar, transparent background and title bar buttons
+  #     - transparent: title bar, transparent background, but no title bar buttons
+  decorations: buttonless
+
+  dynamic_title: true
+
+  # Startup mode (changes require restart)
+  #
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  #
+  # Values for `startup_mode` (macOS only):
+  #   - SimpleFullscreen
+  startup_mode: Windowed
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 10000
+
+  # Number of lines the viewport will move for every line scrolled when
+  # Scrollback is enabled (history > 0).
+  multiplier: 3
+
+# When true, bold text is drawn using the bright variant of colors.
+draw_bold_text_with_bright_colors: false
+
+# Font configuration (changes require restart)
+font:
+  normal:
+    family: 'Operator Mono SSm Lig'
+    style: Light
+  italic:
+    family: 'Operator Mono SSm Lig'
+    style: Light Italic
+  bold:
+    family: 'Operator Mono SSm Lig'
+    style: Book
+  bold_italic:
+    family: 'Operator Mono SSm Lig'
+    style: Book Italic
+
+  # Point size of the font
+  size: 20.0
+
+  # OS X only: Use thin stroke font rendering. Thin strokes are suitable
+  # for retina displays, but for non-retina you probably want this set to
+  # false.
+  use_thin_strokes: true
+
+  # Offset is the extra space around each character. `offset.y` can be thought of
+  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+  offset:
+    x: 0
+    y: 12
+
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increasing `x` moves the glyph to the right,
+  # increasing `y` moves the glyph upward.
+  glyph_offset:
+    x: 0
+    y: 6
+debug:
+  # Display the time it takes to redraw each frame.
+  render_timer: false
+
+  # Keep the log file after quitting alacritty.
+  persistent_logging: false
+
+  # Log level
+  #
+  # Values for `log_level`:
+  #   - None
+  #   - Error
+  #   - Warn
+  #   - Info
+  #   - Debug
+  #   - Trace
+  log_level: Warn
+
+  # Print all received window events.
+  print_events: false
+
+  # Record all characters and escape sequences as test data.
+  ref_test: false
+
+##colors: (sublime-celeste)
+#sublime-celeste: &sublime-celeste
+#  primary:
+#    background: '0xf9fafa'
+#    foreground: '0x000000'
+#  normal:
+#    black: '0xffffff'
+#    red: '0xe46767'
+#    green: '0x22c33d'
+#    yellow: '0xf58a3d'
+#    blue: '0x228ec3'
+#    magenta: '0x8866cc'
+#    cyan: '0x22c3a8'
+#    white: '0x333333'
+#  bright:
+#    black: '0x000000'
+#    red: '0xe05252'
+#    green: '0x1fad36'
+#    yellow: '0xf47b25'
+#    blue: '0x1f7ead'
+#    magenta: '0x7953c6'
+#    cyan: '0x1fad96'
+#    white: '0xf6f6f6'
+## colors (github-light)
+#github-light: &github-light
+#  primary:
+#    background: '0xffffff'
+#    foreground: '0x24292e'
+#  normal:
+#    black: '0x24292e'
+#    red: '0xcb2431'
+#    green: '0x22863a'
+#    yellow: '0xe36209'
+#    blue: '0x005cc5'
+#    magenta: '0x6f42c1'
+#    cyan: '0xd03592'
+#    white: '0x586069'
+#  bright:
+#    black: '0x6a737d'
+#    red: '0xd73a49'
+#    green: '0x28a745'
+#    yellow: '0xdbab09'
+#    blue: '0x005cc5'
+#    magenta: '0x6f42c1'
+#    cyan: '0xd03592'
+#    white: '0xf6f8fa'
+## colors (github-dark)
+#github-dark: &github-dark
+#  primary:
+#    background: '0x17181c'
+#    foreground: '0xd1d5da'
+#  normal:
+#    black: '0x000000'
+#    red: '0xd81029'
+#    green: '0x00c172'
+#    yellow: '0xe2e800'
+#    blue: '0x1571ce'
+#    magenta: '0xc824c2'
+#    cyan: '0x00aad1'
+#    white: '0xe5e5e5'
+#  bright:
+#    black: '0x666666'
+#    red: '0xfe3646'
+#    green: '0x00d684'
+#    yellow: '0xf2f800'
+#    blue: '0x2e8df1'
+#    magenta: '0xe163dc'
+#    cyan: '0x00badf'
+#    white: '0xe5e5e5'
+## colors (solarized light)
+#solarized-light: &solarized-light # default colors
+#  primary:
+#    background: '#fdf6e3' # base3
+#    foreground: '#657b83' # base00
+#  cursor:
+#    text: '#fdf6e3' # base3
+#    cursor: '#657b83' # base00
+#  normal:
+#    black: '#073642' # base02
+#    red: '#dc322f' # red
+#    green: '#859900' # green
+#    yellow: '#b58900' # yellow
+#    blue: '#268bd2' # blue
+#    magenta: '#d33682' # magenta
+#    cyan: '#2aa198' # cyan
+#    white: '#eee8d5' # base2
+#  bright:
+#    black: '#002b36' # base03
+#    red: '#cb4b16' # orange
+#    green: '#586e75' # base01
+#    yellow: '#657b83' # base00
+#    blue: '#839496' # base0
+#    magenta: '#6c71c4' # violet
+#    cyan: '#93a1a1' # base1
+#    white: '#fdf6e3' # base3
+## colors (papercolor-light)
+#papercolor-light: &papercolor-light
+#  primary:
+#    background: '0xfafafa'
+#    foreground: '0x4d4d4c'
+#  normal:
+#    black: '0xededed'
+#    red: '0xd7005f'
+#    green: '0x718c00'
+#    yellow: '0xd75f00'
+#    blue: '0x4271ae'
+#    magenta: '0x8959a8'
+#    cyan: '0x3e999f'
+#    white: '0x4d4d4c'
+#  bright:
+#    black: '0x969694'
+#    red: '0xd7005f'
+#    green: '0x718c00'
+#    yellow: '0xd75f00'
+#    blue: '0x4271ae'
+#    magenta: '0x8959a8'
+#    cyan: '0x3e999f'
+#    white: '0xf5f5f5'
+## colors (pencil light)
+#pencil-light: &pencil-light
+#  primary:
+#    background: '0xfafafa'
+#    foreground: '0x424242'
+#  normal:
+#    black: '0x212121'
+#    red: '0xc30771'
+#    green: '0x10a778'
+#    yellow: '0xa89c14'
+#    blue: '0x008ec4'
+#    magenta: '0x523c79'
+#    cyan: '0x20a5ba'
+#    white: '0xe0e0e0'
+#  bright:
+#    black: '0x212121'
+#    red: '0xfb007a'
+#    green: '0x5fd7af'
+#    yellow: '0xf3e430'
+#    blue: '0x20bbfc'
+#    magenta: '0x6855de'
+#    cyan: '0x4fb8cc'
+#    white: '0xf1f1f1'
+## colors (monokai pro)
+monokai-pro: &monokai-pro # default colors:
+  primary:
+    background: '0x18191c'
+    foreground: '0xfcfcfa'
+  normal:
+    black: '0x403e41'
+    red: '0xff6188'
+    green: '0xa9dc76'
+    yellow: '0xffd866'
+    blue: '0xfc9867'
+    magenta: '0xab9df2'
+    cyan: '0x78dce8'
+    white: '0xfcfcfa'
+  bright:
+    black: '0x727072'
+    red: '0xff6188'
+    green: '0xa9dc76'
+    yellow: '0xffd866'
+    blue: '0xfc9867'
+    magenta: '0xab9df2'
+    cyan: '0x78dce8'
+    white: '0xfcfcfa'
+# colors (iceberg light)
+iceberg-light: &iceberg-light
+  primary:
+    background: '0xe8e9ec'
+    foreground: '0x33374c'
+  normal:
+    black:   '0xdcdfe7'
+    red:     '0xcc517a'
+    green:   '0x668e3d'
+    yellow:  '0xc57339'
+    blue:    '0x2d539e'
+    magenta: '0x7759b4'
+    cyan:    '0x3f83a6'
+    white:   '0x33374c'
+  bright:
+    black:   '0x8389a3'
+    red:     '0xcc3768'
+    green:   '0x598030'
+    yellow:  '0xb6662d'
+    blue:    '0x22478e'
+    magenta: '0x6845ad'
+    cyan:    '0x327698'
+    white:   '0x262a3f'
+colors: *iceberg-light
+
+# Background opacity
+background_opacity: 1.0
+
+# Mouse bindings
+#
+# Currently doesn't support modifiers. both the `mouse` and `action` fields must
+# be specified.
+#
+# Values for `mouse`:
+# - Middle
+# - Left
+# - Right
+# - Numeric identifier such as `5`
+#
+# Values for `action`:
+# - Paste
+# - PasteSelection
+# - Copy (TODO)
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+
+mouse:
+  # Click settings
+  #
+  # The `double_click` and `triple_click` settings control the time
+  # Alacritty should wait for accepting multiple clicks as one double
+  # or triple click.
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+
+  hide_when_typing: false
+  # Faux scrollback
+  #
+  # The `faux_scrollback_lines` setting controls the number
+  # of lines the terminal should scroll when the alternate
+  # screen buffer is active. this is used to allow mouse
+  # scrolling for applications like `man`.
+  #
+  # To disable this completely, set `faux_scrollback_lines` to 0.
+  # faux_scrollback_lines: 1
+
+  url:
+    # URL launcher
+    #
+    # This program is executed when clicking on a text which is recognized as a url.
+    # The url is always added to the command as the last parameter.
+    launcher: open
+
+
+    # URL modifiers
+    #
+    # These are the modifiers that need to be held down for opening urls when clicking
+    # on them. The available modifiers are documented in the key binding section.
+    #modifiers: control|shift
+
+selection:
+  semantic_escape_chars: ',│`|:"'' ()[]{}<>'
+
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  save_to_clipboard: true
+
+cursor:
+  # Style of the cursor
+  #
+  # Values for 'cursor_style':
+  # - Block
+  # - Underline
+  # - Beam
+  style: Block
+
+  # Whether the cursor should be a hollow block on window focus loss
+  unfocused_hollow: true
+
+# Live config reload (changes require restart)
+live_config_reload: true
+
+# Shell
+#
+# You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
+# entries in shell.args are passed unmodified as arguments to the shell.
+#
+# shell:
+#   program: /bin/zsh
+#   args:
+#     - -l
+
+# Keybinding
+key_bindings:
+  - { key: Home, chars: "\x1bOH", mode: AppCursor }
+  - { key: Home, chars: "\x1b[H", mode: ~AppCursor }
+  - { key: End, chars: "\x1bOF", mode: AppCursor }
+  - { key: End, chars: "\x1b[F", mode: ~AppCursor }
+  - { key: Key0, mods: Command, action: ResetFontSize }
+  - { key: Equals, mods: Command, action: IncreaseFontSize }
+  - { key: Minus, mods: Command, action: DecreaseFontSize }
+  - { key: PageUp, mods: Shift, chars: "\x1b[5;2~" }
+  - { key: PageUp, mods: Control, chars: "\x1b[5;5~" }
+  - { key: PageUp, chars: "\x1b[5~" }
+  - { key: PageDown, mods: Shift, chars: "\x1b[6;2~" }
+  - { key: PageDown, mods: Control, chars: "\x1b[6;5~" }
+  - { key: PageDown, chars: "\x1b[6~" }
+  - { key: Tab, mods: Shift, chars: "\x1b[Z" }
+  - { key: Back, chars: "\x7f" }
+  - { key: Back, mods: Alt, chars: "\x1b\x7f" }
+  - { key: Insert, chars: "\x1b[2~" }
+  - { key: Delete, chars: "\x1b[3~" }
+  - { key: Left, mods: Shift, chars: "\x1b[1;2D" }
+  - { key: Left, mods: Control, chars: "\x1b[1;5D" }
+  - { key: Left, mods: Alt, chars: "\x1b[1;3D" }
+  - { key: Left, chars: "\x1b[D", mode: ~AppCursor }
+  - { key: Left, chars: "\x1bOD", mode: AppCursor }
+  - { key: Right, mods: Shift, chars: "\x1b[1;2C" }
+  - { key: Right, mods: Control, chars: "\x1b[1;5C" }
+  - { key: Right, mods: Alt, chars: "\x1b[1;3C" }
+  - { key: Right, chars: "\x1b[C", mode: ~AppCursor }
+  - { key: Right, chars: "\x1bOC", mode: AppCursor }
+  - { key: Up, mods: Shift, chars: "\x1b[1;2A" }
+  - { key: Up, mods: Control, chars: "\x1b[1;5A" }
+  - { key: Up, mods: Alt, chars: "\x1b[1;3A" }
+  - { key: Up, chars: "\x1b[A", mode: ~AppCursor }
+  - { key: Up, chars: "\x1bOA", mode: AppCursor }
+  - { key: Down, mods: Shift, chars: "\x1b[1;2B" }
+  - { key: Down, mods: Control, chars: "\x1b[1;5B" }
+  - { key: Down, mods: Alt, chars: "\x1b[1;3B" }
+  - { key: Down, chars: "\x1b[B", mode: ~AppCursor }
+  - { key: Down, chars: "\x1bOB", mode: AppCursor }
+  - { key: F1, chars: "\x1bOP" }
+  - { key: F2, chars: "\x1bOQ" }
+  - { key: F3, chars: "\x1bOR" }
+  - { key: F4, chars: "\x1bOS" }
+  - { key: F5, chars: "\x1b[15~" }
+  - { key: F6, chars: "\x1b[17~" }
+  - { key: F7, chars: "\x1b[18~" }
+  - { key: F8, chars: "\x1b[19~" }
+  - { key: F9, chars: "\x1b[20~" }
+  - { key: F10, chars: "\x1b[21~" }
+  - { key: F11, chars: "\x1b[23~" }
+  - { key: F12, chars: "\x1b[24~" }
+  - { key: F1, mods: Shift, chars: "\x1b[1;2P" }
+  - { key: F2, mods: Shift, chars: "\x1b[1;2Q" }
+  - { key: F3, mods: Shift, chars: "\x1b[1;2R" }
+  - { key: F4, mods: Shift, chars: "\x1b[1;2S" }
+  - { key: F5, mods: Shift, chars: "\x1b[15;2~" }
+  - { key: F6, mods: Shift, chars: "\x1b[17;2~" }
+  - { key: F7, mods: Shift, chars: "\x1b[18;2~" }
+  - { key: F8, mods: Shift, chars: "\x1b[19;2~" }
+  - { key: F9, mods: Shift, chars: "\x1b[20;2~" }
+  - { key: F10, mods: Shift, chars: "\x1b[21;2~" }
+  - { key: F11, mods: Shift, chars: "\x1b[23;2~" }
+  - { key: F12, mods: Shift, chars: "\x1b[24;2~" }
+  - { key: F1, mods: Control, chars: "\x1b[1;5P" }
+  - { key: F2, mods: Control, chars: "\x1b[1;5Q" }
+  - { key: F3, mods: Control, chars: "\x1b[1;5R" }
+  - { key: F4, mods: Control, chars: "\x1b[1;5S" }
+  - { key: F5, mods: Control, chars: "\x1b[15;5~" }
+  - { key: F6, mods: Control, chars: "\x1b[17;5~" }
+  - { key: F7, mods: Control, chars: "\x1b[18;5~" }
+  - { key: F8, mods: Control, chars: "\x1b[19;5~" }
+  - { key: F9, mods: Control, chars: "\x1b[20;5~" }
+  - { key: F10, mods: Control, chars: "\x1b[21;5~" }
+  - { key: F11, mods: Control, chars: "\x1b[23;5~" }
+  - { key: F12, mods: Control, chars: "\x1b[24;5~" }
+  - { key: F1, mods: Alt, chars: "\x1b[1;6P" }
+  - { key: F2, mods: Alt, chars: "\x1b[1;6Q" }
+  - { key: F3, mods: Alt, chars: "\x1b[1;6R" }
+  - { key: F4, mods: Alt, chars: "\x1b[1;6S" }
+  - { key: F5, mods: Alt, chars: "\x1b[15;6~" }
+  - { key: F6, mods: Alt, chars: "\x1b[17;6~" }
+  - { key: F7, mods: Alt, chars: "\x1b[18;6~" }
+  - { key: F8, mods: Alt, chars: "\x1b[19;6~" }
+  - { key: F9, mods: Alt, chars: "\x1b[20;6~" }
+  - { key: F10, mods: Alt, chars: "\x1b[21;6~" }
+  - { key: F11, mods: Alt, chars: "\x1b[23;6~" }
+  - { key: F12, mods: Alt, chars: "\x1b[24;6~" }
+  - { key: F1, mods: Command, chars: "\x1b[1;3P" }
+  - { key: F2, mods: Command, chars: "\x1b[1;3Q" }
+  - { key: F3, mods: Command, chars: "\x1b[1;3R" }
+  - { key: F4, mods: Command, chars: "\x1b[1;3S" }
+  - { key: F5, mods: Command, chars: "\x1b[15;3~" }
+  - { key: F6, mods: Command, chars: "\x1b[17;3~" }
+  - { key: F7, mods: Command, chars: "\x1b[18;3~" }
+  - { key: F8, mods: Command, chars: "\x1b[19;3~" }
+  - { key: F9, mods: Command, chars: "\x1b[20;3~" }
+  - { key: F10, mods: Command, chars: "\x1b[21;3~" }
+  - { key: F11, mods: Command, chars: "\x1b[23;3~" }
+  - { key: F12, mods: Command, chars: "\x1b[24;3~" }
+  - { key: NumpadEnter, chars: "\n" }
+  - { key: N, mods: Command, action: SpawnNewInstance }
+
+  - { key: Grave, mods: Alt, chars: "\x1b`" } # Alt + `
+  - { key: Grave, mods: Alt|Shift, chars: "\x1b~" } # Alt + ~
+  - { key: Period, mods: Alt, chars: "\x1b." } # Alt + .
+  - { key: Key8, mods: Alt|Shift, chars: "\x1b*" } # Alt + *
+  - { key: Key3, mods: Alt|Shift, chars: "\x1b#" } # Alt + #
+  - { key: Comma, mods: Alt|Shift, chars: "\x1b<" } # Alt + <
+  - { key: Period, mods: Alt|Shift, chars: "\x1b>" } # Alt + >
+  - { key: Key5, mods: Alt|Shift, chars: "\x1b%" } # Alt + %
+  - { key: Key6, mods: Alt|Shift, chars: "\x1b^" } # Alt + ^
+  - { key: Backslash, mods: Alt, chars: "\x1b\\" } # Alt + \
+  - { key: Backslash, mods: Alt|Shift, chars: "\x1b|" } # Alt + |
+
+  - { key: Apostrophe, mods: Alt, chars: "\x1b'" } # Alt + '
+
+  # ----------------------------------------------------------------------------------------------------
+  - { key: Key1, mods: Alt, chars: "\x1b1" }
+  - { key: Key2, mods: Alt, chars: "\x1b2" }
+  - { key: Key3, mods: Alt, chars: "\x1b3" }
+  - { key: Key4, mods: Alt, chars: "\x1b4" }
+  - { key: Key5, mods: Alt, chars: "\x1b5" }
+  - { key: Key6, mods: Alt, chars: "\x1b6" }
+  - { key: Key7, mods: Alt, chars: "\x1b7" }
+  - { key: Key8, mods: Alt, chars: "\x1b8" }
+  - { key: Key9, mods: Alt, chars: "\x1b9" }
+  - { key: Key0, mods: Alt, chars: "\x1b0" }
+  - { key: Minus, mods: Alt, chars: "\x1b-" }
+  - { key: Equals, mods: Alt, chars: "\x1b=" }
+  - { key: A, mods: Alt, chars: "\x1ba" }
+  - { key: B, mods: Alt, chars: "\x1bb" }
+  - { key: C, mods: Alt, chars: "\x1bc" }
+  - { key: D, mods: Alt, chars: "\x1bd" }
+  - { key: E, mods: Alt, chars: "\x1be" }
+  - { key: F, mods: Alt, chars: "\x1bf" }
+  - { key: G, mods: Alt, chars: "\x1bg" }
+  - { key: H, mods: Alt, chars: "\x1bh" }
+  - { key: I, mods: Alt, chars: "\x1bi" }
+  - { key: J, mods: Alt, chars: "\x1bj" }
+  - { key: K, mods: Alt, chars: "\x1bk" }
+  - { key: L, mods: Alt, chars: "\x1bl" }
+  - { key: M, mods: Alt, chars: "\x1bm" }
+  - { key: N, mods: Alt, chars: "\x1bn" }
+  - { key: O, mods: Alt, chars: "\x1bo" }
+  - { key: P, mods: Alt, chars: "\x1bp" }
+  - { key: Q, mods: Alt, chars: "\x1bq" }
+  - { key: R, mods: Alt, chars: "\x1br" }
+  - { key: S, mods: Alt, chars: "\x1bs" }
+  - { key: T, mods: Alt, chars: "\x1bt" }
+  - { key: U, mods: Alt, chars: "\x1bu" }
+  - { key: V, mods: Alt, chars: "\x1bv" }
+  - { key: W, mods: Alt, chars: "\x1bw" }
+  - { key: X, mods: Alt, chars: "\x1bx" }
+  - { key: Y, mods: Alt, chars: "\x1by" }
+  - { key: Z, mods: Alt, chars: "\x1bz" }
+  - { key: Escape, mods: Alt, chars: "\x1b" }
+  - { key: Key1, mods: Alt|Shift, chars: "\x1b!" }
+  - { key: Key2, mods: Alt|Shift, chars: "\x1b#" }
+  - { key: Key3, mods: Alt|Shift, chars: "\x1b$" }
+  - { key: Key4, mods: Alt|Shift, chars: "\x1b$" }
+  - { key: Key5, mods: Alt|Shift, chars: "\x1b%" }
+  - { key: Key6, mods: Alt|Shift, chars: "\x1b^" }
+  - { key: Key7, mods: Alt|Shift, chars: "\x1b&" }
+  - { key: Key8, mods: Alt|Shift, chars: "\x1b*" }
+  - { key: Key9, mods: Alt|Shift, chars: "\x1b(" }
+  - { key: Key0, mods: Alt|Shift, chars: "\x1b)" }
+  - { key: Minus, mods: Alt|Shift, chars: "\x1b_" }
+  - { key: Equals, mods: Alt|Shift, chars: "\x1b+" }
+  - { key: A, mods: Alt|Shift, chars: "\x1bA" }
+  - { key: B, mods: Alt|Shift, chars: "\x1bB" }
+  - { key: C, mods: Alt|Shift, chars: "\x1bC" }
+  - { key: D, mods: Alt|Shift, chars: "\x1bD" }
+  - { key: E, mods: Alt|Shift, chars: "\x1bE" }
+  - { key: F, mods: Alt|Shift, chars: "\x1bF" }
+  - { key: G, mods: Alt|Shift, chars: "\x1bG" }
+  - { key: H, mods: Alt|Shift, chars: "\x1bH" }
+  - { key: I, mods: Alt|Shift, chars: "\x1bI" }
+  - { key: J, mods: Alt|Shift, chars: "\x1bJ" }
+  - { key: K, mods: Alt|Shift, chars: "\x1bK" }
+  - { key: L, mods: Alt|Shift, chars: "\x1bL" }
+  - { key: M, mods: Alt|Shift, chars: "\x1bM" }
+  - { key: N, mods: Alt|Shift, chars: "\x1bN" }
+  - { key: O, mods: Alt|Shift, chars: "\x1bO" }
+  - { key: P, mods: Alt|Shift, chars: "\x1bP" }
+  - { key: Q, mods: Alt|Shift, chars: "\x1bQ" }
+  - { key: R, mods: Alt|Shift, chars: "\x1bR" }
+  - { key: S, mods: Alt|Shift, chars: "\x1bS" }
+  - { key: T, mods: Alt|Shift, chars: "\x1bT" }
+  - { key: U, mods: Alt|Shift, chars: "\x1bU" }
+  - { key: V, mods: Alt|Shift, chars: "\x1bV" }
+  - { key: W, mods: Alt|Shift, chars: "\x1bW" }
+  - { key: X, mods: Alt|Shift, chars: "\x1bX" }
+  - { key: Y, mods: Alt|Shift, chars: "\x1bY" }
+  - { key: Z, mods: Alt|Shift, chars: "\x1bZ" }
+
+  - { key: Space, mods: Control, chars: "\x00" }
+  - { key: Space, mods: Alt, chars: "\x1b " }
+  - { key: Space, mods: Alt|Shift, chars: "\x1b " }
+
+  - { key: Semicolon, mods: Alt, chars: "\x1b;" }
+  - { key: Semicolon, mods: Alt|Shift, chars: "\x1b:" }
+
+  - { key: LBracket, mods: Alt, chars: "\x1b[" }
+  - { key: RBracket, mods: Alt, chars: "\x1b]" }
+  - { key: LBracket, mods: Alt|Shift, chars: "\x1b{" }
+  - { key: RBracket, mods: Alt|Shift, chars: "\x1b}" }
+
+  - { key: V, mods: Command, action: Paste }
+  - { key: C, mods: Command, action: Copy }
+  - { key: Paste, action: Paste }
+  - { key: Paste, mods: Command, action: Paste }
+  - { key: Copy, action: Copy }
+  - { key: H, mods: Command, action: Hide }
+  - { key: Q, mods: Command, action: Quit }
+  - { key: G, mods: Control, chars: "\a" }
+
+  - { key: Semicolon, mods: Control, chars: "\x1b+\x1b+\x43\x3b" }
+  - { key: Semicolon, mods: Control|Shift, chars: "\x1b+\x1b+\x43\x3a" }
+
+  - { key: Period, mods: Control, chars: "\x1b+\x1b+\x43\x2e" }
+  - { key: Period, mods: Control|Shift, chars: "\x1b+\x1b+\x43\x3e" }
+
+  - { key: Comma, mods: Control, chars: "\x1b+\x1b+\x43\x2c" }
+  - { key: Comma, mods: Control|Shift, chars: "\x1b+\x1b+\x43\x3c" }
+
+  - { key: Apostrophe, mods: Control|Shift, chars: "\x1b+\x1b+\x43\x22" }
+  - { key: Apostrophe, mods: Control, chars: "\x1b+\x1b+\x43\x27" }
+
+  - { key: Slash, mods: Control, chars: "\x1f" }
+  - { key: Slash, mods: Control|Shift, chars: "\x1b+\x1b+\x43\x3f" }
+  - { key: Q, mods: Control, chars: "\x11" }
+  - { key: K, mods: Command, chars: "\x1b+\x1b+\x44\x6b" }

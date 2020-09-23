@@ -1,0 +1,25 @@
+# this is `bat`s configuration file. each line either contains a comment or
+# a command-line option that you want to pass to `bat` by default. you can
+# run `bat --help` to get a list of all possible configuration options.
+
+# specify desired highlighting theme (e.g. "twodark"). run `bat --list-themes`
+# for a list of all available themes
+--theme="Monokai Extended Origin"
+
+# enable this to use italic text on the terminal. this is not supported on all
+# terminal emulators (like tmux, by default):
+--italic-text=always
+
+# uncomment the following line to disable automatic paging:
+#--paging=never
+
+# uncomment the following line if you are using less version >= 551 and want to
+# enable mouse scrolling support in `bat` when running inside tmux. this might
+# disable text selection, unless you press shift.
+#--pager="--RAW-CONTROL-CHARS --quit-if-one-screen --mouse"
+
+# syntax mappings: map a certain filename pattern to a language.
+#   example 1: use the c++ syntax for .ino files
+#   example 2: use ".gitignore"-style highlighting for ".ignore" files
+#--map-syntax "*.ino:C++"
+#--map-syntax ".ignore:Git Ignore"
