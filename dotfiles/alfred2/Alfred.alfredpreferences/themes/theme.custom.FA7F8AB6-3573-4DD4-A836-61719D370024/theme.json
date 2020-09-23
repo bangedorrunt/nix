@@ -1,0 +1,61 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 5,
+      "subtext" : {
+        "size" : 17,
+        "colorSelected" : "#FEFFFFFF",
+        "font" : "Literata",
+        "color" : "#FEFFFFFF"
+      },
+      "shortcut" : {
+        "size" : 16,
+        "colorSelected" : "#FFFFFFFF",
+        "font" : "Didot",
+        "color" : "#FEFFFFFF"
+      },
+      "backgroundSelected" : "#D783FFFF",
+      "text" : {
+        "size" : 26,
+        "colorSelected" : "#FEFFFFFF",
+        "font" : "Literata",
+        "color" : "#FEFFFFFF"
+      },
+      "iconPaddingHorizontal" : 4,
+      "paddingVertical" : 3,
+      "iconSize" : 40
+    },
+    "search" : {
+      "paddingVertical" : 8,
+      "background" : "#26292C7E",
+      "spacing" : 8,
+      "text" : {
+        "size" : 44,
+        "colorSelected" : "#000000FF",
+        "font" : "Literata",
+        "color" : "#FEFFFFFF"
+      },
+      "backgroundSelected" : "#FFBAB8FF"
+    },
+    "window" : {
+      "color" : "#1D1F20FF",
+      "paddingHorizontal" : 9,
+      "width" : 559,
+      "borderPadding" : 0,
+      "borderColor" : "#0000007F",
+      "blur" : 35,
+      "roundness" : 3,
+      "paddingVertical" : 0
+    },
+    "credit" : "babygau",
+    "separator" : {
+      "color" : "#CBCBCBF3",
+      "thickness" : 0
+    },
+    "scrollbar" : {
+      "color" : "#561A72FF",
+      "thickness" : 2
+    },
+    "name" : "Alfred Dark"
+  }
+}

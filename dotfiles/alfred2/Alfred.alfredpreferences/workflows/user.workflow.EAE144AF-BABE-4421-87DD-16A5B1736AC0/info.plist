@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.watts.rewifi</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>136E48F5-A6FF-44A9-8C56-BCFE81D69B11</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8C107FFB-3FD6-41FE-9958-AABBBDDDA08B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Rachit Watts</string>
+	<key>description</key>
+	<string>Reconnect Wifi</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Refresh Wifi</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+	do shell script "networksetup -setairportpower en0 off"	do shell script "networksetup -setairportpower en0 on"
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>8C107FFB-3FD6-41FE-9958-AABBBDDDA08B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>rewifi</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Refresh WiFi</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>136E48F5-A6FF-44A9-8C56-BCFE81D69B11</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>136E48F5-A6FF-44A9-8C56-BCFE81D69B11</key>
+		<dict>
+			<key>xpos</key>
+			<integer>180</integer>
+			<key>ypos</key>
+			<integer>120</integer>
+		</dict>
+		<key>8C107FFB-3FD6-41FE-9958-AABBBDDDA08B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>390</integer>
+			<key>ypos</key>
+			<integer>120</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>

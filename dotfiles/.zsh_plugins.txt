@@ -1,0 +1,20 @@
+# pure prompt
+mafredri/zsh-async
+
+# powerlevel10k
+romkatv/powerlevel10k
+
+# aliases
+djui/alias-tips
+
+# workflow
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+zdharma/fast-syntax-highlighting
+zimfw/completion
+
+# essentials from oh-my-zsh
+robbyrussell/oh-my-zsh path:plugins/colored-man-pages/colored-man-pages.plugin.zsh
+robbyrussell/oh-my-zsh path:plugins/git/git.plugin.zsh
+robbyrussell/oh-my-zsh path:plugins/nvm/nvm.plugin.zsh
