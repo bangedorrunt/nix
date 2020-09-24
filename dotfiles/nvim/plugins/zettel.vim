@@ -56,7 +56,7 @@ let g:zettel_link_format="[%title](%link)"
 let g:zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always "
 
 let g:zettel_options = [{ "front_matter" : {"tags" : ""},
-												\ "template" :  "$HOME/workspace/note-to-self/zettel.tpl"}]
+												\ "template" :  "$HOME/workspace/notetoself/zettel.tpl"}]
 let g:zettel_random_chars=8
 let g:zettel_format = "%random"
 let g:zettel_date_format = "%y-%m-%dT%H:%M"
