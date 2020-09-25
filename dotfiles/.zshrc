@@ -26,8 +26,8 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#17181c,hl:#5f8
 # light
 # export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e8e9ec,hl:#5f87af --color=fg+:#33374c,bg+:#e8e9ec,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden --glob '!{.git,node_modules}/**'"
-export FZF_CTRL_T_COMMAND="rg --files --follow --no-ignore-vcs --hidden --glob '!{.git,node_modules}/**'"
+export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
+export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --exclude .git"
 
 # nvm config
