@@ -1,8 +1,8 @@
 " -------------------
-" vim asterisk config
+" VIM ASTERISK CONFIG
 " -------------------
 
-" also keep search result at center of screen
+" Also keep search result at center of screen
 nnoremap n nzz
 nnoremap N Nzz
 
@@ -20,6 +20,6 @@ map *  <plug>(asterisk-z*)<plug>(is-nohl-1)
 map g* <plug>(asterisk-gz*)<plug>(is-nohl-1)
 map #  <plug>(asterisk-z#)<plug>(is-nohl-1)
 map g# <plug>(asterisk-gz#)<plug>(is-nohl-1)
-" enable keepcursor
+" Enable keepcursor
 let g:asterisk#keeppos = 1
 

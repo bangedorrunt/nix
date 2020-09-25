@@ -1,5 +1,5 @@
 
-" set augroup
+" Set AuGroup
 augroup VIMRC-GROUP
   autocmd!
   autocmd CursorHold *? syntax sync minlines=300
@@ -10,7 +10,7 @@ augroup TYPESRC
   autocmd!
 augroup END
 
-" custom command for source files
+" Custom command for source files
 command! -nargs=1 ImportRCFrom
   \ execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/'.<args>.'.rc.vim'
 
@@ -20,13 +20,13 @@ command! -nargs=1 ImportPlugConfigFrom
 command! -nargs=1 ImportLuaPlugConfigFrom
   \ execute 'luafile' fnamemodify(expand('<sfile>'), ':h').'/plugins/'.<args>.'.lua'
 
-" initialize base requirements
+" Initialize base requirements
 if has('vim_starting')
   ImportRCFrom 'base'
 endif
 
 " -----------
-" plug manager
+" PLUG MANAGER
 " -----------
 
 if empty(glob(expand('~/.config/nvim/autoload/plug.vim')))
@@ -45,11 +45,11 @@ if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
 endif
 
 
-" navigation plugins
+" NAVIGATION PLUGINS
 " ------------------
 " Plug 'asvetliakov/vim-easymotion'
 
-" utility plugins
+" UTILITY PLUGINS
 " ---------------
 
 Plug 'tpope/vim-repeat'
@@ -60,25 +60,25 @@ Plug 'haya14busa/vim-asterisk'
 
 " Plug 'brglng/vim-im-select'
 
-" completion plugins
+" COMPLETION PLUGINS
 " ------------------
 
 call plug#end()
 
-" disable packpath
+" Disable packpath
 set packpath=
 
 " ----------
-" load plugin configs
+" LOAD PLUGIN CONFIGS
 " ----------
 ImportRCFrom 'general'
 ImportRCFrom 'keybindings'
 
-" reload vim config automatically
+" Reload vim config automatically
 execute 'autocmd VIMRC-GROUP BufWritePost '.$NVIM_PATH.'/config/*,$MYVIMRC nested'
   \ .' source $MYVIMRC | redraw'
 
-" auto change input setting
-" ref: https://github.com/asvetliakov/vscode-neovim/issues/68
-" installed vim-imselect fixed issue
+" Auto change input setting
+" Ref: https://github.com/asvetliakov/vscode-neovim/issues/68
+" Installed vim-imselect fixed issue
 autocmd InsertLeave * :!/usr/local/bin/im-select com.apple.keylayout.ABC
