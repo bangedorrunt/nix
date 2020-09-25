@@ -1,41 +1,37 @@
-" neovim initialization
+" NEOVIM INITIALIZATION
 " ------------------
-" neovim conforms to the xdg base directory specification
+" Neovim conforms to the xdg base directory specification
 " $XDG_CONFIG_HOME: ~/.config/nvim
 " $XDG_DATA_HOME: ~/.local/share/nvim
 
-" neovim automatically create `shada`, `swap`, `undo` dirs under $XDG_DATA_HOME
+" Neovim automatically create `shada`, `swap`, `undo` dirs under $XDG_DATA_HOME
 
 let $NVIM_PATH = expand($HOME.'/.config/nvim')
 let $CACHE_PATH = expand(($XDG_CACHE_HOME ? $XDG_CACHE_HOME : '~/.cache').'/vim')
 
-" ensure custom spelling directory
+" Ensure custom spelling directory
 if !isdirectory(expand('$NVIM_PATH/spell'))
   call mkdir(expand('$NVIM_PATH/spell'))
 endif
 
-" load vault settings
+" Load vault settings
 if filereadable(expand('$NVIM_PATH/.vault.vim'))
   execute 'source' expand('$NVIM_PATH/.vault.vim')
 endif
 
-" python interpreter settings
-" python2 is end of life cycle, use python3 only
-" use pyenv to manage python, let neovim automatically find its path
-" let g:python3_host_prog = '/usr/local/bin/python3'
 
-" disable menu.vim
+" Disable menu.vim
 if has('gui_running')
   set guioptions=Mc
 endif
 
-" disable providers we do not give a shit about
+" Disable providers we do not give a shit about
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
 " let g:loaded_node_provider = 0
 
-" disable some in built plugins completely
+" Disable some in built plugins completely
 let g:loaded_netrw            = 1
 let g:loaded_netrwPlugin      = 1
 let g:loaded_matchparen       = 1
