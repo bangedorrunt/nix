@@ -58,7 +58,8 @@
         {:des "F17/F18/F19: init"
          :rules [[:right_command [:to-f17 ["f17-layout" 1]] nil {:afterup ["f17-layout" 0]}]
                  [:right_option [:to-f18 ["f18-layout" 1]] nil {:afterup ["f18-layout" 0]}]
-                 [:right_control [:to-f19 ["f19-layout" 1]] nil {:afterup ["f19-layout" 0]}]]}
+                 [:right_control [:to-f19 ["f19-layout" 1]] nil {:afterup ["f19-layout" 0]}]
+                 [:fn [:to-f18 ["f18-layout" 1]] :keychron {:afterup ["f18-layout" 0]}]]}
         #_{:des "F17/F18/F19: init"
            ;; Make sure you remap right Control/Option/Cmd to F19
            ;; in simple modification mod
@@ -185,6 +186,7 @@
                             "^com\\.apple\\.Safari$"]
                 :Firefoxes ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"]}
+ :devices {:keychron [{:vendor_id 1452 :product_id 591}]}
  :input-sources {:us {:input_mode_id ""
                       :input_source_id "com.apple.keylayout.ABC"
                       :language "en"}}

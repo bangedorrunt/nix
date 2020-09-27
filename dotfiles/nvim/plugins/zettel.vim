@@ -2,7 +2,7 @@
 " -----------------
 
 " Neuron dir
-" let g:zkdir = $HOME.'/workspace/note-to-self/'
+" let g:zkdir = $HOME.'/workspace/notetoself/'
 " let g:neuron_no_mappings = 1
 
 " Neuron keybinding
