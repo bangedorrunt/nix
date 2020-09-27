@@ -2,12 +2,20 @@
 
 # if you come from bash you might have to change your $PATH.
 export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
-
+export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
 # enable powerlevel10k instant prompt. should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX=$(brew --prefix)
+  # gnubin; gnuman
+  for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnubin; do export PATH=$d:$PATH; done
+  # I actually like that man grep gives the BSD grep man page
+  #for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
 fi
 
 # fzf config
@@ -52,7 +60,7 @@ if [ -f $(brew --prefix)/etc/brew-wrap ];then
 fi
 
 # added by Nix installer
-# if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
 
 ### added by zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -132,9 +140,9 @@ zinit wait"1" lucid for \
 
 # preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='vim'
+  export EDITOR='nvim'
 fi
 
 # compilation flags
@@ -151,6 +159,17 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
+    alias egui="/Applications/Emacs.app/Contents/MacOS/Emacs"
+    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+  fi
+
+  if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
+    alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+  fi
+fi
+
 alias code='code-insiders'
 alias c='code-insiders'
 alias desktop='cd ~/Desktop'

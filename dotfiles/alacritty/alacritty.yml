@@ -5,7 +5,7 @@ env:
 #
 # Note that some xterm terminfo databases don't declare support for italics.
 # TERM: xterm-256color
-  TERM: alacritty
+  TERM: xterm-24bits
 
 window:
   # Window dimensions in character columns and lines (changes require restart)
@@ -59,16 +59,16 @@ draw_bold_text_with_bright_colors: false
 font:
   normal:
     family: 'Operator Mono SSm Lig'
-    style: Light
+    style: Book
   italic:
     family: 'Operator Mono SSm Lig'
-    style: Light Italic
+    style: Book Italic
   bold:
     family: 'Operator Mono SSm Lig'
-    style: Book
+    style: Bold
   bold_italic:
     family: 'Operator Mono SSm Lig'
-    style: Book Italic
+    style: Bold Italic
 
   # Point size of the font
   size: 20.0
@@ -258,7 +258,7 @@ debug:
 ## colors (monokai pro)
 monokai-pro: &monokai-pro # default colors:
   primary:
-    background: '0x18191c'
+    background: '0x17181c'
     foreground: '0xfcfcfa'
   normal:
     black: '0x403e41'
@@ -301,7 +301,7 @@ iceberg-light: &iceberg-light
     magenta: '0x6845ad'
     cyan:    '0x327698'
     white:   '0x262a3f'
-colors: *iceberg-light
+colors: *monokai-pro
 
 # Background opacity
 background_opacity: 1.0
