@@ -13,113 +13,10 @@
         "basic.to_if_held_down_threshold_milliseconds" : 200
       },
       "rules" : [ {
-        "description" : "Auto generated layer conditions",
-        "manipulators" : [ {
-          "type" : "basic",
-          "to" : [ {
-            "set_variable" : {
-              "name" : "f19-layout",
-              "value" : 1
-            }
-          } ],
-          "from" : {
-            "key_code" : "f19"
-          },
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f19-layout",
-              "value" : 0
-            }
-          } ],
-          "to_if_alone" : [ {
-            "key_code" : "f19"
-          } ]
-        }, {
-          "type" : "basic",
-          "to" : [ {
-            "set_variable" : {
-              "name" : "f17-layout",
-              "value" : 1
-            }
-          } ],
-          "from" : {
-            "key_code" : "f17"
-          },
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f17-layout",
-              "value" : 0
-            }
-          } ],
-          "to_if_alone" : [ {
-            "key_code" : "f17"
-          } ]
-        }, {
-          "type" : "basic",
-          "to" : [ {
-            "set_variable" : {
-              "name" : "f18-layout",
-              "value" : 1
-            }
-          } ],
-          "from" : {
-            "key_code" : "f18"
-          },
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f18-layout",
-              "value" : 0
-            }
-          } ],
-          "to_if_alone" : [ {
-            "key_code" : "f18"
-          } ]
-        } ]
-      }, {
-        "description" : "Super Duper: <s-d> init",
-        "manipulators" : [ {
-          "from" : {
-            "simultaneous" : [ {
-              "key_code" : "s"
-            }, {
-              "key_code" : "d"
-            } ],
-            "simultaneous_options" : {
-              "detect_key_down_uninterruptedly" : false,
-              "key_down_order" : "insensitive",
-              "key_up_order" : "insensitive",
-              "key_up_when" : "any"
-            }
-          },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "super-duper-layout",
-              "value" : 1
-            }
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Hyper: Capslock to Hyper, Escape when released",
+        "description" : "Hyper Layout",
         "manipulators" : [ {
           "to_if_alone" : [ {
             "key_code" : "escape"
-          } ],
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "in-yabai-bsp-mode",
-              "value" : 0
-            }
-          }, {
-            "set_variable" : {
-              "name" : "in-yabai-float-mode",
-              "value" : 0
-            }
-          }, {
-            "set_variable" : {
-              "name" : "in-yabai-stack-mode",
-              "value" : 0
-            }
           } ],
           "from" : {
             "key_code" : "caps_lock",
@@ -133,30 +30,6 @@
           } ],
           "type" : "basic"
         }, {
-          "from" : {
-            "key_code" : "escape"
-          },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "in-yabai-bsp-mode",
-              "value" : 0
-            }
-          }, {
-            "set_variable" : {
-              "name" : "in-yabai-stack-mode",
-              "value" : 0
-            }
-          }, {
-            "set_variable" : {
-              "name" : "in-yabai-float-mode",
-              "value" : 0
-            }
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Hyper: <h/j/k/l> like Vim navigation",
-        "manipulators" : [ {
           "from" : {
             "key_code" : "j",
             "modifiers" : {
@@ -200,10 +73,7 @@
             "key_code" : "right_arrow"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "Hyper: <c/v/u/r> macOS Copy/Paste/Undo/Redo",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "c",
             "modifiers" : {
@@ -251,10 +121,7 @@
             "modifiers" : [ "left_command", "left_shift" ]
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "Hyper: <'> Yabai quick focus windows",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "semicolon",
             "modifiers" : {
@@ -265,10 +132,7 @@
             "shell_command" : "yabai -m query --spaces \\\n                                | jq -re '.[] | select(.visible == 1).index' \\\n                                | xargs -I{} yabai -m query --windows --space {} \\\n                                | jq -sre 'add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\\n                                | xargs -I{} yabai -m window --focus {}"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "Hyper: <n/p> Yabai quick focus spaces",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "p",
             "modifiers" : {
@@ -292,7 +156,7 @@
           "type" : "basic"
         } ]
       }, {
-        "description" : "F17/F18/F19: init",
+        "description" : "F17|F18|F19 Layout Init",
         "manipulators" : [ {
           "to_after_key_up" : [ {
             "set_variable" : {
@@ -311,6 +175,13 @@
               "name" : "f17-layout",
               "value" : 1
             }
+          } ],
+          "conditions" : [ {
+            "identifiers" : [ {
+              "vendor_id" : 1452,
+              "product_id" : 591
+            } ],
+            "type" : "device_unless"
           } ],
           "type" : "basic"
         }, {
@@ -332,6 +203,17 @@
               "value" : 1
             }
           } ],
+          "conditions" : [ {
+            "identifiers" : [ {
+              "vendor_id" : 1452,
+              "product_id" : 591
+            } ],
+            "type" : "device_unless"
+          }, {
+            "name" : "nil",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
           "type" : "basic"
         }, {
           "to_after_key_up" : [ {
@@ -352,6 +234,40 @@
               "value" : 1
             }
           } ],
+          "conditions" : [ {
+            "identifiers" : [ {
+              "vendor_id" : 1452,
+              "product_id" : 591
+            } ],
+            "type" : "device_unless"
+          } ],
+          "type" : "basic"
+        }, {
+          "to_after_key_up" : [ {
+            "set_variable" : {
+              "name" : "f17-layout",
+              "value" : 0
+            }
+          } ],
+          "from" : {
+            "key_code" : "f7"
+          },
+          "to" : [ {
+            "modifiers" : [ "left_shift", "left_control" ],
+            "key_code" : "left_command"
+          }, {
+            "set_variable" : {
+              "name" : "f17-layout",
+              "value" : 1
+            }
+          } ],
+          "conditions" : [ {
+            "identifiers" : [ {
+              "vendor_id" : 1452,
+              "product_id" : 591
+            } ],
+            "type" : "device_if"
+          } ],
           "type" : "basic"
         }, {
           "to_after_key_up" : [ {
@@ -361,7 +277,7 @@
             }
           } ],
           "from" : {
-            "key_code" : "fn"
+            "key_code" : "f8"
           },
           "to" : [ {
             "modifiers" : [ "left_shift", "left_option" ],
@@ -380,9 +296,250 @@
             "type" : "device_if"
           } ],
           "type" : "basic"
+        }, {
+          "to_after_key_up" : [ {
+            "set_variable" : {
+              "name" : "f19-layout",
+              "value" : 0
+            }
+          } ],
+          "from" : {
+            "key_code" : "f9"
+          },
+          "to" : [ {
+            "modifiers" : [ "left_option", "left_command" ],
+            "key_code" : "left_control"
+          }, {
+            "set_variable" : {
+              "name" : "f19-layout",
+              "value" : 1
+            }
+          } ],
+          "conditions" : [ {
+            "identifiers" : [ {
+              "vendor_id" : 1452,
+              "product_id" : 591
+            } ],
+            "type" : "device_if"
+          } ],
+          "type" : "basic"
         } ]
       }, {
-        "description" : "F19: <b/s/f> Yabai bsp layout",
+        "description" : "F17 BSP Layout",
+        "manipulators" : [ {
+          "from" : {
+            "key_code" : "r"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m space --rotate 90"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "y"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m space --mirror y-axis"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "x"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m space --mirror x-axis"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "j"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --focus next || yabai -m window --focus first"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "k"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --focus prev || yabai -m window --focus last"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "return_or_enter"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --warp west"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "s"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --warp south"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "a"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --warp west"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "w"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --warp north"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "d"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --warp east"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        } ]
+      }, {
+        "description" : "F18 Stack Layout",
+        "manipulators" : [ {
+          "from" : {
+            "key_code" : "k"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --focus stack.prev || yabai -m window --focus stack.last"
+          } ],
+          "conditions" : [ {
+            "name" : "f18-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "j"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --focus stack.next || yabai -m window --focus stack.first"
+          } ],
+          "conditions" : [ {
+            "name" : "f18-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "s"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --stack south"
+          } ],
+          "conditions" : [ {
+            "name" : "f18-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "a"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --stack west"
+          } ],
+          "conditions" : [ {
+            "name" : "f18-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "w"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --stack north"
+          } ],
+          "conditions" : [ {
+            "name" : "f18-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "d"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --stack east"
+          } ],
+          "conditions" : [ {
+            "name" : "f18-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        } ]
+      }, {
+        "description" : "F19 Universal Layout",
         "manipulators" : [ {
           "from" : {
             "key_code" : "b"
@@ -428,10 +585,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <f> Yabai toggle float window",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "t"
           },
@@ -446,10 +600,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <p> Yabai toggle picture in picture",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "p"
           },
@@ -462,10 +613,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <o> Yabai toggle topmost window",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "o"
           },
@@ -478,26 +626,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <o> Yabai toggle sticky window",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "o"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --toggle sticky"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <left/down/up/right> Yabai resize float window",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "up_arrow"
           },
@@ -549,10 +678,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <1-7> Yabai fast focus spaces",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "1"
           },
@@ -643,10 +769,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <9/0> Yabai send windows and focus to spaces",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "0"
           },
@@ -672,10 +795,7 @@
             "type" : "variable_if"
           } ],
           "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19: <d/c> Yabai create and destroy spaces",
-        "manipulators" : [ {
+        }, {
           "from" : {
             "key_code" : "d"
           },
@@ -703,263 +823,7 @@
           "type" : "basic"
         } ]
       }, {
-        "description" : "F17: <r> Yabai bsp rotates tree",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "r"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m space --rotate 90"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17: <y> Yabai bsp rotates y-axis",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "y"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m space --mirror y-axis"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17: <x> Yabai bsp rotates x-axis",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "x"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m space --mirror x-axis"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17: <s> Yabai toggle split vertical/horizontal window",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "s"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --toggle split"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17: <j/k> Yabai bsp cycle through windows",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "j"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --focus next || yabai -m window --focus first"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "k"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --focus prev || yabai -m window --focus last"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17: <a/s/w/d> Yabai bsp moves west/south/north/east",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "return_or_enter"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --warp west"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "s"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --warp south"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "a"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --warp west"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "w"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --warp north"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "d"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --warp east"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F18: <j/k> Yabai stack cycle through windows",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "j"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --focus stack.prev || yabai -m window --focus stack.last"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "k"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --focus stack.next || yabai -m window --focus stack.first"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F18: <a/s/w/d> Yabai stack moves west/south/north/east",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "s"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --stack south"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "a"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --stack west"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "w"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --stack north"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "d"
-          },
-          "to" : [ {
-            "shell_command" : "yabai -m window --stack east"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F13: take screenshot",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "f13"
-          },
-          "to" : [ {
-            "shell_command" : "osascript -e 'tell application \"Screenshot.app\" to activate'"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Double tap right Shift key to switch input setting",
+        "description" : "Double tap right shift key to switch input setting",
         "manipulators" : [ {
           "from" : {
             "key_code" : "right_shift"
@@ -1016,7 +880,7 @@
           "type" : "basic"
         } ]
       }, {
-        "description" : "Double tap Left_shift key to toggle terminal",
+        "description" : "Double tap left shift key to toggle terminal",
         "manipulators" : [ {
           "from" : {
             "key_code" : "left_shift"
@@ -1113,6 +977,18 @@
       "ignore" : true,
       "manipulate_caps_lock_led" : true,
       "simple_modifications" : [ ]
+    }, {
+      "disable_built_in_keyboard_if_exists" : false,
+      "fn_function_keys" : [ ],
+      "identifiers" : {
+        "is_keyboard" : true,
+        "is_pointing_device" : false,
+        "product_id" : 591,
+        "vendor_id" : 1452
+      },
+      "ignore" : false,
+      "manipulate_caps_lock_led" : true,
+      "simple_modifications" : [ ]
     } ],
     "fn_function_keys" : [ {
       "from" : {
@@ -1161,21 +1037,21 @@
         "key_code" : "f7"
       },
       "to" : {
-        "key_code" : "rewind"
+        "key_code" : "f7"
       }
     }, {
       "from" : {
         "key_code" : "f8"
       },
       "to" : {
-        "key_code" : "play_or_pause"
+        "key_code" : "f8"
       }
     }, {
       "from" : {
         "key_code" : "f9"
       },
       "to" : {
-        "key_code" : "fastforward"
+        "key_code" : "f9"
       }
     }, {
       "from" : {
