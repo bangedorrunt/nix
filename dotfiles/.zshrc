@@ -1,9 +1,12 @@
 #!/bin/zsh
 
-# if you come from bash you might have to change your $PATH.
+# If you come from bash you might have to change your $PATH.
 export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
-export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
-# enable powerlevel10k instant prompt. should stay close to the top of ~/.zshrc.
+
+# Need this if I use compiled `gccemacs`
+# export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+
+# Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -18,7 +21,7 @@ if type brew &>/dev/null; then
   #for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
 fi
 
-# fzf config
+# FZF CONFIG
 # ######################
 
 # iceberg-light: e8e9ec
@@ -28,31 +31,31 @@ fi
 # github dark: 1e2429
 # sonokai: 2c2e33
 
-# dark
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#17181c,hl:#5f87af --color=fg+:#24292e,bg+:#17181c,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+# Dark
+# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#17181c,hl:#5f87af --color=fg+:#24292e,bg+:#17181c,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 
-# light
-# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e8e9ec,hl:#5f87af --color=fg+:#33374c,bg+:#e8e9ec,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+# Light
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e8e9ec,hl:#5f87af --color=fg+:#33374c,bg+:#e8e9ec,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --exclude .git"
 
-# nvm config
+# NVM CONFIG
 # ######################
 export NVM_DIR="$HOME/.nvm"
 export NVM_SYMLINK_CURRENT=true
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nv
 
-# z config
+# Z CONFIG
 # ######################
 . /usr/local/etc/profile.d/z.sh # This load z
 
-# goku
+# GOKU
 # #####################
 export GOKU_EDN_CONFIG_FILE="$HOME/.config/karabiner/karabiner.edn"
 
-# homebrew config
+# HOMEBREW CONFIG
 # ######################
 # this load brew wrapper
 if [ -f $(brew --prefix)/etc/brew-wrap ];then
@@ -75,7 +78,7 @@ source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# load a few important annexes, without turbo
+# Load a few important annexes, without turbo
 # (this is currently required for annexes)
 zinit light-mode for \
     zinit-zsh/z-a-rust \
@@ -83,15 +86,15 @@ zinit light-mode for \
     zinit-zsh/z-a-patch-dl \
     zinit-zsh/z-a-bin-gem-node
 
-# a glance at the new for-syntax – load all of the above
+# A glance at the new for-syntax – load all of the above
 # plugins with a single command. For more information see:
 # https://zdharma.org/zinit/wiki/For-Syntax/
 
 # powerlevel10k theme
-# to customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 zinit light-mode for atload'source ~/.p10k.zsh' romkatv/powerlevel10k
 
-# sensible defaults
+# Sensible defaults
 zstyle ':prezto:*:*' color 'yes'
 zinit light-mode for \
   id-as'prezto/environment' \
@@ -103,22 +106,22 @@ zinit light-mode for \
 HISTSIZE=200000
 SAVEHIST=100000
 
-# vi mode
+# Vi mode
 zinit wait lucid light-mode for OMZP::vi-mode
 
-# fzf completion
+# FZF completion
 zinit wait lucid light-mode for \
   id-as'fzf/completion' https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
   id-as'fzf/key-bindings' https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
-# pyenv lazy init
+# PyEnv
 zinit wait lucid light-mode for davidparsson/zsh-pyenv-lazy
 
-# auto-suggest how to install missing commands.
-zinit light-mode for id-as'brew/command-not-found' \
+# Auto suggest how to install missing commands.
+zinit wait lucid light-mode for id-as'brew/command-not-found' \
   https://github.com/Homebrew/homebrew-command-not-found/blob/master/handler.sh
 
-# fast-syntax-highlighting & autosuggestions
+# Fast syntax highlighting & autosuggestions
 zinit wait"1" lucid for \
   atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
     zdharma/fast-syntax-highlighting \
@@ -126,7 +129,7 @@ zinit wait"1" lucid for \
     zsh-users/zsh-autosuggestions \
   blockf \
     zsh-users/zsh-completions
-# fast navigation
+# Fast navigation
 zinit wait"1" lucid for \
     psprint/zsh-navigation-tools \
     zsh-users/zsh-history-substring-search \
@@ -159,16 +162,18 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-    alias egui="/Applications/Emacs.app/Contents/MacOS/Emacs"
-    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-  fi
 
-  if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
-    alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
-  fi
-fi
+# Need this if I use `gccemacs`
+# if [[ "$OSTYPE" == "darwin"* ]]; then
+#   if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
+#     alias egui="/Applications/Emacs.app/Contents/MacOS/Emacs"
+#     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+#   fi
+
+#   if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
+#     alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+#   fi
+# fi
 
 # alias code='code-insiders'
 # alias c='code-insiders'
