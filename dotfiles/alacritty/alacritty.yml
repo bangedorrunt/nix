@@ -59,19 +59,19 @@ draw_bold_text_with_bright_colors: false
 font:
   normal:
     family: 'Operator Mono SSm Lig'
-    style: Book
+    style: Light
   italic:
     family: 'Operator Mono SSm Lig'
-    style: Book Italic
+    style: Light Italic
   bold:
     family: 'Operator Mono SSm Lig'
-    style: Bold
+    style: Book
   bold_italic:
     family: 'Operator Mono SSm Lig'
-    style: Bold Italic
+    style: Book Italic
 
   # Point size of the font
-  size: 20.0
+  size: 21.0
 
   # OS X only: Use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
@@ -301,7 +301,7 @@ iceberg-light: &iceberg-light
     magenta: '0x6845ad'
     cyan:    '0x327698'
     white:   '0x262a3f'
-colors: *monokai-pro
+colors: *iceberg-light
 
 # Background opacity
 background_opacity: 1.0

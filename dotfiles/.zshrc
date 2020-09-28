@@ -170,8 +170,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   fi
 fi
 
-alias code='code-insiders'
-alias c='code-insiders'
+# alias code='code-insiders'
+# alias c='code-insiders'
 alias desktop='cd ~/Desktop'
 if [ "$(command -v exa)" ]; then
     unalias -m 'll'
