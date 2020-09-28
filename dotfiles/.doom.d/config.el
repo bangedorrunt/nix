@@ -2,15 +2,27 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
+
+;; (when (featurep! :feature evil)
+;;   (load! +bindings)  ; My key bindings
+;;   (load! +commands)) ; My custom ex commands
+
 (defvar +babygau-projects '(
-                            "~/workspace"
                             "~/workspace/notetoself"
+                            "~/workspace/fullstack-react-book"
+                            "~/workspace/kobopatch-config"
+                            "~/dotfiles"
                             ))
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Thanh Dung TRUONG"
       user-mail-address "braden.truong@gmail.com")
+
+;; Change keybinding specifically for macOS
+;; (when (eq system-type 'darwin)
+;;   (setq mac-option-modifier 'alt
+;;         mac-command-modifier 'meta))
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -25,16 +37,17 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-font (font-spec :family "Operator Mono SSm Lig" :size 22 :weight 'light ))
+(setq doom-font (font-spec :family "Operator Mono SSm Lig" :size 22 :weight 'light )
+      doom-variable-pitch-font (font-spec :family "Operator Mono SSm Lig" :size 22 :weight 'light ))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-monokai-spectrum)
+(setq doom-theme 'modus-operandi)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+;; (setq org-directory "~/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -53,22 +66,26 @@
 ;;         '(default :background "#17181c"))
 
 (custom-set-faces!
-        '(default :background "#17181c")
-        '(markdown-code-face :background nil)
-        '(markdown-blockquote-face :background nil)
-        '(org-hide :background nil :foreground nil)
-        '(org-block :background nil)
-        '(org-level-1 :background nil)
-        '(org-level-2 :background nil)
-        '(org-level-3 :background nil)
-        '(org-level-4 :background nil)
-        '(org-level-5 :background nil)
-        '(org-level-6 :background nil)
-        '(org-level-7 :background nil)
-        '(org-level-8 :background nil)
-        '(solaire-default-face :background "#17181c")
-        '(solaire-minibuffer-face :background "#17181c")
-        '(solaire-org-hide-face :background "#17181c"))
+  ;; '(default :background "#17181c")
+  ;; '(solaire-default-face :background "#17181c")
+  ;; '(solaire-minibuffer-face :background "#17181c")
+  ;; '(solaire-org-hide-face :background "#17181c")
+  ;; '(solaire-hl-line-face :background "#17181c")
+  ;; '(solaire-mode-line-face :background "#17181c")
+  ;; '(solaire-mode-line-inactive-face :background "#17181c")
+  ;; '(solaire-line-number-face :background "#17181c")
+  '(markdown-code-face :background nil)
+  '(markdown-blockquote-face :background nil)
+  '(org-hide :background nil :foreground nil)
+  '(org-block :background nil)
+  '(org-level-1 :background nil)
+  '(org-level-2 :background nil)
+  '(org-level-3 :background nil)
+  '(org-level-4 :background nil)
+  '(org-level-5 :background nil)
+  '(org-level-6 :background nil)
+  '(org-level-7 :background nil)
+  '(org-level-8 :background nil))
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -86,6 +103,10 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Only for gccemacs
+(when (boundp 'comp-eln-load-path)
+  (setcar comp-eln-load-path
+          (expand-file-name "cache/eln-cache/" doom-cache-dir)))
 ;; Disable solaire-mode first
 ;; (after! solaire-mode
 ;;   (solaire-global-mode -1))
@@ -94,8 +115,10 @@
 (fringe-mode 0)
 
 ;;;; Which key settings
-(setq which-key-idle-delay 0.3)
+(after! which-key
+  (setq which-key-idle-delay 0.3))
 
 (after! projectile
   (dolist (project +babygau-projects)
-    (projectile-add-known-project project)))
+    (projectile-add-known-project project))
+  (setq projectile-ignored-projects '("~/" "/tmp" "~/dotfiles/.emacs.d/.local/straight/repos/")))
