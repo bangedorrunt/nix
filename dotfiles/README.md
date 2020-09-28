@@ -14,6 +14,8 @@ ln -s ../dotfiles/nvim .
 ln -s ../dotfiles/skhd .
 ln -s ../dotfiles/yabai .
 ln -s ../dotfiles/tmux .
+ln -s ../dotfiles/.doom.d doom
+ln -s ../dotfiles/.emacs.d emacs
 ```
 
 - Under `$HOME` directory

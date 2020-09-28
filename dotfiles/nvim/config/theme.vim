@@ -11,16 +11,16 @@ endif
 " -------
 
 " let g:sonokai_style = 'atlantis'
-let g:sonokai_enable_italic             = 1
-let g:sonokai_diagnostic_line_highlight = 1
-let g:sonokai_better_performance        = 1
-colorscheme sonokai
+" let g:sonokai_enable_italic             = 1
+" let g:sonokai_diagnostic_line_highlight = 1
+" let g:sonokai_better_performance        = 1
+" colorscheme sonokai
 
 " Iceberg
 " -------
 
-" set background=dark
-" colorscheme iceberg
+set background=light
+colorscheme iceberg
 
 
 " I hate error background color

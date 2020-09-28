@@ -4,7 +4,7 @@
 
 # specify desired highlighting theme (e.g. "twodark"). run `bat --list-themes`
 # for a list of all available themes
---theme="Monokai Extended Origin"
+--theme="GitHub"
 
 # enable this to use italic text on the terminal. this is not supported on all
 # terminal emulators (like tmux, by default):

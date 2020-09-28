@@ -89,7 +89,7 @@ Plug 'junegunn/fzf.vim'
 
 " Plug 'alok/notational-fzf-vim'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" Plug 'ihsanturk/neuron.vim', { 'branch': 'dev' }
+Plug 'fiatjaf/neuron.vim'
 " Plug 'rlue/vim-barbaric'
 " Plug 'tpope/vim-unimpaired'
 " Plug 'christoomey/vim-tmux-navigator'
@@ -106,8 +106,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vimwiki/vimwiki'
-Plug 'michal-h21/vim-zettel'
+" Plug 'vimwiki/vimwiki'
+" Plug 'michal-h21/vim-zettel'
 
 " COMPLETION PLUGINS
 " ------------------
@@ -118,6 +118,8 @@ Plug 'nvim-treesitter/completion-treesitter'
 Plug 'haorenW1025/completion-nvim'
 Plug 'nathunsmitty/diagnostic-nvim'
 Plug 'steelsojka/completion-buffers'
+Plug 'RishabhRD/popfix'
+Plug 'RishabhRD/nvim-lsputils'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
