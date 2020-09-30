@@ -129,7 +129,7 @@
             }
           },
           "to" : [ {
-            "shell_command" : "yabai -m query --spaces \\\n                                | jq -re '.[] | select(.visible == 1).index' \\\n                                | xargs -I{} yabai -m query --windows --space {} \\\n                                | jq -sre 'add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\\n                                | xargs -I{} yabai -m window --focus {}"
+            "shell_command" : "yabai -m query --spaces --space \\\n                                | jq -re '.index' \\\n                                | xargs -I{} yabai -m query --windows --space {} \\\n                                | jq -sre 'add | map(select(.minimized != 1)) | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\\n                                | xargs -I{} yabai -m window --focus {}"
           } ],
           "type" : "basic"
         }, {
@@ -367,6 +367,19 @@
           "type" : "basic"
         }, {
           "from" : {
+            "key_code" : "v"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --toggle split"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
             "key_code" : "j"
           },
           "to" : [ {
@@ -384,6 +397,71 @@
           },
           "to" : [ {
             "shell_command" : "yabai -m window --focus prev || yabai -m window --focus last"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "up_arrow"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --insert north"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "down_arrow"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --insert south"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "left_arrow"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --insert west"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "right_arrow"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --insert east"
+          } ],
+          "conditions" : [ {
+            "name" : "f17-layout",
+            "value" : 1,
+            "type" : "variable_if"
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "t"
+          },
+          "to" : [ {
+            "shell_command" : "yabai -m window --insert stack"
           } ],
           "conditions" : [ {
             "name" : "f17-layout",
@@ -458,7 +536,7 @@
           "type" : "basic"
         } ]
       }, {
-        "description" : "F18 Stack Layout",
+        "description" : "F18 Edit Layout",
         "manipulators" : [ {
           "from" : {
             "key_code" : "k"

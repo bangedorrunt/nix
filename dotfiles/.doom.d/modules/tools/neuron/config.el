@@ -33,11 +33,11 @@
   :init
   (map! :leader
         (:prefix ("z" . "zettel")
-          "z" #'neuron-new-zettel
+          "n" #'neuron-new-zettel
           "e" #'neuron-edit-zettel
           "w" #'neuron-rib-watch
           "g" #'neuron-rib-generate
-          "o" #'neuron-open-zettel
+          "z" #'neuron-open-zettel
           "O" #'neuron-open-index
           "j" #'neuron-open-daily-notes
           "t" #'neuron-query-tags

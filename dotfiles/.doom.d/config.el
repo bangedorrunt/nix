@@ -3,17 +3,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-;; (when (featurep! :feature evil)
-;;   (load! +bindings)  ; My key bindings
-;;   (load! +commands)) ; My custom ex commands
-
-(defvar +babygau-projects '(
-                            "~/workspace/notetoself"
-                            "~/workspace/fullstack-react-book"
-                            "~/workspace/kobopatch-config"
-                            "~/dotfiles"
-                            ))
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Thanh Dung TRUONG"
@@ -43,8 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'modus-operandi)
-
+(setq doom-theme 'doom-monokai-spectrum)
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")
@@ -55,18 +43,22 @@
 
 ;; Set line spacing
 ;; Ref: https://github.com/syl20bnr/spacemacs/issues/10502
-(defun set-bigger-spacing ()
-  (setq-local default-text-properties '(line-spacing 0.25 line-height 1.25)))
-(add-hook 'text-mode-hook 'set-bigger-spacing)
-(add-hook 'prog-mode-hook 'set-bigger-spacing)
+;; (defun set-bigger-spacing ()
+;;   (setq-local default-text-properties '(line-spacing 0.25 line-height 1.25)))
+;; (add-hook 'text-mode-hook 'set-bigger-spacing)
+;; (add-hook 'prog-mode-hook 'set-bigger-spacing)
 
 ;; Custom theme
 ;; emacs-doom used transparent background color in terminal
 ;; (custom-set-faces!
 ;;         '(default :background "#17181c"))
 
+(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+(set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
+(set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
 (custom-set-faces!
-  ;; '(default :background "#17181c")
+  '(default :background "#202124")
+  '(vertical-border :background "#202124")
   ;; '(solaire-default-face :background "#17181c")
   ;; '(solaire-minibuffer-face :background "#17181c")
   ;; '(solaire-org-hide-face :background "#17181c")
@@ -86,6 +78,16 @@
   '(org-level-6 :background nil)
   '(org-level-7 :background nil)
   '(org-level-8 :background nil))
+
+
+;; Ref: https://www.reddit.com/r/emacs/comments/3u0d0u/how_do_i_make_the_vertical_window_divider_more/
+(defun gapless-window-divider ()
+  (let ((display-table (or buffer-display-table standard-display-table)))
+    (set-display-table-slot display-table 5 ?│)
+    (set-window-display-table (selected-window) display-table)))
+
+(add-hook 'window-configuration-change-hook 'gapless-window-divider)
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -95,7 +97,7 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
-;;
+
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
@@ -103,10 +105,28 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; (when (featurep! :feature evil)
+;;   (load! +bindings)  ; My key bindings
+;;   (load! +commands)) ; My custom ex commands
+
+(defvar +babygau-projects '(
+                            "~/workspace/notetoself"
+                            "~/workspace/fullstack-react-book"
+                            "~/workspace/kobopatch-config"
+                            "~/dotfiles"
+                            ))
+
+(after! projectile
+  (dolist (project +babygau-projects)
+    (projectile-add-known-project project))
+  (setq projectile-project-search-path '("~/workspace/")
+        projectile-ignored-projects '("~/" "/tmp" "~/dotfiles/.emacs.d/.local/straight/repos/")))
+
 ;; Only for gccemacs
 (when (boundp 'comp-eln-load-path)
   (setcar comp-eln-load-path
           (expand-file-name "cache/eln-cache/" doom-cache-dir)))
+
 ;; Disable solaire-mode first
 ;; (after! solaire-mode
 ;;   (solaire-global-mode -1))
@@ -118,7 +138,9 @@
 (after! which-key
   (setq which-key-idle-delay 0.3))
 
-(after! projectile
-  (dolist (project +babygau-projects)
-    (projectile-add-known-project project))
-  (setq projectile-ignored-projects '("~/" "/tmp" "~/dotfiles/.emacs.d/.local/straight/repos/")))
+(after! sublimity
+  (sublimity-mode 1)
+  (setq sublimity-scroll-weight 5
+        sublimity-scroll-drift-length 10
+        sublimity-scroll-vertical-frame-delay 0.01))
+

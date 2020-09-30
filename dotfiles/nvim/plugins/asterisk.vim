@@ -20,6 +20,7 @@ map *  <plug>(asterisk-z*)<plug>(is-nohl-1)
 map g* <plug>(asterisk-gz*)<plug>(is-nohl-1)
 map #  <plug>(asterisk-z#)<plug>(is-nohl-1)
 map g# <plug>(asterisk-gz#)<plug>(is-nohl-1)
+
 " Enable keepcursor
 let g:asterisk#keeppos = 1
 

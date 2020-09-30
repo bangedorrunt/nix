@@ -4,7 +4,7 @@
 export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 
 # Need this if I use compiled `gccemacs`
-# export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
 
 # Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
@@ -24,12 +24,12 @@ fi
 # FZF CONFIG
 # ######################
 
-# iceberg-light: e8e9ec
-# onehalf: 282c34
-# onehalf light: fafafa
-# github android: 17181c
-# github dark: 1e2429
-# sonokai: 2c2e33
+# Iceberg Light: e8e9ec
+# Onehalf: 282c34
+# Onehalf Light: fafafa
+# Github Android: 17181c
+# Github Dark: 1e2429
+# Sonokai: 2c2e33
 
 # Dark
 # export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#17181c,hl:#5f87af --color=fg+:#24292e,bg+:#17181c,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
@@ -164,16 +164,17 @@ alias vi='nvim'
 alias vim='nvim'
 
 # Need this if I use `gccemacs`
-# if [[ "$OSTYPE" == "darwin"* ]]; then
-#   if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-#     alias egui="/Applications/Emacs.app/Contents/MacOS/Emacs"
-#     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-#   fi
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
+    alias edaemon="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --daemon"
+    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+  fi
 
-#   if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
-#     alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
-#   fi
-# fi
+  if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
+    alias ekill="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -e '(kill-emacs)'"
+    alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -a=''"
+  fi
+fi
 
 # alias code='code-insiders'
 # alias c='code-insiders'
