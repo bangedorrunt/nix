@@ -137,6 +137,9 @@ Plug 'prettier/vim-prettier', {
 "           \'do': 'cd app & yarn install'
 "           \}
 
+" All in one syntax
+Plug 'sheerun/vim-polyglot'
+
 " VimL
 Plug 'vim-jp/syntax-vim-ex', { 'for': ['vim'] }
 
@@ -164,12 +167,10 @@ ImportRCFrom 'theme'
 
 " ImportPlugConfigFrom 'markdown'
 ImportPlugConfigFrom    'completion-nvim'
-ImportLuaPlugConfigFrom 'colorizer'
 ImportLuaPlugConfigFrom 'nvim-lsp'
 ImportPlugConfigFrom    'asterisk'
 ImportPlugConfigFrom    'betterwhitespace'
 ImportPlugConfigFrom    'fzf'
-ImportPlugConfigFrom    'lightline'
 ImportPlugConfigFrom    'prettier'
 ImportPlugConfigFrom    'startify'
 ImportPlugConfigFrom    'vim-rooter'
@@ -177,6 +178,7 @@ ImportPlugConfigFrom    'fern'
 ImportPlugConfigFrom    'neoterm'
 ImportPlugConfigFrom    'im-select'
 ImportPlugConfigFrom    'zettel'
+ImportLuaPlugConfigFrom 'colorizer'
 
 " Reload vim config automatically
 execute 'au VIMRC-GROUP BufWritePost '.$NVIM_PATH.'/config/*,$MYVIMRC nested'

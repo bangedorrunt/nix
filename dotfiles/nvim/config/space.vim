@@ -45,8 +45,9 @@ nnoremap <leader>bm :<c-u>Move<space>
 " Ref: http://bit.ly/2gxMMwc
 " nnoremap <silent> <leader>fD :<c-u>call delete(expand('%')) | bdelete!
 " nnoremap <silent> <leader>bD :<c-u>call delete(expand('%')) | bdelete!
-nnoremap <silent> <leader>fD :<c-u>Delete<cr>
-nnoremap <silent> <leader>bD :<c-u>Delete<cr>
+nnoremap <leader>fD :<c-u>Delete!<cr>
+nnoremap <leader>bD :<c-u>Delete!<cr>
+
 
 " Quick open popular files
 nnoremap <silent> <leader>fev :<c-u>e $MYVIMRC<cr>

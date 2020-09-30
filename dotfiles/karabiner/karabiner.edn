@@ -42,10 +42,10 @@
                  [:!!u :!Cz]
                  [:!!r :!CSz]
                  ;; Quick focus windows with Yabai
-                 [:!!semicolon "yabai -m query --spaces \\
-                                | jq -re '.[] | select(.visible == 1).index' \\
+                 [:!!semicolon "yabai -m query --spaces --space \\
+                                | jq -re '.index' \\
                                 | xargs -I{} yabai -m query --windows --space {} \\
-                                | jq -sre 'add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\
+                                | jq -sre 'add | map(select(.minimized != 1)) | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\
                                 | xargs -I{} yabai -m window --focus {}"]
                  ;; Quick focus spaces with Yabai
                  [:!!p "yabai -m space --focus prev"]
@@ -70,17 +70,24 @@
                  ;; Mirror x axis
                  [:x "yabai -m space --mirror x-axis"]
                  ;; Split horizontal/vertical windows
-                 ; [:s "yabai -m window --toggle split"]
+                 [:v "yabai -m window --toggle split"]
                  ;; Cycle through windows
                  [:j "yabai -m window --focus next || yabai -m window --focus first"]
                  [:k "yabai -m window --focus prev || yabai -m window --focus last"]
+                 ;; Insert windows
+                 [:up_arrow "yabai -m window --insert north"]
+                 [:down_arrow "yabai -m window --insert south"]
+                 [:left_arrow "yabai -m window --insert west"]
+                 [:right_arrow "yabai -m window --insert east"]
+                 ;; Insert stacks
+                 [:t "yabai -m window --insert stack"]
                  ;; Move windows
                  [:return_or_enter "yabai -m window --warp west"]
                  [:s "yabai -m window --warp south"]
                  [:a "yabai -m window --warp west"]
                  [:w "yabai -m window --warp north"]
                  [:d "yabai -m window --warp east"]]}
-        {:des "F18 Stack Layout"
+        {:des "F18 Edit Layout"
          :rules [:f18-layout
                  ;; Cycle through windows
                  [:k "yabai -m window --focus stack.prev || yabai -m window --focus stack.last"]

@@ -11,7 +11,7 @@ let g:neuron_no_mappings = 0
 nm <leader>zn <plug>EditZettelNew
 nm <leader>zN <plug>EditZettelNewFromCword
 vm <leader>zN <esc><plug>EditZettelNewFromVisual
-nm <leader>zb <plug>NeuronRibStart
+" nm <leader>zb <plug>NeuronRibStart
 nm <leader>zr <plug>NeuronRefreshCache
 nm <leader>zu <plug>EditZettelLast
 nm <leader>zU :<c-u>call neuron#move_history(-1)<cr>
