@@ -4,11 +4,16 @@
 " Use FZF instead of denite
 " Dependency: FZF
 
+" Map leader to space
+nmap <space> <nop>
+let g:mapleader="\<space>"
+let g:maplocalleader="\<space>"
+
 " ------------------------
 " UNIVERSAL SEARCH
 " ------------------------
-nnoremap <silent> <leader><space> :<c-u>Files<cr>
-nnoremap <leader>; :<c-u>RG<cr>
+" nnoremap <leader><space> :<c-u>Files<cr>
+" nnoremap <leader>; :<c-u>RG<cr>
 " ------------------------
 " FILE & BUFFER NAVIGATION
 " ------------------------
@@ -54,7 +59,8 @@ nnoremap <silent> <leader>fev :<c-u>e $MYVIMRC<cr>
 nnoremap <silent> <leader>fez :<c-u>e ~/dotfiles/.zshrc<cr>
 
 nnoremap <silent> <leader>ff :<c-u>Files<cr>
-nnoremap <silent> <leader>bf :<c-u>Buffers<cr>
+nnoremap <silent> <leader>fb :<c-u>Buffers<cr>
+nnoremap <silent> <leader>bf :<c-u>Files<cr>
 nnoremap <silent> <leader>bb :<c-u>Buffers<cr>
 
 nnoremap <silent> <leader>fn :<c-u>bn<cr>
@@ -76,6 +82,7 @@ nnoremap <silent> <leader>wH <c-w>H
 nnoremap <silent> <leader>wL <c-w>L
 nnoremap <silent> <leader>wd <c-w>c
 nnoremap <silent> <leader>wc <c-w>c
+nnoremap <silent> <leader>ww <c-w>w
 nnoremap <silent> <leader>w= <c-w>=
 nnoremap <silent> <leader>ws :<c-u>sp<cr>
 nnoremap <silent> <leader>wv :<c-u>vsplit<cr>
@@ -159,8 +166,9 @@ tnoremap <silent> <leader>tt <c-\><c-n>:<c-u>Ttoggle<cr>
 
 " Indent guide
 nnoremap <silent> <leader>ti :<c-u>IndentLinesToggle<cr>
-nnoremap <silent> <leader>tn :<c-u>!echo /dev/urandom \| base64 \| tr -dc 'a-zA-Z0-9' \| fold -w 7 \| head -n 1 \| pbcopy<cr>
+" nnoremap <silent> <leader>tn :<c-u>!echo /dev/urandom \| base64 \| tr -dc 'a-zA-Z0-9' \| fold -w 7 \| head -n 1 \| pbcopy<cr>
 
 " Markdown Preview
 " nnoremap <silent> <leader>tM :<c-u>MarkdownPreview<cr>
-
+nnoremap <silent> <leader>qq :<c-u>qa<cr>
+nnoremap <silent> <leader>qQ :<c-u>qa!<cr>
