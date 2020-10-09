@@ -5,8 +5,7 @@ env:
 #
 # Note that some xterm terminfo databases don't declare support for italics.
 # TERM: xterm-256color
-  TERM: xterm-24bits
-
+    TERM: alacritty
 window:
   # Window dimensions in character columns and lines (changes require restart)
   dimensions:
@@ -53,25 +52,26 @@ scrolling:
   multiplier: 3
 
 # When true, bold text is drawn using the bright variant of colors.
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Font configuration (changes require restart)
 font:
   normal:
-    family: 'Operator Mono SSm Lig'
+    family: Operator Mono SSm Lig
     style: Light
   italic:
-    family: 'Operator Mono SSm Lig'
+    family: Operator Mono SSm Lig
     style: Light Italic
   bold:
-    family: 'Operator Mono SSm Lig'
+    family: Operator Mono SSm Lig
     style: Book
   bold_italic:
-    family: 'Operator Mono SSm Lig'
+    family: Operator Mono SSm Lig
     style: Book Italic
+    
 
   # Point size of the font
-  size: 21.0
+  size: 22.0
 
   # OS X only: Use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
@@ -81,7 +81,7 @@ font:
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
-    x: 0
+    x: -2
     y: 12
 
   # Glyph offset determines the locations of the glyphs within their cells with
@@ -258,7 +258,7 @@ debug:
 ## colors (monokai pro)
 monokai-pro: &monokai-pro # default colors:
   primary:
-    background: '0x202124'
+    background: '0x15191e'
     foreground: '0xfcfcfa'
   normal:
     black: '0x403e41'
@@ -301,7 +301,7 @@ iceberg-light: &iceberg-light
     magenta: '0x6845ad'
     cyan:    '0x327698'
     white:   '0x262a3f'
-colors: *monokai-pro
+colors: *iceberg-light
 
 # Background opacity
 background_opacity: 1.0
@@ -384,10 +384,10 @@ live_config_reload: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # entries in shell.args are passed unmodified as arguments to the shell.
 #
-# shell:
-#   program: /bin/zsh
-#   args:
-#     - -l
+shell:
+  program: /usr/local/bin/zsh
+  args:
+    - -l
 
 # Keybinding
 key_bindings:

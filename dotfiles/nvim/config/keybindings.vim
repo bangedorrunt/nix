@@ -9,11 +9,6 @@ tnoremap fd <c-\><c-n>
 " Force quit all
 nmap <silent> <c-q> :<c-u>confirm qa<cr>
 
-" Map leader to space
-nmap <space> <nop>
-let mapleader="\<space>"
-let maplocalleader="\<space>"
-
 " Use <tab> and <s-tab> to jump to buffers
 nnoremap <tab> :<c-u>bn<cr>
 nnoremap <s-tab> :<c-u>bp<cr>

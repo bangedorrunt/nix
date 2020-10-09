@@ -4,7 +4,10 @@
 export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 
 # Need this if I use compiled `gccemacs`
-export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+if [ -d "/Applications/Emacs.app/Contents/MacOS" ]; then
+    EMACS_APPDIR=/Applications/Emacs.app/Contents/MacOS
+    export PATH=$EMACS_APPDIR:$EMACS_APPDIR/bin:$PATH
+fi
 
 # Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
@@ -166,7 +169,7 @@ alias vim='nvim'
 # Need this if I use `gccemacs`
 if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-    alias edaemon="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --daemon"
+    alias edaemon="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
   fi
 
@@ -216,3 +219,5 @@ alias rmds='fd -H -I \.DS\_Store -x rm -v'
 alias rsync='rsync -a --delete'
 alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias top='vtop'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

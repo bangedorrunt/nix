@@ -1,5 +1,8 @@
 .vscode
 .calva
+.lsp
+.clj-kondo
+.dir-locals.el
 alfred2
 iterm2
 tmux/plugins

@@ -54,6 +54,7 @@ endif
 " Plug 'reedes/vim-colors-pencil'
 " Plug 'srcery-colors/srcery-vim'
 " Plug 'sonph/onehalf', {'rtp': '/vim'}
+Plug 'liuchengxu/vim-which-key'
 Plug 'Yggdroot/indentLine'
 Plug 'ap/vim-buftabline'
 Plug 'itchyny/lightline.vim'
@@ -166,6 +167,7 @@ ImportRCFrom 'space'
 ImportRCFrom 'theme'
 
 " ImportPlugConfigFrom 'markdown'
+ImportPlugConfigFrom    'which-key'
 ImportPlugConfigFrom    'completion-nvim'
 ImportLuaPlugConfigFrom 'nvim-lsp'
 ImportPlugConfigFrom    'asterisk'

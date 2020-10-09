@@ -2,6 +2,11 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
+(setq read-process-output-max (* 1024 1024))
+;; Only for gccemacs
+(when (boundp 'comp-eln-load-path)
+  (setcar comp-eln-load-path
+          (expand-file-name "cache/eln-cache/" doom-cache-dir)))
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -32,7 +37,9 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-monokai-spectrum)
+(setq doom-theme 'doom-one-light
+      doom-themes-enable-bold t
+      doom-themes-enable-italic t)
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")
@@ -57,8 +64,8 @@
 (set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
 (set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
 (custom-set-faces!
-  '(default :background "#202124")
-  '(vertical-border :background "#202124")
+  '(default :background "#e8e9ec")
+  '(vertical-border :background "#e8e9ec")
   ;; '(solaire-default-face :background "#17181c")
   ;; '(solaire-minibuffer-face :background "#17181c")
   ;; '(solaire-org-hide-face :background "#17181c")
@@ -81,12 +88,13 @@
 
 
 ;; Ref: https://www.reddit.com/r/emacs/comments/3u0d0u/how_do_i_make_the_vertical_window_divider_more/
-(defun gapless-window-divider ()
-  (let ((display-table (or buffer-display-table standard-display-table)))
-    (set-display-table-slot display-table 5 ?│)
-    (set-window-display-table (selected-window) display-table)))
+;; (defun gapless-window-divider ()
+;;   (let ((display-table (or buffer-display-table standard-display-table)))
+;;     (set-display-table-slot display-table 5 ?│)
+;;     (set-window-display-table (selected-window) display-table)))
+; (add-hook 'window-configuration-change-hook 'gapless-window-divider)
 
-(add-hook 'window-configuration-change-hook 'gapless-window-divider)
+(set-display-table-slot standard-display-table 5 ?│)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -105,12 +113,10 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; (when (featurep! :feature evil)
-;;   (load! +bindings)  ; My key bindings
-;;   (load! +commands)) ; My custom ex commands
+;; (load! "+bindings")  ; My key bindings
+;; (load! "+commands")) ; My custom ex commands
 
-(defvar +babygau-projects '(
-                            "~/workspace/notetoself"
+(defvar +babygau-projects '("~/workspace/notetoself"
                             "~/workspace/fullstack-react-book"
                             "~/workspace/kobopatch-config"
                             "~/dotfiles"
@@ -122,10 +128,6 @@
   (setq projectile-project-search-path '("~/workspace/")
         projectile-ignored-projects '("~/" "/tmp" "~/dotfiles/.emacs.d/.local/straight/repos/")))
 
-;; Only for gccemacs
-(when (boundp 'comp-eln-load-path)
-  (setcar comp-eln-load-path
-          (expand-file-name "cache/eln-cache/" doom-cache-dir)))
 
 ;; Disable solaire-mode first
 ;; (after! solaire-mode
@@ -133,14 +135,14 @@
 
 ;; Disable tildes
 (fringe-mode 0)
-
-;;;; Which key settings
+;; Which key settings
 (after! which-key
   (setq which-key-idle-delay 0.3))
 
 (after! sublimity
-  (sublimity-mode 1)
-  (setq sublimity-scroll-weight 5
-        sublimity-scroll-drift-length 10
+  (require 'sublimity-scroll)
+  (setq sublimity-scroll-weight 10
+        sublimity-scroll-drift-length 5
         sublimity-scroll-vertical-frame-delay 0.01))
-
+(sublimity-mode 1)
+;; Ref: https://discordapp.com/channels/406534637242810369/695450585758957609/759868990909841438
