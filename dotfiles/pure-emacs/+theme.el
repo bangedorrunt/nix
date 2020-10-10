@@ -9,12 +9,12 @@
 
 ;; DOOM Theme
 (use-package doom-themes
-  :init (load-theme 'doom-nord t)
+  :init (load-theme 'doom-nord-light t)
   :custom-face
-  (default ((t (:background "#191b22"))))
+  ;; (default ((t (:background "#191b22"))))
   ;; (vertical-border ((t (:background "#191b22"))))
-  ;; (line-number ((t (:background "#dfe2e7"))))
-  (ivy-current-match ((t (:background nil :foreground "#18a57e"))))
+  (line-number ((t (:background "#dfe2e7"))))
+  (ivy-current-match ((t (:background "#dfe2e7" :foreground "#18a57e"))))
   (ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
   (ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
   (ivy-minibuffer-match-face-2 ((t (:background nil))))
@@ -31,6 +31,7 @@
   (isearch-fail ((t (:background nil :slant italic :weight bold))))
   (isearch-group-even ((t (:background nil :slant italic :weight bold))))
   (isearch-group-odd ((t (:background nil :slant italic :weight bold))))
+  (highlight ((t (:background nil :slant italic :weight bold))))
   (lazy-highlight ((t (:background nil :slant italic :weight bold))))
   (evil-search-forward ((t (:background nil :slant italic :weight bold))))
   (evil-ex-search ((t (:background nil :slant italic :weight bold))))
@@ -40,7 +41,7 @@
   (doom-modeline-debug-visual ((t (:background nil))))
   (next-error  ((t (:background nil :foreground "#d65e7e"))))
   (button  ((t (:background nil)))))
-  
+
 
 (use-package doom-modeline
   :init

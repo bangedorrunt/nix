@@ -64,7 +64,7 @@
   :hook
   (emacs-startup . (lambda() (gcmh-mode +1)))
   ;; focus-out-hook is obsolete
-  (focus-out-hook . gcmh-idle-garbage-collect)
+  ;; (focus-out-hook . gcmh-idle-garbage-collect)
   (emacs-startup . (lambda ()
             (if (boundp 'after-focus-change-function)
                 (add-function :after after-focus-change-function
@@ -72,9 +72,9 @@
                                 (unless (frame-focus-state)
                                   (gcmh-idle-garbage-collect))))
               (add-hook 'after-focus-change-function 'gcmh-idle-garbage-collect))))
-  :custom
-  (gcmh-idle-delay 5)
-  (gcmh-high-cons-threshold 104857600))
+  :init
+  (setq gcmh-idle-delay 10)
+  (setq gcmh-high-cons-threshold 104857600))
 
 (if window-system
   (use-package exec-path-from-shell
@@ -479,7 +479,7 @@
 (setq auto-save-default nil
       create-lockfiles nil
       make-backup-files nil)
-(fset 'yes-or-no-p 'y-or-n-p) 
+(fset 'yes-or-no-p 'y-or-n-p)
 ;;
 ;;; Formatting
 
