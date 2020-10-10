@@ -4,7 +4,7 @@
 (require '+helper)
 
 ;;;; START UP
-
+;;
 (setq user-full-name "Thanh Dung TRUONG"
       user-mail-address "braden.truong@gmail.com")
 
@@ -56,13 +56,24 @@
 (straight-use-package 'use-package)
 
 ;; (setq use-package-always-defer t)
+;; (use-package esup
+;;   :config
+;;   (setq esup-depth 0))
 
 (use-package gcmh
   :hook
   (emacs-startup . (lambda() (gcmh-mode +1)))
+  ;; focus-out-hook is obsolete
   (focus-out-hook . gcmh-idle-garbage-collect)
+  (emacs-startup . (lambda ()
+            (if (boundp 'after-focus-change-function)
+                (add-function :after after-focus-change-function
+                              (lambda ()
+                                (unless (frame-focus-state)
+                                  (gcmh-idle-garbage-collect))))
+              (add-hook 'after-focus-change-function 'gcmh-idle-garbage-collect))))
   :custom
-  (gcmh-idle-delay 10)
+  (gcmh-idle-delay 5)
   (gcmh-high-cons-threshold 104857600))
 
 (if window-system
@@ -70,6 +81,7 @@
     :init (exec-path-from-shell-initialize)))
 
 (use-package blackout
+  :defer 2
   :straight (:host github :repo "raxod502/blackout"))
 
 (use-package no-littering
@@ -84,25 +96,78 @@
   ;; Save custom theme to different location
   ;; I don't use this, but when I need to use custom theme, do
   ;; (load custom-file)
-  (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-  (setq package-user-dir (expand-file-name ".cache/elpa" user-emacs-directory)))
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
 
+;; Use `evil' with `map!' macro for keybindings
 (require '+map!)
+
+(use-package ivy
+  :blackout t
+  :defer 1
+  :config
+  (setq ivy-use-virtual-buffers t
+	      enable-recursive-minibuffers t
+	      ivy-use-selectable-prompt t
+	      ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
+	      ivy-height 10
+	      ivy-fixed-height-minibuffer t
+	      ivy-count-format "(%d/%d) "
+	      ivy-on-del-error-function nil
+	      ivy-initial-inputs-alist nil)
+  (ivy-mode 1))
 
 (use-package amx)
 
+;; (use-package flx)
+(use-package counsel
+  ;; :after ivy
+  :blackout t
+  :defer 1
+  :config
+  (setq ivy-re-builders-alist
+	'((counsel-git-grep . ivy--regex-plus)
+	(counsel-rg . ivy--regex-plus)
+	(swiper . ivy--regex-plus)
+	(swiper-all . ivy--regex-plus)
+	(t . ivy--regex-fuzzy)))
+  ;; Use the faster search tool: ripgrep (`rg')
+  (when (executable-find "rg")
+    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")))
+
+(use-package swiper
+  :blackout t
+  :defer 2)
+
+
+;;;; CODE MUST-HAVE TOOLS
+;;
+
+;; Project manager
 (defvar +babygau-projects '("~/workspace/notetoself"
                             "~/workspace/fullstack-react-book"
                             "~/workspace/kobopatch-config"
                             "~/dotfiles"))
-
 (use-package projectile
-  :init
+  :config
+	(setq projectile-project-search-path '("~/workspace")
+        projectile-project-root '("~/workspace")
+        projectile-ignored-projects '("~/" "/tmp" "~/dotfiles/.emacs.d/.local/straight/repos"))
 	(dolist (project +babygau-projects)
-	    (projectile-add-known-project project))
-	(setq projectile-project-search-path '("~/workspace/")
-	      projectile-project-root '("~/workspace/")
-	      projectile-ignored-projects '("~/" "/tmp" "~/dotfiles/.emacs.d/.local/straight/repos/")))
+    (projectile-add-known-project project)))
+
+(use-package counsel-projectile
+  :defer 2
+  :blackout t)
+
+(use-package ivy-rich
+  :defer 2
+  ;; Must load after counsel-projectile
+  :hook (counsel-projectile-mode . ivy-rich-mode)
+  :config
+  (setq ivy-rich-parse-remote-buffer nil)
+  (setq ivy-rich-path-style 'abbrev)
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  (ivy-rich-mode 1))
 
 ;; Completion framework
 (use-package company
@@ -120,59 +185,8 @@
   (setq company-tooltip-minimum company-tooltip-limit)
   (setq company-require-match #'company-explicit-action-p))
 
-(use-package swiper
-  :blackout t
-  :defer 3)
-
-(use-package ivy
-  :blackout t
-  :defer 3
-  :init
-  (setq ivy-use-virtual-buffers t
-	      enable-recursive-minibuffers t
-	      ivy-use-selectable-prompt t
-	      ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
-	      ivy-height 10
-	      ivy-fixed-height-minibuffer t
-	      ivy-count-format "(%d/%d) "
-	      ivy-on-del-error-function nil
-	      ivy-initial-inputs-alist nil)
-  (ivy-mode 1))
-
-
-(use-package ivy-rich
-  :after (ivy counsel)
-  ;; Must load after counsel-projectile
-  :hook (counsel-projectile-mode . ivy-rich-mode)
-  :init
-  (setq ivy-rich-parse-remote-buffer nil)
-  (setq ivy-rich-path-style 'abbrev)
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (ivy-rich-mode 1))
-
-;; (use-package flx)
-(use-package counsel
-  :blackout t
-  :defer 2
-  :init
-  (setq ivy-re-builders-alist
-	'((counsel-git-grep . ivy--regex-plus)
-	(counsel-rg . ivy--regex-plus)
-	(swiper . ivy--regex-plus)
-	(swiper-all . ivy--regex-plus)
-	(t . ivy--regex-fuzzy)))
-  ;; Use the faster search tool: ripgrep (`rg')
-  (when (executable-find "rg")
-    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")))
-
-(use-package counsel-projectile
-  :blackout t
-  :after (counsel projectile))
-
-;;;; CODE MUST-HAVE TOOLS
-;;
 (use-package magit
-  :defer 4
+  :defer 2
   :init
     ;; Suppress the message we get about "Turning on
     ;; magit-auto-revert-mode" when loading Magit.
@@ -186,6 +200,7 @@
 ;; Feature `vc-hooks' provides hooks for the Emacs VC package. We
 ;; don't use VC, because Magit is superior in pretty much every way.
 (use-feature vc-hooks
+  :defer t
   :config
   ;; Disable VC. This improves performance and disables some annoying
   ;; warning messages and prompts, especially regarding symlinks. See
@@ -195,27 +210,19 @@
 ;; Feature `smerge-mode' provides an interactive mode for visualizing
 ;; and resolving Git merge conflicts.
 (use-feature smerge-mode
+  :defer 3
   :blackout t)
 
-
-;;;###autoload
-;; Allow using `ESC` to quit out of popups
-(defun babygau/transient-bind-escape-to-quit ()
-    "Allow using `ESC` to quit out of popups"
-    (define-key transient-base-map   (kbd "<escape>") 'transient-quit-one)
-    (define-key transient-sticky-map (kbd "<escape>") 'transient-quit-seq)
-    (setq transient-substitute-key-function
-        'transient-rebind-quit-commands))
-
 ;; Package `transient' is the interface used by Magit to display popups.
+
 (use-package transient
-  :after magit
+  ;; :after magit
   :config
-    ;; Allow using `q' to quit out of popups, in addition to `C-g'. See
-    ;; <https://magit.vc/manual/transient.html#Why-does-q-not-quit-popups-anymore_003f>
-    ;; for discussion.
-  (babygau/transient-bind-escape-to-quit)
-  (transient-bind-q-to-quit))
+  ;; Allow using `q' to quit out of popups, in addition to `C-g'. See
+  ;; <https://magit.vc/manual/transient.html#Why-does-q-not-quit-popups-anymore_003f>
+  ;; for discussion.
+  ;;(transient-bind-q-to-quit)
+  (babygau/transient-bind-escape-to-quit))
 
 ;; (use-package eglot)
 
@@ -228,20 +235,21 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred)
   :config
-    ;; Disable features that have great potential to be slow.
-    (setq lsp-enable-file-watchers nil
-          lsp-enable-folding nil
-          lsp-enable-text-document-color nil)
-    (setq read-process-output-max (* 1024 1024)))
-    (use-package lsp-ui
+  ;; Disable features that have great potential to be slow.
+  (setq lsp-enable-file-watchers nil
+        lsp-enable-folding nil
+        lsp-enable-text-document-color nil)
+  (setq read-process-output-max (* 1024 1024)))
+
+(use-package lsp-ui
   :commands lsp-ui-mode
   :config
-    (use-feature lsp-mode
-      :config
-      ;; With `lsp-ui', there's no need for the ElDoc integration
-      ;; provided by `lsp-mode', and in fact for Bash it is very
-      ;; annoying since all the hover information is multiline.
-      (setq lsp-eldoc-enable-hover nil)))
+  (use-feature lsp-mode
+    :config
+    ;; With `lsp-ui', there's no need for the ElDoc integration
+    ;; provided by `lsp-mode', and in fact for Bash it is very
+    ;; annoying since all the hover information is multiline.
+    (setq lsp-eldoc-enable-hover nil)))
 
 (use-package lsp-ivy
   :defer t
@@ -258,7 +266,7 @@
   :after tree-sitter
   :hook (after-init . global-tree-sitter-mode)
   :config
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package flycheck
   :blackout t
@@ -271,19 +279,10 @@
 
 ;;;; UTILITY
 ;;
-;; Undo
-(use-package undo-fu
-  :blackout t
-  :after evil
-  :config
-    ;; (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-    ;; (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
-    (map! :n "u"    'undo-fu-only-undo)
-    (map! :n "\C-r" 'undo-fu-only-redo))
 
 ;; Better terminal
 (use-package vterm
-  :defer t
+  :defer 3
   :config
   (setq vterm-kill-buffer-on-exit t))
 (use-package vterm-toggle
@@ -306,7 +305,7 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :config (setq markdown-command "multimarkdown"))
 ;; Clojure
 (use-package clojure-mode
   :defer t)
@@ -335,8 +334,10 @@
 
 ;; (use-package js2-mode
 ;;   :defer t)
-(use-package rjsx-mode)
-(use-package typescript-mode)
+(use-package rjsx-mode
+  :defer t)
+(use-package typescript-mode
+  :defer t)
 
 ;; Web
 (use-package web-mode
@@ -368,153 +369,14 @@
           (counsel-find-file))))
 
 (use-package sublimity
-  :defer 3
-  :init
-    (require 'sublimity-scroll)
-    (setq sublimity-scroll-weight 10
-	  sublimity-scroll-drift-length 5
-	  sublimity-scroll-vertical-frame-delay 0.01)
-    (sublimity-mode 1))
-
-;;;; THEME
-;; I'm obssessed with beatiful themes
-
-;; FlucUI Theme
-;; (use-package flucui-themes
-;;   :init (flucui-themes-load-style 'light))
-
-;; DOOM Theme
-(use-package doom-themes
-  :init
-  (load-theme 'doom-nord-light t))
-
-
-;; Built-in Theme
-;; (load-theme 'dichromacy)
-
-(use-package doom-modeline
-  :init
-    ;; Display real file name
-    (setq find-file-visit-truename t)
-    (doom-modeline-init))
-
-(set-display-table-slot standard-display-table 5 ?│)
-;; (fringe-mode 0)
-;; (setq linum-format "%4d \u2502 ")
-(setq linum-format "%d ")
-(add-hook! prog-mode '(display-line-numbers-mode))
-
-;; element-dark: #15191e
-;; iceberg-light: #e8e9ec
-(custom-set-faces
-  '(default ((t (:background "#e8e9ec"))))
-  '(vertical-border ((t (:background "#e8e9ec"))))
-  '(ivy-current-match ((t (:background nil :foreground "#18a57e"))))
-  '(ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
-  '(ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
-  '(ivy-minibuffer-match-face-2 ((t (:background nil))))
-  '(ivy-minibuffer-match-face-3 ((t (:background nil))))
-  '(ivy-minibuffer-match-face-4 ((t (:background nil))))
-  '(ivy-minibuffer-match-highlight ((t (:background nil))))
-  '(ivy-confirm-face ((t (:background nil))))
-  '(ivy-match-required-face ((t (:background nil))))
-  '(ivy-confirm-face ((t (:background nil))))
-  '(ivy-yanked-word ((t (:background nil))))
-  '(ivy-cursor ((t (:background nil))))
-  '(ivy-subdir ((t (:background nil))))
-  '(isearch ((t (:background nil :slant italic :weight bold))))
-  '(isearch-fail ((t (:background nil :slant italic :weight bold))))
-  '(isearch-group-even ((t (:background nil :slant italic :weight bold))))
-  '(isearch-group-odd ((t (:background nil :slant italic :weight bold))))
-  '(lazy-highlight ((t (:background nil :slant italic :weight bold))))
-  '(evil-search-forward ((t (:background nil :slant italic :weight bold))))
-  '(evil-ex-search ((t (:background nil :slant italic :weight bold))))
-  '(evil-ex-lazy-highlight ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
-  '(evil-ex-substitute-matches ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
-  '(evil-ex-substitute-replacement ((t (:background nil :foreground "#18a57e" :slant italic :weight bold))))
-  '(doom-modeline-debug-visual ((t (:background nil))))
-  '(next-error  ((t (:background nil :foreground "#d65e7e"))))
-  '(button  ((t (:background nil)))))
-(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-(set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
-(set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
-
-(use-package treemacs
-  :defer t
-  ;; :hook (treemacs-mode . which-key-mode)
-  :init
-    (with-eval-after-load 'winum
-        (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :defer 1
   :config
-    (defun babygau/disable-line-numbers (&optional dummy)
-        (display-line-numbers-mode -1))
-    (add-hook 'treemacs-mode #'babygau/disable-line-numbers)
-    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-        treemacs-deferred-git-apply-delay      0.5
-        treemacs-directory-name-transformer    #'identity
-        treemacs-display-in-side-window        t
-        treemacs-eldoc-display                 t
-        treemacs-file-event-delay              5000
-        treemacs-file-extension-regex          treemacs-last-period-regex-value
-        treemacs-file-follow-delay             0.2
-        treemacs-file-name-transformer         #'identity
-        treemacs-follow-after-init             t
-        treemacs-git-command-pipe              ""
-        treemacs-goto-tag-strategy             'refetch-index
-        treemacs-indentation                   2
-        treemacs-indentation-string            " "
-        treemacs-is-never-other-window         nil
-        treemacs-max-git-entries               5000
-        treemacs-missing-project-action        'ask
-        treemacs-move-forward-on-expand        nil
-        treemacs-no-png-images                 nil
-        treemacs-no-delete-other-windows       t
-        treemacs-project-follow-cleanup        nil
-        treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-        treemacs-position                      'left
-        treemacs-recenter-distance             0.1
-        treemacs-recenter-after-file-follow    nil
-        treemacs-recenter-after-tag-follow     nil
-        treemacs-recenter-after-project-jump   'always
-        treemacs-recenter-after-project-expand 'on-distance
-        treemacs-show-cursor                   nil
-        treemacs-show-hidden-files             t
-        treemacs-silent-filewatch              nil
-        treemacs-silent-refresh                nil
-        treemacs-sorting                       'alphabetic-asc
-        treemacs-space-between-root-nodes      t
-        treemacs-tag-follow-cleanup            t
-        treemacs-tag-follow-delay              1.5
-        treemacs-user-mode-line-format         nil
-        treemacs-user-header-line-format       nil
-        treemacs-width                         35
-        treemacs-workspace-switch-cleanup      nil)
-    (setq treemacs-indentation-string (propertize " ⫶ " 'face 'font-lock-comment-face)
-    treemacs-indentation 1)
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
+  (require 'sublimity-scroll)
+  (setq sublimity-scroll-weight 10
+        sublimity-scroll-drift-length 20
+        sublimity-scroll-vertical-frame-delay 0.01)
+  (sublimity-mode 1))
 
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                (not (null treemacs-python-executable)))
-    (`(t . t)
-    (treemacs-git-mode 'deferred))
-    (`(t . _)
-    (treemacs-git-mode 'simple)))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile))
 
 
 ;;;; Clipboard integration
@@ -617,7 +479,7 @@
 (setq auto-save-default nil
       create-lockfiles nil
       make-backup-files nil)
-
+(fset 'yes-or-no-p 'y-or-n-p) 
 ;;
 ;;; Formatting
 
@@ -687,6 +549,7 @@
 ;; order to detect when the file visited by a buffer has changed, and
 ;; optionally reverting the buffer to match the file (unless it has
 ;; unsaved changes).
+
 (use-feature autorevert
   :defer 2
   :init
@@ -793,6 +656,69 @@ was printed, and only have ElDoc display if one wasn't."
                                    (:propertize
                                     "/d" face warning))))))
 
+;;
+;;;; OPTIMIZATIONS
 
-(provide 'init.el)
+;; Disable bidirectional text rendering for a modest performance boost. I've set
+;; this to `nil' in the past, but the `bidi-display-reordering's docs say that
+;; is an undefined state and suggest this to be just as good:
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+
+;; Disabling the BPA makes redisplay faster, but might produce incorrect display
+;; reordering of bidirectional text with embedded parentheses and other bracket
+;; characters whose 'paired-bracket' Unicode property is non-nil.
+(setq bidi-inhibit-bpa t)  ; Emacs 27 only
+
+;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
+;; in non-focused windows.
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
+;; More performant rapid scrolling over unfontified regions. May cause brief
+;; spells of inaccurate syntax highlighting right after scrolling, which should
+;; quickly self-correct.
+(setq fast-but-imprecise-scrolling t)
+
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we halve startup times, particularly when we use
+;; fonts that are larger than the system default (which would resize the frame).
+(setq frame-inhibit-implied-resize t)
+
+;; Don't ping things that look like domain names.
+(setq ffap-machine-p-known 'reject)
+
+;; Font compacting can be terribly expensive, especially for rendering icon
+;; fonts on Windows. Whether disabling it has a notable affect on Linux and Mac
+;; hasn't been determined, but we inhibit it there anyway. This increases memory
+;; usage, however!
+(setq inhibit-compacting-font-caches t)
+
+;; Performance on Windows is considerably worse than elsewhere. We'll need
+;; everything we can get.
+(when IS-WINDOWS
+  (setq w32-get-true-file-attributes nil   ; decrease file IO workload
+        w32-pipe-read-delay 0              ; faster ipc
+        w32-pipe-buffer-size (* 64 1024))) ; read more at a time (was 4K)
+
+;; Remove command line options that aren't relevant to our current OS; means
+;; slightly less to process at startup.
+(unless IS-MAC   (setq command-line-ns-option-alist nil))
+(unless IS-LINUX (setq command-line-x-option-alist nil))
+
+;; HACK `tty-run-terminal-initialization' is *tremendously* slow for some
+;;      reason; inexplicably doubling startup time for terminal Emacs. Keeping
+;;      it disabled will have nasty side-effects, so we simply delay it until
+;;      later in the startup process and, for some reason, it runs much faster
+;;      when it does.
+(unless (daemonp)
+  (advice-add #'tty-run-terminal-initialization :override #'ignore)
+  (add-hook 'window-setup-hook
+    (defun doom-init-tty-h ()
+      (advice-remove #'tty-run-terminal-initialization #'ignore)
+      (tty-run-terminal-initialization (selected-frame) nil t))))
+
+
+(require '+theme)
+(provide 'init)
 ;;; init.el ends here

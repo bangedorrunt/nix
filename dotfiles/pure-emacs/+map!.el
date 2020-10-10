@@ -1,28 +1,5 @@
 ;;;; +map!.el -*- lexical-binding: t; -*-
 
-;;;###autoload
-(defun +default/restart-server ()
-  "Restart the Emacs server."
-  (interactive)
-  (server-force-delete)
-  (while (server-running-p)
-    (sleep-for 1))
-  (server-start))
-
-;;;###autoload
-(defun +evil/insert-newline-below (count)
-  "Insert COUNT blank line(s) below current line. Does not change modes."
-  (interactive "p")
-  (dotimes (_ count)
-    (save-excursion (evil-insert-newline-below))))
-
-;;;###autoload
-(defun +evil/insert-newline-above (count)
-  "Insert COUNT blank line(s) above current line. Does not change modes."
-  (interactive "p")
-  (dotimes (_ count)
-    (save-excursion (evil-insert-newline-above))))
-
 ;;;; SPACEMACS
 ;;
 (cond (IS-MAC
@@ -51,18 +28,37 @@ and Emacs states, and for non-evil users.")
 ;; Once upon a time, I used `:hook (after-init evil-mode)'
 ;; That was a big mistake, and make `map!' is deffective
 ;; because `evil' is loaded too late
+;; (use-package evil
+;;   :init
+;;   (setq evil-search-module 'evil-search
+;;         ;; `evil' already has built-in undo-redo feature
+;;         evil-undo-system 'undo-redo
+;;         evil-magic 'very-magic
+;;         evil-want-keybinding nil
+;;         evil-want-Y-yank-to-eol t
+;;         evil-want-C-u-scroll t
+;;         ;; This variable explained why I couldn't use C-z
+;;         evil-toggle-key ""
+;;         ;; Disable evil state displayed above modeline
+;;         evil-echo-state nil)
+;;   (setq evil-shift-width 2)
+;;   (evil-mode))
+
 (use-package evil
+  :custom
+  (evil-search-module 'evil-search)
+  ;; `evil' already has built-in undo-redo feature
+  (evil-undo-system 'undo-redo)
+  (evil-magic 'very-magic)
+  (evil-want-keybinding nil)
+  (evil-want-Y-yank-to-eol t)
+  (evil-want-C-u-scroll t)
+  ;; This variable explained why I couldn't use C-z
+  (evil-toggle-key "")
+  ;; Disable evil state displayed above modeline
+  (evil-echo-state nil)
+  (evil-shift-width 2)
   :init
-  (setq evil-search-module 'evil-search
-        evil-magic 'very-magic
-        evil-want-keybinding nil
-        evil-want-Y-yank-to-eol t
-        evil-want-C-u-scroll t
-        ;; This variable explained why I couldn't use C-z
-        evil-toggle-key ""
-        ;; Disable evil state displayed above modeline
-        evil-echo-state nil)
-  (setq evil-shift-width 2)
   (evil-mode))
 
 (use-package evil-surround
@@ -74,28 +70,24 @@ and Emacs states, and for non-evil users.")
 
 ;; (use-package evil-embrace)
 
-;; (use-package evil-nerd-commenter
-;;   :init
-;;     (setq evilnc-hotkey-comment-operator "gc"))
-
 ;; (use-package evil-textobj-anyblock)
 ;; (use-package evil-visualstar)
+(use-package evil-nerd-commenter)
+
 
 ;; NOTE: I have to use this extention
 ;; to quit on `Ivy` buffers
-;; (use-package evil-collection
-;;   :blackout t
-;;   :after evil
-;;   :config
-;;   (evil-collection-init))
+(use-package evil-collection
+  :init
+  (evil-collection-init))
 
 ;; Need it for universal escape
-(use-package evil-escape
-  :straight (:host github :repo "hlissner/evil-escape")
-  :after evil)
+;; (use-package evil-escape
+;;   :straight (:host github :repo "hlissner/evil-escape")
+;;   :after evil)
 
 (use-package evil-magit
-  :after evil
+  :after (evil magit)
   :init
   (setq evil-magit-state 'normal))
 
@@ -472,124 +464,129 @@ all hooks after it are ignored.")
         ;; Also abort macros
         ((or defining-kbd-macro executing-kbd-macro) t)
         ;; Back to the default
-        ((keyboard-quit))))
+        ((keyboard-escape-quit))))
 
 (global-set-key [remap keyboard-quit] #'doom/escape)
 
 (map!
-  [escape]   'evil-escape
-  :n "o"     '+evil/insert-newline-below
-  :n "O"     '+evil/insert-newline-above)
+  ;; [escape]   #'evil-escape
+  :n "o"     #'+evil/insert-newline-below
+  :n "O"     #'+evil/insert-newline-above
+  :n "gcc"   #'evilnc-comment-or-uncomment-lines
+  :v "gc"    #'evilnc-comment-or-uncomment-lines)
 (map!
   :leader
-  ":"        'counsel-M-x
-  ";"        'counsel-rg
-  "u"        'universal-argument
-  "."        'counsel-find-file
-  ","        'ivy-switch-buffer
-  "SPC"      'counsel-fzf
-  "/"        'swiper
-  "TAB"      'eval-last-sexp
+  ":"        #'counsel-M-x
+  ";"        #'counsel-rg
+  "u"        #'universal-argument
+  "."        #'counsel-find-file
+  ","        #'ivy-switch-buffer
+  "SPC"      #'counsel-fzf
+  "/"        #'swiper
+  "TAB"      #'eval-last-sexp
 
   (:prefix ("q" . "quits")
-	"q" 'save-buffers-kill-terminal
-  "r" '+default/restart-server
-	"Q" 'evil-quit-all-with-error-code)
+	"q"        #'save-buffers-kill-terminal
+  "r"        #'+default/restart-server
+	"Q"        #'evil-quit-all-with-error-code)
 
   (:prefix ("b" . "buffers")
-	"s" 'basic-save-buffer
-	"d" 'kill-current-buffer
-	"b" 'ivy-switch-buffer
-	"p" 'previous-buffer
-	"n" 'next-buffer
-	"N" 'evil-buffer-new
-	"z" 'bury-buffer)
+	"s"        #'basic-save-buffer
+	"d"        #'kill-current-buffer
+	"b"        #'ivy-switch-buffer
+	"p"        #'previous-buffer
+	"n"        #'next-buffer
+	"x"        #'(lambda ()
+                 (switch-to-buffer (other-buffer)))
+	"N"        #'evil-buffer-new
+	"z"        #'bury-buffer)
 
   (:prefix ("f" . "files")
-	"n" 'new-file
-	"D" 'delete-file
-	"r" 'rename-file
-	"d" 'move-file-to-trash
-	"f" 'counsel-find-file)
+	"n"        #'new-file
+	"D"        #'delete-file
+	"r"        #'rename-file
+	"d"        #'move-file-to-trash
+	"f"        #'counsel-find-file)
 
   (:prefix ("c" . "code")
-  "f" 'lsp-format-buffer
-  "j" 'lsp-ivy-workspace-symbol
-  "J" 'lsp-ivy-global-workspace-symbol
-  "r" 'lsp-rename)
-  
+  "c"        #'evilnc-comment-or-uncomment-lines
+  "f"        #'lsp-format-buffer
+  "j"        #'lsp-ivy-workspace-symbol
+  "J"        #'lsp-ivy-global-workspace-symbol
+  "r"        #'lsp-rename)
+
   (:prefix ("h" . "help")
-	"?" 'help-command
-  "i" 'info
-  "c" 'counsel-faces
-	"f" 'counsel-describe-function
-  "k" 'describe-key
-	"v" 'counsel-describe-variable)
-  
+	"?"        #'help-command
+  "i"        #'info
+  "c"        #'counsel-faces
+	"f"        #'counsel-describe-function
+  "k"        #'describe-key
+	"v"        #'counsel-describe-variable)
+
   (:prefix ("e" . "error")
-  "l" 'counsel-flycheck
-  "n" 'flycheck-next-error
-  "p" 'flycheck-previous-error
-  "a" 'counsel-flycheck-errors-action)
-  
+  "l"        #'counsel-flycheck
+  "n"        #'flycheck-next-error
+  "p"        #'flycheck-previous-error
+  "a"        #'counsel-flycheck-errors-action)
+
   (:prefix ("g" . "git")
-  "/" 'magit-dispatch
-  "'" 'forge-dispatch
-  "b" 'magit-branch-checkout
-  "g" 'magit-status
-  "G" 'magit-status-here
-  "D" 'magit-file-delete
-  "B" 'magit-blame-addition
-  "C" 'magit-clone
-  "F" 'magit-fetch
-  "L" 'magit-log
-  "S" 'magit-stage-file
-  "U" 'magit-unstage-file)
-  
+  "/"        #'magit-dispatch
+  "'"        #'forge-dispatch
+  "b"        #'magit-branch-checkout
+  "g"        #'magit-status
+  "G"        #'magit-status-here
+  "D"        #'magit-file-delete
+  "B"        #'magit-blame-addition
+  "C"        #'magit-clone
+  "F"        #'magit-fetch
+  "L"        #'magit-log
+  "S"        #'magit-stage-file
+  "U"        #'magit-unstage-file)
+
   (:prefix ("p" . "project-manager")
-	"b" 'counsel-projectile-switch-to-buffer
-	"f" 'counsel-projectile-find-file
-	"p" 'counsel-projectile-switch-project
-	"!" 'projectile-run-shell-command-in-root
-	"a" 'projectile-add-known-project
-	"e" 'projectile-edit-dir-locals
-	"d" 'projectile-remove-known-project
-	"g" 'projectile-configure-project
-	"i" 'projectile-invalidate-cache
-	"k" 'projectile-kill-buffers
-	"o" 'projectile-find-other-file
-	"r" 'counsel-recentf
-	"R" 'projectile-run-project
-	"s" 'projectile-save-project-buffers
-	"T" 'projectile-test-project)
-  
+	"b"        #'counsel-projectile-switch-to-buffer
+	"f"        #'counsel-projectile-find-file
+	"p"        #'counsel-projectile-switch-project
+	"!"        #'projectile-run-shell-command-in-root
+	"a"        #'projectile-add-known-project
+	"e"        #'projectile-edit-dir-locals
+	"d"        #'projectile-remove-known-project
+	"g"        #'projectile-configure-project
+	"i"        #'projectile-invalidate-cache
+	"k"        #'projectile-kill-buffers
+	"o"        #'projectile-find-other-file
+	"r"        #'counsel-recentf
+	"R"        #'projectile-run-project
+	"s"        #'projectile-save-project-buffers
+	"T"        #'projectile-test-project)
+
   (:prefix ("w" . "windows")
-	"h" 'evil-window-left
-	"j" 'evil-window-down
-	"k" 'evil-window-up
-	"l" 'evil-window-right
-	"s" 'evil-window-split
-	"v" 'evil-window-vsplit
-	"w" 'other-window
-	"c" 'delete-window)
+	"h"        #'evil-window-left
+	"j"        #'evil-window-down
+	"k"        #'evil-window-up
+	"l"        #'evil-window-right
+	"s"        #'evil-window-split
+	"v"        #'evil-window-vsplit
+	"w"        #'other-window
+	"c"        #'delete-window)
 
    (:prefix ("x" . "edit-texts")
-	 "c" 'comment-or-uncomment-region)
-   
+	 "a"       #'align)
+
    (:prefix ("t" . "toggle")
-	 "t" 'vterm-toggle
-	 "s" 'treemacs)
-   
+	 "t"       #'vterm-toggle
+	 "s"       #'treemacs)
+
    (:prefix ("z" . "zettel-mode")
-	 "z" 'neuron-new-zettel
-   "e" 'neuron-edit-zettel
-   "w" 'neuron-rib-watch
-   "g" 'neuron-rib-generate
-   "o" 'neuron-open-zettel
-   "O" 'neuron-open-index
-   "j" 'neuron-open-daily-notes
-   "t" 'neuron-query-tags
-   "r" 'neuron-refresh
-   "c" 'neuron-edit-zettelkasten-configuration))
+	 "z"       #'neuron-new-zettel
+   "e"       #'neuron-edit-zettel
+   "w"       #'neuron-rib-watch
+   "g"       #'neuron-rib-generate
+   "o"       #'neuron-open-zettel
+   "O"       #'neuron-open-index
+   "j"       #'neuron-open-daily-notes
+   "t"       #'neuron-query-tags
+   "r"       #'neuron-refresh
+   "c"       #'neuron-edit-zettelkasten-configuration))
 (provide '+map!)
 ;;; +map!.el ends here
