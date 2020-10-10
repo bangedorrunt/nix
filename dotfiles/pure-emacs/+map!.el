@@ -28,37 +28,20 @@ and Emacs states, and for non-evil users.")
 ;; Once upon a time, I used `:hook (after-init evil-mode)'
 ;; That was a big mistake, and make `map!' is deffective
 ;; because `evil' is loaded too late
-;; (use-package evil
-;;   :init
-;;   (setq evil-search-module 'evil-search
-;;         ;; `evil' already has built-in undo-redo feature
-;;         evil-undo-system 'undo-redo
-;;         evil-magic 'very-magic
-;;         evil-want-keybinding nil
-;;         evil-want-Y-yank-to-eol t
-;;         evil-want-C-u-scroll t
-;;         ;; This variable explained why I couldn't use C-z
-;;         evil-toggle-key ""
-;;         ;; Disable evil state displayed above modeline
-;;         evil-echo-state nil)
-;;   (setq evil-shift-width 2)
-;;   (evil-mode))
-
 (use-package evil
-  :custom
-  (evil-search-module 'evil-search)
-  ;; `evil' already has built-in undo-redo feature
-  (evil-undo-system 'undo-redo)
-  (evil-magic 'very-magic)
-  (evil-want-keybinding nil)
-  (evil-want-Y-yank-to-eol t)
-  (evil-want-C-u-scroll t)
-  ;; This variable explained why I couldn't use C-z
-  (evil-toggle-key "")
-  ;; Disable evil state displayed above modeline
-  (evil-echo-state nil)
-  (evil-shift-width 2)
   :init
+  (setq evil-search-module 'evil-search
+        ;; `evil' already has built-in undo-redo feature
+        evil-undo-system 'undo-redo
+        evil-magic 'very-magic
+        evil-want-keybinding nil
+        evil-want-Y-yank-to-eol t
+        evil-want-C-u-scroll t
+        ;; This variable explained why I couldn't use C-z
+        evil-toggle-key ""
+        ;; Disable evil state displayed above modeline
+        evil-echo-state nil)
+  (setq evil-shift-width 2)
   (evil-mode))
 
 (use-package evil-surround
@@ -570,23 +553,23 @@ all hooks after it are ignored.")
 	"w"        #'other-window
 	"c"        #'delete-window)
 
-   (:prefix ("x" . "edit-texts")
-	 "a"       #'align)
+  (:prefix ("x" . "edit-texts")
+	"a"        #'align)
 
-   (:prefix ("t" . "toggle")
-	 "t"       #'vterm-toggle
-	 "s"       #'treemacs)
+  (:prefix ("t" . "toggle")
+	"t"        #'vterm-toggle
+	"s"        #'treemacs)
 
-   (:prefix ("z" . "zettel-mode")
-	 "z"       #'neuron-new-zettel
-   "e"       #'neuron-edit-zettel
-   "w"       #'neuron-rib-watch
-   "g"       #'neuron-rib-generate
-   "o"       #'neuron-open-zettel
-   "O"       #'neuron-open-index
-   "j"       #'neuron-open-daily-notes
-   "t"       #'neuron-query-tags
-   "r"       #'neuron-refresh
-   "c"       #'neuron-edit-zettelkasten-configuration))
+  (:prefix ("z" . "zettel-mode")
+	"z"        #'neuron-new-zettel
+  "e"        #'neuron-edit-zettel
+  "w"        #'neuron-rib-watch
+  "g"        #'neuron-rib-generate
+  "o"        #'neuron-open-zettel
+  "O"        #'neuron-open-index
+  "j"        #'neuron-open-daily-notes
+  "t"        #'neuron-query-tags
+  "r"        #'neuron-refresh
+  "c"        #'neuron-edit-zettelkasten-configuration))
 (provide '+map!)
 ;;; +map!.el ends here
