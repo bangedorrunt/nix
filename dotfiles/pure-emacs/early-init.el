@@ -22,15 +22,6 @@
 ;;
 ;;; Code:
 
-(defconst EMACS27+   (> emacs-major-version 26))
-(defconst EMACS28+   (> emacs-major-version 27))
-(defconst IS-MAC     (eq system-type 'darwin))
-(defconst IS-LINUX   (eq system-type 'gnu/linux))
-(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-(defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
-
-(setq comp-speed 2)
-
 ;; Prevent unwanted runtime builds in gccemacs (native-comp); packages are
 ;; compiled ahead-of-time when they are installed and site files are compiled
 ;; when gccemacs is installed.
@@ -38,6 +29,8 @@
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
+
+(setq comp-speed 1)
 
 (setq load-prefer-newer t)
 
@@ -50,15 +43,30 @@
 
 ;; Prevent package.el from modifying this file
 ;; Disabled by straight.el by default
-;; (setq package-enable-at-startup nil)
+(setq package-enable-at-startup nil)
+
+;; Change `packages.el' path
+(setq package-user-dir (expand-file-name ".cache/elpa" user-emacs-directory))
 
 ;; Do not show the startup screen.
 (setq inhibit-startup-message t)
 
-;; Disable tool bar, menu bar, scroll bar.
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+
+(setq menu-bar-mode nil
+      tool-bar-mode nil
+      scroll-bar-mode nil)
+
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
+(setq frame-inhibit-implied-resize t)
+
+
+(setq load-path (cons "~/dotfiles/pure-emacs" load-path))
 
 ;; Temporary fix for eln cache
 ;; Official gccemacs might not need this
@@ -73,69 +81,6 @@
       (call-process find-exec nil nil nil eln-cache-dir
                     "-name" "*.eln" "-size" "0" "-delete" "-or"
                     "-name" "*.eln.tmp" "-size" "0" "-delete"))))
-;;
-;;; Optimizations
-
-;; Disable bidirectional text rendering for a modest performance boost. I've set
-;; this to `nil' in the past, but the `bidi-display-reordering's docs say that
-;; is an undefined state and suggest this to be just as good:
-(setq-default bidi-display-reordering 'left-to-right
-              bidi-paragraph-direction 'left-to-right)
-
-;; Disabling the BPA makes redisplay faster, but might produce incorrect display
-;; reordering of bidirectional text with embedded parentheses and other bracket
-;; characters whose 'paired-bracket' Unicode property is non-nil.
-(setq bidi-inhibit-bpa t)  ; Emacs 27 only
-
-;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
-;; in non-focused windows.
-(setq-default cursor-in-non-selected-windows nil)
-(setq highlight-nonselected-windows nil)
-
-;; More performant rapid scrolling over unfontified regions. May cause brief
-;; spells of inaccurate syntax highlighting right after scrolling, which should
-;; quickly self-correct.
-(setq fast-but-imprecise-scrolling t)
-
-;; Resizing the Emacs frame can be a terribly expensive part of changing the
-;; font. By inhibiting this, we halve startup times, particularly when we use
-;; fonts that are larger than the system default (which would resize the frame).
-(setq frame-inhibit-implied-resize t)
-
-;; Don't ping things that look like domain names.
-(setq ffap-machine-p-known 'reject)
-
-;; Font compacting can be terribly expensive, especially for rendering icon
-;; fonts on Windows. Whether disabling it has a notable affect on Linux and Mac
-;; hasn't been determined, but we inhibit it there anyway. This increases memory
-;; usage, however!
-(setq inhibit-compacting-font-caches t)
-
-;; Performance on Windows is considerably worse than elsewhere. We'll need
-;; everything we can get.
-(when IS-WINDOWS
-  (setq w32-get-true-file-attributes nil   ; decrease file IO workload
-        w32-pipe-read-delay 0              ; faster ipc
-        w32-pipe-buffer-size (* 64 1024))) ; read more at a time (was 4K)
-
-;; Remove command line options that aren't relevant to our current OS; means
-;; slightly less to process at startup.
-(unless IS-MAC   (setq command-line-ns-option-alist nil))
-(unless IS-LINUX (setq command-line-x-option-alist nil))
-
-;; HACK `tty-run-terminal-initialization' is *tremendously* slow for some
-;;      reason; inexplicably doubling startup time for terminal Emacs. Keeping
-;;      it disabled will have nasty side-effects, so we simply delay it until
-;;      later in the startup process and, for some reason, it runs much faster
-;;      when it does.
-(unless (daemonp)
-  (advice-add #'tty-run-terminal-initialization :override #'ignore)
-  (add-hook 'window-setup-hook
-    (defun doom-init-tty-h ()
-      (advice-remove #'tty-run-terminal-initialization #'ignore)
-      (tty-run-terminal-initialization (selected-frame) nil t))))
-
-(setq load-path (cons "~/dotfiles/pure-emacs" load-path))
 
 (provide 'early-init)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

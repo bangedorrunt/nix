@@ -384,10 +384,10 @@ live_config_reload: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # entries in shell.args are passed unmodified as arguments to the shell.
 #
-shell:
-  program: /usr/local/bin/zsh
-  args:
-    - -l
+# shell:
+#   program: /usr/local/bin/zsh
+#   args:
+#     - -l
 
 # Keybinding
 key_bindings:

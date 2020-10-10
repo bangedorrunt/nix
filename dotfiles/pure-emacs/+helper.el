@@ -2,6 +2,13 @@
 
 ;; HELPER FUNCTIONS
 
+(defconst EMACS27+   (> emacs-major-version 26))
+(defconst EMACS28+   (> emacs-major-version 27))
+(defconst IS-MAC     (eq system-type 'darwin))
+(defconst IS-LINUX   (eq system-type 'gnu/linux))
+(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+
 (defmacro after! (package &rest body)
   "Evaluate BODY after PACKAGE have loaded.
   PACKAGE is a symbol or list of them. These are package names, not modes,
@@ -213,6 +220,38 @@ NAME and ARGS are as in `use-package'."
   `(use-package ,name
      :straight nil
      ,@args))
+
+;;;###autoload
+(defun +default/restart-server ()
+  "Restart the Emacs server."
+  (interactive)
+  (server-force-delete)
+  (while (server-running-p)
+    (sleep-for 1))
+  (server-start))
+
+;;;###autoload
+(defun +evil/insert-newline-below (count)
+  "Insert COUNT blank line(s) below current line. Does not change modes."
+  (interactive "p")
+  (dotimes (_ count)
+    (save-excursion (evil-insert-newline-below))))
+
+;;;###autoload
+(defun +evil/insert-newline-above (count)
+  "Insert COUNT blank line(s) above current line. Does not change modes."
+  (interactive "p")
+  (dotimes (_ count)
+    (save-excursion (evil-insert-newline-above))))
+
+;;;###autoload
+;; Allow using `ESC` to quit out of popups
+(defun babygau/transient-bind-escape-to-quit ()
+    "Allow using `ESC` to quit out of popups"
+    (define-key transient-base-map   (kbd "<escape>") 'transient-quit-one)
+    (define-key transient-sticky-map (kbd "<escape>") 'transient-quit-seq)
+    (setq transient-substitute-key-function
+        'transient-rebind-quit-commands))
 
 (provide '+helper)
 ;;; +helper.el ends here
