@@ -216,7 +216,7 @@
 ;; Package `transient' is the interface used by Magit to display popups.
 
 (use-package transient
-  ;; :after magit
+  :after magit
   :config
   ;; Allow using `q' to quit out of popups, in addition to `C-g'. See
   ;; <https://magit.vc/manual/transient.html#Why-does-q-not-quit-popups-anymore_003f>
@@ -255,6 +255,11 @@
   :defer t
   :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
 
+;; Tree Sitter Core APIs.
+(straight-register-package
+ '(tsc :host github
+       :repo "ubolonton/emacs-tree-sitter"
+       :files ("core/*.el")))
 (use-package tree-sitter
   :straight (tree-sitter :host github
                          :repo "ubolonton/emacs-tree-sitter"
