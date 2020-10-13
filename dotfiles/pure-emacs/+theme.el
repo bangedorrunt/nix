@@ -3,18 +3,23 @@
 ;;;; THEME
 ;; I'm obssessed with beatiful themes
 
-;; FlucUI Theme
-;; (use-package flucui-themes
-;;   :init (flucui-themes-load-style 'dark))
+(setq linum-format "%d ")
+(add-hook! prog-mode '(display-line-numbers-mode))
+(set-display-table-slot standard-display-table 5 ?│)
 
 ;; DOOM Theme
+
+;; element-dark: #15191e
+;; iceberg-light: #e8e9ec
+;; complement-light: #dfe2e7
 (use-package doom-themes
-  :init (load-theme 'doom-nord-light t)
+  :init (load-theme 'doom-one t)
   :custom-face
-  ;; (default ((t (:background "#191b22"))))
+  (default ((t (:background "#191b22" :foreground "#eeeeed"))))
   ;; (vertical-border ((t (:background "#191b22"))))
-  (line-number ((t (:background "#dfe2e7"))))
-  (ivy-current-match ((t (:background "#dfe2e7" :foreground "#18a57e"))))
+  ;; (default ((t (:font "Operator Mono SSm Lig" :size 22))))
+  ;; (line-number ((t (:background "#dfe2e7"))))
+  (ivy-current-match ((t (:background nil :foreground "#18a57e"))))
   (ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
   (ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
   (ivy-minibuffer-match-face-2 ((t (:background nil))))
@@ -42,7 +47,6 @@
   (next-error  ((t (:background nil :foreground "#d65e7e"))))
   (button  ((t (:background nil)))))
 
-
 (use-package doom-modeline
   :init
     ;; Display real file name
@@ -50,45 +54,6 @@
     (doom-modeline-init))
 
 
-;; Built-in Theme
-;; (load-theme 'dichromacy)
-
-
-;; (fringe-mode 0)
-;; (setq linum-format "%4d \u2502 ")
-
-;; element-dark: #15191e
-;; iceberg-light: #e8e9ec
-;; (custom-set-faces
-;;   '(default ((t (:background "#e8e9ec"))))
-;;   '(vertical-border ((t (:background "#e8e9ec"))))
-;;   '(line-number ((t (:background "#dfe2e7"))))
-;;   '(ivy-current-match ((t (:background nil :foreground "#18a57e"))))
-;;   '(ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
-;;   '(ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
-;;   '(ivy-minibuffer-match-face-2 ((t (:background nil))))
-;;   '(ivy-minibuffer-match-face-3 ((t (:background nil))))
-;;   '(ivy-minibuffer-match-face-4 ((t (:background nil))))
-;;   '(ivy-minibuffer-match-highlight ((t (:background nil))))
-;;   '(ivy-confirm-face ((t (:background nil))))
-;;   '(ivy-match-required-face ((t (:background nil))))
-;;   '(ivy-confirm-face ((t (:background nil))))
-;;   '(ivy-yanked-word ((t (:background nil))))
-;;   '(ivy-cursor ((t (:background nil))))
-;;   '(ivy-subdir ((t (:background nil))))
-;;   '(isearch ((t (:background nil :slant italic :weight bold))))
-;;   '(isearch-fail ((t (:background nil :slant italic :weight bold))))
-;;   '(isearch-group-even ((t (:background nil :slant italic :weight bold))))
-;;   '(isearch-group-odd ((t (:background nil :slant italic :weight bold))))
-;;   '(lazy-highlight ((t (:background nil :slant italic :weight bold))))
-;;   '(evil-search-forward ((t (:background nil :slant italic :weight bold))))
-;;   '(evil-ex-search ((t (:background nil :slant italic :weight bold))))
-;;   '(evil-ex-lazy-highlight ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
-;;   '(evil-ex-substitute-matches ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
-;;   '(evil-ex-substitute-replacement ((t (:background nil :foreground "#18a57e" :slant italic :weight bold))))
-;;   '(doom-modeline-debug-visual ((t (:background nil))))
-;;   '(next-error  ((t (:background nil :foreground "#d65e7e"))))
-;;   '(button  ((t (:background nil)))))
 (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
 (set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
 (set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
@@ -155,9 +120,52 @@
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
-(add-hook! prog-mode '(display-line-numbers-mode))
-(setq linum-format "%d ")
-(set-display-table-slot standard-display-table 5 ?│)
+
+;;;; UNUSED SETTINGS
+
+;; FlucUI Theme
+;; (use-package flucui-themes
+;;   :init (flucui-themes-load-style 'dark))
+
+;; Built-in Theme
+;; (load-theme 'dichromacy)
+
+
+;; (fringe-mode 0)
+;; (setq linum-format "%4d \u2502 ")
+
+;; element-dark: #15191e
+;; iceberg-light: #e8e9ec
+;; (custom-set-faces
+;;   '(default ((t (:background "#e8e9ec"))))
+;;   '(vertical-border ((t (:background "#e8e9ec"))))
+;;   '(line-number ((t (:background "#dfe2e7"))))
+;;   '(ivy-current-match ((t (:background nil :foreground "#18a57e"))))
+;;   '(ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
+;;   '(ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
+;;   '(ivy-minibuffer-match-face-2 ((t (:background nil))))
+;;   '(ivy-minibuffer-match-face-3 ((t (:background nil))))
+;;   '(ivy-minibuffer-match-face-4 ((t (:background nil))))
+;;   '(ivy-minibuffer-match-highlight ((t (:background nil))))
+;;   '(ivy-confirm-face ((t (:background nil))))
+;;   '(ivy-match-required-face ((t (:background nil))))
+;;   '(ivy-confirm-face ((t (:background nil))))
+;;   '(ivy-yanked-word ((t (:background nil))))
+;;   '(ivy-cursor ((t (:background nil))))
+;;   '(ivy-subdir ((t (:background nil))))
+;;   '(isearch ((t (:background nil :slant italic :weight bold))))
+;;   '(isearch-fail ((t (:background nil :slant italic :weight bold))))
+;;   '(isearch-group-even ((t (:background nil :slant italic :weight bold))))
+;;   '(isearch-group-odd ((t (:background nil :slant italic :weight bold))))
+;;   '(lazy-highlight ((t (:background nil :slant italic :weight bold))))
+;;   '(evil-search-forward ((t (:background nil :slant italic :weight bold))))
+;;   '(evil-ex-search ((t (:background nil :slant italic :weight bold))))
+;;   '(evil-ex-lazy-highlight ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
+;;   '(evil-ex-substitute-matches ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
+;;   '(evil-ex-substitute-replacement ((t (:background nil :foreground "#18a57e" :slant italic :weight bold))))
+;;   '(doom-modeline-debug-visual ((t (:background nil))))
+;;   '(next-error  ((t (:background nil :foreground "#d65e7e"))))
+;;   '(button  ((t (:background nil)))))
 
 (provide '+theme)
 ;;; +theme.el ends here
