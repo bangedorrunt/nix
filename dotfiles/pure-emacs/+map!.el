@@ -45,10 +45,11 @@ and Emacs states, and for non-evil users.")
   (evil-mode))
 
 (use-package evil-surround
-  :commands (global-evil-surround-mode
-             evil-surround-edit
-             evil-Surround-edit
-             evil-surround-region)
+  ;; `:commands' automatically defer package
+  ;; :commands (global-evil-surround-mode
+  ;;            evil-surround-edit
+  ;;            evil-Surround-edit
+  ;;            evil-surround-region)
   :config (global-evil-surround-mode 1))
 
 ;; (use-package evil-embrace)
@@ -297,7 +298,9 @@ For example, :nvi will map to (list 'normal 'visual 'insert). See
   (let ((a (plist-get doom--map-parent-state prop))
         (b (plist-get doom--map-state prop)))
     (if (and a b)
-        `(general--concat nil ,a ,b)
+        ;; Fix #4074: map! with meta/hyper modifier prefixes 
+        ;; `(general--concat nil ,a ,b)
+        `(general--concat t ,a ,b)
       (or a b))))
 
 (defun doom--map-nested (wrapper rest)
