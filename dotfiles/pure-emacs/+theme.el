@@ -7,18 +7,30 @@
 (add-hook! prog-mode '(display-line-numbers-mode))
 (set-display-table-slot standard-display-table 5 ?│)
 
+(use-package doom-modeline
+  :init
+  ;; Display real file name
+  (setq find-file-visit-truename t)
+  (doom-modeline-init))
+
+
 ;; DOOM Theme
 
 ;; element-dark: #15191e
 ;; iceberg-light: #e8e9ec
 ;; complement-light: #dfe2e7
 (use-package doom-themes
-  :init (load-theme 'doom-one t)
+  :init
+  (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+  (set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
+  (set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
+  (load-theme 'doom-nord t)
+  ;; Use built-in `use-package' results in better startup time
   :custom-face
   (default ((t (:background "#191b22" :foreground "#eeeeed"))))
   ;; (vertical-border ((t (:background "#191b22"))))
   ;; (default ((t (:font "Operator Mono SSm Lig" :size 22))))
-  ;; (line-number ((t (:background "#dfe2e7"))))
+  (line-number ((t (:background "#292e38"))))
   (ivy-current-match ((t (:background nil :foreground "#18a57e"))))
   (ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
   (ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
@@ -45,18 +57,19 @@
   (evil-ex-substitute-replacement ((t (:background nil :foreground "#18a57e" :slant italic :weight bold))))
   (doom-modeline-debug-visual ((t (:background nil))))
   (next-error  ((t (:background nil :foreground "#d65e7e"))))
-  (button  ((t (:background nil)))))
-
-(use-package doom-modeline
-  :init
-    ;; Display real file name
-    (setq find-file-visit-truename t)
-    (doom-modeline-init))
-
-
-(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-(set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
-(set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
+  (button  ((t (:background nil))))
+  (org-hide ((t (:background nil :foreground nil))))
+  (org-block ((t (:background nil))))
+  (org-level-1 ((t (:background nil))))
+  (org-level-2 ((t (:background nil))))
+  (org-level-3 ((t (:background nil))))
+  (org-level-4 ((t (:background nil))))
+  (org-level-5 ((t (:background nil))))
+  (org-level-6 ((t (:background nil))))
+  (org-level-7 ((t (:background nil))))
+  (org-level-8 ((t (:background nil))))
+  (markdown-code-face ((t (:background nil))))
+  (markdown-blockquote-face ((t (:background nil)))))
 
 (use-package treemacs
   :defer t
@@ -101,21 +114,21 @@
         treemacs-user-header-line-format       nil
         treemacs-width                         35
         treemacs-workspace-switch-cleanup      nil)
-    (setq treemacs-indentation-string (propertize " ⫶ " 'face 'font-lock-comment-face)
-    treemacs-indentation 1)
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                (not (null treemacs-python-executable)))
-    (`(t . t)
-    (treemacs-git-mode 'deferred))
-    (`(t . _)
-    (treemacs-git-mode 'simple))))
+  (setq treemacs-indentation-string (propertize " ⫶ " 'face 'font-lock-comment-face)
+        treemacs-indentation 1)
+        ;; The default width and height of the icons is 22 pixels. If you are
+        ;; using a Hi-DPI display, uncomment this to double the icon size.
+        ;;(treemacs-resize-icons 44)
+        
+        (treemacs-follow-mode t)
+        (treemacs-filewatch-mode t)
+        (treemacs-fringe-indicator-mode t)
+        (pcase (cons (not (null (executable-find "git")))
+                    (not (null treemacs-python-executable)))
+        (`(t . t)
+        (treemacs-git-mode 'deferred))
+        (`(t . _)
+        (treemacs-git-mode 'simple))))
 
 (use-package treemacs-projectile
   :after (treemacs projectile))
