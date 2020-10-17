@@ -127,7 +127,9 @@ Plug 'prettier/vim-prettier', {
 
 " LANGUAGE PLUGINS
 " ----------------
-
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'lambdalisue/gina.vim'
 " Markdown
 
 " Removed due to conflict with vimwiki
@@ -160,10 +162,10 @@ set packpath=
 " ----------
 
 " ImportRCFrom 'status-line'
+" ImportRCFrom 'space'
 ImportRCFrom 'filetypes'
 ImportRCFrom 'general'
 ImportRCFrom 'keybindings'
-ImportRCFrom 'space'
 ImportRCFrom 'theme'
 
 " ImportPlugConfigFrom 'markdown'
@@ -180,6 +182,7 @@ ImportPlugConfigFrom    'fern'
 ImportPlugConfigFrom    'neoterm'
 ImportPlugConfigFrom    'im-select'
 ImportPlugConfigFrom    'zettel'
+ImportPlugConfigFrom    'indentline'
 ImportLuaPlugConfigFrom 'colorizer'
 
 " Reload vim config automatically
