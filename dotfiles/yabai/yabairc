@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
-# global settings
+# BigSur compatibility
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Global settings
 yabai -m config mouse_follows_focus          on
 yabai -m config focus_follows_mouse          autoraise
 yabai -m config window_placement             second_child
@@ -22,7 +26,7 @@ yabai -m config mouse_modifier               fn
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
-# general space settings
+# General space settings
 
 yabai -m config layout                       bsp
 
@@ -32,7 +36,7 @@ yabai -m config left_padding                 12
 yabai -m config right_padding                12
 yabai -m config window_gap                   06
 
-# list of rules
+# List of rules
 
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
@@ -46,7 +50,7 @@ yabai -m rule --add label="The Unarchiver" app="^The Unarchiver$" manage=off
 yabai -m rule --add label="Transmission" app="^Transmission$" manage=off
 yabai -m rule --add label="CleanMyMac X" app="^CleanMyMac X$" manage=off
 yabai -m rule --add label="Karabiner Elements" app="^Karabiner" manage=off
-yabai -m rule --add label="PDF Expert" app="^PDF Expert$" space=^2 grid=1:2:1:0:1:1 manage=off
+yabai -m rule --add label="PDF Expert" app="^PDF Expert$" grid=1:2:1:0:1:1 manage=off
 yabai -m rule --add label="Books" app="^Books" space=^1
 yabai -m rule --add label="Calibre" app="^calibre" space=^4
 yabai -m rule --add label="Sublime Text" app="Sublime Text" space=^2
@@ -57,17 +61,18 @@ yabai -m rule --add label="iTerm2" app="iTerm2" space=^2
 yabai -m rule --add label="Discord" app="^Discord" space=^4
 yabai -m rule --add label="Firefox" app="^Firefox" space=^1
 
-# signals
+# Signals
 
-# auto stacking windows
+# Auto stacking windows
 yabai -m signal --add event=window_focused action='yabai -m window $YABAI_WINDOW_ID --insert stack'
 yabai -m signal --add event=application_front_switched action='yabai -m window --insert stack'
 yabai -m signal --add event=window_destroyed action='yabai -m window --insert stack'
 yabai -m signal --add event=application_terminated action='yabai -m window --insert stack'
 
-yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
-yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+# yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+# yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+
 echo "yabai configuration loaded.."
 
-YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
+# YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
 
