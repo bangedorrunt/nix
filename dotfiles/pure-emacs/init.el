@@ -360,27 +360,28 @@
   :defer t
   :hook (neuron-mode . company-neuron-setup)
   :config
-    (customize-set-variable 'neuron-default-zettelkasten-directory (expand-file-name "~/workspace/notetoself"))
-    (defun search-zettelkasten ()
-      "Search zettels by content."
-      (interactive)
-      (progn
-          (+ivy-file-search :in (neuron-zettelkasten) :recursive nil :prompt "Search Zettelkasten: ")
-          (neuron-mode)))
-    (defun find-file-in-zettelkasten ()
-      "Find a file in the currently active zettelkasten."
-      (interactive)
-      (let ((default-directory (neuron-zettelkasten)))
-          (counsel-find-file))))
+  (setq neuron-id-format 'hash)
+  (customize-set-variable 'neuron-default-zettelkasten-directory (expand-file-name "~/workspace/notetoself"))
+  (defun search-zettelkasten ()
+    "Search zettels by content."
+    (interactive)
+    (progn
+        (+ivy-file-search :in (neuron-zettelkasten) :recursive nil :prompt "Search Zettelkasten: ")
+        (neuron-mode)))
+  (defun find-file-in-zettelkasten ()
+    "Find a file in the currently active zettelkasten."
+    (interactive)
+    (let ((default-directory (neuron-zettelkasten)))
+        (counsel-find-file))))
 
-(use-package sublimity
-  :defer 1
-  :config
-  (require 'sublimity-scroll)
-  (setq sublimity-scroll-weight 10
-        sublimity-scroll-drift-length 20
-        sublimity-scroll-vertical-frame-delay 0.01)
-  (sublimity-mode 1))
+;; (use-package sublimity
+;;   :defer 1
+;;   :config
+;;   (require 'sublimity-scroll)
+;;   (setq sublimity-scroll-weight 10
+;;         sublimity-scroll-drift-length 20
+;;         sublimity-scroll-vertical-frame-delay 0.01)
+;;   (sublimity-mode 1))
 
 
 

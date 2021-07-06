@@ -5,6 +5,7 @@
 
 (setq linum-format "%d ")
 (add-hook! prog-mode '(display-line-numbers-mode))
+(add-hook! text-mode '(display-line-numbers-mode))
 (set-display-table-slot standard-display-table 5 ?│)
 
 (use-package doom-modeline
@@ -12,7 +13,6 @@
   ;; Display real file name
   (setq find-file-visit-truename t)
   (doom-modeline-init))
-
 
 ;; DOOM Theme
 
@@ -24,13 +24,14 @@
   (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
   (set-face-attribute 'font-lock-function-name-face nil :slant 'italic)
   (set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
-  (load-theme 'doom-nord t)
+  (load-theme 'doom-nord-light t)
   ;; Use built-in `use-package' results in better startup time
   :custom-face
-  (default ((t (:background "#191b22" :foreground "#eeeeed"))))
-  ;; (vertical-border ((t (:background "#191b22"))))
+  (default ((t (:background "#e8e9ec"))))
+  ;; (default ((t (:background "#191b22" :foreground "#eeeeed"))))
   ;; (default ((t (:font "Operator Mono SSm Lig" :size 22))))
-  (line-number ((t (:background "#292e38"))))
+  ;; (vertical-border ((t (:background "#191b22"))))
+  (line-number ((t (:background "#dfe2e7"))))
   (ivy-current-match ((t (:background nil :foreground "#18a57e"))))
   (ivy-highlight-face ((t (:background nil :foreground "#18a57e"))))
   (ivy-minibuffer-match-face-1 ((t (:background nil :foreground "#d65e7e"))))
@@ -44,14 +45,14 @@
   (ivy-yanked-word ((t (:background nil))))
   (ivy-cursor ((t (:background nil))))
   (ivy-subdir ((t (:background nil))))
-  (isearch ((t (:background nil :slant italic :weight bold))))
+  (isearch ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
   (isearch-fail ((t (:background nil :slant italic :weight bold))))
   (isearch-group-even ((t (:background nil :slant italic :weight bold))))
   (isearch-group-odd ((t (:background nil :slant italic :weight bold))))
-  (highlight ((t (:background nil :slant italic :weight bold))))
-  (lazy-highlight ((t (:background nil :slant italic :weight bold))))
-  (evil-search-forward ((t (:background nil :slant italic :weight bold))))
-  (evil-ex-search ((t (:background nil :slant italic :weight bold))))
+  (highlight ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
+  (lazy-highlight ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
+  (evil-search-forward ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
+  (evil-ex-search ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
   (evil-ex-lazy-highlight ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
   (evil-ex-substitute-matches ((t (:background nil :foreground "#d65e7e" :slant italic :weight bold))))
   (evil-ex-substitute-replacement ((t (:background nil :foreground "#18a57e" :slant italic :weight bold))))
