@@ -1,14 +1,21 @@
-#!/bin/zsh
+#!/usr/local/bin/zsh
+#                ^----- get shellcheck hints based on bash
+# https://github.com/koalaman/shellcheck/issues/809
+# shellcheck disable=SC1090 # sourced filenames with variables
 
 # If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME:.cargo/bin:$PATH
+# export TERM=xterm-256color
 
 # Need this if I use compiled `gccemacs`
-if [ -d "/Applications/Emacs.app/Contents/MacOS" ]; then
-    EMACS_APPDIR=/Applications/Emacs.app/Contents/MacOS
-    export PATH=$EMACS_APPDIR:$EMACS_APPDIR/bin:$PATH
-fi
+# if [ -d "/Applications/Emacs.app/Contents/MacOS" ]; then
+#     EMACS_APPDIR=/Applications/Emacs.app/Contents/MacOS
+#     export PATH=$EMACS_APPDIR:$EMACS_APPDIR/bin:$PATH
+# fi
 
+if [ "$(command -v neofetch)" ]; then
+  neofetch
+fi
 # Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -33,16 +40,19 @@ fi
 # Github Android: 17181c
 # Github Dark: 1e2429
 # Sonokai: 2c2e33
+# Tokyonight: e1e2e7
 
 # Dark
-# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#17181c,hl:#5f87af --color=fg+:#24292e,bg+:#17181c,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#1a1b26,hl:#5f87af --color=fg+:#24292e,bg+:#1a1b26,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 
 # Light
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e8e9ec,hl:#5f87af --color=fg+:#33374c,bg+:#e8e9ec,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e1e2e7,hl:#5f87af --color=fg+:#33374c,bg+:#e1e2e7,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --exclude .git"
+
+alias fv='nvim $(fzf)'
 
 # NVM CONFIG
 # ######################
@@ -50,9 +60,9 @@ export NVM_DIR="$HOME/.nvm"
 export NVM_SYMLINK_CURRENT=true
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nv
 
-# Z CONFIG
+# ZOXIDE CONFIG
 # ######################
-. /usr/local/etc/profile.d/z.sh # This load z
+eval "$(zoxide init zsh --cmd j)"
 
 # GOKU
 # #####################
@@ -167,17 +177,17 @@ alias vi='nvim'
 alias vim='nvim'
 
 # Need this if I use `gccemacs`
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-    alias edaemon="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
-    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-  fi
+# if [[ "$OSTYPE" == "darwin"* ]]; then
+#   if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
+#     alias edaemon="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
+#     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+#   fi
 
-  if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
-    alias ekill="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -e '(kill-emacs)'"
-    alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -a=''"
-  fi
-fi
+#   if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
+#     alias ekill="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -e '(kill-emacs)'"
+#     alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -a=''"
+#   fi
+# fi
 
 # alias code='code-insiders'
 # alias c='code-insiders'
@@ -220,4 +230,20 @@ alias rsync='rsync -a --delete'
 alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias top='vtop'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+## Alias for neuron
+function ns() {
+  if [[ "$PWD" =~ "notetoself" ]]; then
+    nvim $(neuron search)
+  else 
+    echo 'Gotta go to "notetoself"'
+  fi
+}
+function nn() {
+  if [[ "$PWD" =~ "notetoself" ]]; then
+    neuron new
+  else 
+    echo 'Gotta go to "notetoself"'
+  fi
+}
+
