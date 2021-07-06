@@ -16,6 +16,9 @@ endif
 " let g:sonokai_better_performance        = 1
 " colorscheme sonokai
 
+" let g:lightline = {
+"       \ 'colorscheme': 'sonokai',
+"       \ }
 " Iceberg
 " -------
 
