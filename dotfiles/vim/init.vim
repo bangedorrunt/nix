@@ -65,8 +65,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'psliwka/vim-smoothie'
 Plug 'cocopon/pgmnt.vim'
 Plug 'cocopon/iceberg.vim'
-" Plug 'sainnhe/sonokai'
-Plug 'babygau/sonokai', { 'branch': 'custom' }
+Plug 'sainnhe/sonokai'
+" Plug 'babygau/sonokai', { 'branch': 'custom' }
 Plug 't9md/vim-quickhl'
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'lambdalisue/fern.vim'
@@ -90,7 +90,8 @@ Plug 'junegunn/fzf.vim'
 
 " Plug 'alok/notational-fzf-vim'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-Plug 'fiatjaf/neuron.vim'
+" Plug 'fiatjaf/neuron.vim'
+Plug 'chiefnoah/neuron-v2.vim'
 " Plug 'rlue/vim-barbaric'
 " Plug 'tpope/vim-unimpaired'
 " Plug 'christoomey/vim-tmux-navigator'
@@ -113,14 +114,13 @@ Plug 'tpope/vim-surround'
 " COMPLETION PLUGINS
 " ------------------
 " Plug 'aca/neuron-language-server'
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
+Plug 'haorenW1025/completion-nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/completion-treesitter'
-Plug 'haorenW1025/completion-nvim'
-Plug 'nathunsmitty/diagnostic-nvim'
 Plug 'steelsojka/completion-buffers'
-Plug 'RishabhRD/popfix'
-Plug 'RishabhRD/nvim-lsputils'
+" Plug 'RishabhRD/popfix'
+" Plug 'RishabhRD/nvim-lsputils'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
@@ -129,7 +129,7 @@ Plug 'prettier/vim-prettier', {
 " ----------------
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'lambdalisue/gina.vim'
+" Plug 'lambdalisue/gina.vim'
 " Markdown
 
 " Removed due to conflict with vimwiki

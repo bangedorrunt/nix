@@ -142,12 +142,11 @@ let g:which_key_map.c = {
 " ----------------------
 " Use <leader>g
 nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gD :Gdiffoff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gB :Gbrowse<CR>
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gp :Gpush<CR>
+nnoremap <silent> <leader>gc :Git commit<CR>
+nnoremap <silent> <leader>gb :Git blame<CR>
+nnoremap <silent> <leader>gB :GBrowse<CR>
+nnoremap <silent> <leader>gs :Git<CR>
+nnoremap <silent> <leader>gp :Git push<CR>
 
 let g:which_key_map.g = {
       \ 'name': '+git',
