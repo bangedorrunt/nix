@@ -50,6 +50,14 @@
 ;; larger than the system default.
 (setq frame-inhibit-implied-resize t)
 
+;; (if window-system
+;;   (progn 
+;;     (set-frame-font "Operator Mono SSm Lig-22" nil t)
+;;     (set-face-font 'fixed-pitch-serif "Operator Mono SSm Lig")
+;;     (defun set-bigger-spacing ()
+;;       (setq-local default-text-properties '(line-spacing 0.25 line-height 1.50)))
+;;     (add-hook 'text-mode-hook 'set-bigger-spacing)
+;;     (add-hook 'prog-mode-hook 'set-bigger-spacing)))
 
 ;; An extra measure to prevent the flash of unstyled mode-line while Emacs is
 ;; booting up (when Doom is byte-compiled).

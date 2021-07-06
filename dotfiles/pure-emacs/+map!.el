@@ -453,7 +453,6 @@ all hooks after it are ignored.")
         ((keyboard-escape-quit))))
 
 (global-set-key [remap keyboard-quit] #'doom/escape)
-
 (map!
   ;; [escape]   #'evil-escape
   :n "o"     #'+evil/insert-newline-below
