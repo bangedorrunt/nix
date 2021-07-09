@@ -1,19 +1,9 @@
 { inputs, config, pkgs, ... }:
 let
   homeDir = config.home.homeDirectory;
-  pyEnv = (pkgs.python39.withPackages
-    (ps: with ps; [ black pylint typer colorama shellingham ]));
-  sysDoNixos =
-    "[[ -d /etc/nixos ]] && cd /etc/nixos && ${pyEnv}/bin/python bin/do.py $@";
-  sysDoDarwin =
-    "[[ -d ${homeDir}/.nixpkgs ]] && cd ${homeDir}/.nixpkgs && ${pyEnv}/bin/python bin/do.py $@";
-  sysdo = (pkgs.writeShellScriptBin "sysdo" ''
-    (${sysDoNixos}) || (${sysDoDarwin})
-  '');
-
 in
 {
-  imports = [ ./vim ./cli ./kitty ./dotfiles ./git.nix ];
+  imports = [ ./dotfiles.nix ];
 
   programs.home-manager = {
     enable = true;
@@ -21,9 +11,6 @@ in
   };
 
   home =
-    let
-      java = pkgs.adoptopenjdk-bin;
-    in
     {
       # This value determines the Home Manager release that your
       # configuration is compatible with. This helps avoid breakage
@@ -40,11 +27,9 @@ in
         VISUAL = "nvim";
         CLICOLOR = 1;
         LSCOLORS = "ExFxBxDxCxegedabagacad";
-        KAGGLE_CONFIG_DIR = "${config.xdg.configHome}/kaggle";
-        JAVA_HOME = "${java}";
       };
 
-      # define package definitions for current user environment
+      # Define package definitions for current user environment
       packages = with pkgs; [
         # python with default packages
         (python39.withPackages (ps: with ps; [ black numpy scipy networkx ]))
@@ -62,9 +47,7 @@ in
         htop
         httpie
         hyperfine
-        java
         jq
-        kotlin
         neofetch
         niv
         nixUnstable
@@ -73,18 +56,10 @@ in
         nodejs_latest
         openssh
         pandoc
-        pre-commit
-        python3Packages.poetry
-        ranger
         ripgrep
         ripgrep-all
         rsync
-        sysdo
-        tealdeer
-        tectonic
         yarn
-        # texlive.combined.scheme-full
-        youtube-dl
       ];
     };
 }

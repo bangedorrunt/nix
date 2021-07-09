@@ -1,5 +1,5 @@
 {
-  description = "nix system configurations";
+  description = "Nix Configurations";
 
   nixConfig = {
     substituters = [
@@ -16,7 +16,6 @@
   inputs = {
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     stable.url = "github:nixos/nixpkgs/nixos-20.09";
     treefmt.url = "github:numtide/treefmt";
@@ -26,7 +25,7 @@
       flake = false;
     };
     darwin = {
-      url = "github:kclejeune/nix-darwin/backup-etc";
+      url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -36,6 +35,13 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    emacs-overlay = {
+      type = "github";
+      owner = "mjlbach";
+      repo = "emacs-overlay";
+      ref = "feature/flakes";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -56,9 +62,10 @@
       homePrefix = system: if isDarwin system then "/Users" else "/home";
 
       supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
-      overlays = [ inputs.neovim-nightly-overlay.overlay ];
+      overlays = [ inputs.neovim-nightly-overlay.overlay
+                   inputs.emacs-overlay.overlay ];
       lib = nixpkgs.lib.extend
-        (final: prev: (import ./lib final) // home-manager.lib);
+       (final: prev: home-manager.lib);
 
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
@@ -66,7 +73,7 @@
       inherit (flake-utils.lib) eachDefaultSystem eachSystem;
       inherit (builtins) listToAttrs map;
 
-      # generate a base darwin configuration with the
+      # Generate a base darwin configuration with the
       # specified hostname, overlays, and any extraModules applied
       mkDarwinConfig =
         { system ? "x86_64-darwin"
@@ -83,25 +90,7 @@
           specialArgs = { inherit inputs lib; };
         };
 
-      # generate a base nixos configuration with the
-      # specified overlays, hardware modules, and any extraModules applied
-      mkNixosConfig =
-        { system ? "x86_64-linux"
-        , hardwareModules
-        , baseModules ? [
-            home-manager.nixosModules.home-manager
-            ./modules/nixos
-          ]
-        , extraModules ? [ ]
-        }:
-        nixosSystem {
-          inherit system;
-          modules = baseModules ++ hardwareModules ++ extraModules
-            ++ [{ nixpkgs.overlays = overlays; }];
-          specialArgs = { inherit inputs lib; };
-        };
-
-      # generate a home-manager configuration usable on any unix system
+      # Generate a home-manager configuration usable on any unix system
       # with overlays and any extraModules applied
       mkHomeConfig =
         { username
@@ -121,97 +110,38 @@
     in
     {
       checks = listToAttrs (
-        # darwin checks
+        # Darwin checks
         (map
           (system: {
             name = system;
             value = {
-              darwin =
-                self.darwinConfigurations.randall.config.system.build.toplevel;
+              macos =
+                self.darwinConfigurations.tdt.config.system.build.toplevel;
             };
           })
           lib.platforms.darwin) ++
-        # linux checks
+        # Linux checks
         (map
           (system: {
             name = system;
             value = {
-              nixos = self.nixosConfigurations.phil.config.system.build.toplevel;
-              server = self.homeConfigurations.server.activationPackage;
+              archlinux = self.homeConfigurations.server.activationPackage;
             };
           })
           lib.platforms.linux)
       );
 
       darwinConfigurations = {
-        randall = mkDarwinConfig {
+        tdt = mkDarwinConfig {
           extraModules = [ ./profiles/personal.nix ./modules/darwin/apps.nix ];
-        };
-        work = mkDarwinConfig {
-          extraModules =
-            [ ./profiles/work.nix ./modules/darwin/apps-minimal.nix ];
-        };
-      };
-
-      nixosConfigurations = {
-        phil = mkNixosConfig {
-          hardwareModules = [
-            ./modules/hardware/phil.nix
-            nixos-hardware.nixosModules.lenovo-thinkpad-t460s
-          ];
-          extraModules = [ ./profiles/personal.nix ];
         };
       };
 
       homeConfigurations = {
-        server = mkHomeConfig {
-          username = "kclejeune";
-          extraModules = [ ./profiles/home-manager/personal.nix ];
-        };
-        workServer = mkHomeConfig {
-          username = "lejeukc1";
-          extraModules = [ ./profiles/home-manager/work.nix ];
-        };
-        multipass = mkHomeConfig {
-          username = "ubuntu";
+        archlinux = mkHomeConfig {
+          username = "babygau";
           extraModules = [ ./profiles/home-manager/personal.nix ];
         };
       };
-    } //
-    # add a devShell to this flake
-    eachSystem supportedSystems (system:
-    let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ devshell.overlay ];
-      };
-      pyEnv = (pkgs.python3.withPackages
-        (ps: with ps; [ black pylint typer colorama shellingham ]));
-      nixBin = pkgs.writeShellScriptBin "nix" ''
-        ${pkgs.nixFlakes}/bin/nix --option experimental-features "nix-command flakes" "$@"
-      '';
-      sysdo = pkgs.writeShellScriptBin "sysdo" ''
-        cd $DEVSHELL_ROOT && ${pyEnv}/bin/python3 bin/do.py $@
-      '';
-      fmt = treefmt.defaultPackage.${system};
-    in
-    {
-      devShell = pkgs.devshell.mkShell {
-        packages = with pkgs; [ nixBin pyEnv fmt ];
-        commands = [
-          {
-            name = "sysdo";
-            package = sysdo;
-            category = "utilities";
-            help = "perform actions on this repository";
-          }
-          {
-            help = "Format the entire code tree";
-            name = "fmt";
-            command = "treefmt -q";
-            category = "utilities";
-          }
-        ];
-      };
-    });
+    };
 }

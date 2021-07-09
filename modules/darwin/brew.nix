@@ -6,7 +6,7 @@ let
 in
 {
   environment = {
-    # install homebrew
+    # Install homebrew
     extraInit = ''
       ${checkBrew} || ${installBrew}
     '';
@@ -28,13 +28,11 @@ in
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
-      "teamookla/speedtest"
     ];
 
     brews = [
       "beeftornado/rmtree/brew-rmtree"
       "mas"
-      "teamookla/speedtest/speedtest"
     ];
   };
 }

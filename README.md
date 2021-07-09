@@ -1,7 +1,5 @@
 # Nix System Configuration
 
-![system build](https://github.com/kclejeune/system/workflows/system%20build/badge.svg)
-
 This repository manages system configurations for all of my
 macOS, nixOS, and linux machines.
 

@@ -8,17 +8,17 @@
   };
 
   user = {
-    description = "Kennan LeJeune";
+    description = "Thanh Dung TRUONG";
     home = "${
         if pkgs.stdenvNoCC.isDarwin then "/Users" else "/home"
       }/${config.user.name}";
     shell = pkgs.zsh;
   };
 
-  # bootstrap home manager using system config
+  # Bootstrap Home Manager using system config
   hm = import ./home-manager;
 
-  # let nix manage home-manager profiles and use global nixpkgs
+  # Let Nix manage Home-Manager profiles and use global nixpkgs
   home-manager = {
     extraSpecialArgs = { inherit inputs lib; };
     useGlobalPkgs = true;
@@ -26,34 +26,33 @@
     backupFileExtension = "backup";
   };
 
-  # environment setup
+  # Environment setup
   environment = {
     systemPackages = with pkgs; [
-      # editors
+      # Editors
       neovim
 
-      # standard toolset
+      # Standard toolset
       coreutils
       curl
       wget
       git
       jq
 
-      # helpful shell stuff
+      # Helpful shell stuff
       bat
       fzf
       ripgrep
       zsh
 
-      # languages
+      # Languages
       python3
-      ruby
     ];
     etc = {
       home-manager.source = "${inputs.home-manager}";
       nixpkgs.source = "${inputs.nixpkgs}";
     };
-    # list of acceptable shells in /etc/shells
+    # List of acceptable shells in /etc/shells
     shells = with pkgs; [ bash zsh fish ];
   };
 

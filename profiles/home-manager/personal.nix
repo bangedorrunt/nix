@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }: {
   programs.git = {
-    userEmail = "kennan@case.edu";
-    userName = "Kennan LeJeune";
-    signing = {
-      key = "kennan@case.edu";
-      signByDefault = true;
-    };
+    userEmail = "braden.truong@gmail.com";
+    userName = "Thanh Dung TRUONG";
   };
 }
