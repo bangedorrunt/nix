@@ -17,7 +17,7 @@
           ;; :f17-layout {:key :f17}
           ;; :f18-layout {:key :f18}
           ;; :f19-layout {:key :f19}}
- :layers {}
+  :layers {}
 
  ;; Create layer/mode based on key sequences/chords
  ;; :simlayers {:yabai-mode {:key :y}
@@ -158,7 +158,8 @@
 
 
  :applications {:Terminals ["^com\\.apple\\.Terminal$"
-                            "^com\\.googlecode\\.iterm2$"]
+                            "^com\\.googlecode\\.iterm2$"
+                            "^io\\.alacritty"]
                 :Finder    ["^com\\.apple\\.finder$"]
                 :Debuggers ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"
