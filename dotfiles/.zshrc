@@ -43,7 +43,7 @@ fi
 # Tokyonight: e1e2e7
 
 # Dark
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#24292e,bg:#1a1b26,hl:#5f87af --color=fg+:#24292e,bg+:#1a1b26,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#e1e2e7,bg:#1a1b26,hl:#5f87af --color=fg+:#e1e2e7,bg+:#1a1b26,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 
 # Light
 # export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e1e2e7,hl:#5f87af --color=fg+:#33374c,bg+:#e1e2e7,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
@@ -246,4 +246,3 @@ function nn() {
     echo 'Gotta go to "notetoself"'
   fi
 }
-

@@ -26,6 +26,8 @@ cmd [[au FileType help,startuptime,qf,lspinfo nnoremap <buffer><silent> q :close
 cmd [[au FileType man nnoremap <buffer><silent> q :quit<CR>]]
 
 -- Buffer
+
+cmd [[au Buffs BufWritePost plugins.lua source <afile> | PackerCompile]]
 cmd [[
   au Buffs BufWritePre /tmp/* setlocal noundofile
   au Buffs BufWritePre COMMIT_EDITMSG setlocal noundofile
@@ -59,9 +61,6 @@ cmd [[au VimResized * tabdo wincmd=]]
 -- Force write shada on leaving nvim
 cmd [[au Wins WinLeave * if has('nvim') | wshada! | else | wviminfo! | endif]]
 
--- Gruvbox: #fbf1c7
--- Monokai Pro Spectrum: #222222
--- Tokyonight: #e1e2e7
 cmd [[
   aug Theme
     au!

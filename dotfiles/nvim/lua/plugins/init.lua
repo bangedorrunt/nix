@@ -53,7 +53,7 @@ return require('packer').startup {
     use {
       'folke/tokyonight.nvim',
       config = function()
-        vim.g.tokyonight_style = 'day'
+        vim.g.tokyonight_style = 'night'
         -- Better performance
         require('tokyonight').colorscheme()
       end,
