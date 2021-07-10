@@ -56,9 +56,9 @@ alias fv='nvim $(fzf)'
 
 # NVM CONFIG
 # ######################
-export NVM_DIR="$HOME/.nvm"
-export NVM_SYMLINK_CURRENT=true
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nv
+# export NVM_DIR="$HOME/.nvm"
+# export NVM_SYMLINK_CURRENT=true
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nv
 
 # ZOXIDE CONFIG
 # ######################
@@ -75,7 +75,7 @@ if [ -f $(brew --prefix)/etc/brew-wrap ];then
   source $(brew --prefix)/etc/brew-wrap
 fi
 
-# added by Nix installer
+# Added by Nix installer
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
 
 ### added by zinit's installer
@@ -128,7 +128,7 @@ zinit wait lucid light-mode for \
   id-as'fzf/key-bindings' https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
 # PyEnv
-zinit wait lucid light-mode for davidparsson/zsh-pyenv-lazy
+# zinit wait lucid light-mode for davidparsson/zsh-pyenv-lazy
 
 # Auto suggest how to install missing commands.
 zinit wait lucid light-mode for id-as'brew/command-not-found' \

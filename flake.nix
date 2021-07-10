@@ -18,7 +18,6 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     stable.url = "github:nixos/nixpkgs/nixos-20.09";
-    treefmt.url = "github:numtide/treefmt";
 
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -51,9 +50,7 @@
     , stable
     , darwin
     , home-manager
-    , nixos-hardware
     , devshell
-    , treefmt
     , flake-utils
     , ...
     }:
@@ -125,7 +122,7 @@
           (system: {
             name = system;
             value = {
-              archlinux = self.homeConfigurations.server.activationPackage;
+              archlinux = self.homeConfigurations.archlinux.activationPackage;
             };
           })
           lib.platforms.linux)

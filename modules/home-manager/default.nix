@@ -33,14 +33,18 @@ in
       packages = with pkgs; [
         # python with default packages
         (python39.withPackages (ps: with ps; [ black numpy scipy networkx ]))
+        bat
         cachix
-        coreutils-full
         curl
         curlie
+        delta
+        direnv
+        exa 
         fd
+        fzf
+        fzy
         gawk
         ghc
-        git
         gnugrep
         gnupg
         gnused
@@ -48,8 +52,8 @@ in
         httpie
         hyperfine
         jq
+        lazygit
         neofetch
-        niv
         nixUnstable
         nixfmt
         nixpkgs-fmt
@@ -57,9 +61,10 @@ in
         openssh
         pandoc
         ripgrep
-        ripgrep-all
         rsync
+        tmux
         yarn
+        zoxide
       ];
     };
 }

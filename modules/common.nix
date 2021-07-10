@@ -31,20 +31,17 @@
     systemPackages = with pkgs; [
       # Editors
       neovim-nightly
-
       # Standard toolset
       coreutils
       curl
-      wget
-      git
       jq
-
+      wget
       # Helpful shell stuff
       bat
       fzf
+      less
       ripgrep
       zsh
-
       # Languages
       python3
     ];
