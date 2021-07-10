@@ -1,11 +1,11 @@
 { inputs, config, lib, pkgs, ... }: {
   imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ];
 
-  programs.zsh = {
+  /* programs.zsh = {
     enable = true;
     enableCompletion = true;
     enableBashCompletion = true;
-  };
+  }; */
 
   user = {
     description = "Thanh Dung TRUONG";
@@ -30,7 +30,7 @@
   environment = {
     systemPackages = with pkgs; [
       # Editors
-      neovim
+      neovim-nightly
 
       # Standard toolset
       coreutils
@@ -56,5 +56,5 @@
     shells = with pkgs; [ bash zsh fish ];
   };
 
-  fonts.fonts = with pkgs; [ jetbrains-mono iosevka ];
+  /* fonts.fonts = with pkgs; [ jetbrains-mono iosevka ]; */
 }

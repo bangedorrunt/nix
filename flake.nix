@@ -116,7 +116,7 @@
             name = system;
             value = {
               macos =
-                self.darwinConfigurations.tdt.config.system.build.toplevel;
+                self.darwinConfigurations.imac.config.system.build.toplevel;
             };
           })
           lib.platforms.darwin) ++
@@ -132,7 +132,7 @@
       );
 
       darwinConfigurations = {
-        tdt = mkDarwinConfig {
+        imac = mkDarwinConfig {
           extraModules = [ ./profiles/personal.nix ./modules/darwin/apps.nix ];
         };
       };

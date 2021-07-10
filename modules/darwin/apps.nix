@@ -1,18 +1,18 @@
 { config, lib, pkgs, ... }: {
   homebrew = {
     casks = [
-      "firefox-beta"
+      # "firefox-beta"
       "hammerspoon"
-      "iterm2"
+      # "iterm2"
       "iina"
       "karabiner-elements"
       "keepingyouawake"
       "maccy"
       "syncthing"
       "visual-studio-code-insiders"
-      "element"
+      # "element"
       "bitwarden"
-      "discord"
+      # "discord"
     ];
   };
 }
