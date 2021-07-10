@@ -79,9 +79,10 @@ local disable_distribution_plugins = function()
   vim.g.loaded_netrwFileHandlers = 1
   vim.g.loaded_perl_provider = 0
   vim.g.loaded_python_provider = 0
+  vim.g.loaded_python3_provider = 0
+  vim.g.loaded_node_provider = 0
   vim.g.loaded_ruby_provider = 0
-
-  vim.g.python3_host_prog = '~/.pyenv/shims/python'
+  -- vim.g.python3_host_prog = '~/.pyenv/shims/python'
 end
 
 createdir()
