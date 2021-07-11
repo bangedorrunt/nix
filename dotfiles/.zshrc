@@ -4,8 +4,13 @@
 # shellcheck disable=SC1090 # sourced filenames with variables
 
 # If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME:.cargo/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 # export TERM=xterm-256color
+
+# Set nix-darwin environment, otherwise cannot use Nix installed packages
+if [ -z "$__NIX_DARWIN_SET_ENVIRONMENT_DONE" ]; then
+  . /nix/store/9mnc5b2x2c436p12pszgkiif5jvn7ywx-set-environment
+fi
 
 # Need this if I use compiled `gccemacs`
 # if [ -d "/Applications/Emacs.app/Contents/MacOS" ]; then
@@ -13,9 +18,6 @@ export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME:.cargo/bin:$PATH
 #     export PATH=$EMACS_APPDIR:$EMACS_APPDIR/bin:$PATH
 # fi
 
-if [ "$(command -v neofetch)" ]; then
-  neofetch
-fi
 # Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -25,10 +27,6 @@ fi
 
 if type brew &>/dev/null; then
   HOMEBREW_PREFIX=$(brew --prefix)
-  # gnubin; gnuman
-  for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnubin; do export PATH=$d:$PATH; done
-  # I actually like that man grep gives the BSD grep man page
-  #for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH=$d:$MANPATH; done
 fi
 
 # FZF CONFIG
@@ -75,8 +73,8 @@ if [ -f $(brew --prefix)/etc/brew-wrap ];then
   source $(brew --prefix)/etc/brew-wrap
 fi
 
-# added by Nix installer
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
+# Added by Nix installer
+# if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
 
 ### added by zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
