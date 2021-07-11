@@ -1,1185 +1,1660 @@
 {
-  "global" : {
-    "check_for_updates_on_startup" : true,
-    "show_in_menu_bar" : true,
-    "show_profile_name_in_menu_bar" : true
+  "global": {
+    "check_for_updates_on_startup": true,
+    "show_in_menu_bar": true,
+    "show_profile_name_in_menu_bar": true
   },
-  "profiles" : [ {
-    "complex_modifications" : {
-      "parameters" : {
-        "basic.simultaneous_threshold_milliseconds" : 50,
-        "basic.to_delayed_action_delay_milliseconds" : 500,
-        "basic.to_if_alone_timeout_milliseconds" : 180,
-        "basic.to_if_held_down_threshold_milliseconds" : 200
-      },
-      "rules" : [ {
-        "description" : "Hyper Layout",
-        "manipulators" : [ {
-          "to_if_alone" : [ {
-            "key_code" : "escape"
-          } ],
-          "from" : {
-            "key_code" : "caps_lock",
-            "modifiers" : {
-              "optional" : [ "any" ]
-            }
-          },
-          "to" : [ {
-            "modifiers" : [ "left_command", "left_shift", "left_option" ],
-            "key_code" : "left_control"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "j",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "down_arrow"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "k",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "up_arrow"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "h",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "left_arrow"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "l",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "right_arrow"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "c",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "c",
-            "modifiers" : [ "left_command" ]
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "v",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "v",
-            "modifiers" : [ "left_command" ]
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "u",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "z",
-            "modifiers" : [ "left_command" ]
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "r",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "z",
-            "modifiers" : [ "left_command", "left_shift" ]
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "semicolon",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m query --spaces --space \\\n                                | /usr/local/bin/jq -re '.index' \\\n                                | xargs -I{} /usr/local/bin/yabai -m query --windows --space {} \\\n                                | /usr/local/bin/jq -sre 'add | map(select(.minimized != 1)) | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\\n                                | xargs -I{} /usr/local/bin/yabai -m window --focus {}"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "p",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus prev"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "n",
-            "modifiers" : {
-              "mandatory" : [ "left_command", "left_control", "left_option", "left_shift" ]
-            }
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus next"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17|F18|F19 Layout Init",
-        "manipulators" : [ {
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f17-layout",
-              "value" : 0
-            }
-          } ],
-          "from" : {
-            "key_code" : "right_command"
-          },
-          "to" : [ {
-            "modifiers" : [ "left_shift", "left_control" ],
-            "key_code" : "left_command"
-          }, {
-            "set_variable" : {
-              "name" : "f17-layout",
-              "value" : 1
-            }
-          } ],
-          "conditions" : [ {
-            "identifiers" : [ {
-              "vendor_id" : 1452,
-              "product_id" : 591
-            } ],
-            "type" : "device_unless"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f18-layout",
-              "value" : 0
-            }
-          } ],
-          "from" : {
-            "key_code" : "right_option"
-          },
-          "to" : [ {
-            "modifiers" : [ "left_shift", "left_option" ],
-            "key_code" : "left_command"
-          }, {
-            "set_variable" : {
-              "name" : "f18-layout",
-              "value" : 1
-            }
-          } ],
-          "conditions" : [ {
-            "identifiers" : [ {
-              "vendor_id" : 1452,
-              "product_id" : 591
-            } ],
-            "type" : "device_unless"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f19-layout",
-              "value" : 0
-            }
-          } ],
-          "from" : {
-            "key_code" : "right_control"
-          },
-          "to" : [ {
-            "modifiers" : [ "left_option", "left_command" ],
-            "key_code" : "left_control"
-          }, {
-            "set_variable" : {
-              "name" : "f19-layout",
-              "value" : 1
-            }
-          } ],
-          "conditions" : [ {
-            "identifiers" : [ {
-              "vendor_id" : 1452,
-              "product_id" : 591
-            } ],
-            "type" : "device_unless"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f17-layout",
-              "value" : 0
-            }
-          } ],
-          "from" : {
-            "key_code" : "f7"
-          },
-          "to" : [ {
-            "modifiers" : [ "left_shift", "left_control" ],
-            "key_code" : "left_command"
-          }, {
-            "set_variable" : {
-              "name" : "f17-layout",
-              "value" : 1
-            }
-          } ],
-          "conditions" : [ {
-            "identifiers" : [ {
-              "vendor_id" : 1452,
-              "product_id" : 591
-            } ],
-            "type" : "device_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f18-layout",
-              "value" : 0
-            }
-          } ],
-          "from" : {
-            "key_code" : "f8"
-          },
-          "to" : [ {
-            "modifiers" : [ "left_shift", "left_option" ],
-            "key_code" : "left_command"
-          }, {
-            "set_variable" : {
-              "name" : "f18-layout",
-              "value" : 1
-            }
-          } ],
-          "conditions" : [ {
-            "identifiers" : [ {
-              "vendor_id" : 1452,
-              "product_id" : 591
-            } ],
-            "type" : "device_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_after_key_up" : [ {
-            "set_variable" : {
-              "name" : "f19-layout",
-              "value" : 0
-            }
-          } ],
-          "from" : {
-            "key_code" : "f9"
-          },
-          "to" : [ {
-            "modifiers" : [ "left_option", "left_command" ],
-            "key_code" : "left_control"
-          }, {
-            "set_variable" : {
-              "name" : "f19-layout",
-              "value" : 1
-            }
-          } ],
-          "conditions" : [ {
-            "identifiers" : [ {
-              "vendor_id" : 1452,
-              "product_id" : 591
-            } ],
-            "type" : "device_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F17 BSP Layout",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "r"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --rotate 90"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "y"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --mirror y-axis"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "x"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --mirror x-axis"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "v"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --toggle split"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "j"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --focus next || /usr/local/bin/yabai -m window --focus first"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "k"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --focus prev || /usr/local/bin/yabai -m window --focus last"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "up_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --insert north"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "down_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --insert south"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "left_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --insert west"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "right_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --insert east"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "t"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --insert stack"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "return_or_enter"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --warp west"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "s"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --warp south"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "a"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --warp west"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "w"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --warp north"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "d"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --warp east"
-          } ],
-          "conditions" : [ {
-            "name" : "f17-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F18 Edit Layout",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "k"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --focus stack.prev || /usr/local/bin/yabai -m window --focus stack.last"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "j"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --focus stack.next || /usr/local/bin/yabai -m window --focus stack.first"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "s"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --stack south"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "a"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --stack west"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "w"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --stack north"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "d"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --stack east"
-          } ],
-          "conditions" : [ {
-            "name" : "f18-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "F19 Universal Layout",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "b"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --layout bsp"
-          }, {
-            "shell_command" : "osascript -e 'display notification \"BSP\" with title \"Layout!\"'"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "s"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --layout stack"
-          }, {
-            "shell_command" : "osascript -e 'display notification \"Fullscreen Stack\" with title \"Layout!\"'"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "f"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --layout float"
-          }, {
-            "shell_command" : "osascript -e 'display notification \"Float\" with title \"Layout!\"'"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "t"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --toggle float && \\\n                         /tmp/yabai-restore/$(/usr/local/bin/yabai -m query --windows --window | /usr/local/bin/jq -re '.id').restore \\\n                         2>/dev/null || true"
-          }, {
-            "shell_command" : "osascript -e 'display notification \"Float Window\" with title \"Layout!\"'"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "p"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --toggle sticky && \\\n                      /usr/local/bin/yabai -m window --toggle topmost && \\\n                      /usr/local/bin/yabai -m window --toggle pip"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "o"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --toggle topmost"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "up_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --grid 1:1:0:0:1:1"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "down_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --grid 8:8:1:1:6:6"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "left_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --grid 1:2:0:0:1:1"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "right_arrow"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --grid 1:2:1:0:1:1"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "1"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 1"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "2"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 2"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "3"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 3"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "4"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 4"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "5"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 5"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "6"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 6"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "7"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --focus 7"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "0"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --space next && /usr/local/bin/yabai -m space --focus next"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "9"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m window --space prev && /usr/local/bin/yabai -m space --focus prev"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "d"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --destroy"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "from" : {
-            "key_code" : "c"
-          },
-          "to" : [ {
-            "shell_command" : "/usr/local/bin/yabai -m space --create && \\\n                                  index=$(/usr/local/bin/yabai -m query --spaces --display | /usr/local/bin/jq 'map(select(.\"native-fullscreen\" == 0))[-1].index') && \\\n                                  /usr/local/bin/yabai -m space --focus $index"
-          } ],
-          "conditions" : [ {
-            "name" : "f19-layout",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Remap <C-t> to <C-`> for iTerm",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "grave_accent_and_tilde",
-            "modifiers" : {
-              "mandatory" : [ "left_control" ]
-            }
-          },
-          "to" : [ {
-            "key_code" : "t",
-            "modifiers" : [ "left_control" ]
-          } ],
-          "conditions" : [ {
-            "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.apple\\.Terminal$", "^com\\.googlecode\\.iterm2$", "^io\\.alacritty" ]
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Double tap right shift key to switch input setting",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "right_shift"
-          },
-          "to" : [ {
-            "key_code" : "z",
-            "modifiers" : [ "left_option" ]
-          }, {
-            "set_variable" : {
-              "name" : "macos-input-source",
-              "value" : 0
-            }
-          } ],
-          "conditions" : [ {
-            "name" : "macos-input-source",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_delayed_action" : {
-            "to_if_invoked" : [ {
-              "set_variable" : {
-                "name" : "macos-input-source",
-                "value" : 0
+  "profiles": [
+    {
+      "complex_modifications": {
+        "parameters": {
+          "basic.simultaneous_threshold_milliseconds": 50,
+          "basic.to_delayed_action_delay_milliseconds": 500,
+          "basic.to_if_alone_timeout_milliseconds": 180,
+          "basic.to_if_held_down_threshold_milliseconds": 200
+        },
+        "rules": [
+          {
+            "description": "Hyper Layout",
+            "manipulators": [
+              {
+                "to_if_alone": [
+                  {
+                    "key_code": "escape"
+                  }
+                ],
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": {
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_command", "left_shift", "left_option"],
+                    "key_code": "left_control"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "j",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "down_arrow"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "up_arrow"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "c",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "c",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "v",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "v",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "u",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "z",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "r",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "z",
+                    "modifiers": ["left_command", "left_shift"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "semicolon",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m query --spaces --space \\\n                                | /etc/profiles/per-user/babygau/bin/jq -re '.index' \\\n                                | xargs -I{} /run/current-system/sw/bin/yabai -m query --windows --space {} \\\n                                | /etc/profiles/per-user/babygau/bin/jq -sre 'add | map(select(.minimized != 1)) | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\\n                                | xargs -I{} /run/current-system/sw/bin/yabai -m window --focus {}"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus prev"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "n",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_control",
+                      "left_option",
+                      "left_shift"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus next"
+                  }
+                ],
+                "type": "basic"
               }
-            } ],
-            "to_if_canceled" : [ {
-              "set_variable" : {
-                "name" : "macos-input-source",
-                "value" : 0
+            ]
+          },
+          {
+            "description": "F17|F18|F19 Layout Init",
+            "manipulators": [
+              {
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "f17-layout",
+                      "value": 0
+                    }
+                  }
+                ],
+                "from": {
+                  "key_code": "right_command"
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_shift", "left_control"],
+                    "key_code": "left_command"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "f17-layout",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      }
+                    ],
+                    "type": "device_unless"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "f18-layout",
+                      "value": 0
+                    }
+                  }
+                ],
+                "from": {
+                  "key_code": "right_option"
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_shift", "left_option"],
+                    "key_code": "left_command"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "f18-layout",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      }
+                    ],
+                    "type": "device_unless"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "f19-layout",
+                      "value": 0
+                    }
+                  }
+                ],
+                "from": {
+                  "key_code": "right_control"
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_option", "left_command"],
+                    "key_code": "left_control"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "f19-layout",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      }
+                    ],
+                    "type": "device_unless"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "f17-layout",
+                      "value": 0
+                    }
+                  }
+                ],
+                "from": {
+                  "key_code": "f7"
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_shift", "left_control"],
+                    "key_code": "left_command"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "f17-layout",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      }
+                    ],
+                    "type": "device_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "f18-layout",
+                      "value": 0
+                    }
+                  }
+                ],
+                "from": {
+                  "key_code": "f8"
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_shift", "left_option"],
+                    "key_code": "left_command"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "f18-layout",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      }
+                    ],
+                    "type": "device_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "f19-layout",
+                      "value": 0
+                    }
+                  }
+                ],
+                "from": {
+                  "key_code": "f9"
+                },
+                "to": [
+                  {
+                    "modifiers": ["left_option", "left_command"],
+                    "key_code": "left_control"
+                  },
+                  {
+                    "set_variable": {
+                      "name": "f19-layout",
+                      "value": 1
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      }
+                    ],
+                    "type": "device_if"
+                  }
+                ],
+                "type": "basic"
               }
-            } ]
+            ]
           },
-          "parameters" : {
-            "basic.to_delayed_action_delay_milliseconds" : 300
-          },
-          "from" : {
-            "key_code" : "right_shift"
-          },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "macos-input-source",
-              "value" : 1
-            }
-          }, {
-            "key_code" : "right_shift"
-          } ],
-          "conditions" : [ {
-            "name" : "macos-input-source",
-            "value" : 0,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      }, {
-        "description" : "Double tap left shift key to toggle terminal",
-        "manipulators" : [ {
-          "from" : {
-            "key_code" : "left_shift"
-          },
-          "to" : [ {
-            "key_code" : "grave_accent_and_tilde",
-            "modifiers" : [ "left_control" ]
-          }, {
-            "set_variable" : {
-              "name" : "vscode-terminal",
-              "value" : 0
-            }
-          } ],
-          "conditions" : [ {
-            "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.microsoft\\.VSCode" ]
-          }, {
-            "name" : "vscode-terminal",
-            "value" : 1,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        }, {
-          "to_delayed_action" : {
-            "to_if_invoked" : [ {
-              "set_variable" : {
-                "name" : "vscode-terminal",
-                "value" : 0
+          {
+            "description": "F17 BSP Layout",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "r"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --rotate 90"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "y"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --mirror y-axis"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "x"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --mirror x-axis"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "v"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --toggle split"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "j"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --focus next || /usr/local/bin/yabai -m window --focus first"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "k"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --focus prev || /usr/local/bin/yabai -m window --focus last"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "up_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --insert north"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "down_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --insert south"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "left_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --insert west"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "right_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --insert east"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "t"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --insert stack"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "return_or_enter"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --warp west"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "s"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --warp south"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "a"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --warp west"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "w"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --warp north"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "d"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --warp east"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f17-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
               }
-            } ],
-            "to_if_canceled" : [ {
-              "set_variable" : {
-                "name" : "vscode-terminal",
-                "value" : 0
+            ]
+          },
+          {
+            "description": "F18 Edit Layout",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "k"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --focus stack.prev || /usr/local/bin/yabai -m window --focus stack.last"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f18-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "j"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --focus stack.next || /usr/local/bin/yabai -m window --focus stack.first"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f18-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "s"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --stack south"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f18-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "a"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --stack west"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f18-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "w"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --stack north"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f18-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "d"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --stack east"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f18-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
               }
-            } ]
+            ]
           },
-          "parameters" : {
-            "basic.to_delayed_action_delay_milliseconds" : 300
+          {
+            "description": "F19 Universal Layout",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "b"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --layout bsp"
+                  },
+                  {
+                    "shell_command": "osascript -e 'display notification \"BSP\" with title \"Layout!\"'"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "s"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --layout stack"
+                  },
+                  {
+                    "shell_command": "osascript -e 'display notification \"Fullscreen Stack\" with title \"Layout!\"'"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "f"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --layout float"
+                  },
+                  {
+                    "shell_command": "osascript -e 'display notification \"Float\" with title \"Layout!\"'"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "t"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --toggle float && \\\n                         /tmp/yabai-restore/$(/run/current-system/sw/bin/yabai -m query --windows --window | /usr/local/bin/jq -re '.id').restore \\\n                         2>/dev/null || true"
+                  },
+                  {
+                    "shell_command": "osascript -e 'display notification \"Float Window\" with title \"Layout!\"'"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "p"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --toggle sticky && \\\n                      /run/current-system/sw/bin/yabai -m window --toggle topmost && \\\n                      /run/current-system/sw/bin/yabai -m window --toggle pip"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "o"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --toggle topmost"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "up_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --grid 1:1:0:0:1:1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "down_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --grid 8:8:1:1:6:6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "left_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --grid 1:2:0:0:1:1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "right_arrow"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --grid 1:2:1:0:1:1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "1"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "2"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "3"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "4"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "5"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "6"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "7"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --focus 7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "0"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --space next && /usr/local/bin/yabai -m space --focus next"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "9"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m window --space prev && /usr/local/bin/yabai -m space --focus prev"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "d"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --destroy"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "c"
+                },
+                "to": [
+                  {
+                    "shell_command": "/run/current-system/sw/bin/yabai -m space --create && \\\n                                  index=$(/run/current-system/sw/bin/yabai -m query --spaces --display | /usr/local/bin/jq 'map(select(.\"native-fullscreen\" == 0))[-1].index') && \\\n                                  /run/current-system/sw/bin/yabai -m space --focus $index"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "f19-layout",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
           },
-          "from" : {
-            "key_code" : "left_shift"
+          {
+            "description": "Remap <C-t> to <C-`> for iTerm",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "grave_accent_and_tilde",
+                  "modifiers": {
+                    "mandatory": ["left_control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "t",
+                    "modifiers": ["left_control"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.googlecode\\.iterm2$",
+                      "^io\\.alacritty"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
           },
-          "to" : [ {
-            "set_variable" : {
-              "name" : "vscode-terminal",
-              "value" : 1
+          {
+            "description": "Double tap right shift key to switch input setting",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "right_shift"
+                },
+                "to": [
+                  {
+                    "key_code": "z",
+                    "modifiers": ["left_option"]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "macos-input-source",
+                      "value": 0
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "macos-input-source",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_delayed_action": {
+                  "to_if_invoked": [
+                    {
+                      "set_variable": {
+                        "name": "macos-input-source",
+                        "value": 0
+                      }
+                    }
+                  ],
+                  "to_if_canceled": [
+                    {
+                      "set_variable": {
+                        "name": "macos-input-source",
+                        "value": 0
+                      }
+                    }
+                  ]
+                },
+                "parameters": {
+                  "basic.to_delayed_action_delay_milliseconds": 300
+                },
+                "from": {
+                  "key_code": "right_shift"
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "macos-input-source",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "right_shift"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "macos-input-source",
+                    "value": 0,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Double tap left shift key to toggle terminal",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "left_shift"
+                },
+                "to": [
+                  {
+                    "key_code": "grave_accent_and_tilde",
+                    "modifiers": ["left_control"]
+                  },
+                  {
+                    "set_variable": {
+                      "name": "vscode-terminal",
+                      "value": 0
+                    }
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": ["^com\\.microsoft\\.VSCode"]
+                  },
+                  {
+                    "name": "vscode-terminal",
+                    "value": 1,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "to_delayed_action": {
+                  "to_if_invoked": [
+                    {
+                      "set_variable": {
+                        "name": "vscode-terminal",
+                        "value": 0
+                      }
+                    }
+                  ],
+                  "to_if_canceled": [
+                    {
+                      "set_variable": {
+                        "name": "vscode-terminal",
+                        "value": 0
+                      }
+                    }
+                  ]
+                },
+                "parameters": {
+                  "basic.to_delayed_action_delay_milliseconds": 300
+                },
+                "from": {
+                  "key_code": "left_shift"
+                },
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "vscode-terminal",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key_code": "left_shift"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "name": "vscode-terminal",
+                    "value": 0,
+                    "type": "variable_if"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      },
+      "devices": [
+        {
+          "disable_built_in_keyboard_if_exists": true,
+          "fn_function_keys": [],
+          "identifiers": {
+            "is_keyboard": true,
+            "is_pointing_device": false,
+            "product_id": 5632,
+            "vendor_id": 4152
+          },
+          "ignore": false,
+          "manipulate_caps_lock_led": false,
+          "simple_modifications": []
+        },
+        {
+          "disable_built_in_keyboard_if_exists": false,
+          "fn_function_keys": [],
+          "identifiers": {
+            "is_keyboard": true,
+            "is_pointing_device": false,
+            "product_id": 620,
+            "vendor_id": 76
+          },
+          "ignore": false,
+          "manipulate_caps_lock_led": true,
+          "simple_modifications": []
+        },
+        {
+          "disable_built_in_keyboard_if_exists": false,
+          "fn_function_keys": [],
+          "identifiers": {
+            "is_keyboard": true,
+            "is_pointing_device": true,
+            "product_id": 591,
+            "vendor_id": 1452
+          },
+          "ignore": true,
+          "manipulate_caps_lock_led": false,
+          "simple_modifications": []
+        },
+        {
+          "disable_built_in_keyboard_if_exists": false,
+          "fn_function_keys": [],
+          "identifiers": {
+            "is_keyboard": true,
+            "is_pointing_device": false,
+            "product_id": 591,
+            "vendor_id": 1452
+          },
+          "ignore": false,
+          "manipulate_caps_lock_led": false,
+          "simple_modifications": []
+        }
+      ],
+      "fn_function_keys": [
+        {
+          "from": {
+            "key_code": "f1"
+          },
+          "to": [
+            {
+              "key_code": "display_brightness_decrement"
             }
-          }, {
-            "key_code" : "left_shift"
-          } ],
-          "conditions" : [ {
-            "name" : "vscode-terminal",
-            "value" : 0,
-            "type" : "variable_if"
-          } ],
-          "type" : "basic"
-        } ]
-      } ]
-    },
-    "devices" : [ {
-      "disable_built_in_keyboard_if_exists" : true,
-      "fn_function_keys" : [ ],
-      "identifiers" : {
-        "is_keyboard" : true,
-        "is_pointing_device" : false,
-        "product_id" : 5632,
-        "vendor_id" : 4152
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f2"
+          },
+          "to": [
+            {
+              "key_code": "display_brightness_increment"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f3"
+          },
+          "to": [
+            {
+              "key_code": "mission_control"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f4"
+          },
+          "to": [
+            {
+              "key_code": "launchpad"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f5"
+          },
+          "to": [
+            {
+              "key_code": "illumination_decrement"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f6"
+          },
+          "to": [
+            {
+              "key_code": "illumination_increment"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f7"
+          },
+          "to": [
+            {
+              "key_code": "f7"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f8"
+          },
+          "to": [
+            {
+              "key_code": "f8"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f9"
+          },
+          "to": [
+            {
+              "key_code": "f9"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f10"
+          },
+          "to": [
+            {
+              "key_code": "mute"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f11"
+          },
+          "to": [
+            {
+              "key_code": "volume_decrement"
+            }
+          ]
+        },
+        {
+          "from": {
+            "key_code": "f12"
+          },
+          "to": [
+            {
+              "key_code": "volume_increment"
+            }
+          ]
+        }
+      ],
+      "name": "babygau",
+      "parameters": {
+        "delay_milliseconds_before_open_device": 1000
       },
-      "ignore" : false,
-      "manipulate_caps_lock_led" : false,
-      "simple_modifications" : [ ]
-    }, {
-      "disable_built_in_keyboard_if_exists" : false,
-      "fn_function_keys" : [ ],
-      "identifiers" : {
-        "is_keyboard" : true,
-        "is_pointing_device" : false,
-        "product_id" : 620,
-        "vendor_id" : 76
-      },
-      "ignore" : false,
-      "manipulate_caps_lock_led" : true,
-      "simple_modifications" : [ ]
-    }, {
-      "disable_built_in_keyboard_if_exists" : false,
-      "fn_function_keys" : [ ],
-      "identifiers" : {
-        "is_keyboard" : true,
-        "is_pointing_device" : true,
-        "product_id" : 591,
-        "vendor_id" : 1452
-      },
-      "ignore" : true,
-      "manipulate_caps_lock_led" : false,
-      "simple_modifications" : [ ]
-    }, {
-      "disable_built_in_keyboard_if_exists" : false,
-      "fn_function_keys" : [ ],
-      "identifiers" : {
-        "is_keyboard" : true,
-        "is_pointing_device" : false,
-        "product_id" : 591,
-        "vendor_id" : 1452
-      },
-      "ignore" : false,
-      "manipulate_caps_lock_led" : false,
-      "simple_modifications" : [ ]
-    } ],
-    "fn_function_keys" : [ {
-      "from" : {
-        "key_code" : "f1"
-      },
-      "to" : [ {
-        "key_code" : "display_brightness_decrement"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f2"
-      },
-      "to" : [ {
-        "key_code" : "display_brightness_increment"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f3"
-      },
-      "to" : [ {
-        "key_code" : "mission_control"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f4"
-      },
-      "to" : [ {
-        "key_code" : "launchpad"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f5"
-      },
-      "to" : [ {
-        "key_code" : "illumination_decrement"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f6"
-      },
-      "to" : [ {
-        "key_code" : "illumination_increment"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f7"
-      },
-      "to" : [ {
-        "key_code" : "f7"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f8"
-      },
-      "to" : [ {
-        "key_code" : "f8"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f9"
-      },
-      "to" : [ {
-        "key_code" : "f9"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f10"
-      },
-      "to" : [ {
-        "key_code" : "mute"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f11"
-      },
-      "to" : [ {
-        "key_code" : "volume_decrement"
-      } ]
-    }, {
-      "from" : {
-        "key_code" : "f12"
-      },
-      "to" : [ {
-        "key_code" : "volume_increment"
-      } ]
-    } ],
-    "name" : "babygau",
-    "parameters" : {
-      "delay_milliseconds_before_open_device" : 1000
-    },
-    "selected" : true,
-    "simple_modifications" : [ ],
-    "virtual_hid_keyboard" : {
-      "caps_lock_delay_milliseconds" : 0,
-      "country_code" : 0,
-      "indicate_sticky_modifier_keys_state" : true,
-      "keyboard_type" : "ansi",
-      "mouse_key_xy_scale" : 100
+      "selected": true,
+      "simple_modifications": [],
+      "virtual_hid_keyboard": {
+        "caps_lock_delay_milliseconds": 0,
+        "country_code": 0,
+        "indicate_sticky_modifier_keys_state": true,
+        "keyboard_type": "ansi",
+        "mouse_key_xy_scale": 100
+      }
     }
-  } ]
+  ]
 }
