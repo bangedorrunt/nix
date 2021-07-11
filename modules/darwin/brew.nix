@@ -22,6 +22,7 @@ in
 
     taps = [
       "beeftornado/rmtree"
+      "yqrashawn/goku"
       "homebrew/bundle"
       "homebrew/cask"
       "homebrew/cask-fonts"
@@ -33,6 +34,7 @@ in
     brews = [
       "beeftornado/rmtree/brew-rmtree"
       "mas"
+      "yqrashawn/goku/goku"
     ];
   };
 }

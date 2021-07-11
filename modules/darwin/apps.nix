@@ -5,14 +5,14 @@
       "hammerspoon"
       # "iterm2"
       "iina"
-      "karabiner-elements"
+      # "karabiner-elements"
       "keepingyouawake"
       "maccy"
       "syncthing"
       "visual-studio-code-insiders"
-      # "element"
+      "element"
       "bitwarden"
-      # "discord"
+      "discord"
     ];
   };
 }

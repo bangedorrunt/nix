@@ -30,6 +30,8 @@ git clone https://github.com/babygau/nix.git ~/.nixpkgs
 
 - Update
 
+**NOTE:** remove `flake.lock` if existed
+
 ```bash
 cd ~/.nixpkgs
 nix-channel --update

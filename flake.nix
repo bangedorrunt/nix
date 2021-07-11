@@ -3,11 +3,14 @@
 
   nixConfig = {
     substituters = [
-      "https://kclejeune.cachix.org"
+      "https://cache.nixos.org https://cachix.cachix.org"
       "https://nix-community.cachix.org/"
+      "https://kclejeune.cachix.org"
     ];
 
     trusted-public-keys = [
+      "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM=" 
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "kclejeune.cachix.org-1:fOCrECygdFZKbMxHClhiTS6oowOkJ/I/dh9q9b1I4ko="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
@@ -60,7 +63,9 @@
 
       supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
       overlays = [ inputs.neovim-nightly-overlay.overlay
-                   inputs.emacs-overlay.overlay ];
+                   inputs.emacs-overlay.overlay
+                   (import ./modules/darwin/yabai_overlay.nix)
+                   (import ./modules/home-manager/sumneko_overlay.nix)];
       lib = nixpkgs.lib.extend
        (final: prev: home-manager.lib);
 
@@ -112,7 +117,7 @@
           (system: {
             name = system;
             value = {
-              macos =
+              darwin =
                 self.darwinConfigurations.imac.config.system.build.toplevel;
             };
           })

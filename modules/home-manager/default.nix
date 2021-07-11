@@ -3,7 +3,7 @@ let
   homeDir = config.home.homeDirectory;
 in
 {
-  imports = [ ./dotfiles.nix ];
+  imports = [ ./dotfiles.nix ./neovim.nix ];
 
   programs.home-manager = {
     enable = true;
