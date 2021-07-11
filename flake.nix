@@ -45,6 +45,14 @@
       ref = "feature/flakes";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    neuron = {
+      type = "github";
+      owner = "srid";
+      repo = "neuron";
+      ref = "master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      flake = false;
+    };
   };
 
   outputs =
@@ -55,6 +63,7 @@
     , home-manager
     , devshell
     , flake-utils
+    , neuron
     , ...
     }:
     let
@@ -64,8 +73,8 @@
       supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
       overlays = [ inputs.neovim-nightly-overlay.overlay
                    inputs.emacs-overlay.overlay
-                   (import ./modules/darwin/yabai_overlay.nix)
-                   (import ./modules/home-manager/sumneko_overlay.nix)];
+                   (import ./modules/pkgs/yabai_overlay.nix)
+                   (import ./modules/pkgs/sumneko_overlay.nix)];
       lib = nixpkgs.lib.extend
        (final: prev: home-manager.lib);
 

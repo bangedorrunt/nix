@@ -1,11 +1,9 @@
 { inputs, config, lib, pkgs, ... }: {
-  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ];
+  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ./pkgs/neuron_overlay.nix ]; 
 
-  /* programs.zsh = {
+  programs.zsh = {
     enable = true;
-    enableCompletion = true;
-    enableBashCompletion = true;
-  }; */
+  };
 
   user = {
     description = "Thanh Dung TRUONG";
@@ -31,6 +29,7 @@
     systemPackages = with pkgs; [
       # Editors
       neovim-nightly
+      emacsGcc
       # Standard toolset
       coreutils
       curl

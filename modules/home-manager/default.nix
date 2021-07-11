@@ -3,7 +3,7 @@ let
   homeDir = config.home.homeDirectory;
 in
 {
-  imports = [ ./dotfiles.nix ./neovim.nix ];
+  imports = [ ./dotfiles.nix ../pkgs/neovim.nix ];
 
   programs.home-manager = {
     enable = true;
@@ -53,6 +53,7 @@ in
         hyperfine
         jq
         lazygit
+        neuron
         neofetch
         nixUnstable
         nixfmt
