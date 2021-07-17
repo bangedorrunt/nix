@@ -266,7 +266,7 @@ local servers = {
 }
 
 for server, config in pairs(servers) do
-  if config.sources == nil then
+  if server ~= 'null-ls' then
     lspconfig[server].setup(vim.tbl_deep_extend('force', {
       on_attach = on_attach,
       capabilities = capabilities,
