@@ -1,12 +1,12 @@
 { config, lib, pkgs, home-manager, ... }:
 
 let
-  cfg = config.my.modules.yabai;
+  cfg = config.my.modules.goku;
 in
 
 {
   options = with lib; {
-    my.modules.yabai = {
+    my.modules.goku = {
       enable = mkEnableOption ''
         Whether to enable dotfiles module
       '';
@@ -15,7 +15,6 @@ in
 
   config = with lib;
     mkIf cfg.enable {
-      services.yabai.package = pkgs.yabai;
-      services.yabai.enable = true;
+      my.hm.packages = with pkgs; [ goku ];
     };
 }
