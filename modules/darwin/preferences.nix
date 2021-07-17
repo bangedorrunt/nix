@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   system.defaults = {
+
     # Login window settings
     loginwindow = {
       # Disable guest account
@@ -68,5 +69,11 @@
       AppleShowScrollBars = "Automatic";
     };
   };
+  # `nix-darwin` hasn't got this option so I found a hacky way
+  # Disable crash reporter
+  system.activationScripts.userDefaults.text = "defaults write com.apple.CrashReporter DialogType none";
+  # Enable crash reporter
+  # system.activationScripts.userDefaults.text = "defaults write com.apple.CrashReporter DialogType crashreport";
+
 
 }

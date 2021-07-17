@@ -1,7 +1,7 @@
 { inputs, config, lib, pkgs, ... }: {
   nixpkgs = {
     config = import ./config.nix;
-    overlays = [ ];
+    overlays = [];
   };
 
   nix = {
@@ -12,7 +12,7 @@
       ${lib.optionalString (config.nix.package == pkgs.nixFlakes)
       "experimental-features = nix-command flakes"}
     '';
-    trustedUsers = [ "${config.user.name}" "root" "@admin" "@wheel" ];
+    trustedUsers = [ config.my.username "root" "@admin" "@wheel" ];
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
@@ -26,12 +26,18 @@
     ];
 
     binaryCaches = [
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+      "https://nixpkgs.cachix.org"
       "https://kclejeune.cachix.org"
-      "https://nix-community.cachix.org/"
+      "https://srid.cachix.org"
     ];
     binaryCachePublicKeys = [
-      "kclejeune.cachix.org-1:fOCrECygdFZKbMxHClhiTS6oowOkJ/I/dh9q9b1I4ko="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="
+      "kclejeune.cachix.org-1:fOCrECygdFZKbMxHClhiTS6oowOkJ/I/dh9q9b1I4ko="
+      "srid.cachix.org-1:MTQ6ksbfz3LBMmjyPh0PLmos+1x+CdtJxA/J2W+PQxI="
     ];
 
     registry = {

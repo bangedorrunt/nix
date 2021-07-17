@@ -1,27 +1,10 @@
-{ inputs, config, lib, pkgs, ... }: {
-  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ./pkgs/neuron_overlay.nix ]; 
+{ inputs, config, pkgs, lib, options, ... }:
+
+{
+  imports = [ ./primary.nix ./nixpkgs.nix ./overlays.nix ];
 
   programs.zsh = {
     enable = true;
-  };
-
-  user = {
-    description = "Thanh Dung TRUONG";
-    home = "${
-        if pkgs.stdenvNoCC.isDarwin then "/Users" else "/home"
-      }/${config.user.name}";
-    shell = pkgs.zsh;
-  };
-
-  # Bootstrap Home Manager using system config
-  hm = import ./home-manager;
-
-  # Let Nix manage Home-Manager profiles and use global nixpkgs
-  home-manager = {
-    extraSpecialArgs = { inherit inputs lib; };
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "backup";
   };
 
   # Environment setup
@@ -29,7 +12,8 @@
     systemPackages = with pkgs; [
       # Editors
       neovim-nightly
-      emacsGcc
+      # emacsGcc
+
       # Standard toolset
       coreutils
       curl
@@ -52,5 +36,4 @@
     shells = with pkgs; [ bash zsh fish ];
   };
 
-  /* fonts.fonts = with pkgs; [ jetbrains-mono iosevka ]; */
 }
