@@ -1,13 +1,6 @@
 -- REF: https://github.com/akinsho/dotfiles/blob/01ddf20de97e29cbada48a819f0f6d980c6b7abe/.config/nvim/lua/as/plugins/lspconfig.lua
+local lspconfig = require 'lspconfig'
 local u = require 'core.utils'
-local sumneko = require 'plugins.lsp.sumneko'
-local null_ls = require 'plugins.lsp.null-ls'
-local tsserver = require 'plugins.lsp.tsserver'
-local tailwindcss = require 'plugins.lsp.tailwindcss'
-local clojure_lsp = require 'plugins.lsp.clojure-lsp'
-
--- Prefer null-ls for now
--- local efm = require("plugins.lsp.efm")
 
 local cmd, api, lsp = vim.cmd, vim.api, vim.lsp
 
@@ -148,7 +141,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = { 'documentation', 'detail', 'additionalTextEdits' },
 }
-
 -- Code actions
 capabilities.textDocument.codeAction = {
   dynamicRegistration = true,
@@ -162,12 +154,137 @@ capabilities.textDocument.codeAction = {
     },
   },
 }
-tailwindcss.setup(on_attach, capabilities)
-tsserver.setup(on_attach, capabilities)
-sumneko.setup(on_attach, capabilities)
-null_ls.setup(on_attach)
-clojure_lsp.setup(on_attach, capabilities)
--- efm.setup(on_attach, capabilities)
+
+local servers = {
+  -- Cannot use `null-ls` because it's not Lsp config
+  ['null-ls'] = {
+    debounce = 150,
+    sources = (function()
+      local null_ls = require 'null-ls'
+      local b = null_ls.builtins
+      -- NOTE: When you experience any lag or unresponsive with Lsp,
+      ---- make sure respective sources are installed
+      ---- In my case:
+      ---- Typescript was slow because `eslint_d` was not installed
+      ---- Markdown was slow because `write-good` and `markdownlint`
+      ---- was not installed
+      return {
+        b.formatting.prettier.with {
+          filetypes = { 'html', 'json', 'yaml', 'markdown' },
+        },
+        b.formatting.stylua.with {
+          args = {
+            '--config-path',
+            ttd.paths.HOME .. '/dotfiles/nvim/lua/stylua.toml',
+            '-',
+          },
+        },
+        b.formatting.prettier_d_slim,
+        -- b.formatting.stylua,
+        b.formatting.trim_whitespace.with { filetypes = { 'tmux', 'fish', 'teal' } },
+        b.formatting.shfmt,
+        b.diagnostics.write_good,
+        b.diagnostics.markdownlint,
+        b.diagnostics.shellcheck.with {
+          filetypes = { 'zsh', 'sh', 'bash' },
+        },
+        -- b.code_actions.gitsigns,
+      }
+    end)(),
+  },
+  bashls = {},
+  tsserver = {
+    cmd = { 'typescript-language-server', '--stdio' },
+    on_attach = function(client, bufnr)
+      local ts_utils = require 'nvim-lsp-ts-utils'
+      local ts_utils_settings = {
+        -- debug = true,
+        enable_import_on_completion = true,
+        complete_parens = true,
+        signature_help_in_parens = true,
+        eslint_bin = 'eslint_d',
+        eslint_enable_diagnostics = true,
+        enable_formatting = true,
+        formatter = 'eslint_d',
+        update_imports_on_move = true,
+      }
+      client.resolved_capabilities.document_formatting = false
+      on_attach(client)
+      -- If `Typescript` is slow, make sure `eslint_d` installed
+      ts_utils.setup(ts_utils_settings)
+      ts_utils.setup_client(client)
+
+      u.buf_map('n', 'gs', ':TSLspOrganize<CR>', nil, bufnr)
+      u.buf_map('n', 'gI', ':TSLspRenameFile<CR>', nil, bufnr)
+      u.buf_map('n', 'go', ':TSLspImportAll<CR>', nil, bufnr)
+      u.buf_map('n', 'qq', ':TSLspFixCurrent<CR>', nil, bufnr)
+      u.buf_map('i', '.', '.<C-x><C-o>', nil, bufnr)
+      -- vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+    end,
+  },
+  cssls = { cmd = { 'css-languageserver', '--stdio' } },
+  rnix = {},
+  jsonls = { cmd = { 'vscode-json-languageserver', '--stdio' } },
+  html = { cmd = { 'html-languageserver', '--stdio' } },
+  clangd = {},
+  clojure_lsp = { filetypes = { 'clojure', 'edn' } },
+  sumneko_lua = require('lua-dev').setup {
+    library = {
+      vimruntime = true, -- Runtime path
+      types = true, -- Full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+      plugins = true, -- Installed opt or start plugins in packpath
+      -- plugins = { 'nvim-treesitter', 'plenary.nvim', 'telescope.nvim' },
+    },
+    lspconfig = {
+      cmd = { 'lua-language-server' },
+      settings = {
+        Lua = {
+          diagnostics = {
+            enable = true,
+            globals = {
+              'ttd',
+              'packer_plugins',
+              'vim',
+              'use',
+              'describe',
+              'it',
+              'assert',
+              'before_each',
+              'after_each',
+            },
+          },
+          runtime = { version = 'LuaJIT' },
+          workspace = {
+            library = vim.list_extend({ [vim.fn.expand '$VIMRUNTIME/lua'] = true }, {}),
+          },
+        },
+      },
+    },
+  },
+  vimls = {},
+  tailwindcss = { cmd = { 'tailwind-lsp' } },
+}
+
+for server, config in pairs(servers) do
+  if config.sources == nil then
+    lspconfig[server].setup(vim.tbl_deep_extend('force', {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      flags = {
+        debounce_text_changes = 150,
+      },
+    }, config))
+    local cfg = lspconfig[server]
+    if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
+      u.error(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
+    end
+  else
+    require('null-ls').setup(vim.tbl_deep_extend('force', {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }, config))
+  end
+end
 
 -- Lsp keymaps
 _G.reload_lsp = function()

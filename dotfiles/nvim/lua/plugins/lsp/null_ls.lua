@@ -28,13 +28,15 @@ local sources = {
   b.diagnostics.shellcheck.with {
     filetypes = { 'zsh', 'sh', 'bash' },
   },
-  b.code_actions.gitsigns,
+  -- b.code_actions.gitsigns,
 }
 
 local M = {}
 M.setup = function(on_attach)
   null_ls.setup {
     -- debug = true,
+    debounce = 150,
+    -- save_after_format = false,
     on_attach = on_attach,
     sources = sources,
   }

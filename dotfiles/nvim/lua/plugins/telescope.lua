@@ -28,7 +28,8 @@ require('telescope').setup {
     prompt_prefix = '❯ ',
     selection_caret = '❯ ',
     winblend = 0,
-    sorting_strategy = 'descending',
+    sorting_strategy = 'ascending',
+    layout_strategy = 'bottom_pane',
     mappings = {
       i = {
         ['<ESC>'] = require('telescope.actions').close,
@@ -36,37 +37,12 @@ require('telescope').setup {
     },
     layout_config = {
       prompt_position = 'bottom',
+      height = 0.4,
     },
-    -- results_width    = 0.4,
+    file_ignore_patterns = { '.git', 'node_modules/.*', '.neuron/.*', 'alfred2/.*' },
     file_previewer = require('telescope.previewers').vim_buffer_cat.new,
     grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-  },
-  pickers = {
-    find_files = {
-      theme = 'ivy',
-    },
-    buffers = {
-      theme = 'ivy',
-    },
-    git_files = {
-      theme = 'ivy',
-    },
-    oldfiles = {
-      theme = 'ivy',
-    },
-    live_grep = {
-      theme = 'ivy',
-    },
-    file_browser = {
-      theme = 'ivy',
-    },
-    grep_string = {
-      theme = 'ivy',
-    },
-    colorscheme = {
-      theme = 'ivy',
-    },
   },
   extensions = {
     fzy_native = {
