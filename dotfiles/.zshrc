@@ -1,32 +1,16 @@
-#!/usr/local/bin/zsh
-#                ^----- get shellcheck hints based on bash
+#!/bin/zsh
+#      ^----- get shellcheck hints based on bash
 # https://github.com/koalaman/shellcheck/issues/809
 # shellcheck disable=SC1090 # sourced filenames with variables
 
 # If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
-# export TERM=xterm-256color
-
-# Set nix-darwin environment, otherwise cannot use Nix installed packages
-if [ -z "$__NIX_DARWIN_SET_ENVIRONMENT_DONE" ]; then
-  . /nix/store/9mnc5b2x2c436p12pszgkiif5jvn7ywx-set-environment
-fi
-
-# Need this if I use compiled `gccemacs`
-# if [ -d "/Applications/Emacs.app/Contents/MacOS" ]; then
-#     EMACS_APPDIR=/Applications/Emacs.app/Contents/MacOS
-#     export PATH=$EMACS_APPDIR:$EMACS_APPDIR/bin:$PATH
-# fi
+# export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 
 # Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-if type brew &>/dev/null; then
-  HOMEBREW_PREFIX=$(brew --prefix)
 fi
 
 # FZF CONFIG
@@ -52,12 +36,6 @@ export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --e
 
 alias fv='nvim $(fzf)'
 
-# NVM CONFIG
-# ######################
-export NVM_DIR="$HOME/.nvm"
-export NVM_SYMLINK_CURRENT=true
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nv
-
 # ZOXIDE CONFIG
 # ######################
 eval "$(zoxide init zsh --cmd j)"
@@ -66,17 +44,7 @@ eval "$(zoxide init zsh --cmd j)"
 # #####################
 export GOKU_EDN_CONFIG_FILE="$HOME/.config/karabiner/karabiner.edn"
 
-# HOMEBREW CONFIG
-# ######################
-# this load brew wrapper
-if [ -f $(brew --prefix)/etc/brew-wrap ];then
-  source $(brew --prefix)/etc/brew-wrap
-fi
-
-# Added by Nix installer
-# if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
-
-### added by zinit's installer
+### Added by zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
@@ -125,13 +93,6 @@ zinit wait lucid light-mode for \
   id-as'fzf/completion' https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
   id-as'fzf/key-bindings' https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
-# PyEnv
-zinit wait lucid light-mode for davidparsson/zsh-pyenv-lazy
-
-# Auto suggest how to install missing commands.
-zinit wait lucid light-mode for id-as'brew/command-not-found' \
-  https://github.com/Homebrew/homebrew-command-not-found/blob/master/handler.sh
-
 # Fast syntax highlighting & autosuggestions
 zinit wait"1" lucid for \
   atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay" \
@@ -147,45 +108,28 @@ zinit wait"1" lucid for \
   atinit'zstyle ":history-search-multi-word" page-size "7"' \
     zdharma/history-search-multi-word
 
-### end of zinit's installer chunk
+### End of zinit's installer chunk
 
-# you may need to manually set your language environment
+# You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# preferred editor for local and remote sessions
+# Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
   export EDITOR='nvim'
 fi
 
-# compilation flags
+# Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# ssh
+# SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# for a full list of active aliases, run `alias`.
 
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
-
-# Need this if I use `gccemacs`
-# if [[ "$OSTYPE" == "darwin"* ]]; then
-#   if [ -f "/Applications/Emacs.app/Contents/MacOS/Emacs" ]; then
-#     alias edaemon="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
-#     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-#   fi
-
-#   if [ -f "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" ]; then
-#     alias ekill="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -e '(kill-emacs)'"
-#     alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw -a=''"
-#   fi
-# fi
 
 # alias code='code-insiders'
 # alias c='code-insiders'
