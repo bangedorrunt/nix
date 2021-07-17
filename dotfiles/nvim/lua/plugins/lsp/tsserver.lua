@@ -27,11 +27,11 @@ M.setup = function(on_attach, capabilities)
       ts_utils.setup(ts_utils_settings)
       ts_utils.setup_client(client)
 
-      u.buf_mapaapq('n', 'gs', ':TSLspOrganize<CR>', nil, bufnr)
-      u.buf_mapaapq('n', 'gI', ':TSLspRenameFile<CR>', nil, bufnr)
-      u.buf_mapaapq('n', 'go', ':TSLspImportAll<CR>', nil, bufnr)
-      u.buf_mapaapq('n', 'qq', ':TSLspFixCurrent<CR>', nil, bufnr)
-      u.buf_mapaapq('i', '.', '.<C-x><C-o>', nil, bufnr)
+      u.buf_map('n', 'gs', ':TSLspOrganize<CR>', nil, bufnr)
+      u.buf_map('n', 'gI', ':TSLspRenameFile<CR>', nil, bufnr)
+      u.buf_map('n', 'go', ':TSLspImportAll<CR>', nil, bufnr)
+      u.buf_map('n', 'qq', ':TSLspFixCurrent<CR>', nil, bufnr)
+      u.buf_map('i', '.', '.<C-x><C-o>', nil, bufnr)
 
       -- vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
     end,

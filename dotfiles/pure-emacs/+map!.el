@@ -70,10 +70,10 @@ and Emacs states, and for non-evil users.")
 ;;   :straight (:host github :repo "hlissner/evil-escape")
 ;;   :after evil)
 
-(use-package evil-magit
-  :after (evil magit)
-  :init
-  (setq evil-magit-state 'normal))
+;; (use-package evil-magit
+;;   :after (evil magit)
+;;   :init
+;;   (setq evil-magit-state 'normal))
 
 (use-package treemacs-evil
   :after (treemacs evil))
