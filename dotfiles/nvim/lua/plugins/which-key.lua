@@ -20,7 +20,7 @@ require('which-key').register({
   ['6'] = 'which_key_ignore',
   ['7'] = 'which_key_ignore',
   ['8'] = 'which_key_ignore',
-  ['9'] = 'which_key_ignore',
+  ['9'] = 'Dotfiles',
   ['0'] = 'Nvim Conf',
   ['<Space>'] = 'Find All',
   [';'] = 'Live RipGrep',

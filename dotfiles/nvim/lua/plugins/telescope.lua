@@ -68,13 +68,13 @@ map('n', '<Leader>bb', '<Cmd>Telescope buffers<CR>', { nowait = true })
 map(
   'n',
   '<Leader>0',
-  '<Cmd>lua require"telescope.builtin".find_files{cwd = vim.fn.stdpath("config")}<CR>',
+  '<Cmd>lua require"telescope.builtin".find_files{cwd = os.getenv("HOME").."/nix/dotfiles/nvim"}<CR>',
   { nowait = true }
 )
 map(
   'n',
   '<Leader>9',
-  '<Cmd>lua require"telescope.builtin".find_files{cwd = os.getenv("HOME").."/dotfiles"}<CR>',
+  '<Cmd>lua require"telescope.builtin".find_files{cwd = os.getenv("HOME").."/nix/dotfiles"}<CR>',
   { nowait = true }
 )
 

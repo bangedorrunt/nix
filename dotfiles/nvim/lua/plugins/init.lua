@@ -224,7 +224,7 @@ return require('packer').startup {
     --     require('auto-session').setup {
     --       auto_session_enabled = true,
     --       auto_save_enabled = true,
-    --       auto_session_root_dir = require('core.global').cache_dir..'session/'
+    --       auto_session_root_dir = ttd.paths.CACHE_DIR..'session/'
     --     }
     --     require('session-lens').setup {
     --       shorten_path = false,
@@ -257,6 +257,7 @@ return require('packer').startup {
 
     use {
       'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate',
       event = 'BufRead',
       config = function()
         require 'plugins.nvim-treesitter'
