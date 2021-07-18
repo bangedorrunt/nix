@@ -3,29 +3,7 @@
 with lib;
 
 let
-  mkOptStr = value:
-    mkOption {
-      type = with types; uniq str;
-      default = value;
-    };
-
-  mkSecret = description: default:
-    mkOption {
-      inherit description default;
-      type = with types; either str (listOf str);
-    };
-
-  mkOpt = type: default: mkOption { inherit type default; };
-
-  mkOpt' = type: default: description:
-    mkOption { inherit type default description; };
-
-  mkBoolOpt = default:
-    mkOption {
-      inherit default;
-      type = types.bool;
-      example = true;
-    };
+  inherit (lib.mine.options) mkOpt mkOpt' mkOptStr mkBoolOpt;
 
 in
 {
@@ -78,7 +56,9 @@ in
     };
     # Let Nix manage Home-Manager profiles and use global nixpkgs
     home-manager = {
-      useGlobalPkgs = true;
+      # Don't set `useGlobalPkgs`! it's not neccessary in newer HM
+      # and doens't work with configs using `nixpkgs.config`.
+      # useGlobalPkgs = true;
       useUserPackages = true;
       extraSpecialArgs = { inherit inputs lib; };
       backupFileExtension = "backup";

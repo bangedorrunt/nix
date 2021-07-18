@@ -1,5 +1,6 @@
 { config, lib, pkgs, home-manager, ... }:
 let
+  # inherit (lib.hm.file) mkOutOfStoreSymLink;
   cfg = config.my.modules.dotfiles;
 in
 

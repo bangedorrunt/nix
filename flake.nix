@@ -41,13 +41,15 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacs-overlay = {
+    /*
+      emacs-overlay = {
       type = "github";
       owner = "mjlbach";
       repo = "emacs-overlay";
       ref = "feature/flakes";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+      inputs.nixpkgs.follows = "nixpkgs";
+      };
+    */
     neuron = {
       type = "github";
       owner = "srid";
@@ -76,7 +78,8 @@
         supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
         overlays = [
           inputs.neovim-nightly-overlay.overlay
-          inputs.emacs-overlay.overlay
+          # Using Neovim for now
+          # inputs.emacs-overlay.overlay
           (import ./modules/pkgs/yabai_overlay.nix)
           (
             final: prev: {
@@ -85,13 +88,27 @@
           )
           (import ./modules/pkgs/sumneko_overlay.nix)
         ];
+        # Extend nixpkgs.lib with custom lib and HM lib
+        # HM lib will exposed as `lib.hm`
+        # Custom `./lib` will exposed as `lib.mine`
         lib = nixpkgs.lib.extend
-          (final: prev: {} // home-manager.lib);
+          (final: prev: { mine = import ./lib final; } // home-manager.lib);
 
         inherit (darwin.lib) darwinSystem;
         inherit (nixpkgs.lib) nixosSystem;
         inherit (home-manager.lib) homeManagerConfiguration;
         inherit (flake-utils.lib) eachDefaultSystem eachSystem;
+
+        # `listToAttrs` construct a set from a list specifying the names and values of each 
+        # attribute. Each element of the list should be a set consisting of a string-valued
+        # attribute name specifying the name of the attribute, and an attribute value 
+        # specifying its value
+        #
+        # Example: given
+        # builtins.listToAttrs [ { name = "foo"; value = 123; }
+        #                        { name = "bar"; value = 456; } ]
+        # ==> { foo = 123; bar = 456; }
+
         inherit (builtins) listToAttrs map;
 
         # Generate a base darwin configuration with the
@@ -100,6 +117,7 @@
           { system ? "x86_64-darwin"
           , baseModules ? [
               home-manager.darwinModules.home-manager
+              # NOTE: modules imported from here will inherit system context
               ./modules/common.nix
               ./modules/shared
               ./modules/darwin
@@ -107,7 +125,6 @@
           , extraModules ? []
           }:
             darwinSystem {
-              # system = "x86_64-darwin";
               modules = baseModules ++ extraModules
               ++ [ { nixpkgs.overlays = overlays; } ];
               specialArgs = { inherit inputs lib; };
@@ -124,7 +141,7 @@
             homeManagerConfiguration rec {
               inherit system username;
               homeDirectory = "/${homePrefix system}/${username}";
-              # extraSpecialArgs = { inherit inputs lib; };
+              extraSpecialArgs = { inherit inputs lib; };
               configuration = {
                 imports = baseModules ++ extraModules
                 ++ [ { nixpkgs.overlays = overlays; } ];
@@ -132,6 +149,7 @@
             };
       in
         {
+          lib = lib.mine;
           checks = listToAttrs (
             # Darwin checks
             (
