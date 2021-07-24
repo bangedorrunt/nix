@@ -16,6 +16,7 @@ return require('packer').startup {
     local use_with_config = function(path, name)
       use { path, config = config_of(name) }
     end
+
     use { 'nvim-lua/popup.nvim' }
     use { 'nvim-lua/plenary.nvim' }
 
@@ -52,6 +53,8 @@ return require('packer').startup {
     }
     use {
       'folke/tokyonight.nvim',
+      as = 'theme',
+      event = 'VimEnter',
       config = function()
         vim.g.tokyonight_style = 'night'
         -- Better performance
@@ -64,6 +67,7 @@ return require('packer').startup {
 
     use {
       'hoob3rt/lualine.nvim',
+      after = 'theme',
       config = function()
         require 'plugins.lualine'
       end,
@@ -80,7 +84,7 @@ return require('packer').startup {
 
     use {
       'lukas-reineke/indent-blankline.nvim',
-      event = 'BufRead',
+      after = 'theme',
       config = function()
         require 'plugins.indent-blankline'
       end,
@@ -119,6 +123,7 @@ return require('packer').startup {
 
     use {
       'karb94/neoscroll.nvim',
+      event = 'WinScrolled',
       config = function()
         -- vim.cmd[[setlocal scrolloff=0]]
         require('neoscroll').setup {
@@ -217,7 +222,9 @@ return require('packer').startup {
       config = function()
         require 'plugins.telescope'
       end,
-      requires = { { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } },
+      requires = {
+        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      },
     }
     -- use {'rmagatti/session-lens',
     --   config = function()
@@ -257,6 +264,7 @@ return require('packer').startup {
 
     use {
       'nvim-treesitter/nvim-treesitter',
+      as = 'treesitter',
       run = ':TSUpdate',
       event = 'BufRead',
       config = function()
@@ -265,13 +273,13 @@ return require('packer').startup {
     }
     use {
       'windwp/nvim-autopairs',
-      after = 'nvim-treesitter',
+      after = 'treesitter',
       config = function()
         require 'plugins.nvim-autopairs'
       end,
     }
-    use { 'windwp/nvim-ts-autotag', after = 'nvim-treesitter' }
-    use { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' }
+    use { 'windwp/nvim-ts-autotag', after = 'treesitter' }
+    use { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'treesitter' }
 
     -- TODO: Set it up
     -- use {'ray-x/lsp_signature.nvim'}

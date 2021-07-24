@@ -67,7 +67,7 @@ require('which-key').register({
       i = 'Install',
       u = 'Update',
       c = 'Compile',
-      s = 'Compile',
+      s = 'Sync',
       p = 'Profile',
     },
   },

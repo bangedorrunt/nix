@@ -1,10 +1,5 @@
 -- TELESCOPE PLUGIN
 -- ----------------
-if not packer_plugins['plenary.nvim'].loaded then
-  vim.cmd [[packadd plenary.nvim]]
-  vim.cmd [[packadd popup.nvim]]
-  vim.cmd [[packadd telescope-fzf-native.nvim]]
-end
 local map = require('core.utils').map
 local M = {}
 
@@ -24,7 +19,9 @@ M.project_files = function(opts)
 end
 
 require('telescope').setup {
-  defaults = {
+  -- Simple hack until default theme is featured
+  -- REF https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-877539724
+  defaults = require('telescope.themes').get_ivy {
     prompt_prefix = '❯ ',
     selection_caret = '❯ ',
     winblend = 0,
