@@ -175,7 +175,7 @@ local servers = {
         b.formatting.stylua.with {
           args = {
             '--config-path',
-            ttd.paths.HOME .. '/dotfiles/nvim/lua/stylua.toml',
+            ttd.paths.HOME .. '/nix/dotfiles/nvim/lua/stylua.toml',
             '-',
           },
         },
@@ -279,10 +279,10 @@ for server, config in pairs(servers) do
       u.error(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
     end
   else
-    require('null-ls').setup(vim.tbl_deep_extend('force', {
+    require('null-ls').config(vim.tbl_deep_extend('force', {}, config))
+    lspconfig['null-ls'].setup {
       on_attach = on_attach,
-      capabilities = capabilities,
-    }, config))
+    }
   end
 end
 
