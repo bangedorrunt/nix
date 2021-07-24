@@ -8,7 +8,7 @@ in
   options = with lib; {
     my.modules.yabai = {
       enable = mkEnableOption ''
-        Whether to enable dotfiles module
+        Whether to enable Yabai module
       '';
     };
   };

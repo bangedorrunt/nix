@@ -12,7 +12,7 @@ in
   options = with lib; {
     my.modules.neovim = {
       enable = mkEnableOption ''
-        Whether to enable dotfiles module
+        Whether to enable Neovim module
       '';
     };
   };

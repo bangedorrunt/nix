@@ -8,7 +8,7 @@ in
   options = with lib; {
     my.modules.goku = {
       enable = mkEnableOption ''
-        Whether to enable dotfiles module
+        Whether to enable Goku module
       '';
     };
   };
