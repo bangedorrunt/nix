@@ -9,6 +9,4 @@ Git's repo:
 - [https://github.com/glepnir/nvim](glepnir/nvim)
 - [https://github.com/akinsho/dotfiles](akinsho/dotfiles)
 
-## Long-term Goals
-
-- Write Neovim config using `fennel`
+This config is also in maintenance as I switch to `fennel`-based configuration.

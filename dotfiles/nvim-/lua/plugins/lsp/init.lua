@@ -172,19 +172,12 @@ local servers = {
         b.formatting.prettier.with {
           filetypes = { 'html', 'json', 'yaml', 'markdown' },
         },
-        b.formatting.stylua.with {
-          args = {
-            '--config-path',
-            ttd.paths.HOME .. '/nix/dotfiles/nvim/lua/stylua.toml',
-            '-',
-          },
-        },
         b.formatting.prettier_d_slim,
-        -- b.formatting.stylua,
+        b.formatting.stylua,
         b.formatting.trim_whitespace.with { filetypes = { 'tmux', 'fish', 'teal' } },
         b.formatting.shfmt,
-        b.diagnostics.write_good,
-        b.diagnostics.markdownlint,
+        -- b.diagnostics.write_good,
+        -- b.diagnostics.markdownlint,
         b.diagnostics.shellcheck.with {
           filetypes = { 'zsh', 'sh', 'bash' },
         },
