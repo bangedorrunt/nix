@@ -1,6 +1,16 @@
-{ config, lib, pkgs, home-manager, ... }:
+{ config, lib, pkgs, ... }:
+with lib;
 let
-  # inherit (lib.hm.file) mkOutOfStoreSymLink;
+
+  # Manage files with symlink
+  # Stole from: https://github.com/nix-community/home-manager/blob/master/modules/files.nix#L64
+  mkOutOfStoreSymlink = path:
+    let
+      pathStr = toString path;
+      name = lib.hm.strings.storeFileName (baseNameOf pathStr);
+    in
+      pkgs.runCommandLocal name {} ''ln -s ${escapeShellArg pathStr} $out'';
+
   cfg = config.my.modules.dotfiles;
 in
 
@@ -27,7 +37,7 @@ in
           "alacritty".source = ../../dotfiles/alacritty;
           "bat".source = ../../dotfiles/bat;
           "emacs".source = ../../dotfiles/pure-emacs;
-          "nvim".source = ../../dotfiles/nvim;
+          # "nvim".source = ../../dotfiles/nvim;
           "karabiner/karabiner.edn".source = ../../dotfiles/karabiner/karabiner.edn;
           "skhd".source = ../../dotfiles/skhd;
           "tmux".source = ../../dotfiles/tmux;

@@ -1,19 +1,19 @@
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, options, ... }:
 
 {
   imports = [
     ./dotfiles.nix
+    ./dev.nix
     ./neovim.nix
   ];
 
   my.modules = {
     dotfiles.enable = true;
+    dev.enable = true;
     neovim.enable = true;
   };
 
   my.hm.packages = with pkgs; [
-    # python with default packages
-    (python39.withPackages (ps: with ps; [ black ]))
     bat
     cachix
     curl
@@ -33,19 +33,13 @@
     httpie
     hyperfine
     jq
-    lazygit
-    neuron
     neofetch
     nixUnstable
-    nixfmt
-    nixpkgs-fmt
-    nodejs_latest
     openssh
     pandoc
     ripgrep
     rsync
     tmux
-    yarn
     zoxide
   ];
 }

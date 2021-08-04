@@ -1,7 +1,7 @@
 { inputs, config, lib, pkgs, ... }: {
   nixpkgs = {
     config = import ./config.nix;
-    overlays = [];
+    overlays = [ ];
   };
 
   nix = {
@@ -21,8 +21,9 @@
     maxJobs = 8;
     readOnlyStore = true;
     nixPath = [
-      "nixpkgs=/etc/${config.environment.etc.nixpkgs.target}"
-      "home-manager=/etc/${config.environment.etc.home-manager.target}"
+      "nixpkgs=${inputs.nixpkgs}"
+      "darwin=${inputs.darwin}"
+      "home-manager=${inputs.home-manager}"
     ];
 
     binaryCaches = [
@@ -31,7 +32,7 @@
       "https://nix-community.cachix.org"
       "https://nixpkgs.cachix.org"
       "https://babygau.cachix.org"
-      "https://srid.cachix.org"
+      # "https://srid.cachix.org"
     ];
     binaryCachePublicKeys = [
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
@@ -39,7 +40,7 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="
       "babygau.cachix.org-1:zkCsTYBSsJawIKOFe3pSYg1ZpOpwdln5DRLna7Ovx0A="
-      "srid.cachix.org-1:MTQ6ksbfz3LBMmjyPh0PLmos+1x+CdtJxA/J2W+PQxI="
+      # "srid.cachix.org-1:MTQ6ksbfz3LBMmjyPh0PLmos+1x+CdtJxA/J2W+PQxI="
     ];
 
     registry = {

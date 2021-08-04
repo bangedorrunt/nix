@@ -18,5 +18,5 @@ rec {
       setVals = filter isAttrs vals;
       nonSetVals = filter (x: !(isAttrs x)) vals;
     in
-      nonSetVals ++ flatten (map attrValuesRec setVals);
+    nonSetVals ++ flatten (map attrValuesRec setVals);
 }

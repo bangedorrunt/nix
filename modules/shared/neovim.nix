@@ -20,7 +20,6 @@ in
   config = with lib;
     mkIf cfg.enable {
       my.hm.packages = with pkgs; [
-        clang-tools # clangd
         neovim-nightly
         nodePackages.bash-language-server
         nodePackages.dockerfile-language-server-nodejs
@@ -36,7 +35,7 @@ in
         nodePackages.vscode-html-languageserver-bin
         nodePackages.vscode-json-languageserver
 
-        (callPackage ../pkgs/tailwind.nix {})
+        (callPackage ../pkgs/tailwind.nix { })
         (
           writeScriptBin "tailwind-lsp" ''
             #!/usr/bin/env sh

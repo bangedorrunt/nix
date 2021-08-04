@@ -1,11 +1,7 @@
-{ pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [
     ./core.nix
     ./brew.nix
-    ./preferences.nix
-    ./yabai.nix
-    ./goku.nix
+    ./sensible_default_macos.nix
   ];
-  my.modules.goku.enable = true;
-  my.modules.yabai.enable = true;
 }

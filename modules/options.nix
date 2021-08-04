@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, home-manager, options, ... }:
+{ config, pkgs, inputs, lib, options, ... }:
 
 with lib;
 
@@ -16,14 +16,12 @@ in
       github_username = mkOptStr "babygau";
       email = mkOptStr "braden.truong@gmail.com";
       terminal = mkOptStr "iTerm2";
-      nix_managed = mkOptStr
-        "vim: set nomodifiable : Nix managed - DO NOT EDIT - see source inside ~/dotfiles or use `:set modifiable` to force.";
       user = mkOption { type = options.users.users.type.functor.wrapped; };
       hm = {
-        file = mkOpt' attrs {} "Files to place directly in $HOME";
-        configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
-        dataFile = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
-        packages = mkOpt (listOf package) [];
+        file = mkOpt' attrs { } "Files to place directly in $HOME";
+        configFile = mkOpt' attrs { } "Files to place in $XDG_CONFIG_HOME";
+        dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
+        packages = mkOpt (listOf package) [ ];
       };
       env = mkOption {
         type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
@@ -34,11 +32,12 @@ in
             else
               (toString v)
         );
-        default = {};
+        default = { };
         description = "TODO";
       };
     };
-    hm = mkOpt attrs {};
+
+    hm = mkOpt' attrs { } "Primary user's home-manager configuration";
   };
 
   config = {
@@ -54,16 +53,18 @@ in
 
       shell = pkgs.zsh;
     };
+
     # Let Nix manage Home-Manager profiles and use global nixpkgs
     home-manager = {
       # Don't set `useGlobalPkgs`! it's not neccessary in newer HM
       # and doens't work with configs using `nixpkgs.config`.
       # useGlobalPkgs = true;
       useUserPackages = true;
-      extraSpecialArgs = { inherit inputs lib; };
+      # This caused undefined variable `hm` if I don't smash 
+      # home-manager.lib together with `nixpkgs.lib` as @kclejeune did
+      # extraSpecialArgs = { inherit inputs lib; };
       backupFileExtension = "backup";
     };
-
     # hm -> home-manager.users.<primary user>
     home-manager.users.${config.my.username} = mkAliasDefinitions options.hm;
 
@@ -77,7 +78,7 @@ in
     #   my.hm.dataFile    ->  home-manager.users.babygau.home.xdg.dataFile
     #   my.hm.packages    ->  home-manager.users.babygau.home.packages
     hm = {
-      # imports = [./shared];
+      # imports = [ ./shared ];
       xdg = {
         enable = true;
         configFile = mkAliasDefinitions options.my.hm.configFile;
@@ -90,11 +91,12 @@ in
         stateVersion =
           if pkgs.stdenv.isDarwin then "20.09" else config.system.stateVersion;
         username = config.my.username;
+        homeDirectory = config.my.user.home;
         file = mkAliasDefinitions options.my.hm.file;
         packages = mkAliasDefinitions options.my.hm.packages;
 
         sessionVariables = {
-          GPG_TTY = "/dev/ttys000";
+          # GPG_TTY = "/dev/ttys000";
           EDITOR = "nvim";
           VISUAL = "nvim";
           CLICOLOR = 1;
@@ -105,7 +107,7 @@ in
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
-        home-manager.path = ./modules/shared;
+        home-manager.path = ./shared;
       };
     };
 

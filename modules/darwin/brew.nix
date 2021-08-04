@@ -15,7 +15,7 @@ in
   homebrew = {
     enable = true;
     autoUpdate = true;
-    # cleanup = "zap";
+    cleanup = "zap";
     global = {
       brewfile = true;
       noLock = true;
@@ -28,11 +28,16 @@ in
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
+      "koekeishiya/formulae"
+      "yqrashawn/goku"
     ];
 
     brews = [
       "beeftornado/rmtree/brew-rmtree"
+      "goku"
+      "yabai"
       "mas"
+
     ];
   };
 }
