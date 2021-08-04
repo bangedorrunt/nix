@@ -25,10 +25,11 @@ fi
 # Tokyonight: e1e2e7
 
 # Dark
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#e1e2e7,bg:#1a1b26,hl:#5f87af --color=fg+:#e1e2e7,bg+:#1a1b26,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#e1e2e7,bg:#1a1b26,hl:#5f87af --color=fg+:#e1e2e7,bg+:#1a1b26,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
 
 # Light
 # export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e1e2e7,hl:#5f87af --color=fg+:#33374c,bg+:#e1e2e7,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
@@ -172,19 +173,3 @@ alias rsync='rsync -a --delete'
 alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias top='vtop'
 
-
-## Alias for neuron
-function ns() {
-  if [[ "$PWD" =~ "notetoself" ]]; then
-    nvim $(neuron search)
-  else 
-    echo 'Gotta go to "notetoself"'
-  fi
-}
-function nn() {
-  if [[ "$PWD" =~ "notetoself" ]]; then
-    neuron new
-  else 
-    echo 'Gotta go to "notetoself"'
-  fi
-}
