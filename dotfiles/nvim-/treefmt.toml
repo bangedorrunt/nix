@@ -1,0 +1,12 @@
+# One CLI to format the code tree - https://github.com/numtide/treefmt
+
+[formatter.lua]
+# Formatter to run
+command = "stylua"
+# Command-line arguments for the command
+options = []
+# Glob pattern of files to include
+includes = [ "*.lua" ]
+# Glob patterns of files to exclude
+excludes = []
+
