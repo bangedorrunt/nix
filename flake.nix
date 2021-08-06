@@ -95,14 +95,9 @@
       # otherwise build will fail. 
       # My guess is `lib` will override system lib, so some/all attributes of
       # system lib will be _undefined_, thus build error!
+      # lib = nixpkgs.lib;
       lib = nixpkgs.lib.extend
         (final: prev: { mine = import ./lib final; } // home-manager.lib);
-      /* (
-        final: prev: {
-        mine = import ./lib final;
-        # hm = home-manager.lib;
-        }
-        ); */
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
@@ -126,7 +121,7 @@
         { system ? "x86_64-darwin"
         , baseModules ? [
             # Use home-manager module
-            inputs.home-manager.darwinModules.home-manager
+            home-manager.darwinModules.home-manager
             # NOTE: modules imported from here will inherit system context
             ./modules/common.nix
             ./modules/shared
@@ -147,7 +142,7 @@
       mkHomeConfig =
         { username
         , system ? "x86_64-linux"
-        , baseModules ? [ ./modules/hm ./modules/shared ]
+        , baseModules ? [ ./modules/hm ]
         , extraModules ? [ ]
         }:
         homeManagerConfiguration rec {

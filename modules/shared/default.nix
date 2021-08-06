@@ -1,17 +1,10 @@
 { config, inputs, lib, pkgs, options, ... }:
-
 {
   imports = [
     ./dotfiles.nix
     ./dev.nix
     ./neovim.nix
   ];
-
-  my.modules = {
-    dotfiles.enable = true;
-    dev.enable = true;
-    neovim.enable = true;
-  };
 
   my.hm.packages = with pkgs; [
     bat
@@ -42,4 +35,5 @@
     tmux
     zoxide
   ];
+
 }

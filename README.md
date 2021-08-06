@@ -41,7 +41,7 @@ nix flake update --experimantal-features 'nix-command flakes'
 - Build
 
 ```bash
-nix build .\#darwinConfigurations.imac.config.system.build.toplevel --experimental-features 'nix-command flakes'
+nix build .\#me_at_home_with_macos
 ```
 
 ## Uninstall Nix

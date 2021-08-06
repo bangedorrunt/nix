@@ -32,6 +32,7 @@ in
         nixfmt
         nixpkgs-fmt
         (callPackage ../pkgs/fnlfmt.nix { })
+        shfmt
         treefmt
       ];
     };

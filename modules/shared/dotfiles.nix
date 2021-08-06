@@ -1,16 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, home-manager, ... }:
 with lib;
 let
-
+  # FIXME mkOutOfStoreSymLink attribute is missing
   # Manage files with symlink
   # Stole from: https://github.com/nix-community/home-manager/blob/master/modules/files.nix#L64
-  mkOutOfStoreSymlink = path:
-    let
-      pathStr = toString path;
-      name = lib.hm.strings.storeFileName (baseNameOf pathStr);
-    in
-      pkgs.runCommandLocal name {} ''ln -s ${escapeShellArg pathStr} $out'';
-
+  # inherit (config.lib.file) mkOutOfStoreSymLink;
+  home = config.my.user.home;
   cfg = config.my.modules.dotfiles;
 in
 
@@ -25,15 +20,17 @@ in
 
   config = with lib;
     mkIf cfg.enable {
+
       my.hm = {
         file = {
-          ".zshrc".source = ../../dotfiles/.zshrc;
+          ".zshrc".source = config.lib.file.mkOutOfStoreSymLink ../../dotfiles/.zshrc;
           ".tmux.conf".source = ../../dotfiles/tmux/.tmux.conf;
           ".skhdrc".source = ../../dotfiles/skhd/skhdrc;
         };
 
         configFile = {
-          "nixpkgs/config.nix".source = ../config.nix;
+          "nixpkgs/config.nix".source = ../../modules/config.nix;
+
           "alacritty".source = ../../dotfiles/alacritty;
           "bat".source = ../../dotfiles/bat;
           "emacs".source = ../../dotfiles/pure-emacs;

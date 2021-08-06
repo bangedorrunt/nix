@@ -58,11 +58,11 @@ in
     home-manager = {
       # Don't set `useGlobalPkgs`! it's not neccessary in newer HM
       # and doens't work with configs using `nixpkgs.config`.
-      # useGlobalPkgs = true;
+      useGlobalPkgs = true;
       useUserPackages = true;
       # This caused undefined variable `hm` if I don't smash 
       # home-manager.lib together with `nixpkgs.lib` as @kclejeune did
-      # extraSpecialArgs = { inherit inputs lib; };
+      extraSpecialArgs = { inherit inputs lib; };
       backupFileExtension = "backup";
     };
     # hm -> home-manager.users.<primary user>
@@ -107,7 +107,7 @@ in
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
-        home-manager.path = ./shared;
+        home-manager.path = "${self}/modules/shared";
       };
     };
 

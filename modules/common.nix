@@ -1,10 +1,14 @@
-# WARNING: This file is shared among OS such as macOS, nixOS which use
+# WARNING: This file is shared among system configuration such as macOS, nixOS which use
 # home-manager **module**. Don't mess this with `homeConfiguration` because some
 # of attributes don't exist in home-manager
 { inputs, config, pkgs, lib, options, ... }:
 
 {
   imports = [ ./options.nix ./nixpkgs.nix ./overlays.nix ];
+
+  # Comment out this line if I want home-manager manage itself
+  # hm = import ./shared;
+
   programs.zsh = {
     enable = true;
   };

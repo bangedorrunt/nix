@@ -1,14 +1,12 @@
 # NOTE: please compare `modules/hm/options.nix` and `modules/options.nix` to see
 # the difference between home-manager as [nixos/darwin] module and home-manager
 # itself
-
 { config, system, pkgs, inputs, lib, options, ... }:
 
 with lib;
 
 let
   inherit (lib.mine.options) mkOpt mkOpt' mkOptStr mkBoolOpt;
-
 in
 {
   options = with types; {
@@ -29,26 +27,10 @@ in
         dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
         packages = mkOpt (listOf package) [ ];
       };
-      env = mkOption {
-        type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
-        apply = mapAttrs (
-          n: v:
-            if isList v then
-              concatMapStringsSep ":" (x: toString x) v
-            else
-              (toString v)
-        );
-        default = { };
-        description = "TODO";
-      };
     };
-
-    # hm = mkOpt' attrs {} "Primary user's home-manager configuration";
   };
 
   config = {
-    # my.user -> users.users.<primary user>
-    # users.users.${config.my.username} = mkAliasDefinitions options.my.user;
     my.user = {
       description = config.my.name;
       home =
@@ -99,5 +81,10 @@ in
       };
     };
 
+    programs = {
+      # Let Home Manager install and manage itself.
+      home-manager.enable = true;
+      # home-manager.path = https://github.com/rycee/home-manager/master.tar.gz;
+    };
   };
 }

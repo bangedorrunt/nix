@@ -35,22 +35,22 @@ rec {
   mapFiles = fn: dir:
     let
     in
-      mapAttrs'
-        (
-          file: type:
-            let
-              path = "${toString dir}/${file}";
-              value = fn path;
-            in
-              if isNixFile file type then
-                # If it's a .nix file, add its value
-                nameValuePair (removeSuffix ".nix" file) value
-              else
-                # If it's a directory with a default.nix, add ${path}/default.nix as its value
-                nameValuePair file value
-        )
-        # Apply this map to a call to readDir, filtering only for .nix files and directories
-        (readDirNix dir);
+    mapAttrs'
+      (
+        file: type:
+          let
+            path = "${toString dir}/${file}";
+            value = fn path;
+          in
+          if isNixFile file type then
+          # If it's a .nix file, add its value
+            nameValuePair (removeSuffix ".nix" file) value
+          else
+          # If it's a directory with a default.nix, add ${path}/default.nix as its value
+            nameValuePair file value
+      )
+      # Apply this map to a call to readDir, filtering only for .nix files and directories
+      (readDirNix dir);
 
   # Same as mapFiles, but apply recursively onto each directory
   #
@@ -67,7 +67,7 @@ rec {
   #     };
   #   }
   mapFilesRec = fn: dir:
-  # Pass the mapping to removeAttrs since there might be a null pair added in
+    # Pass the mapping to removeAttrs since there might be a null pair added in
     removeAttrs
       (
         mapAttrs'
@@ -77,15 +77,15 @@ rec {
                 path = "${toString dir}/${file}";
                 value = fn path;
               in
-                if isNixFile file type then
-                  # If it's a .nix file that's not default.nix, add its value
-                  nameValuePair (removeSuffix ".nix" file) value
-                else if type == "directory" then
-                  # If it's a directory, add its value recursively
-                  nameValuePair file (mapFilesRec fn path)
-                else
-                  # Otherwise, add nothing
-                  nameValuePair "" null
+              if isNixFile file type then
+              # If it's a .nix file that's not default.nix, add its value
+                nameValuePair (removeSuffix ".nix" file) value
+              else if type == "directory" then
+              # If it's a directory, add its value recursively
+                nameValuePair file (mapFilesRec fn path)
+              else
+              # Otherwise, add nothing
+                nameValuePair "" null
           )
           (readDir dir)
       ) [ "" ];

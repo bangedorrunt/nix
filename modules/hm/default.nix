@@ -3,5 +3,6 @@
 {
   imports = [
     ./options.nix
+    ../shared
   ];
 }
