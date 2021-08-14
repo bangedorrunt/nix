@@ -13,23 +13,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# FZF CONFIG
+# Fzf config
 # ######################
 
-# Iceberg Light: e8e9ec
-# Onehalf: 282c34
-# Onehalf Light: fafafa
-# Github Android: 17181c
-# Github Dark: 1e2429
-# Sonokai: 2c2e33
-# Tokyonight: e1e2e7
-
-# Dark
-# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#e1e2e7,bg:#1a1b26,hl:#5f87af --color=fg+:#e1e2e7,bg+:#1a1b26,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
-
-# Light
-# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#33374c,bg:#e1e2e7,hl:#5f87af --color=fg+:#33374c,bg+:#e1e2e7,hl+:#5fd7ff --color=info:#3f83a6,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
-
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg+:#cc1919,bg+:-1,hl+:#5fd7ff' 
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
@@ -37,11 +24,11 @@ export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --e
 
 alias fv='nvim $(fzf)'
 
-# ZOXIDE CONFIG
+# Zoxide config
 # ######################
 eval "$(zoxide init zsh --cmd j)"
 
-# GOKU
+# Goku
 # #####################
 export GOKU_EDN_CONFIG_FILE="$HOME/nix/dotfiles/karabiner/karabiner.edn"
 
@@ -89,7 +76,7 @@ SAVEHIST=100000
 # Vi mode
 zinit wait lucid light-mode for OMZP::vi-mode
 
-# FZF completion
+# Fzf completion
 zinit wait lucid light-mode for \
   id-as'fzf/completion' https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
   id-as'fzf/key-bindings' https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
