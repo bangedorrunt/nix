@@ -27,7 +27,13 @@ in
     neovim.enable = true;
   };
 
-  system.activationScripts.postUserActivation.text = ''
+  # hm.programs.zsh.enable = true;
+
+  # Use script at system context
+  # system.activationScripts.postUserActivation.text = ''
+
+  # Use script at hm context
+  hm.home.activation.symDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     echo ":: -> Running dotfiles activationScript..."
 
     # Handle mutable configs
@@ -81,7 +87,7 @@ in
       ln -sf ${NIX_DIR}/dotfiles/tmux/.tmux.conf ${HOME_DIR}/.tmux.conf
     fi
 
-    if [ ! -e "${HOME_DIR}/.config/.skhdrc" ]; then
+    if [ ! -e "${HOME_DIR}/.skhdrc" ]; then
       echo ":: -> Linking .skhdrc file..."
       ln -sf ${NIX_DIR}/dotfiles/skhd/skhdrc ${HOME_DIR}/.skhdrc
     fi

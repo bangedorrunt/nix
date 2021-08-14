@@ -19,6 +19,9 @@ in
   config = with lib;
     mkIf cfg.enable {
       my.hm.packages = with pkgs; [
+        # Used system git for keychain integration
+        # git 
+        gh
         # clangd
         clang-tools
         # python with default packages

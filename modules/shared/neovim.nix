@@ -21,6 +21,7 @@ in
     mkIf cfg.enable {
       my.hm.packages = with pkgs; [
         neovim-nightly
+        tree-sitter
         nodePackages.bash-language-server
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.yaml-language-server

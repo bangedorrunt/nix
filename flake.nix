@@ -23,7 +23,7 @@
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    stable.url = "github:nixos/nixpkgs/nixos-20.09";
+    stable.url = "github:nixos/nixpkgs/nixos-21.05";
 
     flake-compat = {
       url = "github:edolstra/flake-compat";

@@ -28,7 +28,7 @@
     jq
     neofetch
     nixUnstable
-    openssh
+    # openssh
     pandoc
     ripgrep
     rsync
