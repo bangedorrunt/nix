@@ -1,0 +1,3 @@
+(module init)
+
+(require :core)
