@@ -88,8 +88,7 @@ in
       home = {
         # Necessary for home-manager to work with flakes, otherwise it will
         # look for a nixpkgs channel.
-        # stateVersion = if pkgs.stdenv.isDarwin then "20.09" else config.system.stateVersion;
-        stateVersion = "21.05";
+        stateVersion = if pkgs.stdenv.isDarwin then "20.09" else config.system.stateVersion;
         username = config.my.username;
         homeDirectory = config.my.user.home;
         file = mkAliasDefinitions options.my.hm.file;
@@ -107,7 +106,7 @@ in
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
-        home-manager.path = "${self}/modules/shared";
+        # home-manager.path = "${self}/modules/shared";
       };
     };
 

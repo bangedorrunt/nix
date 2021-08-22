@@ -1,4 +1,3 @@
-
 #! /usr/bin/env bash
 
 echo 'Remove old packages but current one'

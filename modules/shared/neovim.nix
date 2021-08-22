@@ -22,6 +22,7 @@ in
       my.hm.packages = with pkgs; [
         neovim-nightly
         tree-sitter
+        universal-ctags
         nodePackages.bash-language-server
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.yaml-language-server
@@ -47,7 +48,7 @@ in
         rnix-lsp
         stylua
         clojure-lsp
-        sumneko-lua-language-server
+        # (if pkgs.stdenv.isDarwin then pkgs.sumneko-lua-language-server-macos else pkgs.sumneko-lua-language-server)
       ];
     };
 }
