@@ -1,6 +1,6 @@
 (module plugins.gitsigns
-        {autoload {gitsigns gitsigns}
-         require-macros [core.macros]})
+  {autoload {gitsigns gitsigns}})
+
 (gitsigns.setup {:signs {:add {:hl :GitGutterAdd :text "▋"}
                          :change {:hl :GitGutterChange
                                   :text "▋"}

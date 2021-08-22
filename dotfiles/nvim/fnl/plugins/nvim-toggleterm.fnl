@@ -1,5 +1,6 @@
 (module plugins.nvim-toggleterm
-        {autoload {toggleterm toggleterm}})
+  {autoload {toggleterm toggleterm}})
+
 (toggleterm.setup {:size 20
                    :hide_numbers true
                    :open_mapping :<C-t>

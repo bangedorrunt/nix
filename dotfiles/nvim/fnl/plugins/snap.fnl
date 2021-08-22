@@ -1,4 +1,5 @@
-(module plugin.snap {autoload {snap snap}})
+(module plugins.snap
+  {autoload {snap snap}})
 
 ;; Small actions system
 (def- actions {})
@@ -29,11 +30,14 @@
       preview-help (snap.get :preview.help)
       preview-vimgrep (snap.get :preview.vimgrep)
       preview-jumplist (snap.get :preview.jumplist)]
+
   (defn- create [config]
          (snap.create config {:layout bottom-layout :reverse true}))
+
   ;; Until camspiers fix this
   (def- reverse true)
   (def- args [:--hidden :--follow :--iglob "!{.git,node_modules}/**"])
+
   ;; Add my defaults
   (def- file (snap.config.file:with {:preview true
                                      :consumer :fzy
@@ -41,6 +45,7 @@
                                      :layout bottom-layout
                                      :prompt :Snap
                                      :suffix " ❯"}))
+
   (def- vimgrep (snap.config.vimgrep:with {: reverse
                                            :layout bottom-layout
                                            :limit 50000

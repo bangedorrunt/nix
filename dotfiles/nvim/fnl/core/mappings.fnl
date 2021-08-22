@@ -1,9 +1,14 @@
-(module core.mappings {require-macros [core.macros]})
+(module core.mappings)
+
+(import-macros {: let!
+                : nmap!
+                : noremap!}
+               :core.macros)
 
 ;; DEFAULT MAP
 ;; -----------
-(let! mapleader " ")
-(let! maplocalleader ",")
+(let! mapleader " "
+      maplocalleader ",")
 
 ;; Disable SPC key
 ;; Note: `which-key` already implemented this
@@ -17,21 +22,21 @@
 (noremap! [n] "<ESC>" "<Cmd>noh<CR><ESC>")
 
 ;; Break lines in normmal mode
-(map! [n] "o" "o<ESC>")
-(map! [n] "O" "O<ESC>")
+(nmap! [n] "o" "o<ESC>")
+(nmap! [n] "O" "O<ESC>")
 
 ;; SEE https://dev.to/snawaz/comment/pa71
 ;; (noremap! [n] "o" ":<C-u>call append(line(".")   repeat([""] v:count1))<CR>")
 ;; (noremap! [n] "O" ":<C-u>call append(line(".")-1   repeat([""] v:count1))<CR>")
 
 ;; Vim map
-(map! [n] "Y" "y$")
-(map! [n] "<C-h>" "<C-w>h")
-(map! [n] "<C-l>" "<C-w>l")
-(map! [n] "<C-j>" "<C-w>j")
-(map! [n] "<C-k>" "<C-w>k")
-(map! [n] "<A-[>" "<Cmd>vertical resize -5<CR>")
-(map! [n] "<A-]>" "<Cmd>vertical resize +5<CR>")
+;; (nmap! [n] "Y" "y$")
+(nmap! [n] "<C-h>" "<C-w>h")
+(nmap! [n] "<C-l>" "<C-w>l")
+(nmap! [n] "<C-j>" "<C-w>j")
+(nmap! [n] "<C-k>" "<C-w>k")
+(nmap! [n] "<A-[>" "<Cmd>vertical resize -5<CR>")
+(nmap! [n] "<A-]>" "<Cmd>vertical resize +5<CR>")
 ;; Insert
 (noremap! [i] "<C-w>" "<C-[>diwa")
 (noremap! [i] "<C-h>" "<BS>")
@@ -64,9 +69,9 @@
 ;; ------------------------
 ;; Quit
 ;; ------------------------
-(map! [n] "<Leader>qq" ":<C-u>confirm qa<CR>")
-(map! [n] "<Leader>qQ" ":<C-u>qa!<CR>")
-(map! [n] "<Leader>qs" ":<C-u>wq<CR>")
+(noremap! [n] "<Leader>qq" ":<C-u>confirm qa<CR>")
+(noremap! [n] "<Leader>qQ" ":<C-u>qa!<CR>")
+(noremap! [n] "<Leader>qs" ":<C-u>wq<CR>")
 
 ;; ------------------------
 ;; FILE & BUFFER NAVIGATION
@@ -108,11 +113,11 @@
 ;; ------------------------
 ;; Packer
 
-(noremap! [n] "<Leader>hpu" "<Cmd>PackerUpdate<CR>" :nowait)
-(noremap! [n] "<Leader>hpi" "<Cmd>PackerInstall<CR>" :nowait)
-(noremap! [n] "<Leader>hpc" "<Cmd>PackerCompile<CR>" :nowait)
-(noremap! [n] "<Leader>hps" "<Cmd>PackerSync<CR>" :nowait)
-(noremap! [n] "<Leader>hpp" "<Cmd>PackerProfile<CR>" :nowait)
+(noremap! [n :nowait] "<Leader>hpu" "<Cmd>PackerUpdate<CR>")
+(noremap! [n :nowait] "<Leader>hpi" "<Cmd>PackerInstall<CR>")
+(noremap! [n :nowait] "<Leader>hpc" "<Cmd>PackerCompile<CR>")
+(noremap! [n :nowait] "<Leader>hps" "<Cmd>PackerSync<CR>")
+(noremap! [n :nowait] "<Leader>hpp" "<Cmd>PackerProfile<CR>")
 
 ;; ------------------------
 ;; Project

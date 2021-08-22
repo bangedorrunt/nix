@@ -1,5 +1,7 @@
-(module plugins.nvim-compe {autoload {nvim-compe compe}
-                            require-macros [core.macros]})
+(module plugins.nvim-compe
+  {autoload {nvim-compe compe}})
+
+(import-macros {: nmap! : noremap! : t} :core.macros)
 
 (nvim-compe.setup
   {:enabled true
@@ -23,36 +25,50 @@
             :calc true
             :love true}})
 
-(noremap! [i] "<C-Space>" "compe#complete()" :expr :silent)
-(noremap! [i] "<C-e>" "compe#close('<C-e>')" :expr :silent)
-;;(noremap! [i] "<CR>" "compe#confirm('<CR>')" :expr :silent)
-(noremap! [i] "<C-f>" "compe#scroll({'delta': +4})" :expr :silent)
-(noremap! [i] "<C-d>" "compe#scroll({'delta': -4})" :expr :silent)
+(noremap! [i :expr :silent] "<C-Space>" "compe#complete()")
+(noremap! [i :expr :silent] "<C-e>" "compe#close('<C-e>')")
+;; (noremap! [i :expr :silent] "<CR>" "compe#confirm('<CR>')")
+(noremap! [i :expr :silent] "<C-f>" "compe#scroll({'delta': +4})")
+(noremap! [i :expr :silent] "<C-d>" "compe#scroll({'delta': -4})")
 
 (defn- check-back-space []
   (let [col (- (vim.fn.col ".") 1)]
     (if (or (= col 0) (: (: (vim.fn.getline ".") :sub col col) :match "%s"))
-        true false)))	
+        true false)))
+;; luasnip 
+;; (set _G.tab_complete
+;;   (fn []
+;;     (if (= (vim.fn.pumvisible) 1) (t :<C-n>)
+;;       (and luasnip (luasnip.expand_or_jumpable)) (t :<Plug>luasnip-expand-or-jump)
+;;       (check-back-space) (t :<Tab>)
+;;       ((. vim.fn "compe#complete")))))
 
-(set _G.tab_complete 
-    (fn []
-      (if (= (vim.fn.pumvisible) 1)
-            (t "<C-n>")
-          (= (vim.fn.call "vsnip#available" { 1 1 }) 1)
-            (t "<Plug>(vsnip-expand-or-jump)")
-          (check-back-space)
-            (t "<Tab>")
-          ((. vim.fn "compe#complete")))))
+;; (set _G.s_tab_complete 
+;;   (fn []
+;;     (if (= (vim.fn.pumvisible) 1) (t :<C-p>)
+;;       (and luasnip (luasnip.jumpable (- 1))) (t :<Plug>luasnip-jump-prev)
+;;       (t :<S-Tab>))))
 
-(set _G.s_tab_complete 
-    (fn []
-      (if (= (vim.fn.pumvisible) 1)
-            (t "<C-p>")
-          (= (vim.fn.call "vsnip#jumpable" { 1 -1 }) 1)
-            (t "<Plug>(vsnip-jump-prev)")
-         (t "<S-Tab>"))))
+;; vs-snip
+(set _G.tab_complete
+  (fn []
+    (if (= (vim.fn.pumvisible) 1)
+          (t "<C-n>")
+        (= (vim.fn.call "vsnip#available" { 1 1 }) 1)
+          (t "<Plug>(vsnip-expand-or-jump)")
+        (check-back-space)
+          (t "<Tab>")
+        ((. vim.fn "compe#complete")))))
 
-(noremap! [is] "<Tab>" "v:lua.tab_complete()" :expr :silent)
-(noremap! [is] "<S-Tab>" "v:lua.s_tab_complete()":expr :silent)
+(set _G.s_tab_complete
+  (fn []
+    (if (= (vim.fn.pumvisible) 1)
+          (t "<C-p>")
+        (= (vim.fn.call "vsnip#jumpable" { 1 -1 }) 1)
+          (t "<Plug>(vsnip-jump-prev)")
+        (t "<S-Tab>"))))
+
+(noremap! [is :expr :silent] "<Tab>" "v:lua.tab_complete()")
+(noremap! [is :expr :silent] "<S-Tab>" "v:lua.s_tab_complete()")
 
 (vim.cmd "autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()")

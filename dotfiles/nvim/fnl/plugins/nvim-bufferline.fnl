@@ -1,6 +1,5 @@
-(module plugins.bufferline
-        {autoload {bufferline bufferline}
-         require-macros [core.macros]})
+(module plugins.nvim-bufferline
+  {autoload {bufferline bufferline}})
 
 (bufferline.setup {:options {:buffer_close_icon :x
                              :modified_icon "+"

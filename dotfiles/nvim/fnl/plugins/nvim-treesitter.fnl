@@ -1,6 +1,11 @@
 (module plugins.nvim-treesitter
-        {autoload {treesitter nvim-treesitter.configs}
-         require-macros [core.macros]})
+  {autoload {treesitter nvim-treesitter.configs}})
+
+(import-macros {: set!} :core.macros)
+
+(set! foldmethod :expr)
+(set! foldexpr "nvim_treesitter#foldexpr()")
+
 ;; SEE: https://github.com/folke/dot/blob/master/config/nvim/lua/config/treesitter.lua
 (treesitter.setup
  {;; NOTE: if neovim is unresponsive and slow
@@ -44,6 +49,3 @@
             :extended_mode true
             :max_file_lines 1000}
   :context_commentstring {:enable true}})
-
-(set! foldmethod :expr)
-(set! foldexpr "nvim_treesitter#foldexpr()")

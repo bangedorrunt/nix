@@ -1,5 +1,7 @@
 (module plugins.kommentary
-        {autoload {kommentary kommentary.config} require-macros [core.macros]})
+  {autoload {kommentary kommentary.config}})
+
+(import-macros {: let! : nmap!} :core.macros)
 
 (let! kommentary_create_default_mappings false)
 
@@ -13,6 +15,6 @@
       (kommentary.configure_language {:single_line_comment_string ";;"})))
 
 ;; SEE: https://github.com/b3nj5m1n/kommentary/issues/20#issuecomment-774664395
-(map! [n] :gcc :<Plug>kommentary_line_default)
-(map! [n] :gc :<Plug>kommentary_motion_default)
-(map! [v] :gc :<Plug>kommentary_visual_default<C-c>)
+(nmap! [n] :gcc :<Plug>kommentary_line_default)
+(nmap! [n] :gc :<Plug>kommentary_motion_default)
+(nmap! [v] :gc :<Plug>kommentary_visual_default<C-c>)

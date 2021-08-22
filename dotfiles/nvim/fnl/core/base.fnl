@@ -1,4 +1,6 @@
-(module core.base {require-macros [core.macros]})
+(module core.base)
+
+;; (import-macros {: let!} :core.macros)
 
 (def- os-name (. (vim.loop.os_uname) :sysname))
 
@@ -31,7 +33,7 @@
 ;; Because this is one-off setup so it's better to do with external shell script
 ;; KEEP for reference only
 ;; Create cache dir and subs dir
-;; (defn- createdir []
+;; (fn createdir []
 ;;        (let [CACHE_DIR tdt.paths.CACHE_DIR
 ;;              NVIM_DATA_DIR [(.. CACHE_DIR path-sep :backup)
 ;;                             (.. CACHE_DIR path-sep :session)
@@ -67,10 +69,16 @@
                     :rrhelper
                     :spellfile_plugin
                     :matchit]
-         providers [:perl :python :python3 :node :ruby]]
+         providers [:perl
+                    :python
+                    :python3
+                    :node
+                    :ruby]]
      (each [_ v (ipairs built-ins)]
        (let [b (.. :loaded_ v)]
          (tset vim.g b 1)))
      (each [_ v (ipairs providers)]
        (let [p (.. :loaded_ v :_provider)]
          (tset vim.g p 0))))))
+
+;; (let! g/python3_host_prog (.. tdt.paths.HOME "/.venv/bin/python"))

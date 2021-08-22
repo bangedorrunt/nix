@@ -1,4 +1,5 @@
-(module plugins.lualine {autoload {lualine lualine}})
+(module plugins.lualine
+  {autoload {lualine lualine}})
 
 ;; Set up lualine
 (lualine.setup {:options  {:theme "tokyonight"

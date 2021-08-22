@@ -1,5 +1,5 @@
 (module plugins.lsp.diagnostics
-  {require-macros [core.macros]})
+  {autoload {cljfun bulb}})
 
 (defn setup []
   (tset vim.lsp.handlers :textDocument/publishDiagnostics
@@ -8,8 +8,16 @@
                        :update_in_insert false
                        :virtual_text {:spacing 4 :prefix "●"}
                        :severity_sort true}))
-  (def- signs {:Error " " :Warning " " :Hint " " :Information " "})
+
+  (def signs {:Error " " 
+               :Warning " " 
+               :Hint " " 
+               :Information " "})
+
   (each [type icon (pairs signs)]
-    (def- hl (.. :LspDiagnosticsSign type))
-    (vim.fn.sign_define hl {:text icon :texthl hl :numhl ""}))	
-  )
+    (def hl (.. :LspDiagnosticsSign type))
+    (->> {:text icon
+         :texthl hl 
+         :numhl ""}
+        (vim.fn.sign_define hl))))
+

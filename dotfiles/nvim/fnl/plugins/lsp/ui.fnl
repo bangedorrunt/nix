@@ -1,19 +1,21 @@
-(module plugins.lsp.ui {autoload {lsp-diagnostics plugins.lsp.diagnostics
-                                  lsp-kinds plugins.lsp.kinds}
-                        require-macros [core.macros]})
+(module plugins.lsp.ui
+  {autoload {lsp-diagnostics plugins.lsp.diagnostics
+             lsp-kinds plugins.lsp.kinds}})
 
-(def lsp vim.lsp)
-(def api vim.api)
+(import-macros {: nmap! : noremap! : command!} :core.macros)
+
+(def- lsp vim.lsp)
+(def- api vim.api)
 
 (if lsp.setup
-    (lsp.setup {:floating_preview {:border {1 "┌"
-                                            2 "─"
-                                            3 "┐"
-                                            4 "│"
-                                            5 "┘"
-                                            6 "─"
-                                            7 "└"
-                                            8 "│"}}
+    (lsp.setup {:floating_preview {:border ["┌"
+                                            "─"
+                                            "┐"
+                                            "│"
+                                            "┘"
+                                            "─"
+                                            "└"
+                                            "│"]}
                 :diagnostics {:signs {:error " "
                                       :warning " "
                                       :hint " "
@@ -77,9 +79,9 @@
        (go-to-diagnostic (or (lsp.diagnostic.get_prev_pos)
                              (lsp.diagnostic.get_next_pos))))
 
-(tset tdt :lsp {:popup_opts popup-opts
-                :next_diagnostic next-diagnostic
-                :prev_diagnostic prev-diagnostic})
+(tset tdt :lsp {: popup-opts
+                : next-diagnostic
+                : prev-diagnostic})
 
 ;; More general LSP commands
 
@@ -94,7 +96,7 @@
 (command! LspLog "call v:lua.open_lsp_log()")
 (command! LspRestart "call v:lua.reload_lsp()")
 
-(noremap! [n] :<Leader>li :<Cmd>LspInfo<CR> :nowait)
-(noremap! [n] :<Leader>ls :<Cmd>LspStart<CR> :nowait)
-(noremap! [n] :<Leader>ll :<Cmd>LspLog<CR> :nowait)
-(noremap! [n] :<Leader>lr :<Cmd>LspRestart<CR> :nowait)
+(noremap! [n :nowait] :<Leader>li :<Cmd>LspInfo<CR>)
+(noremap! [n :nowait] :<Leader>ls :<Cmd>LspStart<CR>)
+(noremap! [n :nowait] :<Leader>ll :<Cmd>LspLog<CR>)
+(noremap! [n :nowait] :<Leader>lr :<Cmd>LspRestart<CR>)

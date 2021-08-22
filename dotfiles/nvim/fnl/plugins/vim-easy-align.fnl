@@ -1,4 +1,5 @@
-(module plugins.vim-easy-align
-        {require-macros [core.macros]})
+(module plugins.vim-easy-align)
 
-(map! [nx] "<Leader>xa" "<Plug>(EasyAlign)")
+(import-macros {: noremap! : nmap!} :core.macros)
+
+(noremap! [nx] "<Leader>xa" "<Plug>(EasyAlign)")

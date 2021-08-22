@@ -1,5 +1,8 @@
-(module core.events
-        {require-macros [core.macros]})
+(module core.autocmds)
+
+(import-macros {: autocmd! : augroup!
+                : set! : set-local!}
+               :core.macros)
 
 ;; Smart `q` close windows
 (autocmd! FileType [help startuptime qf lspinfo] "nnoremap <buffer><silent> q :close<CR>")
@@ -46,10 +49,10 @@
                               markdown]
                     #(set-local! colorcolumn [])))
 
-;; Remove highlight after cursor stop moving
-(augroup! disable-highlight-after-cursor-movement
-          (autocmd! CursorHold * "set nohlsearch | let @/=''")
-          (autocmd! CursorMoved * "set hlsearch"))
+;; Remove highlight 
+(augroup! clear-hl-search
+          (autocmd! CmdlineEnter ["/" "?"] "set hlsearch")
+          (autocmd! CmdlineLeave ["/" "?"] "set nohlsearch"))
 
 ;; Set terminal options
 (augroup! terminal-options

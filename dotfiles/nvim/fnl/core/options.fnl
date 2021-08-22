@@ -1,4 +1,6 @@
-(module core.options {require-macros [core.macros]})
+(module core.options)
+
+(import-macros {: set! : set-local!} :core.macros)
 
 ; COLORS
 (set! syntax "enable")
@@ -126,7 +128,7 @@
 (set! grepprg "rg --hidden --vimgrep --smart-case --")
 
 ; FOLDNG
-(set! fen)
+(set! fen false)
 (set! foldlevelstart 99) ;; Start with everything unfold
 (set! foldtext #(vim.fn.printf "  %-6d%s"
                                (- vim.v.foldend (+ vim.v.foldstart 1))
@@ -146,12 +148,12 @@
 (set! breakindentopt "shift:2,min:20")
 
 ; INVISIBLES
+(set! list)
 (set! listchars {:tab "»·"
                  :nbsp "+"
                  :trail "·"
                  :extends "→"
                  :precedes "←"})
-(set! :list)
 (set! fillchars  {:vert "▕"
                   :fold "·"
                   :diff ""

@@ -1,12 +1,20 @@
 (module plugins.which-key
-        {autoload {which-key which-key}
-         require-macros [core.macros]})
+  {autoload {which-key which-key}})
 
 (which-key.setup {:plugins  {:marks  false
                              :registers false}
                   :key_labels  {:<space>  "SPC"}
                   :icons  {:separator  " "}
                   :window  {:border  "single"}})
+; Compile error in /Users/babygau/nix/dotfiles/nvim/fnl/plugins/which-key.fnl:2
+;   unknown global in strict mode: which-key
+; 
+; (local which-key (require :which-key))
+;                                                                                                                         ^
+; * Try looking to see if there's a typo.
+; * Try using the _G table instead, eg. _G.which-key if you really want a global.
+; * Try moving this code to somewhere that which-key is in scope.
+; * Try binding which-key as a local in the scope of this code.
 
 (which-key.register {:1 "which_key_ignore"
                      :2 "which_key_ignore"

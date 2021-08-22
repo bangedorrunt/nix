@@ -1,5 +1,6 @@
-(module plugins.vim-sandwich
-        {:require-macros [core.macros]})
+(module plugins.vim-sandwich)
+
+(import-macros {: let!} :core.macros)
 
 (def- recipes
   [; default
