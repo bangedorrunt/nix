@@ -12,7 +12,7 @@ rm -rf "$CACHE_DIR/log"
 rm -rf "$CACHE_DIR/lsp.log"
 rm -rf "$CACHE_DIR/packer.nvim.log"
 
-if [ ! -d "./lua" ]; then
+if [ -d "./lua" ]; then
 	rm -rf "./lua"
 	echo "Removing lua folder ..."
 fi
