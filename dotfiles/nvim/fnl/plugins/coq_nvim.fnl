@@ -10,6 +10,6 @@
 
 (noremap! [is :expr :silent] "<Tab>" #(if (= (vim.fn.pumvisible) 1) (t "<C-n>") (t "<Tab>")))
 (noremap! [is :expr :silent] "<S-Tab>" #(if (= (vim.fn.pumvisible) 1) (t "<C-p>") (t "<BS>")))
-(noremap! [is :expr :silent] "<Esc>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e>") (t "<Esc>")))
+(noremap! [is :expr :silent] "<Esc>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><Esc>") (t "<Esc>")))
 (noremap! [is :expr :silent] "<C-c>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><C-c>") (t "<C-c>")))
 (noremap! [is :expr :silent] "<BS>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><BS>") (t "<BS>")))

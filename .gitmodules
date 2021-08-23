@@ -1,4 +1,0 @@
-[submodule "cljlib"]
-  path = dotfiles/nvim/fnl/cljlib
-  url = https://github.com/babygau/fennel-cljlib
-  branch = tdt
