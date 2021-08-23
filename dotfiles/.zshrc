@@ -6,30 +6,25 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 
-# Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+### Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Fzf config
-# ######################
-
+### Fzf config
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg+:#cc1919,bg+:-1,hl+:#5fd7ff' 
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --exclude .git"
-
 alias fv='nvim $(fzf)'
 
-# Zoxide config
-# ######################
+### Zoxide config
 eval "$(zoxide init zsh --cmd j)"
 
 # Goku
-# #####################
 export GOKU_EDN_CONFIG_FILE="$HOME/nix/dotfiles/karabiner/karabiner.edn"
 
 ### Added by zinit's installer
@@ -98,20 +93,20 @@ zinit wait"1" lucid for \
 
 ### End of zinit's installer chunk
 
-# You may need to manually set your language environment
+### You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
+### Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
   export EDITOR='nvim'
 fi
 
-# Compilation flags
+### Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# SSH
+### SSH
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 
@@ -119,9 +114,18 @@ alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 
-# alias code='code-insiders'
-# alias c='code-insiders'
-alias desktop='cd ~/Desktop'
+## Git
+alias g='git' 
+alias gs='git status'
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias gd='git diff'
+alias gco='git checkout'
+
+alias got='git '
+alias get='git '
+
 if [ "$(command -v exa)" ]; then
     unalias -m 'll'
     unalias -m 'l'
@@ -136,27 +140,31 @@ if [ "$(command -v bat)" ]; then
   alias cat='bat -pp'
 fi
 
-# alias rm='trash'
-# alias rmds='find . -type f -name '*.DS_Store' | xargs rm'
+### Better cli command
 alias ....='cd ../../../'
 alias ...='cd ../../'
 alias ..='cd ..'
 alias .='pwd'
 alias cl='clear'
+alias mkdir='mkdir -pv'
+alias path='echo $PATH | tr -s ":" "\n"'
+alias top='vtop'
+alias oldtop='/usr/bin/top'
+
+### macOS cli
 alias disableani='defaults write com.apple.finder DisableAllAnimations -bool true'
 alias disablekeys='defaults write -g ApplePressAndHoldEnabled -bool false'
 alias enableani='defaults write com.apple.finder DisableAllAnimations -bool false'
 alias enablekeys='defaults write -g ApplePressAndHoldEnabled -bool true'
 alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;echo "✌️ DNS flushed"'
 alias hide='defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder'
+alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
-alias mkdir='mkdir -pv'
 alias nixup="sudo -i sh -c 'nix-channel --update && nix-env -iA nixpkgs.nix && launchctl remove org.nixos.nix-daemon && launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'"
-alias oldtop='/usr/bin/top'
-alias path='echo $PATH | tr -s ":" "\n"'
+
+# alias rm='trash'
 alias rmconflict='fd --hidden conflicted ~/Dropbox'
+# alias rmds='find . -type f -name '*.DS_Store' | xargs rm'
 alias rmds='fd -H -I \.DS\_Store -x rm -v'
 alias rsync='rsync -a --delete'
-alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
-alias top='vtop'
 
