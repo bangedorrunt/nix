@@ -76,6 +76,13 @@
       homePrefix = system: if isDarwin system then "/Users" else "/home";
       supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
       overlays = [
+        devshell.overlay
+        (final: prev: {
+          # expose stable packages via pkgs.stable
+          stable = import stable {
+            system = prev.system;
+          };
+        })
         inputs.neovim-nightly-overlay.overlay
         # Using Neovim for now
         # inputs.emacs-overlay.overlay
