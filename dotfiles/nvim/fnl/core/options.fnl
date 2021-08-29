@@ -1,12 +1,12 @@
 (module core.options
   {require-macros [core.macros]})
 
-; COLORS
+;;;; COLORS
 (set! syntax "enable")
 
-; RENDERING
-(set! encoding "utf-8")
-(set! synmaxcol 1777)
+;;;; RENDERING
+(set! encoding "utf-8"
+      synmaxcol 1777)
 
 (if (vim.fn.has "termguicolors")
   (do
@@ -15,56 +15,84 @@
     (set! termguicolors))
   nil)
 
-; UI
-(set! 
-  lz
-  number
-  report 0
-  visualbell false
-  errorbells false
-  mouse "a"
-  cursorline
-  showmatch
-  matchtime 2
-  shortmess "IcT"
-  pumblend 0
-  pumheight 15
-  winblend 0
-  winwidth 30
-  winminwidth 10
-  winminheight 0
-  helpheight 12
-  previewheight 12
-  cmdwinheight 12
-  conceallevel 2
-  concealcursor "niv"
-  signcolumn "yes")
+;;;; UI
+(set! lz
+      number
+      report 0
+      visualbell false
+      errorbells false
+      mouse "a"
+      cursorline
+      showmatch
+      matchtime 2
+      shortmess "IcT"
+      pumblend 0
+      pumheight 15
+      winblend 0
+      winwidth 30
+      winminwidth 10
+      winminheight 0
+      helpheight 12
+      previewheight 12
+      cmdwinheight 12
+      conceallevel 2
+      concealcursor "niv"
+      signcolumn "yes"
+      ;; Statusline
+      showmode false
+      laststatus 2
+      ;; Spacing
+      textwidth 80
+      expandtab
+      tabstop 2
+      shiftwidth 2
+      softtabstop -1
+      smarttab
+      autoindent
+      smartindent
+      shiftround
+      showbreak "↳ "
+      breakindentopt "shift:2,min:20"
+      ;; Invisibles
+      list
+      listchars {:tab "»·"
+                 :nbsp "+"
+                 :trail "·"
+                 :extends "→"
+                 :precedes "←"}
+      fillchars  {:vert "▕"
+                  :fold "·"
+                  :diff ""
+                  :msgsep "‾"
+                  :eob " "
+                  :foldopen "▾"
+                  :foldsep "│"
+                  :foldclose "▸"})
 
-; BEHAVIOUR
-(set! hidden)
-(set! magic)
+;;;; BEHAVIOUR
 (set-local! so 10)
-(set! autoread)
-(set! wrap)
-(set! whichwrap "b,s,<,>,h,l,[,],~")
-(set! nolinebreak)
-(set! virtualedit "block")
-(set! fileformats "unix,mac,dos")
-(set! clipboard "unnamedplus") ; don't forget xsel!
-(set! completeopt "menuone,noselect")
-(set! diffopt+ ["vertical" "iwhite" "hiddenoff" "foldcolumn:0" "context:4" "algorithm:histogram" "indent-heuristic"])
-(set! splitright)
-(set! splitbelow)
-(set! backspace ["indent" "eol" "start"])
-(set! switchbuf ["useopen" "uselast"])
-(set! eadirection "hor")
-(set! sessionoptions "curdir,help,tabpages,winsize")
-(set! viewoptions "folds,cursor,curdir,slash,unix")
-
-;; Wildmenu
-(set! wildmenu)
-(set! wildignorecase)
-(set! wildignore+ [".git"
+(set! hidden
+      magic
+      autoread
+      wrap
+      whichwrap "b,s,<,>,h,l,[,],~"
+      nolinebreak
+      virtualedit "block"
+      fileformats "unix,mac,dos"
+      clipboard "unnamedplus" ; don't forget xsel!
+      completeopt "menuone,noselect"
+      diffopt+ ["vertical" "iwhite" "hiddenoff" "foldcolumn:0" "context:4" "algorithm:histogram" "indent-heuristic"]
+      splitright
+      splitbelow
+      backspace ["indent" "eol" "start"]
+      switchbuf ["useopen" "uselast"]
+      eadirection "hor"
+      sessionoptions "curdir,help,tabpages,winsize"
+      viewoptions "folds,cursor,curdir,slash,unix"
+      ;; Wildmenu
+      wildmenu
+      wildignorecase
+      wildignore+ [".git"
                    ".hg"
                    ".svn"
                    "*.o"
@@ -79,87 +107,54 @@
                    "**/node_modules/**"
                    "**/bower_modules/**"
                    "*.pyc"
-                   "*pycache*"])
-(set! wildoptions "pum")
-(set! wildmode "longest:full,full")
+                   "*pycache*"]
+      wildoptions "pum"
+      wildmode "longest:full,full"
+      ;; Time
+      timeout
+      ttimeout
+      updatetime 100
+      timeoutlen 350
+      ttimeoutlen 10
+      redrawtime 1500
+      ;; Search
+      ignorecase
+      incsearch
+      hlsearch
+      smartcase
+      infercase
+      wrapscan
+      inccommand "nosplit"
+      complete ".,w,b,k"
+      grepformat "%f:%l:%c:%m"
+      grepprg "rg --hidden --vimgrep --smart-case --"
+      ;; Foldng
+      fen false
+      foldlevelstart 99 ;; Start with everything unfold
+      foldtext #(vim.fn.printf "  %-6d%s"
+                               (- vim.v.foldend (+ vim.v.foldstart 1))
+                               (vim.fn.getline vim.v.foldstart)))
 
-; VIM DIRECTORIES
-(set! undofile)
-(set! swapfile false)
-(set! backup false)
-(set! history 5000)
-(set! writebackup false)
-(set! directory (.. tdt.paths.CACHE_DIR "/swag/"))
-(set! undodir (.. tdt.paths.CACHE_DIR "/undo/"))
-(set! backupdir (.. tdt.paths.CACHE_DIR "/backup/"))
-(set! viewdir (.. tdt.paths.CACHE_DIR "/view/"))
-(set! spellfile (.. tdt.paths.CACHE_DIR "/spell/en.uft-8.add"))
-(set! backupskip ["/tmp/*"
+;;;; VIM DIRECTORIES
+(set! undofile
+      swapfile false
+      backup false
+      history 5000
+      writebackup false
+      directory (.. tdt.paths.CACHE_DIR "/swag/")
+      undodir (.. tdt.paths.CACHE_DIR "/undo/")
+      backupdir (.. tdt.paths.CACHE_DIR "/backup/")
+      viewdir (.. tdt.paths.CACHE_DIR "/view/")
+      spellfile (.. tdt.paths.CACHE_DIR "/spell/en.uft-8.add")
+      backupskip ["/tmp/*"
                   "$TMPDIR/*"
                   "$TMP/*"
                   "$TEMP/*"
                   "*/shm/*"
                   "/private/var/*"
-                  ".vault.vim"])
-(set! shada ["!" "'1000" "<50" "@100" "s10" "h"])
+                  ".vault.vim"]
+      shada ["!" "'1000" "<50" "@100" "s10" "h"])
 
-; STATUS LINES
-(set! showmode false)
-(set! laststatus 2)
 
-; TIME
-(set! timeout)
-(set! ttimeout)
-(set! updatetime 100)
-(set! timeoutlen 350)
-(set! ttimeoutlen 10)
-(set! redrawtime 1500)
 
-; SEARCH
-(set! ignorecase)
-(set! incsearch)
-(set! hlsearch)
-(set! smartcase)
-(set! infercase)
-(set! wrapscan)
-(set! inccommand "nosplit")
-(set! complete ".,w,b,k")
-(set! grepformat "%f:%l:%c:%m")
-(set! grepprg "rg --hidden --vimgrep --smart-case --")
-
-; FOLDNG
-(set! fen false)
-(set! foldlevelstart 99) ;; Start with everything unfold
-(set! foldtext #(vim.fn.printf "  %-6d%s"
-                               (- vim.v.foldend (+ vim.v.foldstart 1))
-                               (vim.fn.getline vim.v.foldstart)))
-
-; SPACING
-(set! textwidth 80)
-(set! expandtab)
-(set! tabstop 2)
-(set! shiftwidth 2)
-(set! softtabstop -1)
-(set! smarttab)
-(set! autoindent)
-(set! smartindent)
-(set! shiftround)
-(set! showbreak "↳ ")
-(set! breakindentopt "shift:2,min:20")
-
-; INVISIBLES
-(set! list)
-(set! listchars {:tab "»·"
-                 :nbsp "+"
-                 :trail "·"
-                 :extends "→"
-                 :precedes "←"})
-(set! fillchars  {:vert "▕"
-                  :fold "·"
-                  :diff ""
-                  :msgsep "‾"
-                  :eob " "
-                  :foldopen "▾"
-                  :foldsep "│"
-                  :foldclose "▸"})
 

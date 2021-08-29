@@ -30,7 +30,7 @@ cd "$ANISEED_DIR" && git fetch && git checkout develop
 echo 'Downloading Packer ...'
 
 if [ ! -d "$PACKER_DIR" ]; then
-	git clone --depth 1 "https://github.com/wbthomason/packer.nvim" "$PACKER_DIR"
+	git clone "https://github.com/wbthomason/packer.nvim" "$PACKER_DIR"
 fi
 
 if [ ! -e "${CACHE_DIR}/swap" ]; then
