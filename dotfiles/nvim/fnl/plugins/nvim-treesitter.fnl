@@ -1,7 +1,6 @@
 (module plugins.nvim-treesitter
-  {autoload {treesitter nvim-treesitter.configs}})
-
-(import-macros {: set!} :core.macros)
+  {autoload {treesitter nvim-treesitter.configs}
+   require-macros [core.macros]})
 
 (set! foldmethod :expr)
 (set! foldexpr "nvim_treesitter#foldexpr()")
@@ -18,7 +17,7 @@
   :highlight {:enable true
               ;; :use_languagetree true
               :additional_vim_regex_highlighting {:fennel false}}
-  :indent {:enable false}
+  :indent {:enable true}
   :incremental_selection {:enable true
                           :keymaps {:init_selection :<C-n>
                                     :node_incremental :<C-n>

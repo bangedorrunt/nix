@@ -1,6 +1,5 @@
-(module plugins.indent-blankline)
-
-(import-macros {: let! : autocmd!} :core.macros)
+(module plugins.indent-blankline
+  {require-macros [core.macros]})
 
 (let! indent_blankline_char "│"
       indent_blankline_filetype_exclude [:help :packer

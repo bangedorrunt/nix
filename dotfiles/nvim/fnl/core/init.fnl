@@ -5,7 +5,8 @@
 (require :core.mappings)
 (require :core.autocmds)
 
-(defn- load-packer-plugins [] (vim.cmd "packadd packer.nvim")
+(defn- load-packer-plugins [] 
+       (vim.cmd "packadd packer.nvim")
        (require :plugins))
 
 (if (= (vim.fn.filereadable tdt.paths.PACKER_COMPILED_PATH) 1)

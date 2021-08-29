@@ -1,5 +1,4 @@
-(module plugins.lsp.diagnostics
-  {autoload {cljfun bulb}})
+(module plugins.lsp.diagnostics)
 
 (defn setup []
   (tset vim.lsp.handlers :textDocument/publishDiagnostics

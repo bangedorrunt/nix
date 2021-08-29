@@ -1,9 +1,5 @@
-(module core.mappings)
-
-(import-macros {: let!
-                : nmap!
-                : noremap!}
-               :core.macros)
+(module core.mappings
+  {require-macros [core.macros]})
 
 ;; DEFAULT MAP
 ;; -----------

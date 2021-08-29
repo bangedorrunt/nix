@@ -1,7 +1,6 @@
 (module plugins.tokyonight
-  {autoload {tokyonight tokyonight}})
-
-(import-macros {: let!} :core.macros)
+  {autoload {tokyonight tokyonight}
+  require-macros [core.macros]})
 
 (let! tokyonight_style "night"
       tokyonight_cterm_colors false

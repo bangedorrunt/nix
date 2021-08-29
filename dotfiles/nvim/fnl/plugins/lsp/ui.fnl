@@ -1,8 +1,6 @@
-(module plugins.lsp.ui
-  {autoload {lsp-diagnostics plugins.lsp.diagnostics
-             lsp-kinds plugins.lsp.kinds}})
-
-(import-macros {: nmap! : noremap! : command!} :core.macros)
+(module plugins.lsp.ui {autoload {lsp-diagnostics plugins.lsp.diagnostics
+                                  lsp-kinds plugins.lsp.kinds}
+                        require-macros [core.macros]})
 
 (def- lsp vim.lsp)
 (def- api vim.api)
@@ -25,19 +23,19 @@
                                         :virtual_text {:spacing 4
                                                        :prefix "●"}
                                         :severity_sort true}}
-                :completion {:kind {:Class " "
+                :completion {:kind {:Class " "
                                     :Color " "
-                                    :Constant " "
-                                    :Constructor " "
+                                    :Constant " "
+                                    :Constructor " "
                                     :Enum "了 "
                                     :EnumMember " "
                                     :Field " "
                                     :File " "
                                     :Folder " "
                                     :Function " "
-                                    :Interface "ﰮ "
+                                    :Interface " "
                                     :Keyword " "
-                                    :Method "ƒ "
+                                    :Method " "
                                     :Module " "
                                     :Property " "
                                     :Snippet "﬌ "
@@ -68,23 +66,9 @@
 
 (tset lsp.handlers :textDocument/hover (lsp.with lsp.handlers.hover popup-opts))
 
-(defn- go-to-diagnostic [pos]
-       (and pos (api.nvim_win_set_cursor 0 {1 (+ (. pos 1) 1) 2 (. pos 2)})))
-
-(defn- next-diagnostic []
-       (go-to-diagnostic (or (lsp.diagnostic.get_next_pos)
-                             (lsp.diagnostic.get_prev_pos))))
-
-(defn- prev-diagnostic []
-       (go-to-diagnostic (or (lsp.diagnostic.get_prev_pos)
-                             (lsp.diagnostic.get_next_pos))))
-
-(tset tdt :lsp {: popup-opts
-                : next-diagnostic
-                : prev-diagnostic})
+(tset tdt :lsp {: popup-opts})
 
 ;; More general LSP commands
-
 (set _G.reload_lsp (fn []
                      (lsp.stop_client (vim.lsp.get_active_clients))
                      (vim.cmd :edit)))

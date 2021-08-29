@@ -1,7 +1,6 @@
 (module plugins.nvim-compe
-  {autoload {nvim-compe compe}})
-
-(import-macros {: nmap! : noremap! : t} :core.macros)
+  {autoload {nvim-compe compe}
+   require-macros [core.macros]})
 
 (nvim-compe.setup
   {:enabled true
@@ -22,8 +21,7 @@
             :nvim_lsp {:ignored_filetypes ["clojure" "fennel"]}
             :conjure true
             :vsnip true
-            :calc true
-            :love true}})
+            :calc true}})
 
 (noremap! [i :expr :silent] "<C-Space>" "compe#complete()")
 (noremap! [i :expr :silent] "<C-e>" "compe#close('<C-e>')")

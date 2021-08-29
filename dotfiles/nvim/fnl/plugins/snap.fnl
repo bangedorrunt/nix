@@ -62,7 +62,7 @@
                                           (producer-file.args {}
                                                               (.. tdt.paths.HOME
                                                                   :/nix/dotfiles/nvim-))]}))
-  ;; FIXME use `git.file` instead of `vimgrep.file` 
+  ;; FIXME: use `git.file` instead of `vimgrep.file` 
   ;; paths is not working with `git.file` at the moment
   (def- nix
         (snap.config.file:with {:suffix " ❯"
@@ -106,7 +106,7 @@
   (snap.register.map [:n] [:<Leader>sj]
                      (create (fn []
                                {:prompt :Jumplist>
-                                ;; FIXME `fzy` is buggy
+                                ;; FIXME: `fzy` is buggy
                                 :producer (fzf producer-jumplist)
                                 :select select-jumplist.select
                                 :views [preview-jumplist]})))
@@ -120,7 +120,7 @@
                                           (vim.schedule (. actions
                                                            (tostring action))))}))))
 
-;; TODO move these highlight to `tokyonight` theme
+;; TODO: move these highlight to `tokyonight` theme
 (vim.cmd "hi! link SnapSelect DiffAdd")
 (vim.cmd "hi! SnapPosition guibg=None ctermbg=None ctermfg=Red guifg=Red gui=Bold")
 (vim.cmd "hi! SnapBorder guifg=#e1e2e7")

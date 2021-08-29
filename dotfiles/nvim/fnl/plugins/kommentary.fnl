@@ -1,7 +1,6 @@
 (module plugins.kommentary
-  {autoload {kommentary kommentary.config}})
-
-(import-macros {: let! : nmap!} :core.macros)
+  {autoload {kommentary kommentary.config}
+   require-macros [core.macros]})
 
 (let! kommentary_create_default_mappings false)
 

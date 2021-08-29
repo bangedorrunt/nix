@@ -1,6 +1,5 @@
-(module plugins.vim-sexp)
-
-(import-macros {: let! : nmap!} :core.macros)
+(module plugins.vim-sexp
+  {require-macros [core.macros]})
 
 (let! :sexp_enable_insert_mode_mappings 0
       :sexp_mappings {:sexp_insert_at_list_head ""

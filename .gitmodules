@@ -1,0 +1,3 @@
+[submodule "dotfiles/nvim/fnl/cljlib"]
+	path = dotfiles/nvim/fnl/cljlib
+  url = git@github.com:babygau/fennel-cljlib.git

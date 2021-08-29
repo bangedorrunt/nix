@@ -1,6 +1,5 @@
-(module plugins.coq_nvim)
-
-(import-macros {: t : let! : nmap! : noremap!} :core.macros)
+(module plugins.coq_nvim
+  {require-macros [core.macros]})
 
 (vim.cmd "COQnow --shut-up")
 ;; (let! g/coq_settings {:auto_start "shut-up"})

@@ -1,6 +1,5 @@
-(module plugins.accelerated-jk)
-
-(import-macros {: nmap! : t} :core.macros)
+(module plugins.accelerated-jk
+  {require-macros [core.macros]})
 
 (set _G.enhance_jk_move (fn [key]
                           (match key

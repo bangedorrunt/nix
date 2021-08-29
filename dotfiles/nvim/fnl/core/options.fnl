@@ -1,6 +1,5 @@
-(module core.options)
-
-(import-macros {: set! : set-local!} :core.macros)
+(module core.options
+  {require-macros [core.macros]})
 
 ; COLORS
 (set! syntax "enable")
@@ -17,28 +16,29 @@
   nil)
 
 ; UI
-(set! lz)
-(set! number)
-(set! report 0)
-(set! visualbell false)
-(set! errorbells false)
-(set! mouse "a")
-(set! cursorline)
-(set! showmatch)
-(set! matchtime 2)
-(set! shortmess "IcT")
-(set! pumblend 0)
-(set! pumheight 15)
-(set! winblend 0)
-(set! winwidth 30)
-(set! winminwidth 10)
-(set! winminheight 0)
-(set! helpheight 12)
-(set! previewheight 12)
-(set! cmdwinheight 12)
-(set! conceallevel 2)
-(set! concealcursor "niv")
-(set! signcolumn "yes")
+(set! 
+  lz
+  number
+  report 0
+  visualbell false
+  errorbells false
+  mouse "a"
+  cursorline
+  showmatch
+  matchtime 2
+  shortmess "IcT"
+  pumblend 0
+  pumheight 15
+  winblend 0
+  winwidth 30
+  winminwidth 10
+  winminheight 0
+  helpheight 12
+  previewheight 12
+  cmdwinheight 12
+  conceallevel 2
+  concealcursor "niv"
+  signcolumn "yes")
 
 ; BEHAVIOUR
 (set! hidden)
