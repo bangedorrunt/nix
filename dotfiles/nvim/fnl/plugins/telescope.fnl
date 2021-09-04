@@ -10,7 +10,8 @@
 (def {: run!} cljlib)
 
 ;; TODO: move telescope settings to global table `tdt.plugins.telescope`
-(telescope.setup {:defaults {:prompt_prefix "❯ "
+(telescope.setup {:defaults {:cache_picker {:num_pickers 20}
+                             :prompt_prefix "❯ "
                              :selection_caret "❯ "
                              :borderchars ["─"
                                            "│"
@@ -73,3 +74,4 @@
 (noremap! [n :nowait] :<Leader>sc "<Cmd>Telescope commands<CR>")
 (noremap! [n :nowait] :<Leader>sC "<Cmd>Telescope command_history<CR>")
 (noremap! [n :nowait] :<Leader>sk "<Cmd>Telescope keymaps<CR>")
+(noremap! [n :nowait] :<Leader>sr "<Cmd>Telescope pickers<CR>")

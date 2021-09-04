@@ -36,7 +36,8 @@
                          :C "Commands History"
                          :k "Keymaps"
                          :g "Gitfiles"
-                         :o "Oldfiles"}
+                         :o "Oldfiles"
+                         :r "Resume"}
                      :f {:name "Files"
                          :b "File Browser"
                          :c "Close Buffer"
