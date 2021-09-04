@@ -105,7 +105,8 @@
                                     :mod :nvim-treesitter}
   :nvim-treesitter/nvim-treesitter-textobjects {:after :treesitter}
   :p00f/nvim-ts-rainbow {:after :treesitter}
-  :windwp/nvim-autopairs {:event :BufRead
+  :windwp/nvim-autopairs {;; :event :BufRead
+                          :after :treesitter
                           :module_pattern "nvim-autopairs*"
                           :mod :nvim-autopairs}
   :windwp/nvim-ts-autotag {:after :treesitter}
