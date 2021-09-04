@@ -52,8 +52,8 @@
   ;; :nvim-lua/popup.nvim {:as :popup :module_pattern "popup.*" :opt true}
   :nvim-lua/plenary.nvim {:as :plenary :module_pattern "plenary.*" :opt true}
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim-web-devicons*" :opt true}
-  :fzy {:rock true}
-  :Olical/aniseed {}
+  ;; :fzy {:rock true}
+  :Olical/aniseed {:branch :develop}
   ;; :rktjmp/hotpot.nvim {}
 
   ;;;; UI plugins
