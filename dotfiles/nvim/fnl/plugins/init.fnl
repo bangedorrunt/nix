@@ -171,6 +171,8 @@
   ;; :rafamadriz/friendly-snippets {}
 
   ;;;; Tool plugins
+  :ellisonleao/glow.nvim {:mod :glow
+                          :ft [:markdown :md]}
   :editorconfig/editorconfig-vim {:ft [:go :c :cpp :rust
                                        :typescript :javascript
                                        :vim :zig ]})

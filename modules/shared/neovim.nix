@@ -23,6 +23,7 @@ in
         neovim-nightly
         tree-sitter
         universal-ctags
+        glow
         nodePackages.bash-language-server
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.yaml-language-server

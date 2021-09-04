@@ -99,7 +99,9 @@
                          :q "Quit Vim"
                          :Q "Quit Without SAVING!"
                          :s "Save then Quit"}
-                     :t {:name "Toggles"}
+                     :t {:name "Toggles"
+                         :t "Tree"
+                         :p "Markdown Preview"}
                      :w {:name "Windows"
                          := "Ballance Windows"
                          :s "Split Window"
