@@ -37,7 +37,7 @@ in
         nodePackages.vscode-html-languageserver-bin
         nodePackages.vscode-json-languageserver
 
-        (callPackage ../pkgs/tailwind.nix { })
+        (callPackage ../pkgs/tailwind.nix {})
         (
           writeScriptBin "tailwind-lsp" ''
             #!/usr/bin/env sh
@@ -48,7 +48,7 @@ in
         rnix-lsp
         stylua
         clojure-lsp
-        # (if pkgs.stdenv.isDarwin then pkgs.sumneko-lua-language-server-macos else pkgs.sumneko-lua-language-server)
+        (if pkgs.stdenv.isDarwin then pkgs.sumneko-lua-language-server-macos else pkgs.sumneko-lua-language-server)
       ];
     };
 }

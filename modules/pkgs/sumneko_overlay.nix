@@ -11,6 +11,7 @@ self: super: {
       unpackPhase = ''
         ${super.pkgs.unzip}/bin/unzip $src
       '';
+      postPatch = "";
 
       platform = if super.stdenv.isDarwin then "macOS" else "Linux";
 
