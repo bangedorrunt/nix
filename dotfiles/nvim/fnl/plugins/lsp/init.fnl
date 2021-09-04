@@ -1,6 +1,6 @@
 (module plugins.lsp.init {autoload {cljlib cljlib
                                     lspconfig lspconfig
-                                    cmp/lsp cmp_nvim_lsp
+                                    ;; cmp/lsp cmp_nvim_lsp
                                     null-ls null-ls
                                     null-ls/builtins null-ls.builtins}
                           require-macros [core.macros]})
@@ -13,6 +13,8 @@
 
 (def- capabilities
   (let [c (vim.lsp.protocol.make_client_capabilities)]
+    ;; NOTE: use `cmp_nvim_lsp.update_capabilities` is unneccessary
+    ;; https://github.com/hrsh7th/cmp-nvim-lsp/blob/f6f471898bc4b45eacd36eef9887847b73130e0e/lua/cmp_nvim_lsp/init.lua#L23
     ;; Delegate snippet support to any completion engine such as `nvim-cmp`
     (set c.textDocument.completion.completionItem.snippetSupport true)
     (set c.textDocument.completion.completionItem.resolveSupport {:properties [:documentation
@@ -23,6 +25,7 @@
     (set c.textDocument.completion.completionItem.deprecatedSupport true)
     (set c.textDocument.completion.completionItem.commitCharactersSupport true)
     (set c.textDocument.completion.completionItem.tagSupport {:valueSet [1]})
+
     ;; Code action
     ;; (set c.textDocument.codeAction
     ;;      {:dynamicRegistration true
@@ -31,7 +34,8 @@
     ;;                                                                  (vim.tbl_values vim.lsp.protocol.CodeActionKind))
     ;;                                                                (table.sort res)
     ;;                                                                res))}}})
-    (cmp/lsp.update_capabilities c)))
+
+    c))
 
 (defn- enhanced-attach [client bufnr]
        ;; Lsp keymaps
@@ -121,21 +125,16 @@
                :clojure_lsp
                {:filetypes [:clojure :edn]}
 
-               ;; :sumneko_lua
-               ;; {
-               ;;  :cmd [(.. tdt.paths.CACHE_DIR "/lsp_servers/lua-language-server/bin/macOS/lua-language-server")
-               ;;        "-E"
-               ;;        (.. tdt.paths.CACHE_DIR "/lsp_servers/lua-language-server/main.lua")]
-               ;; }
                :sumneko_lua
                ((. (require :lua-dev) :setup)
                  {:library {:vimruntime true
                   :types true
                   :plugins true}
                   :lspconfig {;; Temporarily use custom install until sumneko nix overlay is fixed
-                              :cmd [(.. tdt.paths.CACHE_DIR "/lsp_servers/lua-language-server/bin/macOS/lua-language-server")
-                                   "-E"
-                                   (.. tdt.paths.CACHE_DIR "/lsp_servers/lua-language-server/main.lua")]
+                              ;; :cmd [(.. tdt.paths.CACHE_DIR "/lsp_servers/lua-language-server/bin/macOS/lua-language-server")
+                              ;;      "-E"
+                              ;;      (.. tdt.paths.CACHE_DIR "/lsp_servers/lua-language-server/main.lua")]
+                              :cmd [:lua-language-server]
                               :settings {:Lua {:diagnostics {:enable true
                                                              :globals [:tdt
                                                                        :packer_plugins
@@ -166,7 +165,7 @@
 
 (-> {:debounce 150
     :sources ((fn []
-               ;; NOTE: When you experience any lag or unresponsive with Lsp,
+               ;; WARNING: when you experience any lag or unresponsive with Lsp,
                ;; make sure respective sources are installed
                ;; In my case:
                ;; Typescript was slow because `eslint_d` was not installed

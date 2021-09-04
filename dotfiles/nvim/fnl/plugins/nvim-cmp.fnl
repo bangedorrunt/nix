@@ -94,6 +94,8 @@
    :snippet
    {:expand (fn [args]
               (luasnip.lsp_expand args.body))}
+   ;; :experimental
+   ;; {:ghost_text true}
    :sources cmp-srcs})
 
 ;; Load friendly-snippets
