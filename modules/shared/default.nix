@@ -26,6 +26,7 @@
     httpie
     hyperfine
     jq
+    kepubify
     neofetch
     nixUnstable
     # openssh

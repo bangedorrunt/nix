@@ -31,14 +31,12 @@ in
         nodePackages.markdownlint-cli
         nodePackages.pyright
         nodePackages.prettier
+        # nodePackages.prettier_d_slim
         nodePackages.stylelint
         nodePackages.typescript-language-server
         nodePackages.vim-language-server
-        nodePackages.vscode-css-languageserver-bin
-        nodePackages.vscode-html-languageserver-bin
-        nodePackages.vscode-json-languageserver
-
-        (callPackage ../pkgs/tailwind.nix {})
+        nodePackages.vscode-langservers-extracted # HTML, CSS, JSON LSPs
+        (callPackage ../pkgs/tailwind.nix { })
         (
           writeScriptBin "tailwind-lsp" ''
             #!/usr/bin/env sh

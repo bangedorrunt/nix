@@ -37,7 +37,6 @@ in
       "goku"
       "yabai"
       "mas"
-
     ];
   };
 }

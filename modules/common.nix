@@ -9,9 +9,7 @@
   # Comment out this line if I want home-manager manage itself
   # hm = import ./shared;
 
-  programs.zsh = {
-    enable = true;
-  };
+  programs.zsh.enable = true;
 
   # Environment setup
   environment = {

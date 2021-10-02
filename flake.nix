@@ -20,11 +20,12 @@
   };
 
   inputs = {
-    devshell.url = "github:numtide/devshell";
+    # devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    stable.url = "github:nixos/nixpkgs/nixos-21.05";
-
+    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-stable.url = "github:nixos/nixpkgs/nixos-21.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-21.05-darwin";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -42,6 +43,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rnix-lsp.url = "github:nix-community/rnix-lsp";
+    clojure-lsp.url = "github:zachcoyle/clojure-lsp-flake";
     treefmt.url = "github:numtide/treefmt";
     /* emacs-overlay = {
       type = "github";
@@ -64,36 +66,13 @@
   outputs =
     { self
     , nixpkgs
-    , stable
     , darwin
     , home-manager
-    , devshell
+      # , devshell
     , flake-utils
     , ...
     }@inputs:
     let
-      isDarwin = system: (builtins.elem system lib.platforms.darwin);
-      homePrefix = system: if isDarwin system then "/Users" else "/home";
-      supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
-      overlays = [
-        devshell.overlay
-        (final: prev: {
-          # expose stable packages via pkgs.stable
-          stable = import stable {
-            system = prev.system;
-          };
-        })
-        inputs.neovim-nightly-overlay.overlay
-        # Using Neovim for now
-        # inputs.emacs-overlay.overlay
-        (import ./modules/pkgs/yabai_overlay.nix)
-        /* (
-          final: prev: {
-          neuron = (prev.callPackage "${inputs.neuron}/project.nix" {}).neuron;
-          }
-          ) */
-        (import ./modules/pkgs/sumneko_overlay.nix)
-      ];
       # Extend nixpkgs.lib with custom lib and HM lib
       # Custom `./lib` will exposed as `lib.mine`
       #
@@ -102,9 +81,11 @@
       # otherwise build will fail. 
       # My guess is `lib` will override system lib, so some/all attributes of
       # system lib will be _undefined_, thus build error!
-      # lib = nixpkgs.lib;
-      lib = nixpkgs.lib.extend
-        (final: prev: { mine = import ./lib final; } // home-manager.lib);
+      mkLib = nixpkgs:
+        nixpkgs.lib.extend
+          (final: prev: { mine = import ./lib final; } // home-manager.lib);
+      lib = (mkLib nixpkgs);
+
       inherit (darwin.lib) darwinSystem;
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
@@ -122,10 +103,17 @@
 
       inherit (builtins) listToAttrs map;
 
+      isDarwin = system: (builtins.elem system lib.platforms.darwin);
+      homePrefix = system: if isDarwin system then "/Users" else "/home";
+      supportedSystems = [ "x86_64-darwin" "x86_64-linux" ];
+
       # Generate a base darwin configuration with the
       # specified hostname, overlays, and any extraModules applied
       mkDarwinConfig =
         { system ? "x86_64-darwin"
+        , nixpkgs ? inputs.nixpkgs
+        , stable ? inputs.darwin-stable
+        , lib ? (mkLib nixpkgs)
         , baseModules ? [
             # Use home-manager module
             home-manager.darwinModules.home-manager
@@ -136,12 +124,9 @@
         , extraModules ? [ ]
         }:
         darwinSystem {
-          # system = "x86_64-darwin";
-          modules = baseModules ++ extraModules
-            ++ [{ nixpkgs.overlays = overlays; }];
-          specialArgs = {
-            inherit inputs lib;
-          };
+          inherit system;
+          modules = baseModules ++ extraModules;
+          specialArgs = { inherit inputs lib nixpkgs stable; };
         };
 
       # Generate a home-manager configuration usable on any unix system
@@ -149,16 +134,24 @@
       mkHomeConfig =
         { username
         , system ? "x86_64-linux"
+        , nixpkgs ? inputs.nixpkgs
+        , stable ? inputs.nixos-stable
+        , lib ? (mkLib nixpkgs)
         , baseModules ? [ ./modules/hm ]
         , extraModules ? [ ]
         }:
         homeManagerConfiguration rec {
           inherit system username;
           homeDirectory = "${homePrefix system}/${username}";
-          extraSpecialArgs = { inherit inputs lib; };
+          extraSpecialArgs = { inherit inputs lib nixpkgs stable; };
           configuration = {
-            imports = baseModules ++ extraModules
-              ++ [{ nixpkgs.overlays = overlays; }];
+            imports = baseModules ++ extraModules ++ [
+              (
+                import ./modules/overlays.nix {
+                  inherit inputs nixpkgs stable;
+                }
+              )
+            ];
           };
         };
     in

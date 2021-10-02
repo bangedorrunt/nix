@@ -10,7 +10,7 @@ excludes = []
 command = "stylua"
 options = []
 includes = ["*.lua"]
-excludes = []
+excludes = ["dotfiles/nvim/lua/*"]
 
 [formatter.fennel]
 command = "fnlfmt"

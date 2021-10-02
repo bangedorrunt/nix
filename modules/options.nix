@@ -23,18 +23,6 @@ in
         dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
         packages = mkOpt (listOf package) [ ];
       };
-      env = mkOption {
-        type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
-        apply = mapAttrs (
-          n: v:
-            if isList v then
-              concatMapStringsSep ":" (x: toString x) v
-            else
-              (toString v)
-        );
-        default = { };
-        description = "TODO";
-      };
     };
 
     hm = mkOpt' attrs { } "Primary user's home-manager configuration";
@@ -109,8 +97,5 @@ in
         # home-manager.path = "${self}/modules/shared";
       };
     };
-
-    environment.extraInit = concatStringsSep "\n"
-      (mapAttrsToList (n: v: ''export ${n}="${v}"'') config.my.env);
   };
 }
