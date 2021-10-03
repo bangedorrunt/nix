@@ -1,45 +1,32 @@
-;;; Helper Functions Declaration
+;;;; Helper Functions Declaration
 (local {: inc
         : dec
         : first
         : last
         : rest
-        : any?
         : every?
-        : keys
-        : vals
+        : table?
         : reduce
         : merge
-        :mapv map
+        : map
         : filter
         : string?
         : number?
         : nil?
-        : contains?
-        :map? tbl?
-        : set?
-        :vector? seq?
-        : empty?
-        : cons
-        : conj
-        : dissoc} (require :cljlib))
+        : empty?} (require :aniseed.core))
 
-(import-macros {: defn
-                : into
-                : empty
-                : when-let
-                : if-let
-                : when-some
-                : if-some} :cljlib.macros)
-
-;; Reserve name for `into` macros
-;; tbl->seq
-;; seq->tbl
-;; str->seq
-
-(fn ->str [obj]
+(fn ->str [x]
   "Converts an object to its string representation"
-  (tostring obj))
+  (tostring x))
+
+(fn str->seq [s]
+  "Convert an string into a sequence of characters."
+  (icollect [c (string.gmatch s ".")]
+    c))
+
+(fn ->key-opts [xs]
+  "Returns a set following the structure of `{:key true}` from a sequence"
+  (reduce #(merge $1 {$2 true}) {} xs))
 
 (fn fn? [obj]
   "Returns true if the object is a function
@@ -47,63 +34,77 @@
   (and (list? obj) (or (= (->str (first obj)) :hashfn)
                        (= (->str (first obj)) :fn))))
 
-(fn ->key-opts [seq]
-  "Returns a set following the structure of `{:key true}` from a sequence"
-  (reduce #(merge $1 {$2 true}) {} seq))
+(fn contains? [tbl x]
+  ;; Checks if `x' is stored in `tbl' in linear time.
+  (var res false)
+  (each [i v (ipairs tbl)]
+    (if (= v x)
+        (do
+          (set res i)
+          (lua :break))))
+  res)
 
-(fn exists? [module-name]
-  "Returns true if the module exists and false if it doesn't"
-  (let [(ok? _) (pcall require module-name)]
-    ok?))
+(fn cons [x xs]
+  "Returns a sequence with the object appended as the first element of the sequence"
+  [x (unpack xs)])
 
-(global __core_symfn_id 0)
-(fn gensym-fn! []
-  "Generates a new unique variable name following the structure `__core_symfn_#`"
-  (.. :__core_symfn_ (do
-                       (global __core_symfn_id (inc __core_symfn_id))
-                       __core_symfn_id)))
+(fn conj [tbl ...]
+  "Appends all values to `tbl`, returning `tbl`."
+  (var end (length tbl)) ; a bit faster than table.insert
+  (for [i 1 (select "#" ...)]
+    (match (select i ...)
+      x (do
+          (set end (+ 1 end))
+          (tset tbl end x))))
+  tbl)
 
-;;; Macros Declaration
+(fn disj [tbl ...]
+  "Removes any number of keys from `tbl`, returning `tbl`."
+  (for [i 1 (select "#" ...)]
+    (let [k (select i ...)]
+      (tset tbl k nil)))
+  tbl)
 
-;; FIXME: it's not working as @datwaft `gensym-fn!`
-;; NOTE: see https://github.com/rktjmp/hotpot.nvim/discussions/6
-;; Put Unique Global
-;;
-;; (val :any prefix? :string) -> (uuid :string)
-;;
-;; Takes any given value, generates a unique name (with optional prefix)
-;; and inserts value into _G. Returns unique name.
+
+;;;; Macros Declaration
+
+;; NOTE: https://github.com/rktjmp/hotpot.nvim/discussions/6
 (fn pug [val prefix?]
-  ;; gensym will generate a unique id across a compile pass, but hotpot/aniseed 
-  ;; may compile files in separate passes as they are modified, so symbols may 
-  ;; collide you can avoid this by passing a unique prefix per-file or using 
-  ;; something like the "uid" below, based on compile time
-  (local inter-compile-uid (_G.os.date "%s"))
-  (local name
-         (if prefix?
-             (.. (->str (gensym prefix?)) inter-compile-uid)
-             (.. (->str (gensym :pug)) inter-compile-uid)))
-  `(do
-     (tset _G ,name ,val)
-     ,name))
+  "Put Unique Global
 
-;; Wrap given in v:lua x pug call
+  (val :any prefix? :string) -> (uuid :string)
+
+  Takes any given value, generates a unique name (with optional prefix)
+  and inserts value into _G. Returns unique name."
+  (let [inter-compile-uid (_G.os.date "%s")
+        name (if prefix?
+                 (.. (->str (gensym prefix?)) inter-compile-uid)
+                 (.. (->str (gensym :pug)) inter-compile-uid))]
+    `(do
+       (tset _G ,name ,val)
+       ,name)))
+
 (fn vlua [what prefix?]
+  "Wrap given in v:lua x pug call"
   `(.. "v:lua." ,(pug what prefix?) "()"))
 
-(fn command! [name f]
-  `(vim.cmd ,(string.format "command! %s %s" (->str name) (->str f))))
+(fn command [name expr]
+  (if (fn? expr)
+      `(nvim.ex.command_ ,(->str name) :call ,(vlua expr))
+      `(nvim.ex.command_ ,(->str name) ,expr)))
 
-(fn buf-command! [name f]
-  `(vim.cmd ,(string.format "command! -buffer %s %s" (->str name) (->str f))))
+(fn buf-command [name expr]
+  (if (fn? expr)
+      `(nvim.ex.command_ :-buffer ,(->str name) :call ,(vlua expr))
+      `(nvim.ex.command_ :-buffer ,(->str name) ,expr)))
 
-(fn lua-command! [name f]
-  (let [f (.. "lua " (->str f))]
-    `(command! ,name ,f)))
+(fn viml->lua-command [name expr]
+  (let [expr (.. "lua " expr)]
+    `(command ,name ,expr)))
 
-(fn lua-buf-command! [name f]
-  (let [f (.. "lua " (->str f))]
-    `(buf-command! ,name ,f)))
+(fn viml->lua-buf-command [name expr]
+  (let [f (.. "lua " expr)]
+    `(buf-command ,name ,expr)))
 
 (fn unless [condition ...]
   "Takes a single condition and evaluates the rest as a body if it's nil or
@@ -111,103 +112,56 @@
   `(when (not ,condition)
      ,...))
 
-(fn set! [...]
-  "Set one or multiple vim options using the `vim.opt` API
+(fn o [name ?value]
+  "Set one vim options using the `vim.opt` API
   The option name must be a symbol
   If the option doesn't have a corresponding value, if it begins with no the
   value becomes false, and if it doesn't it becomes true"
-  (fn expr [name ?value]
     (let [name (->str name)
-          value (if (nil? ?value) (not (name:match "^no")) ?value)
+          value (if (nil? ?value) (not (name:match :^no)) ?value)
           name (if (nil? ?value) (or (name:match "^no(.*)$") name) name)]
       (if (fn? value)
-        `(tset vim.opt ,name (string.format "%s" ,(vlua value)))
-        (match (name:sub -1)
-          :+ `(: (. vim.opt ,(name:sub 1 -2)) :append ,value)
-          :- `(: (. vim.opt ,(name:sub 1 -2)) :remove ,value)
-          :^ `(: (. vim.opt ,(name:sub 1 -2)) :prepend ,value)
-          _ `(tset vim.opt ,name ,value)))))
-  (fn exprs [...]
-    (match [...]
-      (where [& rest] (empty? rest)) []
-      (where [name value & rest] (not (sym? value))) [(expr name value)
-                                                      (unpack (exprs (unpack rest)))]
-      [name & rest] [(expr name)
-                     (unpack (exprs (unpack rest)))]
-      _ []))
-  (let [exprs (exprs ...)]
-    (if (> (length exprs) 1)
-      `(do ,(unpack exprs))
-      (unpack exprs))))
+          `(tset vim.opt ,name (string.format "%s" ,(vlua value)))
+          (match (name:sub -1)
+            "+" `(: (. vim.opt ,(name:sub 1 -2)) :append ,value)
+            "-" `(: (. vim.opt ,(name:sub 1 -2)) :remove ,value)
+            "^" `(: (. vim.opt ,(name:sub 1 -2)) :prepend ,value)
+            _ `(tset vim.opt ,name ,value)))))
 
-(fn set-local! [...]
+(fn ol [name ?value]
   "Set a local vim option using the `vim.opt_local` API"
-  (fn expr [name ?value]
     (let [name (->str name)
-          value (if (nil? ?value) (not (name:match "^no")) ?value)
+          value (if (nil? ?value) (not (name:match :^no)) ?value)
           name (if (nil? ?value) (or (name:match "^no(.*)$") name) name)]
       (if (fn? value)
-        `(tset vim.opt_local ,name (string.format "%s" ,(vlua value)))
-        (match (name:sub -1)
-          "+" `(: (. vim.opt_local ,(name:sub 1 -2)) :append ,value)
-          "-" `(: (. vim.opt_local ,(name:sub 1 -2)) :remove ,value)
-          "^" `(: (. vim.opt_local ,(name:sub 1 -2)) :prepend ,value)
-          _ `(tset vim.opt_local ,name ,value)))))
-  (fn exprs [...]
-    (match [...]
-      (where [& rest] (empty? rest)) []
-      (where [name value & rest] (not (sym? value))) [(expr name value)
-                                                      (unpack (exprs (unpack rest)))]
-      [name & rest] [(expr name)
-                     (unpack (exprs (unpack rest)))]
-      _ []))
-  (let [exprs (exprs ...)]
-    (if (> (length exprs) 1)
-      `(do ,(unpack exprs))
-      (unpack exprs))))
+          `(tset vim.opt_local ,name (string.format "%s" ,(vlua value)))
+          (match (name:sub -1)
+            "+" `(: (. vim.opt_local ,(name:sub 1 -2)) :append ,value)
+            "-" `(: (. vim.opt_local ,(name:sub 1 -2)) :remove ,value)
+            "^" `(: (. vim.opt_local ,(name:sub 1 -2)) :prepend ,value)
+            _ `(tset vim.opt_local ,name ,value)))))
 
-(fn let! [...]
-  "Set a vim variable using the vim.[g b w t] API"
-  (fn expr [name value]
-    (let [name (->str name)
-          scope (when (contains? [:g/ :b/ :w/ :t/] (name:sub 1 2))
-                  (name:sub 1 1))
-          name (if (nil? scope) name (name:sub 3))]
-      `(tset ,(match scope
-                :b `vim.b
-                :w `vim.w
-                :t `vim.t
-                _ `vim.g) ,name ,value)))
+(fn g [name value]
+  "Set value for global Vim variable"
+  (let [name (->str name)]
+    `(tset vim.g ,name ,value)))
 
-  (fn exprs [...]
-    (match [...]
-      (where [& rest] (empty? rest)) []
-      [name value & rest] [(expr name value) (unpack (exprs (unpack rest)))]
-      _ []))
-
-  (let [exprs (exprs ...)]
-    (if (> (length exprs) 1)
-        `(do
-           ,(unpack exprs))
-        (unpack exprs))))
-
-(fn augroup! [name ...]
+(fn augroup [name ...]
+  "Defines an autocommand group using the `vim.cmd` API."
   `(do
-     (vim.cmd ,(string.format "augroup %s\nautocmd!" (->str name)))
-     (do
-       ,...)
-     (vim.cmd "augroup END")
-     nil))
+     ,(unpack (-> [`(nvim.ex.augroup ,(->str name)) `(nvim.ex.autocmd_)]
+                  (conj ...)
+                  (conj `(nvim.ex.augroup :END))))))
 
-(fn buf-augroup! [name ...]
+(fn buf-augroup [name ...]
+  "Defines a buffer-local autocommand group using the `vim.cmd` API."
   `(do
-     (vim.cmd ,(string.format "augroup %s\nautocmd! * <buffer>" (->str name)))
-     (do
-       ,...)
-     (vim.cmd "augroup END")
-     nil))
+     ,(unpack (-> [`(nvim.ex.augroup ,(->str name))
+                   `(nvim.ex.autocmd_ "* <buffer>")]
+                  (conj ...)
+                  (conj `(nvim.ex.augroup :END))))))
 
-(fn autocmd! [events pattern command]
+(fn autocmd [events pattern command]
   "Defines an autocommand"
   (let [events (if (sequence? events) events [events])
         events (-> (map ->str events)
@@ -216,92 +170,112 @@
         pattern (-> (map ->str pattern)
                     (table.concat ","))]
     (if (fn? command)
-        `(vim.cmd (string.format "autocmd %s %s call %s" ,events ,pattern ,(vlua command)))
-        `(vim.cmd ,(string.format "autocmd %s %s %s" events pattern command)))))
+        `(nvim.ex.autocmd_ (string.format "%s %s call %s" ,events ,pattern
+                                          ,(vlua command)))
+        `(nvim.ex.autocmd_ (string.format "%s %s %s" ,events ,pattern ,command)))))
 
-(fn buf-autocmd! [events command]
+(fn buf-autocmd [events command]
   "Defines an autocommand"
   (let [events (if (sequence? events) events [events])
         events (-> (map ->str events)
                    (table.concat ","))]
     (if (fn? command)
-        `(vim.cmd (string.format "autocmd %s <buffer> call %s" ,events ,(vlua command)))
-        `(vim.cmd ,(string.format "autocmd %s <buffer> %s" events command)))))
+        `(nvim.ex.autocmd_ (string.format "%s <buffer> call %s" ,events
+                                          ,(vlua command)))
+        `(nvim.ex.autocmd_ (string.format "%s <buffer> %s" ,events ,command)))))
 
-(fn wk-map! [mode lhs options description]
-  "A mapping using which-key"
-  `(let [(ok?# which-key#) (pcall require :which-key)]
-     (when ok?#
-       (which-key#.register {,lhs ,description}
-                            {:mode ,mode
-                             :buffer ,(if options.buffer 0)
-                             :silent ,(if options.silent true)
-                             :noremap ,(if (not options.noremap) false)
-                             :nowait ,(if options.nowait true)}))))
+(fn buf-set-opt [bufnr name value]
+  `(nvim.buf_set_option bufnr ,name ,value))
 
-;; TODO: use `pug` instead of `gensym-fn!`
-(fn nmap! [[modes & options] lhs rhs ?description]
-  "Defines a vim mapping
-  Allows functions as right-hand side"
-  (fn expr [buffer? mode lhs rhs options]
-    (if buffer?
-        `(vim.api.nvim_buf_set_keymap 0 ,mode ,lhs ,rhs ,options)
-        `(vim.api.nvim_set_keymap ,mode ,lhs ,rhs ,options)))
+(fn buf-set-var [bufnr name value]
+  "Sets a buffer-scoped (b:) variable"
+  `(nvim.buf_set_var bufnr ,name ,value))
 
-  (let [modes (->> modes
-                   (->str)
-                   (into []))
-        buffer? (contains? options :buffer)
-        options (->key-opts options)
+(fn nmap [[modes & options] lhs rhs]
+  "Defines a vim mapping using the `vim.api.nvim_set_keymap` API or the
+  `vim.api.nvim_buf_set_keymap` if the option `:buffer` was passed.
+  Support all the options the API supports.
+  If the `rhs` argument is a function then automatically includes the `:expr`
+  option."
+  (fn nvim-set-keymap [mode lhs rhs options]
+    (let [buffer? (?. options :buffer)
+          options (disj options :buffer)]
+      (if buffer?
+          `(nvim.buf_set_keymap 0 ,mode ,lhs ,rhs ,options)
+          `(nvim.set_keymap ,mode ,lhs ,rhs ,options))))
+
+  (fn is-rhs-a-fn? [rhs]
+    (if (fn? rhs)
+        (vlua rhs)
+        rhs))
+
+  (let [modes (-> modes
+                  ->str
+                  str->seq)
         options (if (fn? rhs)
-                    (conj options [:expr true])
+                    (conj options :expr)
                     options)
-        fn-name (when (fn? rhs)
-                  (gensym-fn!))
-        exprs (map #(expr buffer? $ lhs
-                          (if (fn? rhs)
-                              (string.format "v:lua.%s()" fn-name)
-                              rhs)
-                          (dissoc options :buffer)) modes)
-        exprs (if (fn? rhs)
-                  (cons `(global ,(sym fn-name) ,rhs) exprs)
-                  exprs)
-        exprs (if (and ?description (exists? :which-key))
-                  (conj exprs
-                        (unpack (map #(wk-map! $ lhs options ?description)
-                                     modes)))
-                  exprs)]
+        options (->key-opts options)
+        exprs (map #(nvim-set-keymap $ lhs (is-rhs-a-fn? rhs) options) modes)]
     (if (> (length exprs) 1)
         `(do
            ,(unpack exprs))
         (unpack exprs))))
 
-(fn noremap! [[modes & options] lhs rhs ?description]
-  "Defines a vim mapping
-  Allows functions as right-hand side
-  Appends :noremap to the options"
+(fn noremap [[modes & options] lhs rhs]
+  "Defines a vim mapping using the `vim.api.nvim_set_keymap` API or the
+  `vim.api.nvim_buf_set_keymap` if the option `:buffer` was passed.
+  Support all the options the API supports.
+  If the `rhs` argument is a function then automatically includes the `:expr`
+  option.
+  Automatically includes the `:noremap` option."
   (let [options (cons :noremap options)]
-    `(nmap! ,(cons modes options) ,lhs ,rhs ,?description)))
+    `(nmap ,(cons modes options) ,lhs ,rhs)))
 
-(fn buf-nmap! [[modes & options] lhs rhs ?description]
-  "Defines a vim mapping
-  Allows functions as right-hand side
-  Appends :buffer to the options"
+(fn buf-nmap [[modes & options] lhs rhs]
+  "Defines a vim mapping using the `vim.api.nvim_buf_set_keymap` if the option
+  `:buffer` was passed.
+  Support all the options the API supports.
+  If the `rhs` argument is a function then automatically includes the `:expr`
+  option."
   (let [options (cons :buffer options)]
-    `(nmap! ,(cons modes options) ,lhs ,rhs ,?description)))
+    `(nmap ,(cons modes options) ,lhs ,rhs)))
 
-(fn buf-noremap! [[modes & options] lhs rhs ?description]
-  "Defines a vim mapping
-  Allows functions as right-hand side
-  Appends :buffer and :noremap to the options"
+(fn buf-noremap [[modes & options] lhs rhs]
+  "Defines a vim mapping using the `vim.api.nvim_buf_set_keymap` if the option
+  `:buffer` was passed.
+  Support all the options the API supports.
+  If the `rhs` argument is a function then automatically includes the `:expr`
+  option.
+  Automatically includes the `:noremap` option."
   (let [options (->> options
                      (cons :buffer)
                      (cons :noremap))]
-    `(nmap! ,(cons modes options) ,lhs ,rhs ,?description)))
+    `(nmap ,(cons modes options) ,lhs ,rhs)))
 
-(fn t [combination]
+(fn hi [group opts]
+  "Defines a highlight"
+  (let [f (fn [k v]
+            (match k
+              :fg (let [fg (. opts :fg)]
+                    `(.. :ctermfg= ,fg " guifg=" ,fg))
+              :bg (let [bg (. opts :bg)]
+                    `(.. :ctermbg= ,bg " guibg=" ,bg))
+              _ `(.. ,(->str k) "=" ,v)))
+        args (accumulate [args (->str group) k v (pairs opts)] `(.. ,args " " ,(f k v)))]
+    `(nvim.ex.highlight ,args)))
+
+(fn color [name]
+  "Sets a vim colorscheme.
+  The name can be either a symbol or a string."
+  `(nvim.ex.colorscheme ,(->str name)))
+
+(fn t [key]
   "Returns the string with termcodes replaced"
-  `(vim.api.nvim_replace_termcodes ,(->str combination) true true true))
+  `(nvim.replace_termcodes ,(->str key) true true true))
+
+(fn feedkeys [key]
+  `(nvim.feedkeys ,(t key) :n true))
 
 (fn has? [property]
   "Returns true if vim has a propety"
@@ -310,21 +284,28 @@
      0 false
      _# nil))
 
-{: set!
- : set-local!
- : let!
- : command!
- : buf-command!
- : lua-command!
- : lua-buf-command!
- : augroup!
- : buf-augroup!
- : autocmd!
- : buf-autocmd!
- : nmap!
- : noremap!
- : buf-nmap!
- : buf-noremap!
+{: pug
+ : vlua
+ : o
+ : ol
+ : g
+ : command
+ : buf-command
+ : viml->lua-command
+ : viml->lua-buf-command
+ : augroup
+ : buf-augroup
+ : autocmd
+ : buf-autocmd
+ : buf-set-opt
+ : buf-set-var
+ : nmap
+ : noremap
+ : buf-nmap
+ : buf-noremap
+ : hi
+ : color
  : t
+ : feedkeys
  : has?
  : unless}

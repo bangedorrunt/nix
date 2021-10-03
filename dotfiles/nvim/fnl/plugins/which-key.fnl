@@ -1,11 +1,12 @@
 (module plugins.which-key
-  {autoload {which-key which-key}})
+  {autoload {: which-key}})
 
 (which-key.setup {:plugins  {:marks  false
                              :registers false}
-                  :key_labels  {:<space>  "SPC"}
-                  :icons  {:separator  " "}
-                  :window  {:border  "single"}})
+                 :hidden ["<silent>" "<cmd>" "<Cmd>" "<CMD>" "<CR>" "<cr>" "call" "lua" "^:" "^ "]
+                 :key_labels  {:<space>  "SPC"}
+                 :icons  {:separator  " "}
+                 :window  {:border  "single"}})
 
 (which-key.register {:1 "which_key_ignore"
                      :2 "which_key_ignore"
@@ -89,6 +90,7 @@
                              :p "Profile"}}
 
                      :l {:name "LSP"
+                         :a "Code Action"
                          :f "Format"
                          :l "Log"
                          :i "Info"

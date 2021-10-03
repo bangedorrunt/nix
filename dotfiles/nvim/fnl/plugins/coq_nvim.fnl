@@ -1,14 +1,16 @@
 (module plugins.coq_nvim
-  {require-macros [core.macros]})
+  {autoload {nvim aniseed.nvim}
+   require-macros [core.macros]})
 
 (vim.cmd "COQnow --shut-up")
-;; (let! g/coq_settings {:auto_start "shut-up"})
 
 ;; Use custom mappings
-(let! g/coq_settings {:keymap {:recommended false}})
+(g coq_settings {:keymap {:recommended false}
+                 :clients {:tabnine {:enabled true}}
+                 :display {:icons {:mode :none}}})
 
-(noremap! [is :expr :silent] "<Tab>" #(if (= (vim.fn.pumvisible) 1) (t "<C-n>") (t "<Tab>")))
-(noremap! [is :expr :silent] "<S-Tab>" #(if (= (vim.fn.pumvisible) 1) (t "<C-p>") (t "<BS>")))
-(noremap! [is :expr :silent] "<Esc>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><Esc>") (t "<Esc>")))
-(noremap! [is :expr :silent] "<C-c>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><C-c>") (t "<C-c>")))
-(noremap! [is :expr :silent] "<BS>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><BS>") (t "<BS>")))
+(noremap [i] "<Tab>" #(if (= (vim.fn.pumvisible) 1) (t "<C-n>") (t "<Tab>")))
+(noremap [i] "<S-Tab>" #(if (= (vim.fn.pumvisible) 1) (t "<C-p>") (t "<BS>")))
+(noremap [i] "<Esc>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><Esc>") (t "<Esc>")))
+(noremap [i] "<C-c>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><C-c>") (t "<C-c>")))
+(noremap [i] "<BS>" #(if (= (vim.fn.pumvisible) 1) (t "<C-e><BS>") (t "<BS>")))
