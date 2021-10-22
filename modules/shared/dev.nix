@@ -27,7 +27,6 @@ in
         # python with default packages
         (python39.withPackages (ps: with ps; [ pip pipx black ]))
         lua
-        fennel
         nodejs
         nodePackages.pnpm
         nodePackages.yarn
