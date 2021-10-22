@@ -21,5 +21,6 @@
 (hi CmpItemAbbrMatch {:guifg "#73daca"})
 (hi CmpItemAbbrMatchFuzzy {:guifg "#73daca"})
 (hi CmpDocumentation {:guifg "#c0caf5"})
+(hi CmpDocumentationBorder {:guifg "#c0caf5" :guibg "#191724"})
 
 (noremap n :<Leader>tc "<Cmd>lua require('rose-pine.functions').toggle_variant({'base', 'dawn'})<CR>")
