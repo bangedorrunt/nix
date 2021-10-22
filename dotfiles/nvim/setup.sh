@@ -73,10 +73,14 @@ if [ ! -e "${CACHE_PATH}/swap" ]; then
 fi
 
 echo 'Installing Packer plugins ...'
-
-NVIM_SKIP_PLUGIN_CONFIGS=1 nvim --headless -c 'autocmd User PackerComplete qa' -c 'PackerSync'
+# A workaround for Packer commands are not available on first run
+nvim --headless -c 'qa'
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 echo 'Sucessfully install Neovim config'
 
 echo 'Installing TabNine binary ...'
-cd "$T9_PATH" && ./install.sh
+
+if [ -e "$T9_PATH" ]; then
+  cd "$T9_PATH" && ./install.sh
+fi
