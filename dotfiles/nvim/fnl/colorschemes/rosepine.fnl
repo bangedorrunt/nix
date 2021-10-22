@@ -9,7 +9,7 @@
 (g rose_pine_disable_italics false)
 (g rose_pine_bold_vertical_split_line true)
 
-(color rose-pine)
+(colorscheme rose-pine)
 
 (hi NvimInternalError {:guibg :None})
 ; TODO: edit nvim-cmp highlight

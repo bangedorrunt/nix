@@ -226,7 +226,7 @@
         args (accumulate [args (sym->str name) k v (pairs opts)] `(.. ,args " " ,(f k v)))]
     `(nvim.ex.highlight ,args)))
 
-(fn color [name]
+(fn colorscheme [name]
   "Sets a vim colorscheme."
   `(nvim.ex.colorscheme ,(sym->str name)))
 
@@ -258,7 +258,7 @@
  : map
  : noremap
  : hi
- : color
+ : colorscheme
  : t
  : feedkeys
  : has?}
