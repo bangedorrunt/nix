@@ -5,6 +5,8 @@ repos:
 
 - [datwaft/nvim](https://github.com/datwaft/nvim)
 - [Olical/dotfiles](https://github.com/Olical/dotfiles)
+- [rinx/dotfiles](https://github.com/rinx/dotfiles)
+- [davidmh/dot-files](https://github.com/davidmh/dot-files)
 - [tsbohc/zest](https://github.com/tsbohc/zest.nvim)
 - [folk/dot](https://github.com/folke/dot)
 - [jose-elias-alvarez/dotfiles](https://github.com/jose-elias-alvarez/dotfiles)
