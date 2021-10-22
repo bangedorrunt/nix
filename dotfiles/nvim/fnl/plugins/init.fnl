@@ -2,9 +2,6 @@
   {autoload {: packer}
    require-macros [core.macros]})
 
-(defn nil? [x]
-  (= nil x))
-
 (defn assoc [tbl ...]
   "Adds any number of key/value pairs to `tbl`, returning `tbl`. Like [[tset]]
   but for multiple pairs."
@@ -12,9 +9,6 @@
     (let [(k v) (select i ...)]
       (tset tbl k v)))
   tbl)
-
-(defn load-plugin-configs? []
-  (nil? vim.env.NVIM_SKIP_PLUGIN_CONFIGS))
 
 (defn plugin-config [name]
   "A shortcut to building a require string for your plugin
@@ -29,7 +23,7 @@
   configuration options."
   (.. "require('" name "').setup {}"))
 
-(defn colorscheme [name]
+(defn colorscheme-pick [name]
   "A shortcut to building a require string for your colorscheme
   configuration. Intended for use with packer's config or setup
   configuration options. Will prefix the name with `colorscheme.`
@@ -49,10 +43,10 @@
                              (if (. opts :rock)
                                  (use-rocks name)
                                  (. opts :colorscheme)
-                                 (use (assoc opts 1 name :event :VimEnter :as :colorscheme :config (colorscheme (. opts :colorscheme))))
-                                 (and (load-plugin-configs?) (. opts :mod))
+                                 (use (assoc opts 1 name :event :VimEnter :as :colorscheme :config (colorscheme-pick (. opts :colorscheme))))
+                                 (. opts :mod)
                                  (use (assoc opts 1 name :config (plugin-config (. opts :mod))))
-                                 (and (load-plugin-configs?) (. opts :init))
+                                 (. opts :init)
                                  (use (assoc opts 1 name :config (plugin-init (. opts :init))))
                                  (use (assoc opts 1 name))))))
                      :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
