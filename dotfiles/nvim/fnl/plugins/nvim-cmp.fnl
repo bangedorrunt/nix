@@ -47,7 +47,7 @@
 
 (cmp.setup {:formatting {:format cmp/format}
             :mapping {:<CR> (cmp.mapping.confirm {:behavior cmp.ConfirmBehavior.Replace
-                                                  :select true})
+                                                  :select false})
                       :<C-Space> (cmp.mapping.complete)
                       :<C-e> (cmp.mapping.close)
                       :<Tab> (cmp.mapping super-tab [:i :s])
@@ -55,10 +55,4 @@
             :snippet {:expand (fn [args] (luasnip.lsp_expand args.body))}
             :experimental {:ghost_text true}
             :sources cmp/srcs})
-
-; Disable completion in prompt
-(augroup disable-cmp-on-filetype
-         (autocmd!)
-         (autocmd FileType TelescopePrompt "lua require('cmp').setup.buffer { enabled = false }"))
-
 
