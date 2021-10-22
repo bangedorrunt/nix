@@ -1,10 +1,10 @@
-#!/bin/zsh
-#      ^----- get shellcheck hints based on bash
+#!/usr/bin/zsh
+#          ^----- get shellcheck hints based on bash
 # https://github.com/koalaman/shellcheck/issues/809
 # shellcheck disable=SC1090 # sourced filenames with variables
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH
 
 ### Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
@@ -102,6 +102,8 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
+
+export PAGER=less
 
 ### Compilation flags
 # export ARCHFLAGS="-arch x86_64"

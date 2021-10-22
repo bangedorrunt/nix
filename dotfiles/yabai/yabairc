@@ -12,7 +12,7 @@ yabai -m config window_topmost               off
 yabai -m config window_shadow                off
 yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
-yabai -m config active_window_opacity        1.0
+yabai -m config active_window_opacity        0.85
 yabai -m config normal_window_opacity        0.95
 yabai -m config window_border                off
 yabai -m config window_border_width          5
@@ -64,7 +64,7 @@ yabai -m rule --add label="Firefox" app="^Firefox" space=^1
 # Signals
 
 # Auto stacking windows
-yabai -m signal --add event=window_focused action='yabai -m window $YABAI_WINDOW_ID --insert stack'
+yabai -m signal --add event=window_focused action="yabai -m window $YABAI_WINDOW_ID --insert stack"
 yabai -m signal --add event=application_front_switched action='yabai -m window --insert stack'
 yabai -m signal --add event=window_destroyed action='yabai -m window --insert stack'
 yabai -m signal --add event=application_terminated action='yabai -m window --insert stack'
