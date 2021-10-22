@@ -2,8 +2,9 @@
   {require-macros [core.macros]})
 
 ; NOTE:
-; light: #faf4ed
-; dark:  #191724
+;; light: #faf4ed
+;; dark:  #191724
+
 ; (g rose_pine_variant :dawn)
 (g rose_pine_disable_background false)
 (g rose_pine_disable_italics false)
@@ -12,16 +13,13 @@
 (colorscheme rose-pine)
 
 (hi NvimInternalError {:guibg :None})
-; TODO: edit nvim-cmp highlight
-; (hi Pmenu {:guibg "#191724" :guifg "#56949f"})
-; (hi PmenuSel {:guifg "#56949f"})
-; (hi PmenuThumb {:guibg "#191724"})
-; (hi CmpItemAbbr {:guibg "#191724" :guifg "#56949f"})
-; (hi CmpItemMenu {:guibg "#191724" :guifg "#56949f"})
-; (hi CmpItemKind {:guibg "#191724" :guifg "#56949f"})
-; (hi CmpItemAbbr {:guibg "#191724" :guifg "#56949f"})
-; (hi CmpItemAbbrDeprecated {:guibg "#191724" :guifg "#907aa9"})
-; (hi CmpItemAbbrMatch {:guibg "#191724" :guifg "#907aa9"})
-; (hi CmpItemAbbrMatchFuzzy {:guibg "#191724" :guifg "#907aa9"})
+
+(hi CmpItemAbbr {:guifg "#c0caf5"})
+(hi CmpItemMenu {:guifg "#db4b4b"})
+(hi CmpItemKind {:guifg "#f7768e"})
+(hi CmpItemAbbrDeprecated {:guifg "#3b4261"})
+(hi CmpItemAbbrMatch {:guifg "#73daca"})
+(hi CmpItemAbbrMatchFuzzy {:guifg "#73daca"})
+(hi CmpDocumentation {:guifg "#c0caf5"})
 
 (noremap n :<Leader>tc "<Cmd>lua require('rose-pine.functions').toggle_variant({'base', 'dawn'})<CR>")
