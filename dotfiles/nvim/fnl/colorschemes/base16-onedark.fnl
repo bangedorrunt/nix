@@ -1,6 +1,5 @@
 (module colorschemes.base16-onedark
-  {autoload {nvim aniseed.nvim
-             base16 base16-colorscheme}
+  {autoload {base16 base16-colorscheme}
    require-macros [core.macros]})
 
 (base16.setup {:base00 "#17181c"
@@ -20,6 +19,4 @@
                :base0E "#c678dd"
                :base0F "#be5046"})
 
-;; (hi LineNr {:guibg "#282c34"})
-;; (hi VertSplit {:guibg "#3e4452" :guifg "#3e4452"})
 (hi VertSplit {:guibg "#282c34" :guifg "#282c34"})

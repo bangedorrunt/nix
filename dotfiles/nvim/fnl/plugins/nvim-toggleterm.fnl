@@ -1,5 +1,5 @@
 (module plugins.nvim-toggleterm
-  {autoload {toggleterm toggleterm}})
+  {autoload {: toggleterm}})
 
 (toggleterm.setup {:size 20
                    :hide_numbers true

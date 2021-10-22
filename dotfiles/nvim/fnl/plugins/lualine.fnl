@@ -1,6 +1,7 @@
-(module plugins.lualine {autoload {: lualine}})
+(module plugins.lualine 
+  {autoload {: lualine}})
 
-(def colors {:bg "#17181c"
+(def colors {:bg "#191724"
              :fg "#bbc2cf"
              :yellow "#ecbe7b"
              :cyan "#008080"

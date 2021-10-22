@@ -1,7 +1,7 @@
 (module plugins.gitsigns
   {autoload {: gitsigns}})
 
-;; fnlfmt: skip
+; fnlfmt: skip
 (gitsigns.setup 
   {:signs {:add          {:hl :GitSignsAdd
                           :text "+"
@@ -25,7 +25,7 @@
                           :linehl :GitSignsChangeLn}}
    :numhl true
    :linehl false
-   ;; I don't use this keymaps
+   ; I don't use this keymaps
    :keymaps {}
    :watch_index {:interval 1000}
    :current_line_blame false

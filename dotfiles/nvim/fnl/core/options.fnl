@@ -1,148 +1,155 @@
-(module core.options
-  {autoload {nvim aniseed.nvim}
-   require-macros [core.macros]})
+(module core.options 
+  {require-macros [core.macros]})
 
 ;;;; RENDERING
-;; (o background :light)
+; (opt background :light)
 
 (if (has? :termguicolors)
-  (do
-    (vim.cmd "let &t_8f = '\\<Esc>[38;2;%lu;%lu;%lum'")
-    (vim.cmd "let &t_8b = '\\<Esc>[48;2;%lu;%lu;%lum'")
-    (o termguicolors))
-  nil)
+    (do
+      (vim.cmd "let &t_8f = '\\<Esc>[38;2;%lu;%lu;%lum'")
+      (vim.cmd "let &t_8b = '\\<Esc>[48;2;%lu;%lu;%lum'")
+      (opt termguicolors))
+    nil)
 
 ;;;; UI
-(o lz)
-(o number)
-(o report 0)
-(o visualbell false)
-(o errorbells false)
-(o mouse "a")
-(o cursorline)
-(o showmatch)
-(o matchtime 2)
-(o shortmess "cA")
-(o pumblend 0)
-(o pumheight 15)
-(o winblend 0)
-(o winwidth 30)
-(o winminwidth 10)
-(o winminheight 0)
-(o helpheight 12)
-(o previewheight 12)
-(o cmdwinheight 12)
-(o conceallevel 2)
-(o concealcursor "niv")
-(o signcolumn "yes")
-;; Statusline
-(o showmode false)
-(o laststatus 2)
-;; Spacing
-(o textwidth 80)
-(o expandtab)
-(o tabstop 2)
-(o shiftwidth 2)
-(o softtabstop -1)
-(o smarttab)
-(o autoindent)
-(o smartindent)
-(o shiftround)
-(o showbreak "↳ ")
-(o breakindentopt "shift:2,min:20")
-;; Invisibles
-(o list)
-(o listchars {:tab "»·"
-              :nbsp       "+"
-              :trail      "·"
-              :extends    "→"
-              :precedes   "←"})
-(o fillchars {:vert "▕"
-              :fold      "·"
-              :diff      ""
-              :msgsep    "‾"
-              :eob       " "
-              :foldopen  "▾"
-              :foldsep   "│"
-              :foldclose "▸"})
+(opt lz)
+(opt number)
+(opt report 0)
+(opt visualbell false)
+(opt errorbells false)
+(opt mouse :a)
+(opt cursorline)
+(opt showmatch)
+(opt matchtime 2)
+(opt shortmess :cA)
+(opt pumblend 0)
+(opt pumheight 15)
+(opt winblend 0)
+(opt winwidth 30)
+(opt winminwidth 10)
+(opt winminheight 0)
+(opt helpheight 12)
+(opt previewheight 12)
+(opt cmdwinheight 12)
+(opt conceallevel 2)
+(opt concealcursor :niv)
+(opt signcolumn :yes)
+; Statusline
+(opt showmode false)
+(opt laststatus 2)
+; Spacing
+(opt textwidth 80)
+(opt expandtab)
+(opt tabstop 2)
+(opt shiftwidth 2)
+(opt softtabstop -1)
+(opt smarttab)
+(opt autoindent)
+(opt smartindent)
+(opt shiftround)
+(opt showbreak "↳ ")
+(opt breakindentopt "shift:2,min:20")
+; Invisibles
+(opt list)
+(opt listchars {:tab "»·"
+                :nbsp "+"
+                :trail "·"
+                :extends "→"
+                :precedes "←"})
+
+(opt fillchars {:vert "▕"
+                :fold "·"
+                :diff ""
+                :msgsep "‾"
+                :eob " "
+                :foldopen "▾"
+                :foldsep "│"
+                :foldclose "▸"})
 
 ;;;; BEHAVIOUR
-;; fnlfmt: skip
-(o magic)
-;; (o hidden)
-(o autoread)
-(o wrap)
-(o whichwrap "b,s,<,>,h,l,[,],~")
-(o nolinebreak)
-(o virtualedit "block")
-(o fileformats "unix,mac,dos")
-(o clipboard "unnamedplus") 
-(o completeopt "menuone,noselect")
-(o diffopt+  ["vertical" "iwhite" "hiddenoff" "foldcolumn:0" "context:4" "algorithm:histogram" "indent-heuristic"])
-(o splitright)
-(o splitbelow)
-(o backspace "indent,eol,start")
-(o switchbuf "useopen,uselast")
-(o eadirection "hor")
-(o sessionoptions "curdir,help,tabpages,winsize")
-(o viewoptions "folds,cursor,curdir,slash,unix")
-;; Wildmenu
-(o wildmenu)
-(o wildignorecase)
-(o wildignore+ [".git"
-                ".hg"
-                ".svn"
-                "*.o"
-                "*.out"
-                "*.jpg"
-                "*.jpeg"
-                "*.png"
-                "*.gif"
-                "*.zip"
-                "*~"
-                "**/tmp/** *.DS_Store"
-                "**/node_modules/**"
-                "**/bower_modules/**"
-                "*.pyc"
-                "*pycache*"])
-(o wildoptions "pum")
-(o wildmode "longest:full,full")
-;; Time
-(o timeout)
-(o ttimeout)
-(o updatetime 100)
-(o timeoutlen 350)
-(o ttimeoutlen 10)
-(o redrawtime 1500)
-;; Search
-(o ignorecase)
-(o incsearch)
-(o hlsearch)
-(o smartcase)
-(o infercase)
-(o wrapscan)
-(o inccommand "nosplit")
-(o complete ".,w,b,k")
-(o grepformat "%f:%l:%c:%m")
-(o grepprg "rg --hidden --vimgrep --smart-case --")
+(opt magic)
+; (opt hidden)
+(opt autoread)
+(opt wrap)
+(opt whichwrap "b,s,<,>,h,l,[,],~")
+(opt nolinebreak)
+(opt virtualedit :block)
+(opt fileformats "unix,mac,dos")
+(opt clipboard :unnamedplus)
+(opt completeopt "menu,menuone,noselect")
+(opt diffopt+ [:vertical
+               :iwhite
+               :hiddenoff
+               "foldcolumn:0"
+               "context:4"
+               "algorithm:histogram"
+               :indent-heuristic])
+
+(opt splitright)
+(opt splitbelow)
+(opt backspace "indent,eol,start")
+(opt switchbuf "useopen,uselast")
+(opt eadirection :hor)
+(opt sessionoptions "curdir,help,tabpages,winsize")
+(opt viewoptions "folds,cursor,curdir,slash,unix")
+; Wildmenu
+(opt wildmenu)
+(opt wildignorecase)
+(opt wildignore+ [:.git
+                  :.hg
+                  :.svn
+                  :*.o
+                  :*.out
+                  :*.jpg
+                  :*.jpeg
+                  :*.png
+                  :*.gif
+                  :*.zip
+                  "*~"
+                  "**/tmp/** *.DS_Store"
+                  :**/node_modules/**
+                  :**/bower_modules/**
+                  :*.pyc
+                  :*pycache*])
+
+(opt wildoptions :pum)
+(opt wildmode "longest:full,full")
+; Time
+(opt timeout)
+(opt ttimeout)
+(opt updatetime 100)
+(opt timeoutlen 350)
+(opt ttimeoutlen 10)
+(opt redrawtime 1500)
+; Search
+(opt ignorecase)
+(opt incsearch)
+(opt hlsearch)
+(opt smartcase)
+(opt infercase)
+(opt wrapscan)
+(opt inccommand :nosplit)
+(opt complete ".,w,b,k")
+(opt grepformat "%f:%l:%c:%m")
+(opt grepprg "rg --hidden --vimgrep --smart-case --")
 
 ;;;; VIM DIRECTORIES
-(o undofile)
-(o swapfile false)
-(o backup false)
-(o history 5000)
-(o writebackup false)
-(o directory (.. tdt.paths.CACHE_PATH "/swag/"))
-(o undodir (.. tdt.paths.CACHE_PATH "/undo/"))
-(o backupdir (.. tdt.paths.CACHE_PATH "/backup/"))
-(o viewdir (.. tdt.paths.CACHE_PATH "/view/"))
-(o spellfile (.. tdt.paths.CACHE_PATH "/spell/en.uft-8.add"))
-(o backupskip ["/tmp/*"
-               "$TMPDIR/*"
-               "$TMP/*"
-               "$TEMP/*"
-               "*/shm/*"
-               "/private/var/*"
-               ".vault.vim"])
-(o shada ["!" "'1000" "<50" "@100" "s10" "h"])
-
+(opt undofile)
+(opt swapfile false)
+(opt backup false)
+(opt history 5000)
+(opt writebackup false)
+(opt directory (.. tdt.paths.CACHE_PATH :/swag/))
+(opt undodir (.. tdt.paths.CACHE_PATH :/undo/))
+(opt backupdir (.. tdt.paths.CACHE_PATH :/backup/))
+(opt viewdir (.. tdt.paths.CACHE_PATH :/view/))
+(opt spellfile (.. tdt.paths.CACHE_PATH :/spell/en.uft-8.add))
+(opt backupskip [:/tmp/*
+                 :$TMPDIR/*
+                 :$TMP/*
+                 :$TEMP/*
+                 :*/shm/*
+                 :/private/var/*
+                 :.vault.vim])
+; fnlfmt: skip
+(opt shada ["!" "'1000" "<50" "@100" "s10" "h"])

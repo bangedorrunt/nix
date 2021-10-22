@@ -1,5 +1,5 @@
 (module plugins.nvim-bufferline
-  {autoload {bufferline bufferline}})
+  {autoload {: bufferline}})
 
 (bufferline.setup {:options {:buffer_close_icon :x
                              :modified_icon "+"

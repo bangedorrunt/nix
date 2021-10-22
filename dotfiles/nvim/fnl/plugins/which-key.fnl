@@ -3,10 +3,10 @@
 
 (which-key.setup {:plugins  {:marks  false
                              :registers false}
-                 :hidden ["<silent>" "<cmd>" "<Cmd>" "<CMD>" "<CR>" "<cr>" "call" "lua" "^:" "^ "]
-                 :key_labels  {:<space>  "SPC"}
-                 :icons  {:separator  " "}
-                 :window  {:border  "single"}})
+                  :hidden ["<silent>" "<cmd>" "<Cmd>" "<CMD>" "<CR>" "<cr>" "call" "lua" "^:" "^ "]
+                  :key_labels  {:<space>  "SPC"}
+                  :icons  {:separator  " "}
+                  :window  {:border  "single"}})
 
 (which-key.register {:1 "which_key_ignore"
                      :2 "which_key_ignore"
@@ -21,17 +21,7 @@
                      :<Space> "Find All"
                      ";" "Live RipGrep"
                      "*" "RG*"
-                     :s {:name "Snap"
-                         ;; Snap binding
-                         ;; :s "Git+Files"
-                         ;; :a "Snap Action"
-                         ;; :b "Buffers"
-                         ;; :j "Jumplists"
-                         ;; :g "Gitfiles"
-                         ;; :o "Oldfiles"
-                         ;; :m "Visual Selected"
-
-                         ;; Telescope binding
+                     :s {:name "Snap" ; In memory of Snap plugin
                          :b "Buffers"
                          :c "Commands"
                          :C "Commands History"
@@ -79,7 +69,13 @@
                          :f "Fetch"
                          :p "Pull"
                          :P "Push"
-                         }
+                         :v {:name "DiffView"
+                             :c "Close"
+                             :r "Refresh"
+                             :h "File History"
+                             :f "Focused File"
+                             :t "Toggle"
+                             :v "Open"}}
                      :h {:name "Help"
                          ;; :s {:name "Snap References"}
                          :p {:name "Packer Manager"
@@ -88,7 +84,6 @@
                              :c "Compile"
                              :s "Sync"
                              :p "Profile"}}
-
                      :l {:name "LSP"
                          :a "Code Action"
                          :f "Format"
@@ -102,8 +97,10 @@
                          :Q "Quit Without SAVING!"
                          :s "Save then Quit"}
                      :t {:name "Toggles"
-                         :t "Tree"
-                         :p "Markdown Preview"}
+                         :c "Colorscheme"
+                         :p "Markdown Preview"
+                         :s "Scratch"
+                         :t "Tree"}
                      :w {:name "Windows"
                          := "Ballance Windows"
                          :s "Split Window"

@@ -3,8 +3,8 @@ CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache/nvim}"
 OLD_PATH="${XDG_DATA_HOME:-$HOME/.local/share/nvim/site}"
 PACK_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start"
 ANISEED_PATH="${PACK_PATH}/aniseed"
-IMPATIENT_PATH="${PACK_PATH}/impatient.nvim"
-FILETYPE_NVIM_PATH="${PACK_PATH}/filetype.nvim"
+# IMPATIENT_PATH="${PACK_PATH}/impatient.nvim"
+# FILETYPE_NVIM_PATH="${PACK_PATH}/filetype.nvim"
 # HOTPOT_PATH="${PACK_PATH}/hotpot.nvim"
 PACKER_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/packer.nvim"
 T9_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/cmp-tabnine"
@@ -50,17 +50,17 @@ if [ ! -d "$PACKER_PATH" ]; then
   git clone "https://github.com/wbthomason/packer.nvim" "$PACKER_PATH"
 fi
 
-echo 'Downloading impatient.nvim ...'
+# echo 'Downloading impatient.nvim ...'
 
-if [ ! -d "$IMPATIENT_PATH" ]; then
-  git clone "https://github.com/lewis6991/impatient.nvim.git" "$IMPATIENT_PATH"
-fi
+# if [ ! -d "$IMPATIENT_PATH" ]; then
+#   git clone "https://github.com/lewis6991/impatient.nvim.git" "$IMPATIENT_PATH"
+# fi
 
-echo 'Downloading filetype.nvim ...'
+# echo 'Downloading filetype.nvim ...'
 
-if [ ! -d "$FILETYPE_NVIM_PATH" ]; then
-  git clone "https://github.com/nathom/filetype.nvim" "$FILETYPE_NVIM_PATH"
-fi
+# if [ ! -d "$FILETYPE_NVIM_PATH" ]; then
+#   git clone "https://github.com/nathom/filetype.nvim" "$FILETYPE_NVIM_PATH"
+# fi
 
 if [ ! -e "${CACHE_PATH}/swap" ]; then
   echo "Creating vim swap/backup/undo/view folders inside ${CACHE_PATH}/nvim ..."
@@ -73,6 +73,7 @@ if [ ! -e "${CACHE_PATH}/swap" ]; then
 fi
 
 echo 'Installing Packer plugins ...'
+
 NVIM_SKIP_PLUGIN_CONFIGS=1 nvim --headless -c 'autocmd User PackerComplete qa' -c 'PackerSync'
 
 echo 'Sucessfully install Neovim config'

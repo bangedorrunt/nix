@@ -1,67 +1,38 @@
-(module plugins.scratch 
-  {autoload {nvim aniseed.nvim
-             util aniseed.nvim.util
-             core aniseed.core
-             str aniseed.string}
-   require-macros [core.macros]})
+(module plugins.scratch)
 
-(defonce- state {:bufnr nil})
+(fn first [xs]
+  (when xs
+    (. xs 1)))
 
-; assumes state.bufnr ~= nil
-(defn- new-scratch-split []
-  (nvim.ex.botright :vsplit)
-  (nvim.win_set_buf (nvim.get_current_win) state.bufnr)
-  (util.normal :G))
+(def state {:bufnr nil})
 
-(defn- initialize []
-  (var bufnr (nvim.create_buf false false))
-  (buf-set-opt bufnr :filetype :fennel)
-  (buf-set-opt bufnr :buftype :nofile)
-  (nvim.buf_set_lines bufnr 0 0 true ["(module scratch {autoload {nvim aniseed.nvim"
-                                      "                           core aniseed.core}"
-                                      "                 require-macros [core.macros]})"
-                                      ""])
+; Assumes state.bufnr ~= nil
+(defn new-scratch-split []
+  (vim.cmd "botright vsplit")
+  (vim.api.nvim_win_set_buf (vim.api.nvim_get_current_win) state.bufnr)
+  (vim.cmd "silent exe 'normal! G'"))
+
+(defn initialize []
+  (var bufnr (vim.api.nvim_create_buf false false))
+  (vim.api.nvim_buf_set_option bufnr :filetype :fennel)
+  (vim.api.nvim_buf_set_option bufnr :buftype :nofile)
+  (vim.api.nvim_buf_set_lines bufnr 0 0 true ["(module scratch {autoload {aniseed aniseed.core}"
+                                              "                 require-macros [core.macros]})"
+                                              ""])
   (tset state :bufnr bufnr)
   (new-scratch-split)
   (vim.cmd :ConjureEvalBuf))
 
 (defn show []
   (if (= state.bufnr nil)
-    ;; we need to initialize the scratch buffer's properties
+    ; we need to initialize the scratch buffer's properties
     (initialize)
 
-    ;; open an existing scratch buffer in a split window
-    (let [winid (core.first (vim.fn.win_findbuf state.bufnr))]
+    ; open an existing scratch buffer in a split window
+    (let [winid (first (vim.fn.win_findbuf state.bufnr))]
       (if (= winid nil)
         ; open a new scratch split
         (new-scratch-split)
 
         ; focus the scratch window
         (vim.fn.win_gotoid winid)))))
-
-; in theory this function won't be called at all, the scratch could live along
-; the session indefinitely
-(defn kill []
-  (if (~= -1 state.bufnr)
-    (do
-
-      ; maybe close the window
-      (let [winid (vim.fn.bufwinid state.bufnr)
-            current-winid (vim.fn.winnr :$)]
-        (if (and
-              ; it's a valid window
-              (~= -1 winid)
-              ; the cursor is in it
-              (= winid current-winid)
-              ; it's not the only window remaining
-              (~= 1 winid))
-          (nvim.win_close winid false)))
-
-      ; delete the buffer
-      (nvim.buf_delete state.bufnr {:force true})
-
-      ; reset the state
-      (tset state :bufnr nil))
-
-    (nvim.echo "Nothing to kill")))
-
