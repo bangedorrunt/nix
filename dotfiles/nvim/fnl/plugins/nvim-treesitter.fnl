@@ -18,9 +18,5 @@
   :rainbow {:enable true
             :extended_mode true
             :max_file_lines nil}
-  :context_commentstring {:enable true}
-  :incremental_selection {:enable true
-                          :keymaps {:init_selection :<C-n>
-                                    :node_incremental :<C-n>
-                                    :scope_incremental :<C-s>
-                                    :node_decremental :<C-r>}}})
+  :context_commentstring {:enable true
+                          :enable_autocmd false}})

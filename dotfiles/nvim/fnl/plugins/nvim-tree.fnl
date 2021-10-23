@@ -31,10 +31,10 @@
                   :ignore [:.git/ :node_modules]
                   :auto_ignore_ft [:dashboard :startify]
                   :diagnostics {:enable true
-                                :hint ""
-                                :info ""
-                                :warning ""
-                                :error ""}
+                                :hint " "
+                                :info " "
+                                :warning " "
+                                :error " "}
                   :view {:width 35
                          :side :left
                          :auto_resize true}})

@@ -1,4 +1,4 @@
-(module plugins.telescope 
+(module plugins.telescope
   {autoload {: telescope
              telescope/utils telescope.utils
              telescope/actions telescope.actions
