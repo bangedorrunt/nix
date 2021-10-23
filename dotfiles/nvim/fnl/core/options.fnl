@@ -1,4 +1,4 @@
-(module core.options 
+(module core.options
   {require-macros [core.macros]})
 
 ;;;; RENDERING
@@ -69,6 +69,7 @@
 ;;;; BEHAVIOUR
 (opt magic)
 ; (opt hidden)
+(opt scrolloff 10)
 (opt autoread)
 (opt wrap)
 (opt whichwrap "b,s,<,>,h,l,[,],~")
