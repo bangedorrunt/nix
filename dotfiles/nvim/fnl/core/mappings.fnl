@@ -4,8 +4,8 @@
 
 ; DEFAULT MAP
 ; -----------
-(g mapleader " ")
-(g maplocalleader ",")
+(g mapleader (t :<Space>))
+(g maplocalleader (t ","))
 
 ; Disable SPC key
 ; NOTE: `which-key` already implemented this
@@ -17,12 +17,14 @@
 ; (noremap n :N :Nzzzv)
 ; (noremap n :J "mzJ`z")
 
+(noremap i :jj :<Esc>)
+
 (noremap n :<Tab> :<Cmd>bn<CR>)
 (noremap n :<S-Tab> :<Cmd>bp<CR>)
 
 ; Break lines in normmal mode
-(map n :o :o<ESC>)
-(map n :O :O<ESC>)
+; (map n :o :o<ESC>)
+; (map n :O :O<ESC>)
 
 ; Vim map
 ; (map n "Y" "y$")
@@ -52,7 +54,6 @@
 (noremap c :<C-e> :<End>)
 (noremap c :<C-d> :<Del>)
 (noremap c :<C-h> :<BS>)
-; (noremap c "<C-t>" [[<C-r>=expand("%:p:h") . "/" <CR>]])
 
 ; Term
 (noremap t :<Esc><Esc> "<C-\\><C-n>")
