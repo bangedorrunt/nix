@@ -1,6 +1,7 @@
 (module plugins.nvim-cmp
   {autoload {: cmp
-             : luasnip}
+             : luasnip
+             : lspkind}
    require-macros [core.macros]})
 
 (def- cmp/menu-items {:cmp_tabnine "[T9]"
@@ -15,18 +16,18 @@
                {:name :nvim_lsp}
                {:name :conjure}
                {:name :luasnip}
-               {:name :buffer}
+               {:name :buffer :keyword_lengthen 5}
                {:name :path}
                {:name :nvim_lua}
                {:name :calc}])
 
 ; Menu display
-(defn- cmp/format [entry item]
-  (set item.menu
-       (or (. cmp/menu-items
-              entry.source.name)
-           ""))
-  item)
+; (defn- cmp/format [entry item]
+;   (set item.menu
+;        (or (. cmp/menu-items
+;               entry.source.name)
+;            ""))
+;   item)
 
 ; Check backspace
 (defn- has-words-before? []
@@ -45,7 +46,8 @@
       (luasnip.jumpable -1) (luasnip.jump -1)
       (fallback)))
 
-(cmp.setup {:formatting {:format cmp/format}
+(cmp.setup {:formatting {:format (lspkind.cmp_format {:with_text true
+                                                      :menu cmp/menu-items})}
             :mapping {:<CR> (cmp.mapping.confirm {:behavior cmp.ConfirmBehavior.Replace
                                                   :select false})
                       :<C-Space> (cmp.mapping.complete)

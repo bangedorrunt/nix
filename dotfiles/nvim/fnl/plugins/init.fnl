@@ -125,6 +125,7 @@
   :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
   :jose-elias-alvarez/nvim-lsp-ts-utils {:module_pattern "nvim.lsp.ts.utils.*"}
   :folke/lua-dev.nvim {:module_pattern "lua.dev.*"}
+  :onsails/lspkind-nvim {:module_pattern "lspkind"}
   :neovim/nvim-lspconfig {:event :BufReadPre
                           :mod :lsp}
   :folke/trouble.nvim {:cmd :Trouble}
