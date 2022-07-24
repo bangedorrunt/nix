@@ -125,7 +125,7 @@
                           :mod :lsp}
   :folke/trouble.nvim {:cmd :Trouble}
   ; :folke/todo-comments.nvim {:after :treesitter :init :todo-comments}
-
+  :kmonad/kmonad-vim {:ft [:kbd]}
   ;;;; Fuzzy search engine
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]

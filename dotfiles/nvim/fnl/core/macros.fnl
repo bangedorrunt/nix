@@ -88,6 +88,9 @@
   (let [non-quoted (second expr)]
     `(fn [] ,non-quoted)))
 
+(fn quoted->fn? [expr]
+  (if (quoted? expr) (quoted->fn expr) expr))
+
 (fn quoted->str [expr]
   "Converts a quoted expression like `(quote (+ 1 1))` into an string with its shorthand form."
   (let [non-quoted (second expr)]
@@ -136,49 +139,11 @@
 
 ;;;; Macros Declaration
 
-; NOTE: https://github.com/rktjmp/hotpot.nvim/discussions/6
-(fn pug [val prefix?]
-  "Put Unique Global
-
-  (val :any prefix? :string) -> (uuid :string)
-
-  Takes any given value, generates a unique name (with optional prefix)
-  and inserts value into _G. Returns unique name."
-  (let [inter-compile-uid (os.date "%s")
-        name (if prefix?
-                 (.. (->str (gensym prefix?)) inter-compile-uid)
-                 (.. (->str (gensym :pug)) inter-compile-uid))]
-    `(do
-       (tset _G ,name ,val)
-       ,name)))
-
-(fn vlua [what prefix?]
-  "Wrap given in v:lua x pug call"
-  `(.. "v:lua." ,(pug what prefix?) "()"))
-
-(fn vlua-maybe [expr ?in-keymap]
-  ; WARNING: only use with anonymous function
-  "Evaluate expr. If expr is a function, wrap expr with `vlua`"
-  (if (fn? expr)
-      (if (nil? ?in-keymap)
-          (values :call (vlua expr))
-          (vlua expr))
-      expr))
-
-(fn viml->fn [name]
-  ; WARNING: use with named function
-  "Wrap given function in lua call"
-  `(.. "lua require('" *module-name* "')['" ,(->str name) "']()"))
-
-(fn viml->keymap [name]
-  "Wrap given function in lua call which will be used for keybinding"
-  `(.. "<Cmd>lua require('" *module-name* "')['" ,(->str name) "']()<CR>"))
-
 (fn command [...]
   "Define command"
   (match (select "#" ...)
-    2 (let [(name expr) ...] `(nvim.ex.command_ ,(->str name) ,(vlua-maybe expr) {}))
-    3 (let [(name _ expr) ...] `(nvim.ex.buf_command_ 0 ,(->str name) ,(vlua-maybe expr) {}))))
+    2 (let [(name expr) ...] `(nvim.ex.command_ ,(->str name) ,(quoted->fn? expr) {}))
+    3 (let [(name _ expr) ...] `(nvim.ex.buf_command_ 0 ,(->str name) ,(quoted->fn? expr) {}))))
 
 (fn opt [name ?value]
   "Set one vim.options using the `vim.opt` API
@@ -226,9 +191,7 @@
                   options)
         options (if (str? command)
                   (doto options (tset :command command))
-                  (doto options (tset :callback (if (quoted? command)
-                                                  (quoted->fn command)
-                                                  command))))
+                  (doto options (tset :callback (quoted->fn? command))))
         options (if (nil? options.desc)
                   (doto options (tset :desc (if (quoted? command) (quoted->str command)
                                               (str? command) command
@@ -270,14 +233,15 @@
                   ->str
                   str->seq)
         rhs (last args)
+        rhs (quoted->fn? rhs)
         lhs (llast args)
         args-index-without-rlhs (- (length args) 2)
         options (mapt ->str [(unpack args 1 args-index-without-rlhs)])
-        options (if (fn? rhs)
+        options (if (quoted? rhs)
                     (conj options :expr)
                     options)
         options (->key-opts options)
-        exprs (mapt #(bind-to $ lhs (vlua-maybe rhs :in-keymap) options) modes)]
+        exprs (mapt #(bind-to $ lhs rhs options) modes)]
     (if (> (length exprs) 1)
         `(do
            ,(unpack exprs))
@@ -313,8 +277,8 @@
      0 false
      _# nil))
 
-{: viml->fn
- : viml->keymap
+{: any?
+ : contains?
  : opt
  : opt-local
  : g

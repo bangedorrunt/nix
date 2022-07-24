@@ -23,8 +23,8 @@
   (let [path (vim.lsp.get_log_path)]
     (vim.cmd (string.format "edit %s" path))))
 
-(command LspLog (viml->fn open-lsp-log))
-(command LspRestart (viml->fn reload-lsp))
+(command LspLog '(open-lsp-log))
+(command LspRestart '(reload-lsp))
 
 (noremap n nowait :<Leader>li :<Cmd>LspInfo<CR>)
 (noremap n nowait :<Leader>ls :<Cmd>LspStart<CR>)
@@ -86,18 +86,11 @@
     (do
       (augroup LspFormatOnSave
                (autocmd! {:buffer bufnr})
-               (autocmd BufWritePre <buffer> "lua vim.lsp.buf.format({ bufnr = bufnr })"))
-      (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ bufnr = bufnr })<CR>"))
-    (print "LSP not support formatting.")))
-
-(defn null-attach [client bufnr]
-  ; LSP format
-  (if (capable? client :documentFormattingProvider)
-    (do
-      (augroup LspFormatOnSave
-               (autocmd! {:buffer bufnr})
-               (autocmd BufWritePre <buffer> "lua vim.lsp.buf.format({ bufnr = bufnr })"))
-      (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ bufnr = bufnr })<CR>"))
+               (autocmd BufWritePre <buffer>
+                        '(vim.lsp.buf.format {:filter (fn [client] (not (contains? [:jsonls :tsserver] client.name)))
+                                              :bufnr bufnr}
+                         {:buffer bufnr})))
+      (noremap n buffer :<Leader>lf '(vim.lsp.buf.format {:bufnr bufnr})))
     (print "LSP not support formatting.")))
 
 ; fnlfmt: skip
@@ -156,5 +149,5 @@
                   (null-ls/builtins.diagnostics.shellcheck.with {:filetypes [:zsh
                                                                              :sh
                                                                              :bash]})]))
-     :on_attach null-attach}
+     :on_attach enhanced-attach}
     (null-ls.setup))
