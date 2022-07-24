@@ -86,8 +86,8 @@
     (do
       (augroup LspFormatOnSave
                (autocmd! {:buffer bufnr})
-               (autocmd BufWritePost <buffer> "lua vim.lsp.buf.format({ async = true, bufnr = bufnr })"))
-      (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ async = true, bufnr = bufnr })<CR>"))
+               (autocmd BufWritePre <buffer> "lua vim.lsp.buf.format({ bufnr = bufnr })"))
+      (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ bufnr = bufnr })<CR>"))
     (print "LSP not support formatting.")))
 
 (defn null-attach [client bufnr]
@@ -96,38 +96,13 @@
     (do
       (augroup LspFormatOnSave
                (autocmd! {:buffer bufnr})
-               (autocmd BufWritePost <buffer> "lua vim.lsp.buf.format({ async = true, bufnr = bufnr })"))
-      (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ async = true, bufnr = bufnr })<CR>"))
+               (autocmd BufWritePre <buffer> "lua vim.lsp.buf.format({ bufnr = bufnr })"))
+      (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ bufnr = bufnr })<CR>"))
     (print "LSP not support formatting.")))
 
 ; fnlfmt: skip
 (def servers
   {:bashls {}
-   :tsserver {:cmd [:typescript-language-server :--stdio]
-              :on_attach (fn [client bufnr]
-                           (var ts-utils (require :nvim-lsp-ts-utils))
-                           (var ts-utils-settings
-                             {:enable_import_on_completion true
-                              :complete_parens true
-                              :signature_help_in_parens true
-                              :eslint_bin :eslint_d
-                              :eslint_enable_diagnostics true
-                              :eslint_disable_if_no_config true
-                              :enable_formatting true
-                              :formatter :eslint_d
-                              :update_imports_on_move true
-                              ; :filter_out_diagnostics_by_code ["80001"]
-                              })
-                           (set client.server_capabilities.documentFormattingProvider false)
-                           (set client.server_capabilities.documentRangeFormattingProvider false)
-                           (enhanced-attach client)
-                           (ts-utils.setup ts-utils-settings)
-                           (ts-utils.setup_client client)
-                           (noremap n buffer :gs ":TSLspOrganize<CR>")
-                           (noremap n buffer :gI ":TSLspRenameFile<CR>")
-                           (noremap n buffer :go ":TSLspImportAll<CR>")
-                           (noremap n buffer :qq ":TSLspFixCurrent<CR>")
-                           (noremap n buffer "." :.<C-x><C-o>))}
    :cssls {:cmd [:vscode-css-language-server :--stdio]}
    ; :rnix {}
    :jsonls {:cmd [:vscode-json-language-server :--stdio]}
