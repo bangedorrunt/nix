@@ -84,15 +84,18 @@
   ; LSP format
   (if (capable? client :documentFormattingProvider)
     (do
-      (augroup LspFormatOnSave (autocmd! {:buffer bufnr})
+      (augroup LspFormatOnSave
+               (autocmd! {:buffer bufnr})
                (autocmd BufWritePost <buffer> "lua vim.lsp.buf.format({ async = true, bufnr = bufnr })"))
       (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ async = true, bufnr = bufnr })<CR>"))
     (print "LSP not support formatting.")))
 
-(defn null-attach [client bufnr] ; LSP format
+(defn null-attach [client bufnr]
+  ; LSP format
   (if (capable? client :documentFormattingProvider)
     (do
-      (augroup LspFormatOnSave (autocmd! {:buffer bufnr})
+      (augroup LspFormatOnSave
+               (autocmd! {:buffer bufnr})
                (autocmd BufWritePost <buffer> "lua vim.lsp.buf.format({ async = true, bufnr = bufnr })"))
       (noremap n buffer :<Leader>lf "<Cmd>lua vim.lsp.buf.format({ async = true, bufnr = bufnr })<CR>"))
     (print "LSP not support formatting.")))
