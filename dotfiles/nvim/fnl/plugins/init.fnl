@@ -51,19 +51,19 @@
                                  (use (assoc opts 1 name))))))
                      :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
                               :git {:clone_timeout 120 :depth 1}
+                              :max_jobs 60
                               :profile {:enable true :threshold 0}}})))
 
 ; fnlfmt: skip
 ; NOTE: lua use % as escape in pattern
 (use
   ;;;; Dependencies
-  :wbthomason/packer.nvim {:opt true}
   :lewis6991/impatient.nvim {}
-  :nathom/filetype.nvim {}
+  :wbthomason/packer.nvim {:opt true}
   :Olical/aniseed {:branch :develop}
   :antoinemadec/FixCursorHold.nvim {}
   :nvim-lua/plenary.nvim {:as :plenary :module_pattern "plenary.*"}
-  :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons"}
+  ; :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons"}
 
   ;;;; UI plugins
   :rose-pine/neovim {:colorscheme :rosepine}
@@ -71,8 +71,8 @@
   ; :woodyZootopia/iceberg.vim {:branch :support_LSP
   ;                             :colorscheme :iceberg}
   ; :RRethy/nvim-base16 {:colorscheme :base16-onedark}
-  :akinsho/nvim-bufferline.lua {:after :colorscheme :mod :nvim-bufferline}
   :lukas-reineke/indent-blankline.nvim {:after :colorscheme :mod :indent-blankline}
+  :akinsho/bufferline.nvim {:after :colorscheme :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :colorscheme :mod :lualine}
   :folke/which-key.nvim {:event :BufRead :mod :which-key}
   :kyazdani42/nvim-tree.lua {:event :BufRead :mod :nvim-tree}
@@ -82,8 +82,8 @@
   :tpope/vim-repeat {:event :BufWinEnter}
   :tpope/vim-commentary {:event :BufRead}
   :tpope/vim-surround {:event :BufRead}
-  :tpope/vim-unimpaired {:event :BufRead}
-  :akinsho/nvim-toggleterm.lua {:event :BufRead :mod :nvim-toggleterm}
+  :tpope/vim-sleuth {:event :BufRead}
+  :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
   :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
   :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
   :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
@@ -102,12 +102,7 @@
                                     :as :treesitter
                                     ; :run ":TSUpdate"
                                     :mod :nvim-treesitter}
-  ; :nvim-treesitter/nvim-treesitter-textobjects {:after :treesitter}
-  ; :RRethy/nvim-treesitter-textsubjects {:after :treesitter}
   :p00f/nvim-ts-rainbow {:after :treesitter}
-  ; :windwp/nvim-autopairs {:after :treesitter
-  ;                         :mod :nvim-autopairs}
-  ; :windwp/nvim-ts-autotag {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
   ; :gpanders/nvim-parinfer {:ft [:clojure :fennel :lisp]}
@@ -129,7 +124,7 @@
   :neovim/nvim-lspconfig {:event :BufReadPre
                           :mod :lsp}
   :folke/trouble.nvim {:cmd :Trouble}
-  :folke/todo-comments.nvim {:after :treesitter :init :todo-comments}
+  ; :folke/todo-comments.nvim {:after :treesitter :init :todo-comments}
 
   ;;;; Fuzzy search engine
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
@@ -138,10 +133,12 @@
                                   :cmd :Telescope
                                   :mod :telescope}
   ;;;; Completion plugins
+  ; :github/copilot.vim {}
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
   :hrsh7th/nvim-cmp {:event :BufRead
                      :module_pattern "cmp.*"
                      :mod :nvim-cmp}
+  :hrsh7th/cmp-cmdline {:after :nvim-cmp}
   :hrsh7th/cmp-path {:after :nvim-cmp}
   :hrsh7th/cmp-buffer {:after :nvim-cmp}
   :hrsh7th/cmp-calc {:after :nvim-cmp}

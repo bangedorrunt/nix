@@ -19,4 +19,4 @@
                :base0E "#c678dd"
                :base0F "#be5046"})
 
-(hi VertSplit {:guibg "#282c34" :guifg "#282c34"})
+(hi VertSplit {:bg "#282c34" :fg "#282c34"})

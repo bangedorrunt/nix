@@ -23,8 +23,8 @@
 (noremap n :<S-Tab> :<Cmd>bp<CR>)
 
 ; Break lines in normmal mode
-; (map n :o :o<ESC>)
-; (map n :O :O<ESC>)
+(map n :o :o<ESC>)
+(map n :O :O<ESC>)
 
 ; Vim map
 ; (map n "Y" "y$")

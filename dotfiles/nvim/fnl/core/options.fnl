@@ -2,7 +2,7 @@
   {require-macros [core.macros]})
 
 ;;;; RENDERING
-; (opt background :light)
+(opt background :light)
 
 (if (has? :termguicolors)
     (do
@@ -21,7 +21,7 @@
 (opt cursorline)
 (opt showmatch)
 (opt matchtime 2)
-(opt shortmess :cA)
+(opt shortmess :filnxtToOFc)
 (opt pumblend 0)
 (opt pumheight 15)
 (opt winblend 0)
@@ -37,16 +37,16 @@
 ; Statusline
 (opt showmode false)
 (opt laststatus 2)
-; Spacing
 (opt textwidth 80)
-(opt expandtab)
+; Let vim-sleuth handle indent options
+; (opt expandtab)
+; (opt shiftwidth 2)
 (opt tabstop 2)
-(opt shiftwidth 2)
 (opt softtabstop -1)
 (opt smarttab)
-(opt autoindent)
-(opt smartindent)
-(opt shiftround)
+; (opt autoindent)
+; (opt smartindent)
+; (opt shiftround)
 (opt showbreak "↳ ")
 (opt breakindentopt "shift:2,min:20")
 ; Invisibles
@@ -70,14 +70,14 @@
 (opt magic)
 ; (opt hidden)
 (opt scrolloff 10)
-(opt autoread)
+; (opt autoread)
 (opt wrap)
 (opt whichwrap "b,s,<,>,h,l,[,],~")
 (opt nolinebreak)
 (opt virtualedit :block)
 (opt fileformats "unix,mac,dos")
 (opt clipboard :unnamedplus)
-(opt completeopt "menu,menuone,noselect")
+; (opt completeopt "menu,menuone,noselect")
 (opt diffopt+ [:vertical
                :iwhite
                :hiddenoff

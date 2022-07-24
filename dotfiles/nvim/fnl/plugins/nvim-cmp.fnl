@@ -4,30 +4,22 @@
              : lspkind}
    require-macros [core.macros]})
 
-(def- cmp/menu-items {:cmp_tabnine "[T9]"
-                     :nvim_lsp "[LSP]"
-                     :luasnip "[LuaSnip]"
-                     :conjure "[Conjure]"
-                     :buffer "[Buffer]"
-                     :calc "[Calc]"
-                     :path "[Path]"})
+(def- cmp/menu-items {:cmp_tabnine :T9
+                      :nvim_lsp :LSP
+                      :luasnip :LuaSnip
+                      :conjure :Conjure
+                      :buffer :Buffer
+                      :calc :Calc
+                      :path :Path})
 
 (def- cmp/srcs [{:name :cmp_tabnine}
-               {:name :nvim_lsp}
-               {:name :conjure}
-               {:name :luasnip}
-               {:name :buffer :keyword_lengthen 5}
-               {:name :path}
-               {:name :nvim_lua}
-               {:name :calc}])
-
-; Menu display
-; (defn- cmp/format [entry item]
-;   (set item.menu
-;        (or (. cmp/menu-items
-;               entry.source.name)
-;            ""))
-;   item)
+                  {:name :nvim_lsp}
+                {:name :conjure}
+                {:name :luasnip}
+                {:name :buffer :keyword_length 5}
+                {:name :path}
+                {:name :nvim_lua}
+                {:name :calc}])
 
 ; Check backspace
 (defn- has-words-before? []
@@ -46,15 +38,24 @@
       (luasnip.jumpable -1) (luasnip.jump -1)
       (fallback)))
 
-(cmp.setup {:formatting {:format (lspkind.cmp_format {:with_text true
+(cmp.setup {:completion {:completeopt "menuone,noinsert"}
+            :formatting {:format (lspkind.cmp_format {:with_text false
                                                       :menu cmp/menu-items})}
             :mapping {:<CR> (cmp.mapping.confirm {:behavior cmp.ConfirmBehavior.Replace
                                                   :select false})
                       :<C-Space> (cmp.mapping.complete)
-                      :<C-e> (cmp.mapping.close)
+                      :<C-e> (cmp.mapping {:i (cmp.mapping.abort)
+                                           :c (cmp.mapping.close)})
                       :<Tab> (cmp.mapping super-tab [:i :s])
                       :<S-Tab> (cmp.mapping super-s-tab [:i :s])}
-            :snippet {:expand (fn [args] (luasnip.lsp_expand args.body))}
+            :snippet {:expand #(luasnip.lsp_expand $.body)}
             :experimental {:ghost_text true}
             :sources cmp/srcs})
 
+; Cmdline completions
+(cmp.setup.cmdline :/ {:sources [{:name :buffer}]
+                       :mapping (cmp.mapping.preset.cmdline)})
+(cmp.setup.cmdline ":" {:mapping (cmp.mapping.preset.cmdline)
+                        :sources (cmp.config.sources
+                                   [{:name :path}]
+                                   [{:name :cmdline}])})

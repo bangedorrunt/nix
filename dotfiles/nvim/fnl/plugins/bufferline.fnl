@@ -1,4 +1,4 @@
-(module plugins.nvim-bufferline
+(module plugins.bufferline
   {autoload {: bufferline}})
 
 (bufferline.setup {:options {:buffer_close_icon :x

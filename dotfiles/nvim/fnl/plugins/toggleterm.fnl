@@ -1,4 +1,4 @@
-(module plugins.nvim-toggleterm
+(module plugins.toggleterm
   {autoload {: toggleterm}})
 
 (toggleterm.setup {:size 20

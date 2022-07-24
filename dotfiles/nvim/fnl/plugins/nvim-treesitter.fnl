@@ -11,7 +11,7 @@
                       :lua :vim :nix :python]
   :highlight {:enable true
               :additional_vim_regex_highlighting false}
-  :indent {:enable true}
+  :indent {:enable false}
   ; :autopairs {:enable false}
   ; :autotag {:enable true}
   :matchup {:enable true}

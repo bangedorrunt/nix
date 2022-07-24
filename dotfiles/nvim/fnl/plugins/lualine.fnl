@@ -1,7 +1,7 @@
-(module plugins.lualine 
+(module plugins.lualine
   {autoload {: lualine}})
 
-(def colors {:bg "#191724"
+(def colors {:bg "#faf4ed"
              :fg "#bbc2cf"
              :yellow "#ecbe7b"
              :cyan "#008080"
@@ -95,7 +95,7 @@
 
 (ins-left {1 :progress :color {:fg colors.fg :gui :bold}})
 (ins-left {1 :diagnostics
-           :sources {1 :nvim_lsp}
+           :sources {1 :nvim_diagnostic}
            :symbols {:error " " :warn " " :info " "}
            :diagnostics_color {:color_error {:fg colors.red}
                                :color_warn {:fg colors.yellow}

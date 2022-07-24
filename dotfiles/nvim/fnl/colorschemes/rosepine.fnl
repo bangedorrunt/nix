@@ -1,26 +1,30 @@
 (module colorschemes.rosepine
-  {require-macros [core.macros]})
+        {autoload {: rose-pine} require-macros [core.macros]})
 
-; NOTE:
-;; light: #faf4ed
-;; dark:  #191724
-
-; (g rose_pine_variant :dawn)
-(g rose_pine_disable_background false)
-(g rose_pine_disable_italics false)
-(g rose_pine_bold_vertical_split_line true)
+(rose-pine.setup
+  {:dark_variant :dawn
+   :bold_vert_split true
+   :dim_nc_background false
+   :disable_background false
+   :disable_float_background false
+   :disable_italics false})
 
 (colorscheme rose-pine)
 
-(hi NvimInternalError {:guibg :None})
+(hi NvimInternalError {:bg :None})
+(hi RedrawDebugClear {:fg "#eb6f92" :bg :None})
+(hi RedrawDebugComposed {:fg "#eb6f92" :bg :None})
+(hi RedrawDebugNormal {:fg "#eb6f92" :bg :None})
+(hi RedrawDebugRecompose {:fg "#eb6f92" :bg :None})
 
-(hi CmpItemAbbr {:guifg "#c0caf5"})
-(hi CmpItemMenu {:guifg "#db4b4b"})
-(hi CmpItemKind {:guifg "#f7768e"})
-(hi CmpItemAbbrDeprecated {:guifg "#3b4261"})
-(hi CmpItemAbbrMatch {:guifg "#73daca"})
-(hi CmpItemAbbrMatchFuzzy {:guifg "#73daca"})
-(hi CmpDocumentation {:guifg "#c0caf5"})
-(hi CmpDocumentationBorder {:guifg "#c0caf5" :guibg "#191724"})
+(hi CmpItemAbbr {:fg "#c0caf5"})
+(hi CmpItemMenu {:fg "#db4b4b"})
+(hi CmpItemKind {:fg "#f7768e"})
+(hi CmpItemAbbrDeprecated {:fg "#3b4261"})
+(hi CmpItemAbbrMatch {:fg "#73daca"})
+(hi CmpItemAbbrMatchFuzzy {:fg "#73daca"})
+(hi CmpDocumentation {:fg "#c0caf5"})
+(hi CmpDocumentationBorder {:fg "#c0caf5" :bg "#191724"})
 
-(noremap n :<Leader>tc "<Cmd>lua require('rose-pine.functions').toggle_variant({'base', 'dawn'})<CR>")
+(noremap n :<Leader>tc
+         "<Cmd>lua require('rose-pine.functions').toggle_variant({'base', 'dawn'})<CR>")
