@@ -8,24 +8,8 @@
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
 
  :templates {:launch "osascript -e 'tell application \"%s\" to activate'"
-             :debug "osascript -e 'display notification \"%s\" with title \"Debug!\"'"
-             :notify-layout "osascript -e 'display notification \"%s\" with title \"Layout!\"'"
-             :notify-yabai "osascript -e 'display notification \"%s\" with title \"Yabai!\"'"}
- ;; Create layer/mode based on holding keys
- ;; :layers {;; macOS only use from f1 to f12
-          ;; Make use of these keys for naming condition purpose
-          ;; :f17-layout {:key :f17}
-          ;; :f18-layout {:key :f18}
-          ;; :f19-layout {:key :f19}}
+             :debug "osascript -e 'display notification \"%s\" with title \"Debug!\"'"}
  :layers {}
-
- ;; Create layer/mode based on key sequences/chords
- ;; :simlayers {:yabai-mode {:key :y}
-              ;; Because bsp and stack are complement each other, I don't need
-              ;; set :condi to detect its state any more
-              ;;:yabai-stack-mode {:key :s}
-              ;;:yabai-bsp-mode {:key :b}
-              ;;:yabai-float-mode {:key :f :condi ["in-yabai-float-mode" 1]}}
  :simlayers {}
  ;; Main contains multiple manipulators
  :main [{:des "Hyper Layout"
@@ -40,102 +24,7 @@
                  [:!!c :!Cc]
                  [:!!v :!Cv]
                  [:!!u :!Cz]
-                 [:!!r :!CSz]
-                 ;; Quick focus windows with Yabai
-                 [:!!semicolon "yabai -m query --spaces --space \\
-                                | jq -re '.index' \\
-                                | xargs -I{} yabai -m query --windows --space {} \\
-                                | jq -sre 'add | map(select(.minimized != 1)) | sort_by(.display, .frame.y, .frame.x, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id' \\
-                                | xargs -I{} yabai -m window --focus {}"]
-                 ;; Quick focus spaces with Yabai
-                 [:!!p "yabai -m space --focus prev"]
-                 [:!!n "yabai -m space --focus next"]]}
-        {:des "F17|F18|F19 Layout Init"
-         :rules [:!keychron
-                 [:right_command [:to-f17 ["f17-layout" 1]] nil {:afterup ["f17-layout" 0]}]
-                 [:right_option [:to-f18 ["f18-layout" 1]] nil {:afterup ["f18-layout" 0]}]
-                 [:right_control [:to-f19 ["f19-layout" 1]] nil {:afterup ["f19-layout" 0]}]
-                 :keychron
-                 [:f7 [:to-f17 ["f17-layout" 1]] nil {:afterup ["f17-layout" 0]}]
-                 [:f8 [:to-f18 ["f18-layout" 1]] nil {:afterup ["f18-layout" 0]}]
-                 [:f9 [:to-f19 ["f19-layout" 1]] nil {:afterup ["f19-layout" 0]}]]}
-
-        {:des "F17 BSP Layout"
-         :rules [:f17-layout
-                 ;; Rotate tree
-                 [:r "yabai -m space --rotate 90"]
-                 ;; Mirror y axis
-                 [:y "yabai -m space --mirror y-axis"]
-                 ;; Mirror x axis
-                 [:x "yabai -m space --mirror x-axis"]
-                 ;; Split horizontal/vertical windows
-                 [:v "yabai -m window --toggle split"]
-                 ;; Cycle through windows
-                 [:j "yabai -m window --focus next || yabai -m window --focus first"]
-                 [:k "yabai -m window --focus prev || yabai -m window --focus last"]
-                 ;; Insert windows
-                 [:up_arrow "yabai -m window --insert north"]
-                 [:down_arrow "yabai -m window --insert south"]
-                 [:left_arrow "yabai -m window --insert west"]
-                 [:right_arrow "yabai -m window --insert east"]
-                 ;; Insert stacks
-                 [:t "yabai -m window --insert stack"]
-                 ;; Move windows
-                 [:return_or_enter "yabai -m window --warp west"]
-                 [:s "yabai -m window --warp south"]
-                 [:a "yabai -m window --warp west"]
-                 [:w "yabai -m window --warp north"]
-                 [:d "yabai -m window --warp east"]]}
-        {:des "F18 Edit Layout"
-         :rules [:f18-layout
-                 ;; Cycle through windows
-                 [:k "yabai -m window --focus stack.prev || yabai -m window --focus stack.last"]
-                 [:j "yabai -m window --focus stack.next || yabai -m window --focus stack.first"]
-                 ;; Move stack windows
-                 [:s "yabai -m window --stack south"]
-                 [:a "yabai -m window --stack west"]
-                 [:w "yabai -m window --stack north"]
-                 [:d "yabai -m window --stack east"]]}
-        {:des "F19 Universal Layout"
-         :rules [:f19-layout
-                 ;; Switch layouts
-                 [:b ["yabai -m space --layout bsp" [:notify-layout "BSP"]]]
-                 [:s ["yabai -m space --layout stack" [:notify-layout "Fullscreen Stack"]]]
-                 [:f ["yabai -m space --layout float" [:notify-layout "Float"]]]
-                 ;; Toggle float window
-                 [:t ["yabai -m window --toggle float && \\
-                         /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore \\
-                         2>/dev/null || true" [:notify-layout "Float Window"]]]
-                 ;; Toggle PIP
-                 [:p "yabai -m window --toggle sticky && \\
-                      yabai -m window --toggle topmost && \\
-                      yabai -m window --toggle pip"]
-                 ;; Toggle top most window
-                 [:o "yabai -m window --toggle topmost"]
-                 ;; Toggle sticky window
-                 ; [:!So "yabai -m window --toggle sticky"]
-                 ;; Resize float windows
-                 [:up_arrow "yabai -m window --grid 1:1:0:0:1:1"]
-                 [:down_arrow "yabai -m window --grid 8:8:1:1:6:6"]
-                 [:left_arrow "yabai -m window --grid 1:2:0:0:1:1"]
-                 [:right_arrow "yabai -m window --grid 1:2:1:0:1:1"]
-                 ;; Fast focus spaces
-                 [:1 "yabai -m space --focus 1"]
-                 [:2 "yabai -m space --focus 2"]
-                 [:3 "yabai -m space --focus 3"]
-                 [:4 "yabai -m space --focus 4"]
-                 [:5 "yabai -m space --focus 5"]
-                 [:6 "yabai -m space --focus 6"]
-                 [:7 "yabai -m space --focus 7"]
-                 ;; Send windows and focus to spaces
-                 [:0 "yabai -m window --space next && yabai -m space --focus next"]
-                 [:9 "yabai -m window --space prev && yabai -m space --focus prev"]
-                 ;; Create and destroy spaces
-                 [:d "yabai -m space --destroy"]
-                 [:c "yabai -m space --create && \\
-                                  index=$(yabai -m query --spaces --display | jq 'map(select(.\"native-fullscreen\" == 0))[-1].index') && \\
-                                  yabai -m space --focus $index"]]}
-
+                 [:!!r :!CSz]]}
         {:des "Remap <C-t> to <C-`> for iTerm"
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
 
@@ -145,12 +34,8 @@
                   [["macos-input-source" 1] :right_shift]
                   ["macos-input-source" 0]
                   {:delayed {:invoked ["macos-input-source" 0] :canceled ["macos-input-source" 0]} :params {:delay 300}}]]}
-
-        ;; {:des "Remap <C-Tab> to toggle Capslock"
-        ;;  :rules [[:!Ttab :caps_lock]]}
-
         {:des "Double tap left shift key to toggle terminal"
-         :rules [[:left_shift [:!Tgrave_accent_and_tilde ["vscode-terminal" 0]] [:VSCODE ["vscode-terminal" 1]]] 
+         :rules [[:left_shift [:!Tgrave_accent_and_tilde ["vscode-terminal" 0]] [:VSCODE ["vscode-terminal" 1]]]
                  [:left_shift [["vscode-terminal" 1] :left_shift] ["vscode-terminal" 0]
                   {:delayed {:invoked ["vscode-terminal" 0] :canceled ["vscode-terminal" 0]} :params {:delay 300}}]]}]
 
