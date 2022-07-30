@@ -1,4 +1,2 @@
-(module init)
-
-(require :impatient)
-(require :core)
+(module init
+  {require [impatient core]})

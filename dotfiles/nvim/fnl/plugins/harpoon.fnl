@@ -1,0 +1,18 @@
+(module plugins.harpoon
+  {require-macros [core.macros]})
+
+(noremap n :<Leader>mf "<CMD>lua require('harpoon.mark').add_file()<CR>")
+(noremap n :<Leader>md "<CMD>lua require('harpoon.mark').rm_file()<CR>")
+(noremap n :<Leader>mD "<CMD>lua require('harpoon.mark').clear_all()<CR>")
+(noremap n :<Leader>mm "<CMD>lua require('harpoon.ui').toggle_quick_menu()<CR>")
+(noremap n :<Leader>mn "<CMD>lua require('harpoon.ui').nav_next()<CR>")
+(noremap n :<Leader>mp "<CMD>lua require('harpoon.ui').nav_prev()<CR>")
+(noremap n :<Leader>1 "<CMD>lua require('harpoon.ui').nav_file(1)<CR>")
+(noremap n :<Leader>2 "<CMD>lua require('harpoon.ui').nav_file(2)<CR>")
+(noremap n :<Leader>3 "<CMD>lua require('harpoon.ui').nav_file(3)<CR>")
+(noremap n :<Leader>4 "<CMD>lua require('harpoon.ui').nav_file(4)<CR>")
+(noremap n :<Leader>5 "<CMD>lua require('harpoon.ui').nav_file(5)<CR>")
+(noremap n :<Leader>6 "<CMD>lua require('harpoon.ui').nav_file(6)<CR>")
+(noremap n :<Leader>7 "<CMD>lua require('harpoon.ui').nav_file(7)<CR>")
+(noremap n :<Leader>8 "<CMD>lua require('harpoon.ui').nav_file(8)<CR>")
+(noremap n :<Leader>9 "<CMD>lua require('harpoon.ui').nav_file(9)<CR>")

@@ -23,17 +23,17 @@
 (noremap n :<S-Tab> :<Cmd>bp<CR>)
 
 ; Break lines in normmal mode
-(map n :o :o<ESC>)
-(map n :O :O<ESC>)
+(nmap n :o :o<ESC>)
+(nmap n :O :O<ESC>)
 
 ; Vim map
 ; (map n "Y" "y$")
-(map n :<C-h> :<C-w>h)
-(map n :<C-l> :<C-w>l)
-(map n :<C-j> :<C-w>j)
-(map n :<C-k> :<C-w>k)
-(map n "<A-[>" "<Cmd>vertical resize -5<CR>")
-(map n "<A-]>" "<Cmd>vertical resize +5<CR>")
+(nmap n :<C-h> :<C-w>h)
+(nmap n :<C-l> :<C-w>l)
+(nmap n :<C-j> :<C-w>j)
+(nmap n :<C-k> :<C-w>k)
+(nmap n "<A-[>" "<Cmd>vertical resize -5<CR>")
+(nmap n "<A-]>" "<Cmd>vertical resize +5<CR>")
 ; Insert
 (noremap i :<C-w> "<C-[>diwa")
 (noremap i :<C-h> :<BS>)

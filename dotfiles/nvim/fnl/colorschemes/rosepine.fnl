@@ -1,5 +1,6 @@
 (module colorschemes.rosepine
-        {autoload {: rose-pine} require-macros [core.macros]})
+  {autoload {: rose-pine}
+   require-macros [core.macros]})
 
 (rose-pine.setup
   {:dark_variant :dawn
@@ -25,6 +26,3 @@
 (hi CmpItemAbbrMatchFuzzy {:fg "#73daca"})
 (hi CmpDocumentation {:fg "#c0caf5"})
 (hi CmpDocumentationBorder {:fg "#c0caf5" :bg "#191724"})
-
-(noremap n :<Leader>tc
-         "<Cmd>lua require('rose-pine.functions').toggle_variant({'base', 'dawn'})<CR>")

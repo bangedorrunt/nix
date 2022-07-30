@@ -2,7 +2,7 @@
   {require-macros [core.macros]})
 
 ;;;; RENDERING
-(opt background :light)
+; (opt background :light)
 
 (if (has? :termguicolors)
     (do
@@ -77,7 +77,7 @@
 (opt virtualedit :block)
 (opt fileformats "unix,mac,dos")
 (opt clipboard :unnamedplus)
-; (opt completeopt "menu,menuone,noselect")
+(opt completeopt "menu,menuone,noselect")
 (opt diffopt+ [:vertical
                :iwhite
                :hiddenoff

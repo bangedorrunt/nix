@@ -6,7 +6,7 @@ ANISEED_PATH="${PACK_PATH}/aniseed"
 IMPATIENT_PATH="${PACK_PATH}/impatient.nvim"
 # HOTPOT_PATH="${PACK_PATH}/hotpot.nvim"
 PACKER_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/packer.nvim"
-T9_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/cmp-tabnine"
+# T9_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/cmp-tabnine"
 
 echo 'Removing old files ...'
 rm -rf "$OLD_PATH/lua"
@@ -72,8 +72,8 @@ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 echo 'Sucessfully install Neovim config'
 
-echo 'Installing TabNine binary ...'
+# echo 'Installing TabNine binary ...'
 
-if [ -e "$T9_PATH" ]; then
-  cd "$T9_PATH" && ./install.sh
-fi
+# if [ -e "$T9_PATH" ]; then
+#   cd "$T9_PATH" && ./install.sh
+# fi

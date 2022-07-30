@@ -1,12 +1,15 @@
-(module plugins.lsp.init
-        {autoload {lsp/config lspconfig
-                   lsp/signature lsp_signature
-                   : null-ls
-                   null-ls/builtins null-ls.builtins}
-         require-macros [core.macros]})
+(module plugins.lsp
+  {autoload {{: contains?} core.utils
+             lsp-config lspconfig
+             : mason
+             : mason-lspconfig
+             lsp-signature lsp_signature
+             : null-ls
+             null-ls-builtins null-ls.builtins}
+   require-macros [core.macros]})
 
 ;;;; LSP UI
-(def popup-opts {:border :single :focusable false})
+(def- popup-opts {:border :single :focusable false})
 
 (tset vim.lsp.handlers :textDocument/signatureHelp
       (vim.lsp.with vim.lsp.handlers.signature_help popup-opts))
@@ -15,11 +18,11 @@
       (vim.lsp.with vim.lsp.handlers.hover popup-opts))
 
 ; More general LSP commands
-(defn reload-lsp []
+(defn- reload-lsp []
   (vim.lsp.stop_client (vim.lsp.get_active_clients))
   (vim.cmd :edit))
 
-(defn open-lsp-log []
+(defn- open-lsp-log []
   (let [path (vim.lsp.get_log_path)]
     (vim.cmd (string.format "edit %s" path))))
 
@@ -41,15 +44,15 @@
                         :sign true
                         :severity_sort true})
 
-(vim.fn.sign_define :DiagnosticSignError {:text " " :texthl :DiagnosticSignError})
-(vim.fn.sign_define :DiagnosticSignWarning {:text " " :texthl :DiagnosticSignWarning})
-(vim.fn.sign_define :DiagnosticSignInformation {:text " " :texthl :DiagnosticSignInformation})
-(vim.fn.sign_define :DiagnosticSignHint {:text " " :texthl :DiagnosticSignHint})
+(nvim.fn.sign_define :DiagnosticSignError {:text " " :texthl :DiagnosticSignError})
+(nvim.fn.sign_define :DiagnosticSignWarning {:text " " :texthl :DiagnosticSignWarning})
+(nvim.fn.sign_define :DiagnosticSignInformation {:text " " :texthl :DiagnosticSignInformation})
+(nvim.fn.sign_define :DiagnosticSignHint {:text " " :texthl :DiagnosticSignHint})
 
 ;;;; LSP server config
-(defn capable? [client capability] (. client.server_capabilities capability))
+(defn- capable? [client capability] (. client.server_capabilities capability))
 
-(def capabilities
+(def- capabilities
   (let [c (vim.lsp.protocol.make_client_capabilities)]
     ; NOTE: use `cmp_nvim_lsp.update_capabilities` is unneccessary
     ; https://github.com/hrsh7th/cmp-nvim-lsp/blob/f6f471898bc4b45eacd36eef9887847b73130e0e/lua/cmp_nvim_lsp/init.lua#L23
@@ -65,7 +68,7 @@
     (set c.textDocument.completion.completionItem.tagSupport {:valueSet [1]})
     c))
 
-(defn enhanced-attach [client bufnr]
+(defn- enhanced-attach [client bufnr]
   ; LSP keymaps
   (command LspHover -buffer "lua vim.lsp.buf.hover()")
   (command LspRename -buffer "lua vim.lsp.buf.rename()")
@@ -79,58 +82,45 @@
   (noremap n buffer :gi :<Cmd>LspRename<CR>)
   (noremap n buffer :K :<Cmd>LspHover<CR>)
   (noremap n buffer "[a" :<Cmd>LspDiagPrev<CR>)
-  (noremap n buffer "]a" :<Cmd>LspDiagNext<CR>)
+                      (noremap n buffer "]a" :<Cmd>LspDiagNext<CR>)
   (noremap i buffer :<C-x><C-x> :<Cmd>LspSignatureHelp<CR>)
   ; LSP format
   (if (capable? client :documentFormattingProvider)
     (do
       (augroup LspFormatOnSave
-               (autocmd! {:buffer bufnr})
+               (autocmd! * <buffer>)
                (autocmd BufWritePre <buffer>
-                        '(vim.lsp.buf.format {:filter (fn [client] (not (contains? [:jsonls :tsserver] client.name)))
-                                              :bufnr bufnr}
-                         {:buffer bufnr})))
+                        '(vim.lsp.buf.format {:filter (fn [client]
+                                                        (not (contains? [:jsonls :tsserver] client.name)))
+                                              :bufnr bufnr} {:buffer bufnr})))
       (noremap n buffer :<Leader>lf '(vim.lsp.buf.format {:bufnr bufnr})))
     (print "LSP not support formatting.")))
 
 ; fnlfmt: skip
-(def servers
-  {:bashls {}
-   :cssls {:cmd [:vscode-css-language-server :--stdio]}
-   ; :rnix {}
-   :jsonls {:cmd [:vscode-json-language-server :--stdio]}
-   :html {:cmd [:vscode-html-language-server :--stdio]}
-   :clangd {}
-   :clojure_lsp {:filetypes [:clojure :edn]}
-   :sumneko_lua ((. (require :lua-dev) :setup) {:library {:vimruntime true
-                                                          :types true
-                                                          :plugins true}
-                                                :lspconfig {:cmd [:lua-language-server]
-                                                            :settings {:Lua {:diagnostics {:enable true
-                                                                                           :globals [:tdt
-                                                                                                     :packer_plugins
-                                                                                                     :vim
-                                                                                                     :use
-                                                                                                     :describe
-                                                                                                     :it
-                                                                                                     :assert
-                                                                                                     :before_each
-                                                                                                     :after_each]}
-                                                                             :runtime {:version :LuaJIT}
-                                                                             :workspace {:library {(vim.fn.expand :$VIMRUNTIME/lua) true}}}}}})
-   :vimls {}
-   ; :tailwindcss {:cmd [:tailwind-lsp]}
-   })
+(def- servers [:bashls
+               :clojure_lsp
+               :cssls
+               :diagnosticls
+               :dockerls
+               :emmet_ls
+               :eslint
+               :html
+               :jsonls
+               :sumneko_lua
+               :tailwindcss
+               :tsserver
+               :vimls
+               :yamlls])
 
-(defn merge [t1 t2] (vim.tbl_deep_extend :force t1 t2))
-
-(each [server config (pairs servers)]
-  (let [lsp/server (. lsp/config server)]
-    (-> {:on_attach enhanced-attach
-         : capabilities
-         :flags {:debounce_text_changes 150}}
-        (merge config)
-        (lsp/server.setup))))
+(mason.setup)
+(mason-lspconfig.setup {:ensure_installed servers})
+(mason-lspconfig.setup_handlers
+  [(fn [server]
+     (let [lsp-installed-server (. lsp-config server)]
+       (-> {:on_attach enhanced-attach
+            : capabilities
+            :flags {:debounce_text_changes 150}}
+           (lsp-installed-server.setup))))])
 
 ; fnlfmt: skip
 ; WARNING: when you experience any lag or unresponsive with Lsp,
@@ -141,12 +131,12 @@
 ; was not installed
 (-> {:debounce 150
      :sources ((fn []
-                 [null-ls/builtins.formatting.prettier
-                  null-ls/builtins.formatting.stylua
-                  ; null-ls/builtins.formatting.fnlfmt
-                  null-ls/builtins.formatting.trim_whitespace
-                  null-ls/builtins.formatting.shfmt
-                  (null-ls/builtins.diagnostics.shellcheck.with {:filetypes [:zsh
+                 [null-ls-builtins.formatting.prettier
+                  null-ls-builtins.formatting.stylua
+                  ; null-ls-builtins.formatting.fnlfmt
+                  null-ls-builtins.formatting.trim_whitespace
+                  null-ls-builtins.formatting.shfmt
+                  (null-ls-builtins.diagnostics.shellcheck.with {:filetypes [:zsh
                                                                              :sh
                                                                              :bash]})]))
      :on_attach enhanced-attach}

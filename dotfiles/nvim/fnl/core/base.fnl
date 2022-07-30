@@ -1,4 +1,5 @@
-(module core.base {require-macros [core.macros]})
+(module core.base 
+  {require-macros [core.macros]})
 
 (def os-name (. (vim.loop.os_uname) :sysname))
 
@@ -11,18 +12,19 @@
 (def config-path (vim.fn.stdpath :config))
 (def cache-path (vim.fn.stdpath :cache))
 
-(defn vim-cmd [prop] (fn [...]
-                       (let [args (accumulate [acc "" _ s (ipairs [...])]
-                                    (.. acc " " s))]
-                         (vim.cmd (.. prop args)))))
+(defn ex [prop]
+  (fn [...]
+    (let [args (accumulate [acc "" _ s (ipairs [...])]
+                 (.. acc " " s))]
+      (vim.api.nvim_command (.. prop args)))))
 
-(tset _G :nvim {:ex {:augroup vim.api.nvim_create_augroup
-                     :autocmd vim.api.nvim_create_autocmd
-                     :autocmd_ vim.api.nvim_clear_autocmds
+(tset _G :nvim {:ex {:augroup (ex :augroup)
+                     :autocmd (ex :autocmd)
+                     :autocmd_ (ex :autocmd!)
                      :command_ vim.api.nvim_create_user_command
                      :buf_command_ vim.api.nvim_buf_create_user_command
                      :highlight vim.api.nvim_set_hl
-                     :colorscheme (vim-cmd :colorscheme)}
+                     :colorscheme (ex :colorscheme)}
                 :fn vim.fn
                 :g vim.g
                 :opt vim.opt
@@ -55,11 +57,11 @@
                :PACKER_PATH (.. data-path :pack/packer/opt/packer.nvim)
                :PACKER_COMPILED_PATH (.. data-path :lua/packer_compiled.lua)}})
 
-;; Disable built-in plugins and host providers
-;; (g loaded_netrw 1)
-;; (g loaded_netrwPlugin 1)
-;; (g loaded_netrwSettings 1)
-;; (g loaded_netrwFileHandlers 1)
+; Disable built-in plugins and host providers
+(g loaded_netrw 1)
+(g loaded_netrwPlugin 1)
+(g loaded_netrwSettings 1)
+(g loaded_netrwFileHandlers 1)
 (g loaded_gzip 1)
 (g loaded_zip 1)
 (g loaded_zipPlugin 1)

@@ -1,55 +1,55 @@
 (module plugins.lualine
-  {autoload {: lualine}})
+  {autoload {: lualine}
+   require-macros [core.macros]})
 
-(def colors {:bg "#faf4ed"
-             :fg "#bbc2cf"
-             :yellow "#ecbe7b"
-             :cyan "#008080"
-             :darkblue "#081633"
-             :green "#98be65"
-             :orange "#ff8800"
-             :violet "#a9a1e1"
-             :magenta "#c678dd"
-             :blue "#51afef"
-             :red "#ec5f67"})
+(def- colors {:fg "#bbc2cf"
+              :bg "#191724" ; dark alternative "#faf4ed"
+              :yellow "#ecbe7b"
+              :cyan "#008080"
+              :darkblue "#081633"
+              :green "#98be65"
+              :orange "#ff8800"
+              :violet "#a9a1e1"
+              :magenta "#c678dd"
+              :blue "#51afef"
+              :red "#ec5f67"})
 
-(def conditions
-     {:buffer_not_empty (fn []
-                          (not= (vim.fn.empty (vim.fn.expand "%:t")) 1))
-      :hide_in_width (fn []
-                       (> (vim.fn.winwidth 0) 80))
-      :check_git_workspace (fn []
-                             (let [filepath (vim.fn.expand "%:p:h")
-                                   gitdir (vim.fn.finddir :.git
-                                                          (.. filepath ";"))]
-                               (and (and gitdir (> (length gitdir) 0))
-                                    (< (length gitdir) (length filepath)))))})
+(def- conditions
+  {:buffer_not_empty (fn []
+                       (not= (nvim.fn.empty (nvim.fn.expand "%:t")) 1))
+   :hide_in_width (fn []
+                    (> (nvim.fn.winwidth 0) 80))
+   :check_git_workspace (fn []
+                          (let [filepath (nvim.fn.expand "%:p:h")
+                                gitdir (nvim.fn.finddir :.git
+                                                        (.. filepath ";"))]
+                            (and (and gitdir (> (length gitdir) 0))
+                                 (< (length gitdir) (length filepath)))))})
 
-(def config {:options {:component_separators ""
-                       :section_separators ""
-                       :theme {:normal {:c {:fg colors.fg :bg colors.bg}}
-                               :inactive {:c {:fg colors.fg :bg colors.bg}}}}
-             :sections {:lualine_a {}
-                        :lualine_b {}
-                        :lualine_y {}
-                        :lualine_z {}
-                        :lualine_c {}
-                        :lualine_x {}}
-             :inactive_sections {:lualine_a {}
-                                 :lualine_v {}
-                                 :lualine_y {}
-                                 :lualine_z {}
-                                 :lualine_c {}
-                                 :lualine_x {}}})
+(def- config {:options {:component_separators ""
+                        :section_separators ""
+                        :theme {:normal {:c {:fg colors.fg :bg colors.bg}}
+                                :inactive {:c {:fg colors.fg :bg colors.bg}}}}
+              :sections {:lualine_a {}
+                         :lualine_b {}
+                         :lualine_y {}
+                         :lualine_z {}
+                         :lualine_c {}
+                         :lualine_x {}}
+              :inactive_sections {:lualine_a {}
+                                  :lualine_v {}
+                                  :lualine_y {}
+                                  :lualine_z {}
+                                  :lualine_c {}
+                                  :lualine_x {}}})
 
-(defn ins-left [component]
+(defn- ins-left [component]
   (table.insert config.sections.lualine_c component))
 
-(defn ins-right [component]
+(defn- ins-right [component]
   (table.insert config.sections.lualine_x component))
 
-(ins-left {1 (fn []
-               "▊")
+(ins-left {1 (fn [] "▊")
            :color {:fg colors.blue}
            :padding {:left 0 :right 1}})
 
@@ -74,8 +74,7 @@
                                  :r? colors.cyan
                                  :! colors.red
                                  :t colors.red}]
-                 (vim.cmd (.. "hi! LualineMode guifg="
-                              (. mode-color (vim.fn.mode)) " guibg=" colors.bg))
+                 (hi LualineMode {:fg  (. mode-color (nvim.fn.mode)) :bg colors.bg})
                  ""))
            :color :LualineMode
            :padding {:right 1}})
@@ -84,7 +83,14 @@
 (ins-left {1 :filename
            :cond conditions.buffer_not_empty
            :color {:fg colors.magenta :gui :bold}})
-
+; Harpoon indicator
+; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
+(ins-left {1 (fn []
+               (let [harpoon-number ((. (require :harpoon.mark) :get_index_of) (nvim.fn.bufname))]
+                 (if harpoon-number (.. "ﯠ " harpoon-number) "ﯡ ")))
+           :color (fn []
+                    (if ((. (require :harpoon.mark) :get_index_of) (nvim.fn.bufname))
+                      {:fg "#98be65" :gui :bold} {:fg "#ec5f67"}))})
 (ins-left {1 :branch :icon "" :color {:fg colors.violet :gui :bold}})
 (ins-left {1 :diff
            :symbols {:added " " :modified "柳 " :removed " "}

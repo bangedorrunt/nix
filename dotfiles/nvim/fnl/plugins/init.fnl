@@ -1,29 +1,22 @@
 (module plugins.init
-  {autoload {: packer}
+  {autoload {: packer
+             {: assoc : count} core.utils}
    require-macros [core.macros]})
 
-(defn assoc [tbl ...]
-  "Adds any number of key/value pairs to `tbl`, returning `tbl`. Like [[tset]]
-  but for multiple pairs."
-  (for [i 1 (select "#" ...) 2]
-    (let [(k v) (select i ...)]
-      (tset tbl k v)))
-  tbl)
-
-(defn plugin-config [name]
+(defn- plugin-config [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup
   configuration options. Will prefix the name with `plugins.`
   before requiring."
   (.. "require('plugins." name "')"))
 
-(defn plugin-init [name]
+(defn- plugin-init [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup
   configuration options."
   (.. "require('" name "').setup {}"))
 
-(defn colorscheme-pick [name]
+(defn- colorscheme-init [name]
   "A shortcut to building a require string for your colorscheme
   configuration. Intended for use with packer's config or setup
   configuration options. Will prefix the name with `colorscheme.`
@@ -31,24 +24,24 @@
   (.. "require('colorschemes." name "')"))
 
 ;;;; Courtesy of Olical with rocks changes
-(defn use [...]
+(defn- use [...]
   "Iterates through the arguments as pairs and calls packer's use function for
   each of them. Works around Fennel not liking mixed associative and sequential
   tables as well."
   (let [pkgs [...]]
     (packer.startup {1 (fn [use use-rocks]
-                         (for [i 1 (length pkgs) 2]
+                         (for [i 1 (count pkgs) 2]
                            (let [name (. pkgs i)
                                  opts (. pkgs (+ i 1))]
                              (if (. opts :rock)
-                                 (use-rocks name)
-                                 (. opts :colorscheme)
-                                 (use (assoc opts 1 name :event :VimEnter :as :colorscheme :config (colorscheme-pick (. opts :colorscheme))))
-                                 (. opts :mod)
-                                 (use (assoc opts 1 name :config (plugin-config (. opts :mod))))
-                                 (. opts :init)
-                                 (use (assoc opts 1 name :config (plugin-init (. opts :init))))
-                                 (use (assoc opts 1 name))))))
+                               (use-rocks name)
+                               (. opts :colorscheme)
+                               (use (assoc opts 1 name :event :VimEnter :as :colorscheme :config (colorscheme-init (. opts :colorscheme))))
+                               (. opts :mod)
+                               (use (assoc opts 1 name :config (plugin-config (. opts :mod))))
+                               (. opts :init)
+                               (use (assoc opts 1 name :config (plugin-init (. opts :init))))
+                               (use (assoc opts 1 name))))))
                      :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
                               :git {:clone_timeout 120 :depth 1}
                               :max_jobs 60
@@ -66,7 +59,7 @@
   ; :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons"}
 
   ;;;; UI plugins
-  :rose-pine/neovim {:colorscheme :rosepine}
+  :rose-pine/neovim {:colorscheme :rosepine :tag "v1.*"}
   ; :folke/tokyonight.nvim {:colorscheme :tokyonight}
   ; :woodyZootopia/iceberg.vim {:branch :support_LSP
   ;                             :colorscheme :iceberg}
@@ -118,24 +111,29 @@
                          :typescriptreact
                          :xml]}
   :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
-  :jose-elias-alvarez/nvim-lsp-ts-utils {:module_pattern "nvim.lsp.ts.utils.*"}
-  :folke/lua-dev.nvim {:module_pattern "lua.dev.*"}
+  ; :jose-elias-alvarez/nvim-lsp-ts-utils {:module_pattern "nvim.lsp.ts.utils.*"}
+  ; :folke/lua-dev.nvim {:module_pattern "lua.dev.*"}
   :onsails/lspkind-nvim {:module_pattern "lspkind"}
-  :neovim/nvim-lspconfig {:event :BufReadPre
-                          :mod :lsp}
+  :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
+  :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
+  :williamboman/mason-lspconfig.nvim {:event :BufReadPre
+                                      :mod :lsp
+                                      :requires [:mason :lspconfig]}
   :folke/trouble.nvim {:cmd :Trouble}
   ; :folke/todo-comments.nvim {:after :treesitter :init :todo-comments}
-  :kmonad/kmonad-vim {:ft [:kbd]}
   ;;;; Fuzzy search engine
+  :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]
+                                  :tag "0.1.0"
                                   :event :BufRead
                                   :cmd :Telescope
                                   :mod :telescope}
   ;;;; Completion plugins
   ; :github/copilot.vim {}
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
-  :hrsh7th/nvim-cmp {:event :BufRead
+  :hrsh7th/nvim-cmp {:commit "706371f1300e7c0acb98b346f80dad2dd9b5f679"
+                     :event :BufRead
                      :module_pattern "cmp.*"
                      :mod :nvim-cmp}
   :hrsh7th/cmp-cmdline {:after :nvim-cmp}
@@ -144,7 +142,7 @@
   :hrsh7th/cmp-calc {:after :nvim-cmp}
   :hrsh7th/cmp-nvim-lsp {:after :nvim-cmp}
   :hrsh7th/cmp-nvim-lua {:after :nvim-cmp}
-  :tzachar/cmp-tabnine {:mod :cmp-tabnine :after :nvim-cmp}
+  ; :tzachar/cmp-tabnine {:mod :cmp-tabnine :after :nvim-cmp}
   :PaterJason/cmp-conjure {:after [:nvim-cmp :conjure]}
   :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
 

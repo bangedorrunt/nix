@@ -21,14 +21,6 @@
                      :<Space> "Find All"
                      ";" "Live RipGrep"
                      "*" "RG*"
-                     :s {:name "Snap" ; In memory of Snap plugin
-                         :b "Buffers"
-                         :c "Commands"
-                         :C "Commands History"
-                         :k "Keymaps"
-                         :g "Gitfiles"
-                         :o "Oldfiles"
-                         :r "Resume"}
                      :f {:name "Files"
                          :b "File Browser"
                          :c "Close Buffer"
@@ -77,7 +69,6 @@
                              :t "Toggle"
                              :v "Open"}}
                      :h {:name "Help"
-                         ;; :s {:name "Snap References"}
                          :p {:name "Packer Manager"
                              :i "Install"
                              :u "Update"
@@ -91,6 +82,13 @@
                          :i "Info"
                          :s "Start"
                          :r "Restart"}
+                     :m {:name "Harpoon"
+                         :m "Menu"
+                         :f "Add Mark"
+                         :d "Delete Mark"
+                         :D "Delete All"
+                         :n "Next Mark"
+                         :p "Previous Mark"}
                      :p {:name "Projects"}
                      :q {:name "Quit"
                          :q "Quit Vim"
@@ -118,4 +116,3 @@
                          :L "Move Right"}
                      :x {:name "Text Edit"}}
                     {:prefix "<Leader>"})
-

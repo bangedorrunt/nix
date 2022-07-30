@@ -1,18 +1,15 @@
-(module plugins.scratch)
+(module plugins.scratch
+  {autoload {u core.utils}})
 
-(fn first [xs]
-  (when xs
-    (. xs 1)))
-
-(def state {:bufnr nil})
+(def- state {:bufnr nil})
 
 ; Assumes state.bufnr ~= nil
-(defn new-scratch-split []
-  (vim.cmd "botright vsplit")
+(defn- new-scratch-split []
+  (vim.api.nvim_command "botright vsplit")
   (vim.api.nvim_win_set_buf (vim.api.nvim_get_current_win) state.bufnr)
-  (vim.cmd "silent exe 'normal! G'"))
+  (vim.api.nvim_command "silent exe 'normal! G'"))
 
-(defn initialize []
+(defn- initialize []
   (var bufnr (vim.api.nvim_create_buf false false))
   (vim.api.nvim_buf_set_option bufnr :filetype :fennel)
   (vim.api.nvim_buf_set_option bufnr :buftype :nofile)
@@ -21,18 +18,18 @@
                                               ""])
   (tset state :bufnr bufnr)
   (new-scratch-split)
-  (vim.cmd :ConjureEvalBuf))
+  (vim.api.nvim_command :ConjureEvalBuf))
 
-(defn show []
+(defn- show []
   (if (= state.bufnr nil)
-    ; we need to initialize the scratch buffer's properties
+    ; We need to initialize the scratch buffer's properties
     (initialize)
 
-    ; open an existing scratch buffer in a split window
-    (let [winid (first (vim.fn.win_findbuf state.bufnr))]
+    ; Open an existing scratch buffer in a split window
+    (let [winid (u.first (nvim.fn.win_findbuf state.bufnr))]
       (if (= winid nil)
         ; open a new scratch split
         (new-scratch-split)
 
         ; focus the scratch window
-        (vim.fn.win_gotoid winid)))))
+        (nvim.fn.win_gotoid winid)))))
