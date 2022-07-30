@@ -2,9 +2,10 @@
  {:babygau {:default true :sim 50 :delay 500 :alone 180 :held 200}}
  ;; Create alias key for `:to`
  :tos {:hyper {:key :left_control :modi {:mandatory [:left_command :left_shift :left_option]}}
-       :to-f19 {:key :left_control :modi {:mandatory [:left_option :left_command]}}
-       :to-f18 {:key :left_command :modi {:mandatory [:left_shift :left_option]}}
-       :to-f17 {:key :left_command :modi {:mandatory [:left_shift :left_control]}}
+       ; Reserve for future usage
+       ; :mod-1 {:key :left_control :modi {:mandatory [:left_option :left_command]}}
+       ; :mod-2 {:key :left_command :modi {:mandatory [:left_shift :left_option]}}
+       ; :mod-3 {:key :left_command :modi {:mandatory [:left_shift :left_control]}}
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
 
  :templates {:launch "osascript -e 'tell application \"%s\" to activate'"
@@ -14,7 +15,7 @@
  ;; Main contains multiple manipulators
  :main [{:des "Hyper Layout"
          :rules [;; Remap `caps_lock` key to hyper key, escape when pressed alone
-                 [:##caps_lock :hyper nil {:alone   :escape}]
+                 [:##caps_lock :hyper nil {:alone :escape}]
                  ;; Move like Vim
                  [:!!j :down_arrow]
                  [:!!k :up_arrow]
