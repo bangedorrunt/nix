@@ -1,11 +1,30 @@
-(local {: inc
-        : first
-        : second
-        : last
-        : llast
-        : nil?
-        : map
-        } (require :core.utils))
+(fn inc [n]
+  "Increment n by 1."
+  (+ n 1))
+
+(fn dec [n]
+    "Decrement n by 1."
+      (- n 1))
+
+(fn first [xs]
+  (when xs
+    (. xs 1)))
+
+(fn second [xs]
+  (when xs
+    (. xs 2)))
+
+(fn last [xs]
+  (when xs
+    (. xs (length xs))))
+
+(fn llast [xs]
+  (when xs
+    (. xs (dec (length xs)))))
+
+(fn nil? [x]
+  "True if the value is equal to Lua `nil`."
+  (= nil x))
 
 (fn ->str [x]
   "Convert a symbol to a string"
@@ -143,15 +162,6 @@
         (values v 0)
         (values v true))))
 
-  (fn bind-to [mode lhs rhs options]
-    `(nvim.keymap.set ,mode ,lhs ,rhs ,options))
-
-  (fn expand-exprs [exprs]
-    (if (> (length exprs) 1)
-      `(do
-         ,(unpack exprs))
-      (unpack exprs)))
-
   (let [args [...]
         modes (-> modes
                   ->str
@@ -160,10 +170,10 @@
         rhs (quoted->fn? rhs)
         lhs (llast args)
         args-index-without-rlhs (- (length args) 2)
-        options (map ->str [(unpack args 1 args-index-without-rlhs)])
-        options (->opts options)
-        exprs (map #(bind-to $ lhs rhs options) modes)]
-    (expand-exprs exprs)))
+        options (icollect [_ v (ipairs [(unpack args 1 args-index-without-rlhs)])]
+                  (->str v))
+        options (->opts options)]
+    `(nvim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API
