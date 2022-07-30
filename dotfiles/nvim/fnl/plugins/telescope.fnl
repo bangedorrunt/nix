@@ -51,10 +51,9 @@
                               (set-forcibly! opts (merge (or opts {}) override-opts ))
                               ((. telescope-builtin key) opts)))}))
 
-; https://www.reddit.com/r/neovim/comments/p1xj92/make_telescope_git_files_revert_back_to_find
 (defn- project-files []
-  (let [(_ ret _) (telescope-utils.get_os_command_output [:git :rev-parse :--is-inside-work-tree])]
-    (if (= ret 0) (pickers.git_files) (pickers.find_files))))
+  (let [ok (pcall pickers.git_files)]
+    (when (not ok) (pickers.find_files))))
 
 ; Telescope keymaps
 ; fnlfmt: skip
