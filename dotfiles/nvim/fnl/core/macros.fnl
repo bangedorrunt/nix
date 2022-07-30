@@ -30,9 +30,6 @@
   "Convert a symbol to a string"
   (tostring x))
 
-(fn ->bool [x]
-  (if x true false))
-
 (fn str->seq [s]
   "Convert an string into a sequence of characters."
   (icollect [c (string.gmatch s ".")]
@@ -86,15 +83,6 @@
   (if (quoted? expr)
     (values :call (vlua (quoted->fn expr)))
     expr))
-
-(fn viml->fn [name]
-  ; WARNING: use with named function
-  "Wrap given function in lua call"
-  `(.. "lua require('" *module-name* "')['" ,(->str name) "']()"))
-
-(fn viml->keymap [name]
-  "Wrap given function in lua call which will be used for keybinding"
-  `(.. "<Cmd>lua require('" *module-name* "')['" ,(->str name) "']()<CR>"))
 
 (fn command [...]
   "Define command"

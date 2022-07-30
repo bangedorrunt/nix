@@ -2,6 +2,7 @@
 flake.lock
 .direnv
 .vscode
+dotfiles/nvim-
 dotfiles/alfred2
 dotfiles/env
 dotfiles/iterm2
