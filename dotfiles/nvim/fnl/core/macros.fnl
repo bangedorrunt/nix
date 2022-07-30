@@ -153,26 +153,25 @@
 
 (fn nmap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API"
-  ; NOTE: If the `rhs` argument is a function, unlike old API, it's not neccessary
-  ; to set `:expr` option.
-  (fn ->opts [xs]
-    "Returns a set following the structure of `{:key true}` from a sequence"
+  (fn ->opts-seq [...]
+    "Returns a sequence following the structure of [:buffer :nowait]"
+    (let [args [...]]
+      ; Remove rhs and options argument out of sequence
+      (icollect [_ v (ipairs [(unpack args 1 (- (length args) 2))])]
+        (->str v))))
+
+  (fn ->opts-tbl [xs]
+    "Returns a table following the structure of `{:key true}` from a sequence"
     (collect [_ v (ipairs xs)]
       (if (= :buffer v)
         (values v 0)
         (values v true))))
 
   (let [args [...]
-        modes (-> modes
-                  ->str
-                  str->seq)
-        rhs (last args)
-        rhs (quoted->fn? rhs)
+        modes (-> modes ->str str->seq)
+        rhs (-> args last quoted->fn?)
         lhs (llast args)
-        args-index-without-rlhs (- (length args) 2)
-        options (icollect [_ v (ipairs [(unpack args 1 args-index-without-rlhs)])]
-                  (->str v))
-        options (->opts options)]
+        options (-> args ->opts-seq ->opts-tbl)]
     `(nvim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]

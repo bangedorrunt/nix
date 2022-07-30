@@ -1,6 +1,6 @@
 (module plugins.init
   {autoload {: packer
-             {: assoc : count} core.utils}
+             {: assoc} core.utils}
    require-macros [core.macros]})
 
 (defn- plugin-config [name]
@@ -30,7 +30,7 @@
   tables as well."
   (let [pkgs [...]]
     (packer.startup {1 (fn [use use-rocks]
-                         (for [i 1 (count pkgs) 2]
+                         (for [i 1 (length pkgs) 2]
                            (let [name (. pkgs i)
                                  opts (. pkgs (+ i 1))]
                              (if (. opts :rock)
