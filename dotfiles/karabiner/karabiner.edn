@@ -13,7 +13,7 @@
  :simlayers {}
  ;; Main contains multiple manipulators
  :main [{:des "Hyper Layout"
-         :rules [;; Remap Capslock to Hyper key, Escape when pressed alone
+         :rules [;; Remap `caps_lock` key to hyper key, escape when pressed alone
                  [:##caps_lock :hyper nil {:alone   :escape}]
                  ;; Move like Vim
                  [:!!j :down_arrow]
@@ -27,14 +27,17 @@
                  [:!!r :!CSz]]}
         {:des "Remap <C-t> to <C-`> for iTerm"
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
-
-        {:des "Double tap right shift key to switch input setting"
+        {:des "Remap `a` key to `ctrl` key"
+         :rules [[:##a {:key :left_control :lazy :true} nil {:alone :a}]]}
+        {:des "Remap `semicolon` key to `ctrl` key"
+         :rules [[:##semicolon {:key :right_control :lazy :true} nil {:alone :semicolon}]]}
+        {:des "Double tap `right_shift` key to switch input setting"
          :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
                   [["macos-input-source" 1] :right_shift]
                   ["macos-input-source" 0]
                   {:delayed {:invoked ["macos-input-source" 0] :canceled ["macos-input-source" 0]} :params {:delay 300}}]]}
-        {:des "Double tap left shift key to toggle terminal"
+        {:des "Double tap `left_shift` key to toggle terminal"
          :rules [[:left_shift [:!Tgrave_accent_and_tilde ["vscode-terminal" 0]] [:VSCODE ["vscode-terminal" 1]]]
                  [:left_shift [["vscode-terminal" 1] :left_shift] ["vscode-terminal" 0]
                   {:delayed {:invoked ["vscode-terminal" 0] :canceled ["vscode-terminal" 0]} :params {:delay 300}}]]}]
