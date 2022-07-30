@@ -20,6 +20,23 @@
                 {:name :nvim_lua}
                 {:name :calc}])
 
+; Check backspace
+(defn- has-words-before? []
+  (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))]
+    (and (not= col 0) (= (: (: (. (vim.api.nvim_buf_get_lines 0 (- line 1) line true) 1) :sub col col) :match "%s") nil))))
+
+; Supertab
+(defn- super-cn [fallback]
+  (if (cmp.visible) (cmp.select_next_item)
+      (luasnip.expand_or_jumpable) (luasnip.expand_or_jump)
+      (has-words-before?) (cmp.complete)
+      (fallback)))
+
+(defn- super-cp [fallback]
+  (if (cmp.visible) (cmp.select_prev_item)
+      (luasnip.jumpable -1) (luasnip.jump -1)
+      (fallback)))
+
 (cmp.setup {:formatting {:format (lspkind.cmp_format {:with_text false
                                                       :menu cmp-menu-items})}
             :sorting {:comparators [cmp-compare.offset
@@ -32,7 +49,9 @@
             :mapping (cmp.mapping.preset.insert
                        {:<CR> (cmp.mapping.confirm {:select true})
                         :<C-Space> (cmp.mapping.complete)
-                        :<C-e> (cmp.mapping.abort)})
+                        :<C-e> (cmp.mapping.abort)
+                        :<C-n> (cmp.mapping super-cn [:i :s])
+                        :<C-p> (cmp.mapping super-cp [:i :s])})
             :snippet {:expand #(luasnip.lsp_expand $.body)}
             :sources cmp-srcs})
 
