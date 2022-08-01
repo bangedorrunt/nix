@@ -77,11 +77,15 @@
                              :p "Profile"}}
                      :l {:name "LSP"
                          :a "Code Action"
+                         :d "Buffer Diagnostics"
+                         :D "Diagnostics"
                          :f "Format"
-                         :l "Log"
-                         :i "Info"
-                         :s "Start"
-                         :r "Restart"}
+                         :l "Line Diagnostics"
+                         :i "Implementation"
+                         :r "Rename"
+                         :s "Local Symbol"
+                         :S "WorkspaceSymbol"
+                         :y "References"}
                      :m {:name "Harpoon"
                          :m "Menu"
                          :f "Add Mark"

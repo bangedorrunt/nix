@@ -9,15 +9,13 @@
    require-macros [core.macros]})
 
 ;;;; LSP UI
-(def- popup-opts {:border :single :focusable false})
+(let [{: with : handlers} vim.lsp]
+  (set vim.lsp.handlers.textDocument/signatureHelp
+       (with handlers.signature_help {:border :solid}))
+  (set vim.lsp.handlers.textDocument/hover
+       (with handlers.hover {:border :solid})))
 
-(tset vim.lsp.handlers :textDocument/signatureHelp
-      (vim.lsp.with vim.lsp.handlers.signature_help popup-opts))
-
-(tset vim.lsp.handlers :textDocument/hover
-      (vim.lsp.with vim.lsp.handlers.hover popup-opts))
-
-; More general LSP commands
+;; More general LSP commands
 (defn- reload-lsp []
   (vim.lsp.stop_client (vim.lsp.get_active_clients))
   (vim.cmd :edit))
@@ -29,74 +27,85 @@
 (command LspLog '(open-lsp-log))
 (command LspRestart '(reload-lsp))
 
-(noremap n nowait :<Leader>li :<Cmd>LspInfo<CR>)
-(noremap n nowait :<Leader>ls :<Cmd>LspStart<CR>)
-(noremap n nowait :<Leader>ll :<Cmd>LspLog<CR>)
-(noremap n nowait :<Leader>lr :<Cmd>LspRestart<CR>)
-
-;;;; LSP diagnostics
-(vim.diagnostic.config {:underline true
-                        :virtual_text {:spacing 4 :prefix "●"}
-                        :float {:show_header true
-                                :source :if_many
-                                :border :single
-                                :focusable false}
-                        :sign true
-                        :severity_sort true})
-
-(nvim.fn.sign_define :DiagnosticSignError {:text " " :texthl :DiagnosticSignError})
-(nvim.fn.sign_define :DiagnosticSignWarning {:text " " :texthl :DiagnosticSignWarning})
-(nvim.fn.sign_define :DiagnosticSignInformation {:text " " :texthl :DiagnosticSignInformation})
-(nvim.fn.sign_define :DiagnosticSignHint {:text " " :texthl :DiagnosticSignHint})
+;;;; Diagnostics Configuration
+(let [{: config : severity} vim.diagnostic
+      {: sign_define} vim.fn]
+  (config {:underline {:severity {:min severity.INFO}}
+           :signs {:severity {:min severity.INFO}}
+           :virtual_text false ;; lsp_lines handles this
+           :update_in_insert true
+           :severity_sort true
+           :float {:show_header false :border :rounded}})
+  (sign_define :DiagnosticSignError {:text "" :texthl :DiagnosticSignError})
+  (sign_define :DiagnosticSignWarn {:text "" :texthl :DiagnosticSignWarn})
+  (sign_define :DiagnosticSignInfo {:text "" :texthl :DiagnosticSignInfo})
+  (sign_define :DiagnosticSignHint {:text "" :texthl :DiagnosticSignHint}))
 
 ;;;; LSP server config
 (defn- capable? [client capability] (. client.server_capabilities capability))
 
 (def- capabilities
   (let [c (vim.lsp.protocol.make_client_capabilities)]
-    ; NOTE: use `cmp_nvim_lsp.update_capabilities` is unneccessary
-    ; https://github.com/hrsh7th/cmp-nvim-lsp/blob/f6f471898bc4b45eacd36eef9887847b73130e0e/lua/cmp_nvim_lsp/init.lua#L23
-    ; Delegate snippet support to any completion engine such as `nvim-cmp`
-    (set c.textDocument.completion.completionItem.snippetSupport true)
-    (set c.textDocument.completion.completionItem.resolveSupport {:properties [:documentation
-                                                                               :detail
-                                                                               :additionalTextEdits]})
-    (set c.textDocument.completion.completionItem.preselectSupport true)
-    (set c.textDocument.completion.completionItem.insertReplaceSupport true)
-    (set c.textDocument.completion.completionItem.deprecatedSupport true)
-    (set c.textDocument.completion.completionItem.commitCharactersSupport true)
-    (set c.textDocument.completion.completionItem.tagSupport {:valueSet [1]})
-    c))
+    ;; NOTE: use `cmp_nvim_lsp.update_capabilities` is unneccessary
+    ;; https://github.com/hrsh7th/cmp-nvim-lsp/blob/f6f471898bc4b45eacd36eef9887847b73130e0e/lua/cmp_nvim_lsp/init.lua#L23
+    ;; Delegate snippet support to any completion engine such as `nvim-cmp`
+    (set c.textDocument.completion.completionItem
+         {:documentationFormat [:markdown :plaintext]
+          :snippetSupport true
+          :preselectSupport true
+          :insertReplaceSupport true
+          :labelDetailsSupport true
+          :deprecatedSupport true
+          :commitCharactersSupport true
+          :tagSupport {:valueSet {1 1}}
+          :resolveSupport {:properties [:documentation
+                                        :detail
+                                        :additionalTextEdits]}})))
 
 (defn- enhanced-attach [client bufnr]
-  ; LSP keymaps
-  (command LspHover -buffer "lua vim.lsp.buf.hover()")
-  (command LspRename -buffer "lua vim.lsp.buf.rename()")
-  (command LspTypeDef -buffer "lua vim.lsp.buf.type_definition()")
-  (command LspImplementation -buffer "lua vim.lsp.buf.implementation()")
-  (command LspDiagPrev -buffer "lua vim.diagnostic.goto_prev({float = true})")
-  (command LspDiagNext -buffer "lua vim.diagnostic.goto_next({float = true})")
-  (command LspDiagLine -buffer "lua vim.diagnostic.open_float(0, {scope = 'line'})")
-  (command LspSignatureHelp -buffer "lua vim.lsp.buf.signature_help()")
-  (noremap n buffer :gy :<Cmd>LspTypeDef<CR>)
-  (noremap n buffer :gi :<Cmd>LspRename<CR>)
-  (noremap n buffer :K :<Cmd>LspHover<CR>)
-  (noremap n buffer "[a" :<Cmd>LspDiagPrev<CR>)
-  (noremap n buffer "]a" :<Cmd>LspDiagNext<CR>)
-  (noremap i buffer :<C-x><C-x> :<Cmd>LspSignatureHelp<CR>)
-  ; LSP format
-  (if (capable? client :documentFormattingProvider)
-    (do
-      (augroup LspFormatOnSave
-               (autocmd! * <buffer>)
-               (autocmd BufWritePre <buffer>
-                        '(vim.lsp.buf.format {:filter (fn [client]
-                                                        (not (contains? [:jsonls :tsserver] client.name)))
-                                              :bufnr bufnr} {:buffer bufnr})))
-      (noremap n buffer :<Leader>lf '(vim.lsp.buf.format {:bufnr bufnr})))
-    (print "LSP not support formatting.")))
+  (let [{:hover open-doc-float!
+         :declaration goto-declaration!
+         :definition goto-definition!
+         :type_definition goto-type-definition!
+         :code_action open-code-action-float!
+         :rename rename!} vim.lsp.buf
+        {:open_float open-line-diag-float!
+         :goto_prev goto-diag-prev!
+         :goto_next goto-diag-next!} vim.diagnostic
+        {:lsp_implementations open-impl-float!
+         :lsp_references open-ref-float!
+         :diagnostics open-diag-float!
+         :lsp_document_symbols open-local-symbol-float!
+         :lsp_workspace_symbols open-workspace-symbol-float!} (require :telescope.builtin)]
+    ;; LSP keymap
+    (noremap n buffer "K" open-doc-float!)
+    (noremap nv buffer "<leader>la" open-code-action-float!)
+    (noremap nv buffer "<leader>lr" rename!)
+    (noremap n buffer "<leader>ll" open-line-diag-float!)
+    (noremap n buffer "[d" goto-diag-prev!)
+    (noremap n buffer "]d" goto-diag-next!)
+    (noremap n buffer "gD" goto-declaration!)
+    (noremap n buffer "gd" goto-definition!)
+    (noremap n buffer "gt" goto-type-definition!)
+    (noremap n buffer "<leader>li" open-impl-float!)
+    (noremap n buffer "<leader>ly" open-ref-float!)
+    (noremap n buffer "<leader>ld" '(open-diag-float! {:bufnr 0}))
+    (noremap n buffer "<leader>lD" open-diag-float!)
+    (noremap n buffer "<leader>ls" open-local-symbol-float!)
+    (noremap n buffer "<leader>lS" open-workspace-symbol-float!)
+    ;; LSP format
+    (if (capable? client :documentFormattingProvider)
+      (do
+        (augroup LspFormatOnSave
+                 (autocmd! * <buffer>)
+                 (autocmd BufWritePre <buffer>
+                          '(vim.lsp.buf.format {:filter (fn [client]
+                                                          (not (contains? [:jsonls :tsserver] client.name)))
+                                                :bufnr bufnr} {:buffer bufnr})))
+        (noremap n buffer :<Leader>lf '(vim.lsp.buf.format {:bufnr bufnr})))
+      (print "LSP not support formatting."))))
 
-; fnlfmt: skip
+;; fnlfmt: skip
 (def- servers [:bashls
                :clojure_lsp
                :cssls
@@ -122,13 +131,13 @@
             :flags {:debounce_text_changes 150}}
            (lsp-installed-server.setup))))])
 
-; fnlfmt: skip
-; WARNING: when you experience any lag or unresponsive with Lsp,
-; make sure respective sources are installed
-; In my case:
-; Typescript was slow because `eslint_d` was not installed
-; Markdown was slow because `write-good` and `markdownlint`
-; was not installed
+;; fnlfmt: skip
+;; WARNING: when you experience any lag or unresponsive with Lsp,
+;; make sure respective sources are installed
+;; In my case:
+;; Typescript was slow because `eslint_d` was not installed
+;; Markdown was slow because `write-good` and `markdownlint`
+;; was not installed
 (-> {:debounce 150
      :sources ((fn []
                  [null-ls-builtins.formatting.prettier
