@@ -11,7 +11,7 @@
   :Olical/aniseed {:branch :develop}
   :antoinemadec/FixCursorHold.nvim {}
   :nvim-lua/plenary.nvim {:as :plenary :module_pattern "plenary.*"}
-  ; :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons"}
+  :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons"}
 
   ;;;; UI plugins
   :rose-pine/neovim {:colorscheme :rosepine :tag "v1.*"}
@@ -31,6 +31,7 @@
   :tpope/vim-commentary {:event :BufRead}
   :tpope/vim-surround {:event :BufRead}
   :tpope/vim-sleuth {:event :BufRead}
+  :mg979/vim-visual-multi {:event :BufRead}
   :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
   :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
   :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}

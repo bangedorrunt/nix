@@ -3,8 +3,6 @@
              : luasnip
              : lspkind}})
 
-(def- cmp-compare cmp.config.compare)
-
 (def- cmp-menu-items {:nvim_lsp :LSP
                       :luasnip :LuaSnip
                       :conjure :Conjure
@@ -22,8 +20,9 @@
 
 ; Check backspace
 (defn- has-words-before? []
-  (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))]
-    (and (not= col 0) (= (: (: (. (vim.api.nvim_buf_get_lines 0 (- line 1) line true) 1) :sub col col) :match "%s") nil))))
+  (let [col (- (nvim.fn.col ".") 1)
+        ln (nvim.fn.getline ".")]
+    (or (= col 0) (string.match (string.sub ln col col) "%s"))))
 
 ; Supertab
 (defn- super-cn [fallback]
@@ -39,13 +38,6 @@
 
 (cmp.setup {:formatting {:format (lspkind.cmp_format {:with_text false
                                                       :menu cmp-menu-items})}
-            :sorting {:comparators [cmp-compare.offset
-                                    cmp-compare.exact
-                                    cmp-compare.score
-                                    cmp-compare.kind
-                                    cmp-compare.sort_text
-                                    cmp-compare.length
-                                    cmp-compare.order]}
             :mapping (cmp.mapping.preset.insert
                        {:<CR> (cmp.mapping.confirm {:select true})
                         :<C-Space> (cmp.mapping.complete)
