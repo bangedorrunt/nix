@@ -1,9 +1,9 @@
-(module core.base 
+(module core.base
   {require-macros [core.macros]})
 
 (def os-name (. (vim.loop.os_uname) :sysname))
 
-; fnlfmt: skip
+;; fnlfmt: skip
 (def path-sep (match os-name
                 :Windows "\\\\"
                 _ "/"))
@@ -57,7 +57,7 @@
                :PACKER_PATH (.. data-path :pack/packer/opt/packer.nvim)
                :PACKER_COMPILED_PATH (.. data-path :lua/packer_compiled.lua)}})
 
-; Disable built-in plugins and host providers
+;; Disable built-in plugins and host providers
 (g loaded_netrw 1)
 (g loaded_netrwPlugin 1)
 (g loaded_netrwSettings 1)

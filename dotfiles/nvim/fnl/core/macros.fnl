@@ -58,7 +58,7 @@
   (if (quoted? expr) (quoted->fn expr) expr))
 
 ;;;; Macros Declaration
-; NOTE: https://github.com/rktjmp/hotpot.nvim/discussions/6
+;; NOTE: https://github.com/rktjmp/hotpot.nvim/discussions/6
 (fn pug [val prefix?]
   "Put Unique Global
   (val :any prefix? :string) -> (uuid :string)
@@ -77,7 +77,7 @@
   `(.. "v:lua." ,(pug what prefix?) "()"))
 
 (fn vlua->fn? [expr]
-  ; WARNING: only use with anonymous function
+  ;; WARNING: only use with anonymous function
   "Evaluate expr
   If expr is a function, wrap expr with `vlua`"
   (if (quoted? expr)
@@ -144,7 +144,7 @@
   (fn ->opts-seq [...]
     "Returns a sequence following the structure of [:buffer :nowait]"
     (let [args [...]]
-      ; Remove rhs and options argument out of sequence
+      ;; Remove rhs and options argument out of sequence
       (icollect [_ v (ipairs [(unpack args 1 (- (length args) 2))])]
         (->str v))))
 

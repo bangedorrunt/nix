@@ -2,7 +2,7 @@
   {require-macros [core.macros]})
 
 ;;;; RENDERING
-; (opt background :light)
+;; (opt background :light)
 
 (if (has? :termguicolors)
     (do
@@ -34,22 +34,22 @@
 (opt conceallevel 2)
 (opt concealcursor :niv)
 (opt signcolumn :yes)
-; Statusline
+;; Statusline
 (opt showmode false)
 (opt laststatus 2)
 (opt textwidth 80)
-; Let vim-sleuth handle indent options
-; (opt expandtab)
-; (opt shiftwidth 2)
+;; Let vim-sleuth handle indent options
+;; (opt expandtab)
+;; (opt shiftwidth 2)
 (opt tabstop 2)
 (opt softtabstop -1)
 (opt smarttab)
-; (opt autoindent)
-; (opt smartindent)
-; (opt shiftround)
+;; (opt autoindent)
+;; (opt smartindent)
+;; (opt shiftround)
 (opt showbreak "↳ ")
 (opt breakindentopt "shift:2,min:20")
-; Invisibles
+;; Invisibles
 (opt list)
 (opt listchars {:tab "»·"
                 :nbsp "+"
@@ -68,9 +68,9 @@
 
 ;;;; BEHAVIOUR
 (opt magic)
-; (opt hidden)
+;; (opt hidden)
 (opt scrolloff 10)
-; (opt autoread)
+;; (opt autoread)
 (opt wrap)
 (opt whichwrap "b,s,<,>,h,l,[,],~")
 (opt nolinebreak)
@@ -93,7 +93,7 @@
 (opt eadirection :hor)
 (opt sessionoptions "curdir,help,tabpages,winsize")
 (opt viewoptions "folds,cursor,curdir,slash,unix")
-; Wildmenu
+;; Wildmenu
 (opt wildmenu)
 (opt wildignorecase)
 (opt wildignore+ [:.git
@@ -115,14 +115,14 @@
 
 (opt wildoptions :pum)
 (opt wildmode "longest:full,full")
-; Time
+;; Time
 (opt timeout)
 (opt ttimeout)
 (opt updatetime 100)
 (opt timeoutlen 350)
 (opt ttimeoutlen 10)
 (opt redrawtime 1500)
-; Search
+;; Search
 (opt ignorecase)
 (opt incsearch)
 (opt hlsearch)
@@ -152,5 +152,5 @@
                  :*/shm/*
                  :/private/var/*
                  :.vault.vim])
-; fnlfmt: skip
+;; fnlfmt: skip
 (opt shada ["!" "'1000" "<50" "@100" "s10" "h"])

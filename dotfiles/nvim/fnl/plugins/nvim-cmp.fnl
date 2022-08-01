@@ -18,13 +18,13 @@
                 {:name :nvim_lua}
                 {:name :calc}])
 
-; Check backspace
+;; Check backspace
 (defn- has-words-before? []
   (let [col (- (nvim.fn.col ".") 1)
         ln (nvim.fn.getline ".")]
     (or (= col 0) (string.match (string.sub ln col col) "%s"))))
 
-; Supertab
+;; Supertab
 (defn- super-cn [fallback]
   (if (cmp.visible) (cmp.select_next_item)
       (luasnip.expand_or_jumpable) (luasnip.expand_or_jump)
@@ -47,7 +47,7 @@
             :snippet {:expand #(luasnip.lsp_expand $.body)}
             :sources cmp-srcs})
 
-; Cmdline completions
+;; Cmdline completions
 (cmp.setup.cmdline "/" {:mapping (cmp.mapping.preset.cmdline)
                         :sources [{:name :buffer}]})
 (cmp.setup.cmdline ":" {:mapping (cmp.mapping.preset.cmdline)

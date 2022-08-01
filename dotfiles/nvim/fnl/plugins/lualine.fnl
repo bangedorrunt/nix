@@ -1,5 +1,5 @@
 (module plugins.lualine
-  {autoload {: lualine}
+  {autoload {{: setup} lualine}
    require-macros [core.macros]})
 
 (def- colors {:fg "#bbc2cf"
@@ -83,8 +83,8 @@
 (ins-left {1 :filename
            :cond conditions.buffer_not_empty
            :color {:fg colors.magenta :gui :bold}})
-; Harpoon indicator
-; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
+;; Harpoon indicator
+;; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
 (ins-left {1 (fn []
                (let [harpoon-number ((. (require :harpoon.mark) :get_index_of) (nvim.fn.bufname))]
                  (if harpoon-number (.. "ﯠ " harpoon-number) "ﯡ ")))
@@ -126,4 +126,4 @@
             :color {:fg colors.blue}
             :padding {:left 1}})
 
-(lualine.setup config)
+(setup config)

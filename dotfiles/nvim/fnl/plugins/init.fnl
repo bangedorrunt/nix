@@ -2,8 +2,8 @@
   {autoload {{: use} core.utils}
    require-macros [core.macros]})
 
-; fnlfmt: skip
-; NOTE: lua use % as escape in pattern
+;; fnlfmt: skip
+;; NOTE: lua use % as escape in pattern
 (use
   ;;;; Dependencies
   :lewis6991/impatient.nvim {}
@@ -15,10 +15,10 @@
 
   ;;;; UI plugins
   :rose-pine/neovim {:colorscheme :rosepine :tag "v1.*"}
-  ; :folke/tokyonight.nvim {:colorscheme :tokyonight}
-  ; :woodyZootopia/iceberg.vim {:branch :support_LSP
-  ;                             :colorscheme :iceberg}
-  ; :RRethy/nvim-base16 {:colorscheme :base16-onedark}
+  ;; :folke/tokyonight.nvim {:colorscheme :tokyonight}
+  ;; :woodyZootopia/iceberg.vim {:branch :support_LSP
+  ;;                             :colorscheme :iceberg}
+  ;; :RRethy/nvim-base16 {:colorscheme :base16-onedark}
   :lukas-reineke/indent-blankline.nvim {:after :colorscheme :mod :indent-blankline}
   :akinsho/bufferline.nvim {:after :colorscheme :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :colorscheme :mod :lualine}
@@ -54,7 +54,7 @@
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
-  ; :gpanders/nvim-parinfer {:ft [:clojure :fennel :lisp]}
+  ;; :gpanders/nvim-parinfer {:ft [:clojure :fennel :lisp]}
   :Olical/conjure {:branch :develop
                    :mod :conjure
                    :ft [:clojure :fennel :hy]}
@@ -67,8 +67,6 @@
                          :typescriptreact
                          :xml]}
   :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
-  ; :jose-elias-alvarez/nvim-lsp-ts-utils {:module_pattern "nvim.lsp.ts.utils.*"}
-  ; :folke/lua-dev.nvim {:module_pattern "lua.dev.*"}
   :onsails/lspkind-nvim {:module_pattern "lspkind"}
   :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
   :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
@@ -76,7 +74,6 @@
                                       :mod :lsp
                                       :requires [:mason :lspconfig]}
   :folke/trouble.nvim {:cmd :Trouble}
-  ; :folke/todo-comments.nvim {:after :treesitter :init :todo-comments}
   ;;;; Fuzzy search engine
   :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
@@ -86,7 +83,7 @@
                                   :cmd :Telescope
                                   :mod :telescope}
   ;;;; Completion plugins
-  ; :github/copilot.vim {}
+  ;; :github/copilot.vim {}
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
   :hrsh7th/nvim-cmp {:commit "706371f1300e7c0acb98b346f80dad2dd9b5f679"
                      :event :BufRead
@@ -98,7 +95,7 @@
   :hrsh7th/cmp-calc {:after :nvim-cmp}
   :hrsh7th/cmp-nvim-lsp {:after :nvim-cmp}
   :hrsh7th/cmp-nvim-lua {:after :nvim-cmp}
-  ; :tzachar/cmp-tabnine {:mod :cmp-tabnine :after :nvim-cmp}
+  ;; :tzachar/cmp-tabnine {:mod :cmp-tabnine :after :nvim-cmp}
   :PaterJason/cmp-conjure {:after [:nvim-cmp :conjure]}
   :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
 

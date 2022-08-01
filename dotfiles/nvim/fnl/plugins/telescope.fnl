@@ -7,7 +7,7 @@
    require-macros [core.macros]})
 
 
-; TODO: move telescope settings to global table `tdt.plugins.telescope`
+;; TODO: move telescope settings to global table `tdt.plugins.telescope`
 (telescope.setup {:defaults {:cache_picker {:num_pickers 20}
                              :prompt_prefix "❯ "
                              :selection_caret "❯ "
@@ -35,10 +35,10 @@
                                      :override_file_sorter true
                                      :case_mode :smart_case}}})
 
-; Load extensions
+;; Load extensions
 (run! telescope.load_extension [:fzf :projects])
 
-; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
+;; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
 (def- override-opts {:previewer false
                      :disable_devicons true})
 (def- pickers
@@ -55,8 +55,8 @@
   (let [ok (pcall pickers.git_files)]
     (when (not ok) (pickers.find_files))))
 
-; Telescope keymaps
-; fnlfmt: skip
+;; Telescope keymaps
+;; fnlfmt: skip
 (noremap n nowait "<Leader>ht"       :<Cmd>Telescope<CR>)
 (noremap n nowait "<Leader><Leader>" '(project-files))
 (noremap n nowait "<Leader>;"        '(pickers.live_grep))

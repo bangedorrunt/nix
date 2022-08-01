@@ -408,7 +408,7 @@
   "Removes whitespace from both ends of string."
   (string.gsub s "^%s*(.-)%s*$" "%1"))
 
-;;; Packer
+;;;; Packer
 (defn- plugin-config [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup

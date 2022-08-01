@@ -1,10 +1,10 @@
 (module plugins.nvim-tree
-  {autoload {: nvim-tree
-             nvim-tree/events nvim-tree.events}
+  {autoload {{: setup} nvim-tree
+             {: on_nvim_tree_ready} nvim-tree.events}
    require-macros [core.macros]})
 
-; fnlfmt: skip
-(nvim-tree.setup {:hijack_cursor true
+;; fnlfmt: skip
+(setup {:hijack_cursor true
                   :update_cwd true
                   :update_focused_file {:enable true
                                         :update_cwd true}
@@ -23,6 +23,6 @@
                                                        :symlink ""}}}}
                   :view {:width 30 :side :left :adaptive_size true}})
 
-(nvim-tree/events.on_nvim_tree_ready #(vim.cmd :NvimTreeRefresh))
+(on_nvim_tree_ready #(vim.cmd :NvimTreeRefresh))
 
 (noremap n :<Leader>tt :<Cmd>NvimTreeToggle<CR>)
