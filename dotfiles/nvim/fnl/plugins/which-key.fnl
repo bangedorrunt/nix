@@ -75,8 +75,8 @@
                    :p "Profile"}}
            :l {:name "LSP"
                :a "Code Action"
-               :d "Buffer Diagnostics"
-               :D "Diagnostics"
+               :d "Document Diagnostics"
+               :D "Workspace Diagnostics"
                :f "Format"
                :l "Line Diagnostics"
                :i "Implementation"
