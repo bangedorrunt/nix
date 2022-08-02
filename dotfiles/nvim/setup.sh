@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache/nvim}"
+STATE_PATH="${XDG_STATE_HOME:-$HOME/.local/state/nvim}"
 OLD_PATH="${XDG_DATA_HOME:-$HOME/.local/share/nvim/site}"
 PACK_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start"
 ANISEED_PATH="${PACK_PATH}/aniseed"
@@ -55,14 +56,14 @@ if [ ! -d "$IMPATIENT_PATH" ]; then
   git clone "https://github.com/lewis6991/impatient.nvim.git" "$IMPATIENT_PATH"
 fi
 
-if [ ! -e "${CACHE_PATH}/swap" ]; then
-  echo "Creating vim swap/backup/undo/view folders inside ${CACHE_PATH}/nvim ..."
-  mkdir -p "${CACHE_PATH}/backup"
-  mkdir -p "${CACHE_PATH}/session"
-  mkdir -p "${CACHE_PATH}/swap"
-  mkdir -p "${CACHE_PATH}/tags"
-  mkdir -p "${CACHE_PATH}/undo"
-  mkdir -p "${CACHE_PATH}/view"
+if [ ! -e "${STATE_PATH}/swap" ]; then
+  echo "Creating vim swap/backup/undo/view folders inside ${STATE_PATH}/nvim ..."
+  mkdir -p "${STATE_PATH}/backup"
+  mkdir -p "${STATE_PATH}/session"
+  mkdir -p "${STATE_PATH}/swap"
+  mkdir -p "${STATE_PATH}/tags"
+  mkdir -p "${STATE_PATH}/undo"
+  mkdir -p "${STATE_PATH}/view"
 fi
 
 echo 'Installing Packer plugins ...'

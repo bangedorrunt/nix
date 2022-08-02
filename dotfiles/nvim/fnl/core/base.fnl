@@ -11,6 +11,7 @@
 (def data-path (string.format "%s/site/" (vim.fn.stdpath :data)))
 (def config-path (vim.fn.stdpath :config))
 (def cache-path (vim.fn.stdpath :cache))
+(def state-path (vim.fn.stdpath :state))
 
 (defn ex [prop]
   (fn [...]
@@ -54,6 +55,7 @@
                :HOME (os.getenv :HOME)
                :CACHE_PATH cache-path
                :DATA_PATH data-path
+               :STATE_PATH state-path
                :PACKER_PATH (.. data-path :pack/packer/opt/packer.nvim)
                :PACKER_COMPILED_PATH (.. data-path :lua/packer_compiled.lua)}})
 
