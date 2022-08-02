@@ -29,9 +29,9 @@
         {:des "Remap <C-t> to <C-`> for iTerm"
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
         {:des "Remap `a` key to `ctrl` key"
-         :rules [[:##a {:key :left_control :lazy :true} nil {:alone :a}]]}
+         :rules [[:a {:key :left_control :lazy :true} nil {:alone :a}]]}
         {:des "Remap `semicolon` key to `ctrl` key"
-         :rules [[:##semicolon {:key :right_control :lazy :true} nil {:alone :semicolon}]]}
+         :rules [[:semicolon {:key :right_control :lazy :true} nil {:alone :semicolon}]]}
         {:des "Double tap `right_shift` key to switch input setting"
          :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
