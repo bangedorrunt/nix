@@ -2,10 +2,6 @@
  {:babygau {:default true :sim 50 :delay 500 :alone 180 :held 200}}
  ;; Create alias key for `:to`
  :tos {:hyper {:key :left_control :modi {:mandatory [:left_command :left_shift :left_option]}}
-       ; Reserve for future usage
-       ; :mod-1 {:key :left_control :modi {:mandatory [:left_option :left_command]}}
-       ; :mod-2 {:key :left_command :modi {:mandatory [:left_shift :left_option]}}
-       ; :mod-3 {:key :left_command :modi {:mandatory [:left_shift :left_control]}}
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
 
  :templates {:launch "osascript -e 'tell application \"%s\" to activate'"
@@ -20,28 +16,55 @@
                  [:!!j :down_arrow]
                  [:!!k :up_arrow]
                  [:!!h :left_arrow]
-                 [:!!l :right_arrow]
-                 ;; Copy/Paste/Undo/Redo
-                 [:!!c :!Cc]
-                 [:!!v :!Cv]
-                 [:!!u :!Cz]
-                 [:!!r :!CSz]]}
+                 [:!!l :right_arrow]]}
+        {:des "FuckerDuper Layout"
+         :rules [[[:f :d] ["fucker-duper-layout" 1] nil {:afterup ["fucker-duper-layout" 0]}]
+                 :fucker-duper-layout
+                 ;;;; Vim-like keybindings
+                 [:j :down_arrow]
+                 [:k :up_arrow]
+                 [:h :left_arrow]
+                 [:l :right_arrow]]}
+        {:des "SuperDuper Layout"
+         :rules [[[:s :d] ["super-duper-layout" 1] nil {:afterup ["super-duper-layout" 0]}]
+                 :super-duper-layout
+                 ;;;; Amethyst keybindings
+                 ;; Cycle layouts
+                 [:spacebar :!SOspacebar]
+                 ;; Shrink and expand main pain
+                 [:h :!SOh]
+                 [:l :!SOl]
+                 ;; Cycle focus windows
+                 [:j :!SOj]
+                 [:k :!SOk]
+                 ;; Swap focused window with main window
+                 [:return_or_enter :!SOreturn_or_enter]
+                 ;; Move focused window to left or right
+                 [:p :!Tleft_arrow]
+                 [:n :!Tright_arrow]
+                 ;; Force window to be reevaluated
+                 [:z :!SOz]
+                 ;; Throw focused window to space left or right
+                 [:!Tn :!SOTright_arrow]
+                 [:!Tp :!SOTleft_arrow]]}
+        {:des "Windows-like Shortcuts"
+         ;; Copy/Paste/Undo/Redo
+         :rules [:!Terminals
+                 [:!Tc :!Cc]
+                 [:!Tv :!Cv]
+                 [:!Tu :!Cz]
+                 [:!Tr :!CSz]]}
         {:des "Remap <C-t> to <C-`> for iTerm"
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
-        {:des "Remap `a` key to `ctrl` key"
-         :rules [[:a {:key :left_control :lazy :true} nil {:alone :a}]]}
-        {:des "Remap `semicolon` key to `ctrl` key"
-         :rules [[:semicolon {:key :right_control :lazy :true} nil {:alone :semicolon}]]}
+        {:des "Remap `a` and `semicolon` to `ctrl` key"
+         :rules [[:a {:key :left_control :lazy :true} nil {:alone :a}]
+                 [:semicolon {:key :left_control :lazy :true} nil {:alone :semicolon}]]}
         {:des "Double tap `right_shift` key to switch input setting"
          :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
                   [["macos-input-source" 1] :right_shift]
                   ["macos-input-source" 0]
-                  {:delayed {:invoked ["macos-input-source" 0] :canceled ["macos-input-source" 0]} :params {:delay 300}}]]}
-        {:des "Double tap `left_shift` key to toggle terminal"
-         :rules [[:left_shift [:!Tgrave_accent_and_tilde ["vscode-terminal" 0]] [:VSCODE ["vscode-terminal" 1]]]
-                 [:left_shift [["vscode-terminal" 1] :left_shift] ["vscode-terminal" 0]
-                  {:delayed {:invoked ["vscode-terminal" 0] :canceled ["vscode-terminal" 0]} :params {:delay 300}}]]}]
+                  {:delayed {:invoked ["macos-input-source" 0] :canceled ["macos-input-source" 0]} :params {:delay 300}}]]}]
 
  :applications {:Terminals ["^com\\.apple\\.Terminal$"
                             "^com\\.googlecode\\.iterm2$"
@@ -68,10 +91,3 @@
                       :input_source_id "com.apple.keylayout.ABC"
                       :language "en"}}
  :simlayer-threshold 50}
-
-;; Unused rules
-
-;; {:des "Super Duper: <s-d> init"
-;;          :rules [[[:s :d] ["super-duper-layout" 1]]
-;;                  ;; Ref: https://github.com/narze/dotfiles/blob/master/etc/karabiner.edn
-;;                  ]}
