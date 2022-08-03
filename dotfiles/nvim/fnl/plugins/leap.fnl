@@ -1,4 +1,4 @@
 (module plugins.leap
-  {autoload {: leap}})
+  {autoload {{: set_default_keymaps} leap}})
 
-(leap.set_default_keymaps)
+(set_default_keymaps)
