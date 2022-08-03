@@ -31,6 +31,7 @@
   :tpope/vim-commentary {:event :BufRead}
   :tpope/vim-surround {:event :BufRead}
   :tpope/vim-sleuth {:event :BufRead}
+  :ggandor/leap.nvim {:event :BufRead :mod :leap}
   :mg979/vim-visual-multi {:event :BufRead}
   :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
   :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
@@ -54,6 +55,7 @@
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
+  :nvim-neorg/neorg {:after :treesitter :mod :neorg :ft :norg}
   ;; :gpanders/nvim-parinfer {:ft [:clojure :fennel :lisp]}
   :Olical/conjure {:branch :develop
                    :mod :conjure
@@ -78,7 +80,7 @@
   :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]
-                                  :tag "0.1.0"
+                                  :branch "0.1.x"
                                   :event :BufRead
                                   :cmd :Telescope
                                   :mod :telescope}

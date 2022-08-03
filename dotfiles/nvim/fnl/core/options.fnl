@@ -2,7 +2,7 @@
   {require-macros [core.macros]})
 
 ;;;; RENDERING
-(opt background :light)
+;; (opt background :light)
 
 (if (has? :termguicolors)
     (do
@@ -140,11 +140,11 @@
 (opt backup false)
 (opt history 5000)
 (opt writebackup false)
-(opt directory (.. tdt.paths.CACHE_PATH :/swag/))
-(opt undodir (.. tdt.paths.CACHE_PATH :/undo/))
-(opt backupdir (.. tdt.paths.CACHE_PATH :/backup/))
-(opt viewdir (.. tdt.paths.CACHE_PATH :/view/))
-(opt spellfile (.. tdt.paths.CACHE_PATH :/spell/en.uft-8.add))
+(opt directory (.. tdt.paths.STATE_PATH :/swag/))
+(opt undodir (.. tdt.paths.STATE_PATH :/undo/))
+(opt backupdir (.. tdt.paths.STATE_PATH :/backup/))
+(opt viewdir (.. tdt.paths.STATE_PATH :/view/))
+(opt spellfile (.. tdt.paths.STATE_PATH :/spell/en.uft-8.add))
 (opt backupskip [:/tmp/*
                  :$TMPDIR/*
                  :$TMP/*

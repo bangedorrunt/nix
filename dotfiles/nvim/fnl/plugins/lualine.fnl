@@ -3,7 +3,7 @@
    require-macros [core.macros]})
 
 (def- colors {:fg "#bbc2cf"
-              :bg "#faf4ed" ; dark alternative "#191724"
+              :bg "#191724" ; alternative "#191724", "#faf4ed"
               :yellow "#ecbe7b"
               :cyan "#008080"
               :darkblue "#081633"

@@ -7,7 +7,7 @@
                            :javascript :typescript :tsx :svelte
                            :toml :yaml :json :json5 :jsonc
                            :c :cpp
-                           :lua :vim :nix :python]
+                           :lua :vim :nix :python :norg]
         :highlight {:enable true
                     :use_languagetree true}
         :indent {:enable true}

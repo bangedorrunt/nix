@@ -16,6 +16,8 @@ rm -rf "$CACHE_PATH/luacache"
 rm -rf "$CACHE_PATH/log"
 rm -rf "$CACHE_PATH/lsp.log"
 rm -rf "$CACHE_PATH/packer.nvim.log"
+rm -rf "$STATE_PATH/log"
+rm -rf "$STATE_PATH/lsp.log"
 
 if [ -d "./lua" ]; then
   rm -rf "./lua"

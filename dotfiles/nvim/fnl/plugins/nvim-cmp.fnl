@@ -15,6 +15,7 @@
                 {:name :luasnip}
                 {:name :buffer :keyword_length 5}
                 {:name :path}
+                {:name :neorg}
                 {:name :nvim_lua}
                 {:name :calc}])
 
