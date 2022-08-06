@@ -39,7 +39,7 @@
                  [:k :!SOk]
                  ;; Swap focused window with main window
                  [:return_or_enter :!SOreturn_or_enter]
-                 ;; Move focused window to left or right
+                 ;; Move to space left or right
                  [:p :!Tleft_arrow]
                  [:n :!Tright_arrow]
                  ;; Force window to be reevaluated
@@ -50,6 +50,7 @@
         {:des "Windows-like Shortcuts"
          ;; Copy/Paste/Undo/Redo
          :rules [:!Terminals
+                 [:!Ta :!Ca]
                  [:!Tc :!Cc]
                  [:!Tv :!Cv]
                  [:!Tu :!Cz]
