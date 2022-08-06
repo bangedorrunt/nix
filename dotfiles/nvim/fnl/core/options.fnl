@@ -32,7 +32,7 @@
 (opt previewheight 12)
 (opt cmdwinheight 12)
 (opt conceallevel 2)
-(opt concealcursor :niv)
+(opt concealcursor :nc)
 (opt signcolumn :yes)
 ;; Statusline
 (opt showmode false)
