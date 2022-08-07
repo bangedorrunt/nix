@@ -85,7 +85,7 @@
                "context:4"
                "algorithm:histogram"
                :indent-heuristic])
-
+(opt foldlevel 999) ;; Unfold them all
 (opt splitright)
 (opt splitbelow)
 (opt backspace "indent,eol,start")
