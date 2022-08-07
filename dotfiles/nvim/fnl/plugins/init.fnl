@@ -46,6 +46,7 @@
   :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]
+                                  :as :telescope
                                   :module_pattern "telescope.*"
                                   :branch "0.1.x"
                                   :event :BufRead
@@ -72,7 +73,9 @@
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
-  :nvim-neorg/neorg {:after :treesitter :tag "*" :mod :neorg :ft [:norg]}
+  :nvim-neorg/neorg-telescope {:module_pattern "neorg.*"}
+  :nvim-neorg/neorg {:requires [:plenary :neorg-telescope]
+                     :after [:treesitter :telescope] :tag "*" :mod :neorg}
   :Olical/conjure {:branch :develop
                    :mod :conjure
                    :ft [:clojure :fennel :hy]}

@@ -450,5 +450,7 @@
                                (use (assoc opts 1 name))))))
                      :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
                               :git {:clone_timeout 120 :depth 1}
-                              :max_jobs 60
+                              ;; Temporarily disable this due to
+                              ;; https://github.com/wbthomason/packer.nvim/issues/751
+                              ;; :max_jobs 60
                               :profile {:enable true :threshold 0}}})))
