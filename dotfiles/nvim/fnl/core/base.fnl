@@ -60,10 +60,10 @@
                :PACKER_COMPILED_PATH (.. data-path :lua/packer_compiled.lua)}})
 
 ;; Disable built-in plugins and host providers
-(g loaded_netrw 1)
-(g loaded_netrwPlugin 1)
-(g loaded_netrwSettings 1)
-(g loaded_netrwFileHandlers 1)
+;; (g loaded_netrw 1)
+;; (g loaded_netrwPlugin 1)
+;; (g loaded_netrwSettings 1)
+;; (g loaded_netrwFileHandlers 1)
 (g loaded_gzip 1)
 (g loaded_zip 1)
 (g loaded_zipPlugin 1)

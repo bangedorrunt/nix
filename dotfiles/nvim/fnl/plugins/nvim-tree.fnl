@@ -13,15 +13,8 @@
         :renderer {:icons {:show {:git false
                                   :folder true
                                   :folder_arrow false
-                                  :file false}
-                           :glyphs {:default ""
-                                    :symlink ""
-                                    :folder {:default ""
-                                             :open ""
-                                             :empty ""
-                                             :empty_open ""
-                                             :symlink ""}}}}
-        :view {:width 30 :side :left :adaptive_size true}})
+                                  :file false}}}}
+        :view {:width 30 :side :left})
 
 (on_nvim_tree_ready #(vim.cmd :NvimTreeRefresh))
 

@@ -80,10 +80,9 @@
                :f "Format"
                :l "Line Diagnostics"
                :i "Implementation"
-               :r "Rename"
+               :r "References"
                :s "Local Symbol"
-               :S "WorkspaceSymbol"
-               :y "References"}
+               :S "WorkspaceSymbol"}
            :m {:name "Harpoon"
                :m "Menu"
                :f "Add Mark"

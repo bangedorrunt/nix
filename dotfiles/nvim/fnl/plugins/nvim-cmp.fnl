@@ -1,7 +1,17 @@
 (module plugins.nvim-cmp
-  {autoload {: cmp
-             : luasnip
-             : lspkind}})
+  {autoload {{: setup
+              : visible
+              : complete
+              : select_next_item
+              : select_prev_item
+              : mapping
+              : config} cmp
+             {: expand_or_jumpable
+              : expand_or_jump
+              : jumpable
+              : jump
+              : lsp_expand} luasnip
+             {: cmp_format} lspkind}})
 
 (def- cmp-menu-items {:nvim_lsp :LSP
                       :luasnip :LuaSnip
@@ -27,31 +37,31 @@
 
 ;; Supertab
 (defn- super-cn [fallback]
-  (if (cmp.visible) (cmp.select_next_item)
-      (luasnip.expand_or_jumpable) (luasnip.expand_or_jump)
-      (has-words-before?) (cmp.complete)
-      (fallback)))
+  (if (visible) (select_next_item)
+    (expand_or_jumpable) (expand_or_jump)
+    (has-words-before?) (complete)
+    (fallback)))
 
 (defn- super-cp [fallback]
-  (if (cmp.visible) (cmp.select_prev_item)
-      (luasnip.jumpable -1) (luasnip.jump -1)
-      (fallback)))
+  (if (visible) (select_prev_item)
+    (jumpable -1) (jump -1)
+    (fallback)))
 
-(cmp.setup {:formatting {:format (lspkind.cmp_format {:with_text false
-                                                      :menu cmp-menu-items})}
-            :mapping (cmp.mapping.preset.insert
-                       {:<CR> (cmp.mapping.confirm {:select true})
-                        :<C-Space> (cmp.mapping.complete)
-                        :<C-e> (cmp.mapping.abort)
-                        :<C-n> (cmp.mapping super-cn [:i :s])
-                        :<C-p> (cmp.mapping super-cp [:i :s])})
-            :snippet {:expand #(luasnip.lsp_expand $.body)}
-            :sources cmp-srcs})
+(setup {:formatting {:format (cmp_format {:with_text false
+                                          :menu cmp-menu-items})}
+        :mapping (mapping.preset.insert
+                   {:<CR> (mapping.confirm {:select true})
+                    :<C-Space> (mapping.complete)
+                    :<C-e> (mapping.abort)
+                    :<C-n> (mapping super-cn [:i :s])
+                    :<C-p> (mapping super-cp [:i :s])})
+        :snippet {:expand #(lsp_expand $.body)}
+        :sources cmp-srcs})
 
 ;; Cmdline completions
-(cmp.setup.cmdline "/" {:mapping (cmp.mapping.preset.cmdline)
-                        :sources [{:name :buffer}]})
-(cmp.setup.cmdline ":" {:mapping (cmp.mapping.preset.cmdline)
-                        :sources (cmp.config.sources
-                                   [{:name :path}]
-                                   [{:name :cmdline}])})
+(setup.cmdline "/" {:mapping (mapping.preset.cmdline)
+                    :sources [{:name :buffer}]})
+(setup.cmdline ":" {:mapping (mapping.preset.cmdline)
+                    :sources (config.sources
+                               [{:name :path}]
+                               [{:name :cmdline}])})

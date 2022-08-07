@@ -5,7 +5,8 @@
              : mason-lspconfig
              lsp-signature lsp_signature
              : null-ls
-             null-ls-builtins null-ls.builtins}
+             null-ls-builtins null-ls.builtins
+             telescope-builtin telescope.builtin}
    require-macros [core.macros]})
 
 ;;;; LSP UI
@@ -76,19 +77,19 @@
          :lsp_references open-ref-float!
          :diagnostics open-diag-float!
          :lsp_document_symbols open-local-symbol-float!
-         :lsp_workspace_symbols open-workspace-symbol-float!} (require :telescope.builtin)]
+         :lsp_workspace_symbols open-workspace-symbol-float!} telescope-builtin]
     ;; LSP keymap
     (noremap n buffer "K" open-doc-float!)
-    (noremap nv buffer "<leader>la" open-code-action-float!)
-    (noremap nv buffer "<leader>lr" rename!)
-    (noremap n buffer "<leader>ll" open-line-diag-float!)
+    (noremap nv buffer "gr" rename!)
     (noremap n buffer "[d" goto-diag-prev!)
     (noremap n buffer "]d" goto-diag-next!)
     (noremap n buffer "gD" goto-declaration!)
     (noremap n buffer "gd" goto-definition!)
     (noremap n buffer "gt" goto-type-definition!)
+    (noremap nv buffer "<leader>la" open-code-action-float!)
+    (noremap n buffer "<leader>ll" open-line-diag-float!)
     (noremap n buffer "<leader>li" open-impl-float!)
-    (noremap n buffer "<leader>ly" open-ref-float!)
+    (noremap n buffer "<leader>lr" open-ref-float!)
     (noremap n buffer "<leader>ld" '(open-diag-float! {:bufnr 0}))
     (noremap n buffer "<leader>lD" open-diag-float!)
     (noremap n buffer "<leader>ls" open-local-symbol-float!)

@@ -42,12 +42,29 @@
   :norcalli/nvim-colorizer.lua {:ft [:html :css
                                      :sass :vim
                                      :typescript :typescriptreact]}
+  ;;;; Fuzzy search engine
+  :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
+  :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
+  :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]
+                                  :module_pattern "telescope.*"
+                                  :branch "0.1.x"
+                                  :event :BufRead
+                                  :cmd :Telescope
+                                  :mod :telescope}
   ;;;; Git plugins
   :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
   :tpope/vim-rhubarb {:after :vim-fugitive :cmd :GBrowse}
   :sindrets/diffview.nvim {:event :BufRead :mod :diffview}
   :lewis6991/gitsigns.nvim {:after :colorscheme :mod :gitsigns}
   ;;;; Lang plugins
+  :folke/trouble.nvim {:cmd :Trouble}
+  :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
+  :onsails/lspkind-nvim {:module_pattern "lspkind"}
+  :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
+  :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
+  :williamboman/mason-lspconfig.nvim {:event :BufReadPre
+                                      :mod :lsp
+                                      :requires [:mason :lspconfig]}
   :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
                                     ; :run ":TSUpdate"
@@ -55,8 +72,7 @@
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
-  :nvim-neorg/neorg {:after :treesitter :mod :neorg :ft :norg}
-  ;; :gpanders/nvim-parinfer {:ft [:clojure :fennel :lisp]}
+  :nvim-neorg/neorg {:after :treesitter :tag "*" :mod :neorg :ft [:norg]}
   :Olical/conjure {:branch :develop
                    :mod :conjure
                    :ft [:clojure :fennel :hy]}
@@ -68,22 +84,6 @@
                          :markdown
                          :typescriptreact
                          :xml]}
-  :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
-  :onsails/lspkind-nvim {:module_pattern "lspkind"}
-  :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
-  :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
-  :williamboman/mason-lspconfig.nvim {:event :BufReadPre
-                                      :mod :lsp
-                                      :requires [:mason :lspconfig]}
-  :folke/trouble.nvim {:cmd :Trouble}
-  ;;;; Fuzzy search engine
-  :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
-  :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
-  :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]
-                                  :branch "0.1.x"
-                                  :event :BufRead
-                                  :cmd :Telescope
-                                  :mod :telescope}
   ;;;; Completion plugins
   ;; :github/copilot.vim {}
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
@@ -102,5 +102,4 @@
   :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
 
   ;;;; Tool plugins
-  :ellisonleao/glow.nvim {:mod :glow :ft [:markdown :md]}
   :editorconfig/editorconfig-vim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]})
