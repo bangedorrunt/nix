@@ -11,14 +11,7 @@
 (setup {:defaults {:cache_picker {:num_pickers 20}
                    :prompt_prefix "❯ "
                    :selection_caret "❯ "
-                   :borderchars ["─"
-                                 "│"
-                                 "─"
-                                 "│"
-                                 "┌"
-                                 "┐"
-                                 "┘"
-                                 "└"]
+                   :borderchars ["─" "│" "─" "│" "┌" "┐" "┘" "└"]
                    :path_display ["truncate" "smart"]
                    :winblend 0
                    :sorting_strategy :descending
@@ -27,7 +20,6 @@
                    :mappings {:i {:<ESC> close}}
                    :file_ignore_patterns [:.git/
                                           :node_modules/.*
-                                          :.neuron/.*
                                           :alfred2/.*]}
         :extensions {:fzf {:fuzzy true
                            :override_generic_sorter false
