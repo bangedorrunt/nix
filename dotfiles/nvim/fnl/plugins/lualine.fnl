@@ -3,7 +3,10 @@
    require-macros [core.macros]})
 
 (def- colors {:fg "#bbc2cf"
-              :bg "#191724" ; alternative "#191724", "#faf4ed"
+              ;; Dark mode
+              ;; :bg "#191724"
+              ;; Light Mode
+              :bg "#faf4ed"
               :yellow "#ecbe7b"
               :cyan "#008080"
               :darkblue "#081633"
@@ -93,7 +96,7 @@
                       {:fg "#98be65" :gui :bold} {:fg "#ec5f67"}))})
 (ins-left {1 :branch :icon "" :color {:fg colors.violet :gui :bold}})
 (ins-left {1 :diff
-           :symbols {:added " " :modified "柳 " :removed " "}
+           :symbols {:added " " :modified " " :removed " "}
            :diff_color {:added {:fg colors.green}
                         :modified {:fg colors.orange}
                         :removed {:fg colors.red}}
