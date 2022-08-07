@@ -60,6 +60,12 @@
         {:des "Remap `a` and `semicolon` to `ctrl` key"
          :rules [[:a {:key :left_control :lazy :true} nil {:alone :a}]
                  [:semicolon {:key :left_control :lazy :true} nil {:alone :semicolon}]]}
+        {:des "Double tap `left_shift` key to enable capslock"
+         :rules [[:##left_shift [:caps_lock ["caps-lock-on" 0]] ["caps-lock-on" 1]]
+                 [:##left_shift
+                  [["caps-lock-on" 1] :left_shift]
+                  ["caps-lock-on" 0]
+                  {:delayed {:invoked ["caps-lock-on" 0] :canceled ["caps-lock-on" 0]} :params {:delay 300}}]]}
         {:des "Double tap `right_shift` key to switch input setting"
          :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
