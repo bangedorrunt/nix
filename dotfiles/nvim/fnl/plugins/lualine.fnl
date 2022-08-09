@@ -19,12 +19,12 @@
 
 (def- conditions
   {:buffer_not_empty (fn []
-                       (not= (nvim.fn.empty (nvim.fn.expand "%:t")) 1))
+                       (not= (vim.fn.empty (vim.fn.expand "%:t")) 1))
    :hide_in_width (fn []
-                    (> (nvim.fn.winwidth 0) 80))
+                    (> (vim.fn.winwidth 0) 80))
    :check_git_workspace (fn []
-                          (let [filepath (nvim.fn.expand "%:p:h")
-                                gitdir (nvim.fn.finddir :.git
+                          (let [filepath (vim.fn.expand "%:p:h")
+                                gitdir (vim.fn.finddir :.git
                                                         (.. filepath ";"))]
                             (and (and gitdir (> (length gitdir) 0))
                                  (< (length gitdir) (length filepath)))))})
@@ -77,7 +77,7 @@
                                  :r? colors.cyan
                                  :! colors.red
                                  :t colors.red}]
-                 (hi LualineMode {:fg  (. mode-color (nvim.fn.mode)) :bg colors.bg})
+                 (hi LualineMode {:fg  (. mode-color (vim.fn.mode)) :bg colors.bg})
                  ""))
            :color :LualineMode
            :padding {:right 1}})
@@ -89,10 +89,10 @@
 ;; Harpoon indicator
 ;; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
 (ins-left {1 (fn []
-               (let [harpoon-number ((. (require :harpoon.mark) :get_index_of) (nvim.fn.bufname))]
+               (let [harpoon-number ((. (require :harpoon.mark) :get_index_of) (vim.fn.bufname))]
                  (if harpoon-number (.. "ﯠ " harpoon-number) "ﯡ ")))
            :color (fn []
-                    (if ((. (require :harpoon.mark) :get_index_of) (nvim.fn.bufname))
+                    (if ((. (require :harpoon.mark) :get_index_of) (vim.fn.bufname))
                       {:fg "#98be65" :gui :bold} {:fg "#ec5f67"}))})
 (ins-left {1 :branch :icon "" :color {:fg colors.violet :gui :bold}})
 (ins-left {1 :diff

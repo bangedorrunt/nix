@@ -1,5 +1,5 @@
 (module plugins.telescope
-  {autoload {{: run! : merge} core.utils
+  {autoload {{: run! : merge} aniseed.core
              {: setup : load_extension} telescope
              {: get_os_command_output} telescope.utils
              {: close} telescope.actions

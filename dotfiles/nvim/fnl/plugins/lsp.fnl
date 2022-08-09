@@ -1,6 +1,5 @@
 (module plugins.lsp
-  {autoload {{: contains?} core.utils
-             lsp-config lspconfig
+  {autoload {lsp-config lspconfig
              : mason
              : mason-lspconfig
              lsp-signature lsp_signature
@@ -82,7 +81,7 @@
     (noremap n buffer "K" open-doc-float!)
     (noremap nv buffer "gr" rename!)
     (noremap n buffer "[d" goto-diag-prev!)
-    (noremap n buffer "]d" goto-diag-next!)
+                        (noremap n buffer "]d" goto-diag-next!)
     (noremap n buffer "gD" goto-declaration!)
     (noremap n buffer "gd" goto-definition!)
     (noremap n buffer "gt" goto-type-definition!)
@@ -139,15 +138,14 @@
 ;; Typescript was slow because `eslint_d` was not installed
 ;; Markdown was slow because `write-good` and `markdownlint`
 ;; was not installed
+(def- null-sources
+  [null-ls-builtins.formatting.prettier
+   null-ls-builtins.formatting.stylua
+   ;; null-ls-builtins.formatting.fnlfmt
+   null-ls-builtins.formatting.trim_whitespace
+   null-ls-builtins.formatting.shfmt
+   (null-ls-builtins.diagnostics.shellcheck.with {:filetypes [:zsh :sh :bash]})])
 (-> {:debounce 150
-     :sources ((fn []
-                 [null-ls-builtins.formatting.prettier
-                  null-ls-builtins.formatting.stylua
-                  ; null-ls-builtins.formatting.fnlfmt
-                  null-ls-builtins.formatting.trim_whitespace
-                  null-ls-builtins.formatting.shfmt
-                  (null-ls-builtins.diagnostics.shellcheck.with {:filetypes [:zsh
-                                                                             :sh
-                                                                             :bash]})]))
+     :sources null-sources
      :on_attach enhanced-attach}
     (null-ls.setup))

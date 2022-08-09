@@ -1,14 +1,13 @@
 (module colorschemes.rosepine
-  {autoload {: rose-pine}
+  {autoload {{: setup} rose-pine}
    require-macros [core.macros]})
 
-(rose-pine.setup
-  {:dark_variant :dawn
-   :bold_vert_split true
-   :dim_nc_background false
-   :disable_background false
-   :disable_float_background false
-   :disable_italics false})
+(setup {:dark_variant :dawn
+        :bold_vert_split true
+        :dim_nc_background false
+        :disable_background false
+        :disable_float_background false
+        :disable_italics false})
 
 (colorscheme rose-pine)
 

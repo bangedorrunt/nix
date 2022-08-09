@@ -1,5 +1,5 @@
 (module core.base
-  {require-macros [core.macros]})
+   {require-macros [core.macros]})
 
 (def os-name (. (vim.loop.os_uname) :sysname))
 
@@ -12,28 +12,6 @@
 (def config-path (vim.fn.stdpath :config))
 (def cache-path (vim.fn.stdpath :cache))
 (def state-path (vim.fn.stdpath :state))
-
-(defn ex [prop]
-  (fn [...]
-    (let [args (accumulate [acc "" _ s (ipairs [...])]
-                 (.. acc " " s))]
-      (vim.api.nvim_command (.. prop args)))))
-
-(tset _G :nvim {:ex {:augroup (ex :augroup)
-                     :autocmd (ex :autocmd)
-                     :autocmd_ (ex :autocmd!)
-                     :command_ vim.api.nvim_create_user_command
-                     :buf_command_ vim.api.nvim_buf_create_user_command
-                     :highlight vim.api.nvim_set_hl
-                     :colorscheme (ex :colorscheme)}
-                :fn vim.fn
-                :g vim.g
-                :opt vim.opt
-                :opt_local vim.opt_local
-                :create_namespace vim.api.nvim_create_namespace
-                :replace_termcodes vim.api.nvim_replace_termcodes
-                :feedkeys vim.api.nvim_feedkeys
-                :keymap {:set vim.keymap.set}})
 
 (tset _G :tdt
       {:signs {:error " "

@@ -1,6 +1,5 @@
 (module plugins.init
-  {autoload {{: use} core.utils}
-   require-macros [core.macros]})
+  {autoload {{: use} core.packer}})
 
 ;; fnlfmt: skip
 ;; NOTE: lua use % as escape in pattern
@@ -15,10 +14,6 @@
 
   ;;;; UI plugins
   :rose-pine/neovim {:colorscheme :rosepine :tag "v1.*"}
-  ;; :folke/tokyonight.nvim {:colorscheme :tokyonight}
-  ;; :woodyZootopia/iceberg.vim {:branch :support_LSP
-  ;;                             :colorscheme :iceberg}
-  ;; :RRethy/nvim-base16 {:colorscheme :base16-onedark}
   :lukas-reineke/indent-blankline.nvim {:after :colorscheme :mod :indent-blankline}
   :akinsho/bufferline.nvim {:after :colorscheme :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :colorscheme :mod :lualine}
@@ -43,10 +38,9 @@
                                      :sass :vim
                                      :typescript :typescriptreact]}
   ;;;; Fuzzy search engine
-  :ThePrimeagen/harpoon {:requires [:plenary] :event :BufRead :mod :harpoon}
+  :ThePrimeagen/harpoon {:event :BufRead :mod :harpoon}
   :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
-  :nvim-telescope/telescope.nvim {:requires [:plenary :fzf-native :rooter]
-                                  :as :telescope
+  :nvim-telescope/telescope.nvim {:as :telescope
                                   :module_pattern "telescope.*"
                                   :branch "0.1.x"
                                   :event :BufRead
@@ -63,19 +57,15 @@
   :onsails/lspkind-nvim {:module_pattern "lspkind"}
   :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
   :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
-  :williamboman/mason-lspconfig.nvim {:event :BufReadPre
-                                      :mod :lsp
-                                      :requires [:mason :lspconfig]}
+  :williamboman/mason-lspconfig.nvim {:event :BufReadPre :mod :lsp}
   :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
-                                    ; :run ":TSUpdate"
                                     :mod :nvim-treesitter}
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.*"}
-  :nvim-neorg/neorg {:requires [:plenary :neorg-telescope]
-                     :after [:treesitter :telescope] :tag "*" :mod :neorg}
+  :nvim-neorg/neorg {:after [:treesitter :telescope] :tag "*" :mod :neorg :ft [:norg]}
   :Olical/conjure {:branch :develop
                    :mod :conjure
                    :ft [:clojure :fennel :hy]}

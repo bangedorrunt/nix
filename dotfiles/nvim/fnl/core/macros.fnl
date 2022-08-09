@@ -3,8 +3,8 @@
   (+ n 1))
 
 (fn dec [n]
-    "Decrement n by 1."
-      (- n 1))
+  "Decrement n by 1."
+  (- n 1))
 
 (fn first [xs]
   (when xs
@@ -25,6 +25,13 @@
 (fn nil? [x]
   "True if the value is equal to Lua `nil`."
   (= nil x))
+
+(fn contains? [xs target]
+  (var seen? false)
+  (each [_ v (ipairs xs)]
+    (when (= v target)
+      (set seen? true)))
+  seen?)
 
 (fn ->str [x]
   "Convert a symbol to a string"
@@ -66,8 +73,8 @@
   and inserts value into _G. Returns unique name."
   (let [inter-compile-uid (os.date "%s")
         name (if prefix?
-                 (.. (->str (gensym prefix?)) inter-compile-uid)
-                 (.. (->str (gensym :pug)) inter-compile-uid))]
+               (.. (->str (gensym prefix?)) inter-compile-uid)
+               (.. (->str (gensym :pug)) inter-compile-uid))]
     `(do
        (tset _G ,name ,val)
        ,name)))
@@ -87,8 +94,8 @@
 (fn command [...]
   "Define command"
   (match (select "#" ...)
-    2 (let [(name expr) ...] `(nvim.ex.command_ ,(->str name) ,(quoted->fn? expr) {}))
-    3 (let [(name _ expr) ...] `(nvim.ex.buf_command_ 0 ,(->str name) ,(quoted->fn? expr) {}))))
+    2 (let [(name expr) ...] `(vim.api.nvim_create_user_command ,(->str name) ,(quoted->fn? expr) {}))
+    3 (let [(name _ expr) ...] `(vim.api.nvim_buf_create_user_command 0 ,(->str name) ,(quoted->fn? expr) {}))))
 
 (fn opt [name ?value]
   "Set one vim.options using the `vim.opt` API
@@ -99,10 +106,10 @@
         value (if (nil? ?value) (not (name:match :^no)) ?value)
         name (if (nil? ?value) (or (name:match "^no(.*)$") name) name)]
     (match (name:sub -1)
-      "+" `(: (. nvim.opt ,(name:sub 1 -2)) :append ,value)
-      "-" `(: (. nvim.opt ,(name:sub 1 -2)) :remove ,value)
-      "^" `(: (. nvim.opt ,(name:sub 1 -2)) :prepend ,value)
-      _ `(tset nvim.opt ,name ,value))))
+      "+" `(: (. vim.opt ,(name:sub 1 -2)) :append ,value)
+      "-" `(: (. vim.opt ,(name:sub 1 -2)) :remove ,value)
+      "^" `(: (. vim.opt ,(name:sub 1 -2)) :prepend ,value)
+      _ `(tset vim.opt ,name ,value))))
 
 (fn opt-local [name ?value]
   "Set a local vim.option using the `vim.opt_local` API"
@@ -110,34 +117,34 @@
         value (if (nil? ?value) (not (name:match :^no)) ?value)
         name (if (nil? ?value) (or (name:match "^no(.*)$") name) name)]
     (match (name:sub -1)
-      "+" `(: (. nvim.opt_local ,(name:sub 1 -2)) :append ,value)
-      "-" `(: (. nvim.opt_local ,(name:sub 1 -2)) :remove ,value)
-      "^" `(: (. nvim.opt_local ,(name:sub 1 -2)) :prepend ,value)
-      _ `(tset nvim.opt_local ,name ,value))))
+      "+" `(: (. vim.opt_local ,(name:sub 1 -2)) :append ,value)
+      "-" `(: (. vim.opt_local ,(name:sub 1 -2)) :remove ,value)
+      "^" `(: (. vim.opt_local ,(name:sub 1 -2)) :prepend ,value)
+      _ `(tset vim.opt_local ,name ,value))))
 
 (fn g [name value]
   "Set value for global Vim variable"
   (let [name (->str name)]
-    `(tset nvim.g ,name ,value)))
+    `(tset vim.g ,name ,value)))
 
 (fn augroup [name ...]
   "Defines an autocommand group"
   `(do
-     (nvim.ex.augroup ,(->str name))
+     (vim.cmd.augroup ,(->str name))
      (do
        ,...)
-     (nvim.ex.augroup "END")))
+     (vim.cmd.augroup "END")))
 
 (fn autocmd! [...]
   "Defines an autocommand!"
   (match (select "#" ...)
-    0 `(nvim.ex.autocmd_)
-    1 `(nvim.ex.autocmd_ ,(->str ...))
-    2 (let [(x y) ...] `(nvim.ex.autocmd_ ,(->str x) ,(->str y)))))
+    0 `(vim.cmd.autocmd {:bang true})
+    1 `(vim.cmd.autocmd {:bang true :args ,(->str ...)})
+    2 (let [(x y) ...] `(vim.cmd.autocmd {:bang true :args [,(->str x) ,(->str y)]}))))
 
 (fn autocmd [events pattern command]
   "Defines an autocommand"
-    `(nvim.ex.autocmd ,(->str events) ,(->str pattern) ,(vlua->fn? command)))
+  `(vim.cmd.autocmd {:args [,(->str events) ,(->str pattern) ,(vlua->fn? command)]}))
 
 (fn nmap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API"
@@ -160,7 +167,7 @@
         rhs (-> args last quoted->fn?)
         lhs (llast args)
         options (-> args ->opts-seq ->opts-tbl)]
-    `(nvim.keymap.set ,modes ,lhs ,rhs ,options)))
+    `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API
@@ -170,29 +177,30 @@
   `(nmap ,modes :noremap ,...))
 
 (fn hi [name colors]
-    `(nvim.ex.highlight 0 ,(->str name) ,colors))
+  `(vim.api.nvim_set_hl 0 ,(->str name) ,colors))
 
 (fn colorscheme [name]
   "Sets a vim colorscheme."
-  `(nvim.ex.colorscheme ,(->str name)))
+  `(vim.cmd.colorscheme ,(->str name)))
 
 (fn t [key]
   "Returns the string with termcodes replaced"
-  `(nvim.replace_termcodes ,(->str key) true true true))
+  `(vim.api.nvim_replace_termcodes ,(->str key) true true true))
 
 (fn feedkeys [key]
   "Sends input-keys to Nvim, subject to various quirks
   controlled by `mode` flags."
-  `(nvim.feedkeys ,(t key) :n true))
+  `(vim.api.nvim_feedkeys ,(t key) :n true))
 
 (fn has? [property]
   "Returns true if vim has a propety"
-  `(match (nvim.fn.has ,property)
+  `(match (vim.fn.has ,property)
      1 true
      0 false
      _# nil))
 
-{: opt
+{: contains?
+ : opt
  : opt-local
  : g
  : command

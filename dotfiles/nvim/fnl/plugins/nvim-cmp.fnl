@@ -31,8 +31,8 @@
 
 ;; Check backspace
 (defn- has-words-before? []
-  (let [col (- (nvim.fn.col ".") 1)
-        ln (nvim.fn.getline ".")]
+  (let [col (- (vim.fn.col ".") 1)
+        ln (vim.fn.getline ".")]
     (or (= col 0) (string.match (string.sub ln col col) "%s"))))
 
 ;; Supertab

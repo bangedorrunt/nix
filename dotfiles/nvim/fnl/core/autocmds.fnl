@@ -20,9 +20,9 @@
          (autocmd!)
          (autocmd "FocusGained,BufEnter,CursorHold,CursorHoldI" *
                   '(if (and
-                         (not= (nvim.fn.mode) "c")
-                         (= (nvim.fn.bufexists "[Command Line]") 0))
-                     (vim.api.nvim_command "checktime")))
+                         (not= (vim.fn.mode) "c")
+                         (= (vim.fn.bufexists "[Command Line]") 0))
+                     (vim.cmd "checktime")))
          (autocmd FileChangedShellPost * "echom 'File changed on disk. Buffer reloaded.'"))
 
 ;; Open file on last position
@@ -30,9 +30,9 @@
          (autocmd!)
          (autocmd BufReadPost *
                   '(if (and
-                         (> (nvim.fn.line "'\"") 1)
-                         (<= (nvim.fn.line "'\"") (nvim.fn.line "$")))
-                     (vim.api.nvim_command "normal! g'\""))))
+                         (> (vim.fn.line "'\"") 1)
+                         (<= (vim.fn.line "'\"") (vim.fn.line "$")))
+                     (vim.cmd "normal! g'\""))))
 
 ;; Disable spell in certain filetypes
 (augroup disable-spell-on-filetypes
