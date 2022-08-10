@@ -1,3 +1,11 @@
+(local {: for_each
+        : head
+        : map
+        : nth
+        :tomap ->tbl
+        :totable ->seq
+        :length count} (require :aniseed.deps.fun))
+
 (fn inc [n]
   "Increment n by 1."
   (+ n 1))
@@ -7,20 +15,16 @@
   (- n 1))
 
 (fn first [xs]
-  (when xs
-    (. xs 1)))
+  (head xs))
 
 (fn second [xs]
-  (when xs
-    (. xs 2)))
+  (nth 2 xs))
 
 (fn last [xs]
-  (when xs
-    (. xs (length xs))))
+  (nth (count xs) xs))
 
 (fn llast [xs]
-  (when xs
-    (. xs (dec (length xs)))))
+  (nth (dec (count xs)) xs))
 
 (fn nil? [x]
   "True if the value is equal to Lua `nil`."
@@ -28,19 +32,14 @@
 
 (fn contains? [xs target]
   (var seen? false)
-  (each [_ v (ipairs xs)]
-    (when (= v target)
-      (set seen? true)))
+  (for_each #(when (= $ target)
+               (set seen? true))
+            xs)
   seen?)
 
 (fn ->str [x]
   "Convert a symbol to a string"
   (tostring x))
-
-(fn str->seq [s]
-  "Convert an string into a sequence of characters."
-  (icollect [c (string.gmatch s ".")]
-    c))
 
 (fn fn? [x]
   "Checks if `x` is a function definition.
@@ -148,31 +147,19 @@
 
 (fn nmap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API"
-  (fn ->opts-seq [...]
-    "Returns a sequence following the structure of [:buffer :nowait]"
-    (let [args [...]]
-      ;; Remove rhs and options argument out of sequence
-      (icollect [_ v (ipairs [(unpack args 1 (- (length args) 2))])]
-        (->str v))))
-
-  (fn ->opts-tbl [xs]
-    "Returns a table following the structure of `{:key true}` from a sequence"
-    (collect [_ v (ipairs xs)]
-      (if (= :buffer v)
-        (values v 0)
-        (values v true))))
-
+  ;; TODO: figure out why I cant use outer function in macro
   (let [args [...]
-        modes (-> modes ->str str->seq)
+        modes (-> modes ->str ->seq)
         rhs (-> args last quoted->fn?)
         lhs (llast args)
-        options (-> args ->opts-seq ->opts-tbl)]
+        options (->> [(unpack args 1 (- (count args) 2))]
+                     (map ->str)
+                     (map #(values $ true))
+                     ->tbl)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API
-  If the `rhs` argument is a function then automatically includes the `:expr`
-  option.
   Automatically includes the `:noremap` option."
   `(nmap ,modes :noremap ,...))
 
