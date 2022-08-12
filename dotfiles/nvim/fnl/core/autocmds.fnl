@@ -22,7 +22,7 @@
                   '(if (and
                          (not= (vim.fn.mode) "c")
                          (= (vim.fn.bufexists "[Command Line]") 0))
-                     (vim.cmd "checktime")))
+                     (vim.cmd.checktime)))
          (autocmd FileChangedShellPost * "echom 'File changed on disk. Buffer reloaded.'"))
 
 ;; Open file on last position
@@ -32,7 +32,7 @@
                   '(if (and
                          (> (vim.fn.line "'\"") 1)
                          (<= (vim.fn.line "'\"") (vim.fn.line "$")))
-                     (vim.cmd "normal! g'\""))))
+                     (vim.cmd.normal {:args ["g'\""] :bang true}))))
 
 ;; Disable spell in certain filetypes
 (augroup disable-spell-on-filetypes

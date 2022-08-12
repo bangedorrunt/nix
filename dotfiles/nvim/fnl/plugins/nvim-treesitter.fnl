@@ -5,8 +5,8 @@
                            :clojure :commonlisp :fennel
                            :html :css
                            :javascript :typescript :tsx :svelte
+                           :rust :c :cpp
                            :toml :yaml :json :json5 :jsonc
-                           :c :cpp
                            :lua :vim :nix :python :norg]
         :highlight {:enable true
                     :use_languagetree true}

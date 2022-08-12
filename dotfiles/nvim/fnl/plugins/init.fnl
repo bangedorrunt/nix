@@ -61,14 +61,16 @@
   :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
                                     :mod :nvim-treesitter}
+  :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.*"}
-  :nvim-neorg/neorg {:after [:treesitter :telescope] :tag "*" :mod :neorg :ft [:norg]}
+  :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg :ft [:norg]}
   :Olical/conjure {:branch :develop
                    :mod :conjure
                    :ft [:clojure :fennel :hy]}
+  :simrat39/rust-tools.nvim {:after :treesitter}
   :mattn/emmet-vim {:mod :emmet
                     :ft [:css
                          :html
@@ -95,4 +97,4 @@
   :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
 
   ;;;; Tool plugins
-  :editorconfig/editorconfig-vim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]})
+  :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]})
