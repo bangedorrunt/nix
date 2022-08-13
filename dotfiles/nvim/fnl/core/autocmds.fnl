@@ -37,12 +37,12 @@
 ;; Disable spell in certain filetypes
 (augroup disable-spell-on-filetypes
          (autocmd!)
-         (autocmd FileType "help,packer" '(opt-local nospell)))
+         (autocmd FileType "help,packer" '(opt_local nospell)))
 
 ;; Disable colorcolumn in certain filetypes
 (augroup disable-colorcolumn-on-filetypes
          (autocmd!)
-         (autocmd FileType "help,packer,NvimTree,fern,fennel,clojure,lisp,markdown" '(opt-local colorcolumn [])))
+         (autocmd FileType "help,packer,NvimTree,fern,fennel,clojure,lisp,markdown" '(opt_local colorcolumn [])))
 
 ;; Remove highlight
 (augroup clear-hl-search
@@ -57,9 +57,9 @@
          (autocmd TermOpen * "startinsert")
          ;; disables line number on terminal buffers
          (autocmd TermOpen * '(do
-                                (opt-local nonumber)
-                                (opt-local norelativenumber)))
+                                (opt_local nonumber)
+                                (opt_local norelativenumber)))
          ;; disables spell on terminal buffers
-         (autocmd TermOpen * '(opt-local nospell))
+         (autocmd TermOpen * '(opt_local nospell))
          ;; disables sign column on terminal buffers
-         (autocmd TermOpen * '(opt-local signcolumn :no)))
+         (autocmd TermOpen * '(opt_local signcolumn :no)))

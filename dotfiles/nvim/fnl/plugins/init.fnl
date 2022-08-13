@@ -13,7 +13,7 @@
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons"}
 
   ;;;; UI plugins
-  :rose-pine/neovim {:colorscheme :rosepine :tag "v1.*"}
+  :rose-pine/neovim {:color :rosepine}
   :lukas-reineke/indent-blankline.nvim {:after :colorscheme :mod :indent-blankline}
   :akinsho/bufferline.nvim {:after :colorscheme :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :colorscheme :mod :lualine}
@@ -55,6 +55,7 @@
   :folke/trouble.nvim {:cmd :Trouble}
   :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
   :onsails/lspkind-nvim {:module_pattern "lspkind"}
+  :simrat39/rust-tools.nvim {}
   :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
   :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
   :williamboman/mason-lspconfig.nvim {:event :BufReadPre :mod :lsp}
@@ -67,18 +68,8 @@
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.*"}
   :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg :ft [:norg]}
-  :Olical/conjure {:branch :develop
-                   :mod :conjure
-                   :ft [:clojure :fennel :hy]}
-  :simrat39/rust-tools.nvim {:after :treesitter}
-  :mattn/emmet-vim {:mod :emmet
-                    :ft [:css
-                         :html
-                         :javascript
-                         :jsx
-                         :markdown
-                         :typescriptreact
-                         :xml]}
+  :babygau/aniseed-playground {:cmd :AniseedPlayground}
+  :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   ;; :github/copilot.vim {}
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}

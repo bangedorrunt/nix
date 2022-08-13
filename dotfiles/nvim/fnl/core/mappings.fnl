@@ -1,6 +1,5 @@
 (module core.mappings
-  {autoload {scratch plugins.scratch}
-   require-macros [core.macros]})
+  {require-macros [core.macros]})
 
 ;; DEFAULT MAP
 ;; -----------
@@ -133,6 +132,5 @@
 (noremap n :<Leader>w= :<C-w>=)
 (noremap n :<Leader>ws :<Cmd>sp<CR>)
 (noremap n :<Leader>wv :<Cmd>vsplit<CR>)
-
 ;; Open scratch
-(noremap n nowait silent :<Leader>ts "<Cmd>lua require('plugins.scratch').show()<CR>")
+(noremap n nowait silent :<Leader>ts :<Cmd>AniseedPlayground<CR>)

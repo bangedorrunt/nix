@@ -4,9 +4,9 @@
 
 (def- colors {:fg "#bbc2cf"
               ;; Dark mode
-              ;; :bg "#191724"
+              :bg "#191724"
               ;; Light Mode
-              :bg "#faf4ed"
+              ;; :bg "#faf4ed"
               :yellow "#ecbe7b"
               :cyan "#008080"
               :darkblue "#081633"

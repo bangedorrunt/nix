@@ -11,6 +11,8 @@
 
 (colorscheme rose-pine)
 
+(hi Error {:fg :None :bg :None})
+(hi ErrorMsg {:fg :None :bg :None})
 (hi NvimInternalError {:bg :None})
 (hi RedrawDebugClear {:fg "#eb6f92" :bg :None})
 (hi RedrawDebugComposed {:fg "#eb6f92" :bg :None})

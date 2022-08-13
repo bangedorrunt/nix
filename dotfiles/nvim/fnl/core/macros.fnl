@@ -1,3 +1,12 @@
+(local {: for_each
+        : head
+        : map
+        : nth
+        : reduce
+        :tomap totbl
+        :totable toseq
+        :length count} (require :aniseed.deps.fun))
+
 (fn inc [n]
   "Increment n by 1."
   (+ n 1))
@@ -7,40 +16,29 @@
   (- n 1))
 
 (fn first [xs]
-  (when xs
-    (. xs 1)))
+  (head xs))
 
 (fn second [xs]
-  (when xs
-    (. xs 2)))
+  (nth 2 xs))
 
 (fn last [xs]
-  (when xs
-    (. xs (length xs))))
+  (nth (count xs) xs))
 
 (fn llast [xs]
-  (when xs
-    (. xs (dec (length xs)))))
+  (nth (dec (count xs)) xs))
 
 (fn nil? [x]
   "True if the value is equal to Lua `nil`."
   (= nil x))
 
-(fn contains? [xs target]
-  (var seen? false)
-  (each [_ v (ipairs xs)]
-    (when (= v target)
-      (set seen? true)))
-  seen?)
+(fn str? [x]
+  (= :string (type x)))
 
-(fn ->str [x]
-  "Convert a symbol to a string"
-  (tostring x))
+(fn num? [x]
+  (= :number (type x)))
 
-(fn str->seq [s]
-  "Convert an string into a sequence of characters."
-  (icollect [c (string.gmatch s ".")]
-    c))
+(fn bool? [x]
+  (= :boolean (type x)))
 
 (fn fn? [x]
   "Checks if `x` is a function definition.
@@ -51,6 +49,9 @@
            (= 'lambda (first x))
            (= 'partial (first x)))))
 
+(fn tbl? [x]
+  (= :table (type x)))
+
 (fn quoted? [x]
   "Check if `x` is a list that begins with `quote`."
   (and (list? x)
@@ -58,6 +59,7 @@
 
 (fn quoted->fn [expr]
   "Converts an expression like `(quote (+ 1 1))` into `(fn [] (+ 1 1))`."
+  (assert-compile (quoted? expr) "expected quoted expression for expr" expr)
   (let [non-quoted (second expr)]
     `(fn [] ,non-quoted)))
 
@@ -73,8 +75,8 @@
   and inserts value into _G. Returns unique name."
   (let [inter-compile-uid (os.date "%s")
         name (if prefix?
-               (.. (->str (gensym prefix?)) inter-compile-uid)
-               (.. (->str (gensym :pug)) inter-compile-uid))]
+               (.. (tostring (gensym prefix?)) inter-compile-uid)
+               (.. (tostring (gensym :pug)) inter-compile-uid))]
     `(do
        (tset _G ,name ,val)
        ,name)))
@@ -94,15 +96,18 @@
 (fn command [...]
   "Define command"
   (match (select "#" ...)
-    2 (let [(name expr) ...] `(vim.api.nvim_create_user_command ,(->str name) ,(quoted->fn? expr) {}))
-    3 (let [(name _ expr) ...] `(vim.api.nvim_buf_create_user_command 0 ,(->str name) ,(quoted->fn? expr) {}))))
+    1 (error "expected 2 or 3 arguments")
+    2 (let [(name expr) ...] `(vim.api.nvim_create_user_command ,(tostring name) ,(quoted->fn? expr) {}))
+    3 (let [(name _ expr) ...] `(vim.api.nvim_buf_create_user_command 0 ,(tostring name) ,(quoted->fn? expr) {}))
+    _ (error "expected 2 or 3 arguments only")))
 
 (fn opt [name ?value]
   "Set one vim.options using the `vim.opt` API
   The option name must be a symbol
   If the option doesn't have a corresponding value, if it begins with no the
   value becomes false, and if it doesn't it becomes true"
-  (let [name (->str name)
+  (assert-compile (or (sym? name) (str? name)) "expected symbol for name" name)
+  (let [name (tostring name)
         value (if (nil? ?value) (not (name:match :^no)) ?value)
         name (if (nil? ?value) (or (name:match "^no(.*)$") name) name)]
     (match (name:sub -1)
@@ -111,9 +116,10 @@
       "^" `(: (. vim.opt ,(name:sub 1 -2)) :prepend ,value)
       _ `(tset vim.opt ,name ,value))))
 
-(fn opt-local [name ?value]
+(fn opt_local [name ?value]
   "Set a local vim.option using the `vim.opt_local` API"
-  (let [name (->str name)
+  (assert-compile (or (sym? name) (str? name)) "expected symbol for name" name)
+  (let [name (tostring name)
         value (if (nil? ?value) (not (name:match :^no)) ?value)
         name (if (nil? ?value) (or (name:match "^no(.*)$") name) name)]
     (match (name:sub -1)
@@ -124,13 +130,15 @@
 
 (fn g [name value]
   "Set value for global Vim variable"
-  (let [name (->str name)]
+  (assert-compile (or (sym? name) (str? name)) "expected symbol for name" name)
+  (let [name (tostring name)]
     `(tset vim.g ,name ,value)))
 
 (fn augroup [name ...]
   "Defines an autocommand group"
+  (assert-compile (or (sym? name) (str? name)) "expected symbol for name" name)
   `(do
-     (vim.cmd.augroup ,(->str name))
+     (vim.cmd.augroup ,(tostring name))
      (do
        ,...)
      (vim.cmd.augroup "END")))
@@ -139,53 +147,51 @@
   "Defines an autocommand!"
   (match (select "#" ...)
     0 `(vim.cmd.autocmd {:bang true})
-    1 `(vim.cmd.autocmd {:bang true :args ,(->str ...)})
-    2 (let [(x y) ...] `(vim.cmd.autocmd {:bang true :args [,(->str x) ,(->str y)]}))))
+    1 `(vim.cmd.autocmd {:bang true :args ,(tostring ...)})
+    2 (let [(x y) ...] `(vim.cmd.autocmd {:bang true :args [,(tostring x) ,(tostring y)]}))))
 
 (fn autocmd [events pattern command]
   "Defines an autocommand"
-  `(vim.cmd.autocmd {:args [,(->str events) ,(->str pattern) ,(vlua->fn? command)]}))
+  (assert-compile (or (sym? events) (str? events)) "expected symbol or string for events" events)
+  (assert-compile (or (sym? pattern) (str? pattern)) "expected symbol or string for pattern" pattern)
+  (assert-compile (or (sym? command) (str? command) (fn? command) (quoted? command))
+                  "expected string, symbol, function or quoted expression for command" command)
+  `(vim.cmd.autocmd {:args [,(tostring events) ,(tostring pattern) ,(vlua->fn? command)]}))
 
 (fn nmap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API"
-  (fn ->opts-seq [...]
-    "Returns a sequence following the structure of [:buffer :nowait]"
-    (let [args [...]]
-      ;; Remove rhs and options argument out of sequence
-      (icollect [_ v (ipairs [(unpack args 1 (- (length args) 2))])]
-        (->str v))))
-
-  (fn ->opts-tbl [xs]
-    "Returns a table following the structure of `{:key true}` from a sequence"
-    (collect [_ v (ipairs xs)]
-      (if (= :buffer v)
-        (values v 0)
-        (values v true))))
-
+  ;; TODO: figure out why I cant use outer function in macro
+  (assert-compile (sym? modes) "expected symbol for modes" modes)
   (let [args [...]
-        modes (-> modes ->str str->seq)
+        modes (-> modes tostring toseq)
         rhs (-> args last quoted->fn?)
         lhs (llast args)
-        options (-> args ->opts-seq ->opts-tbl)]
+        options (->> [(unpack args 1 (- (count args) 2))]
+                     (map tostring)
+                     (map #(values $ true))
+                     totbl)]
+    (assert-compile (or (str? rhs) (sym? rhs) (fn? rhs) (quoted? rhs)) "expected string, symbol, function or quoted expression for rhs" rhs)
+    (assert-compile (or (sym? lhs) (str? lhs)) "expected symbol or string for lhs" lhs)
+    (assert-compile (or (nil? options) (tbl? options)) "expected table for options" options)
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API
-  If the `rhs` argument is a function then automatically includes the `:expr`
-  option.
   Automatically includes the `:noremap` option."
   `(nmap ,modes :noremap ,...))
 
 (fn hi [name colors]
-  `(vim.api.nvim_set_hl 0 ,(->str name) ,colors))
+  (assert-compile (or (sym? name) (str? name)) "expected symbol for name" name)
+  `(vim.api.nvim_set_hl 0 ,(tostring name) ,colors))
 
 (fn colorscheme [name]
   "Sets a vim colorscheme."
-  `(vim.cmd.colorscheme ,(->str name)))
+  (assert-compile (or (sym? name) (str? name)) "expected symbol for name" name)
+  `(vim.cmd.colorscheme ,(tostring name)))
 
 (fn t [key]
   "Returns the string with termcodes replaced"
-  `(vim.api.nvim_replace_termcodes ,(->str key) true true true))
+  `(vim.api.nvim_replace_termcodes ,(tostring key) true true true))
 
 (fn feedkeys [key]
   "Sends input-keys to Nvim, subject to various quirks
@@ -194,14 +200,14 @@
 
 (fn has? [property]
   "Returns true if vim has a propety"
+  (assert-compile (or (sym? property) (str? property)) "expected symbol or string for property" property)
   `(match (vim.fn.has ,property)
      1 true
      0 false
      _# nil))
 
-{: contains?
- : opt
- : opt-local
+{: opt
+ : opt_local
  : g
  : command
  : autocmd

@@ -37,4 +37,4 @@
                              :goto_previous_end {"[M" "@function.outer"
                                                  "[]" "@class.outer"}}}
         :context_commentstring {:enable true
-                                :enable_autocmd false}})
+                                :config {:fennel ";; %s"}}})
