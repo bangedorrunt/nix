@@ -1,5 +1,6 @@
 (module core.packer
-  {autoload {{: count : assoc} core.fun
+  {autoload {{: count
+              : assoc} core.funs
              : packer}
    require-macros [core.macros]})
 
@@ -51,6 +52,7 @@
                                (use (assoc opts 1 name))))))
                      :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
                               :git {:clone_timeout 180 :depth 1}
+                              ;; TODO:
                               ;; Temporarily disable this due to
                               ;; https://github.com/wbthomason/packer.nvim/issues/751
                               ;; :max_jobs 60

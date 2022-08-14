@@ -19,7 +19,6 @@
                       :buffer :Buffer
                       :calc :Calc
                       :path :Path})
-
 (def- cmp_srcs [{:name :nvim_lsp}
                 {:name :conjure}
                 {:name :luasnip}

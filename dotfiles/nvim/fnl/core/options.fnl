@@ -2,7 +2,7 @@
   {require-macros [core.macros]})
 
 ;;;; RENDERING
-;; (opt background :light)
+(opt background :light)
 
 (if (has? :termguicolors)
     (do

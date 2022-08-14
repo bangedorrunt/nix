@@ -1,13 +1,11 @@
 (module plugins.telescope
-  {autoload {{: run! : merge} core.fun
+  {autoload {{: run! : merge} core.funs
              {: setup : load_extension} telescope
              {: get_os_command_output} telescope.utils
              {: close} telescope.actions
              builtin telescope.builtin}
    require-macros [core.macros]})
 
-
-;; TODO: move telescope settings to global table `tdt.plugins.telescope`
 (setup {:defaults {:cache_picker {:num_pickers 20}
                    :prompt_prefix "❯ "
                    :selection_caret "❯ "
@@ -31,7 +29,7 @@
 
 ;; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
 (defn- custom_opts [opts]
-  (->> {:disable_devicons true} (merge (or opts {}))))
+  (->> {:disable_devicons false} (merge (or opts {}))))
 
 (defn- builtin? [_ key]
   (if-let [picker (. builtin key)]

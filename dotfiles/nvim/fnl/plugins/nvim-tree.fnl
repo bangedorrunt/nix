@@ -13,7 +13,7 @@
         :renderer {:icons {:show {:git false
                                   :folder true
                                   :folder_arrow false
-                                  :file false}}}}
+                                  :file true}}}}
         :view {:width 30 :side :left})
 
 (on_nvim_tree_ready #(vim.cmd :NvimTreeRefresh))

@@ -1,13 +1,13 @@
 
 ;; fnlfmt: skip
 (module plugins.lsp
-  {autoload {{: contains?} core.fun
+  {autoload {{: contains?} core.funs
              : lspconfig
              : mason
              mason_lspconfig mason-lspconfig
              rust_tools rust-tools
              null_ls null-ls
-             null_ls_builtins null-ls.builtins
+             {: formatting : diagnostics} null-ls.builtins
              telescope_builtin telescope.builtin}
    require-macros [core.macros]})
 
@@ -131,25 +131,26 @@
 
 (mason.setup)
 (mason_lspconfig.setup {:ensure_installed servers})
-(mason_lspconfig.setup_handlers {1 (fn [server]
-                                     (let [lsp_installed_server (. lspconfig
-                                                                   server)]
-                                       (-> {:on_attach enhanced_attach
-                                            : capabilities}
-                                           (lsp_installed_server.setup))))
-                                 :rust_analyzer #(rust_tools.setup)})
+(mason_lspconfig.setup_handlers
+  {1 (fn [server]
+       (let [lsp_installed_server (. lspconfig
+                                     server)]
+         (-> {:on_attach enhanced_attach
+              : capabilities}
+             (lsp_installed_server.setup))))
+   :rust_analyzer #(rust_tools.setup)})
 
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
 ;; make sure respective sources are installed
 (def- null_sources
-      [null_ls_builtins.formatting.prettier
-       null_ls_builtins.formatting.stylua
-       ;; null_ls_builtins.formatting.fnlfmt
-       null_ls_builtins.formatting.trim_whitespace
-       null_ls_builtins.formatting.shfmt
-       (null_ls_builtins.diagnostics.shellcheck.with {:filetypes [:zsh
-                                                                  :sh
-                                                                  :bash]})])
+      [formatting.prettier
+       formatting.stylua
+       ;; formatting.fnlfmt
+       formatting.trim_whitespace
+       formatting.shfmt
+       (diagnostics.shellcheck.with {:filetypes [:zsh
+                                                 :sh
+                                                 :bash]})])
 
 (-> {:on_attach enhanced_attach :sources null_sources}
     null_ls.setup)

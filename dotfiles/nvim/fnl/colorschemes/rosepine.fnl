@@ -7,7 +7,8 @@
         :dim_nc_background false
         :disable_background false
         :disable_float_background false
-        :disable_italics false})
+        :disable_italics false
+        :groups {:background "#fff0ec"}})
 
 (colorscheme rose-pine)
 
@@ -18,6 +19,8 @@
 (hi RedrawDebugComposed {:fg "#eb6f92" :bg :None})
 (hi RedrawDebugNormal {:fg "#eb6f92" :bg :None})
 (hi RedrawDebugRecompose {:fg "#eb6f92" :bg :None})
+
+(hi CursorLine {:bg :None})
 
 (hi CmpItemAbbr {:fg "#c0caf5"})
 (hi CmpItemMenu {:fg "#db4b4b"})

@@ -1,13 +1,30 @@
 (module plugins.nvim-treesitter
-  {autoload {{: setup} nvim-treesitter.configs}})
+  {autoload {{: setup} nvim-treesitter.configs
+             parser nvim-treesitter.parsers}})
 
-(setup {:ensure_installed [:bash :comment
-                           :clojure :commonlisp :fennel
-                           :html :css
-                           :javascript :typescript :tsx :svelte
-                           :rust :c :cpp
-                           :toml :yaml :json :json5 :jsonc
-                           :lua :vim :nix :python :norg]
+(let [parser_config (parser.get_parser_configs)]
+  (set parser_config.norg_meta
+       {:install_info
+        {:url "https://github.com/nvim-neorg/tree-sitter-norg-meta"
+         :files [:src/parser.c]
+         :branch :main}})
+  (set parser_config.norg_table
+       {:install_info
+        {:url "https://github.com/nvim-neorg/tree-sitter-norg-table"
+         :files [:src/parser.c]
+         :branch :main}}))
+
+(def- languages
+  [:bash :comment
+   :clojure :commonlisp :fennel
+   :html :css
+   :javascript :typescript :tsx :svelte
+   :rust :c :cpp
+   :toml :yaml :json :json5 :jsonc
+   :lua :vim :nix :python
+   :markdown :norg :norg_meta :norg_table])
+
+(setup {:ensure_installed languages
         :highlight {:enable true
                     :use_languagetree true}
         :indent {:enable true}

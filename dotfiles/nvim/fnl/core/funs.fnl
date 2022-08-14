@@ -1,10 +1,19 @@
-(module core.fun
-  {autoload {{:length length_
+(module core.funs
+  {autoload {{:operator {: add : sub}
+              :length length_
               : for_each
-              : reduce} aniseed.deps.fun}})
+              : foldl} aniseed.deps.fun}})
 
 
 (def count length_)
+
+(defn inc [n]
+  "Increment n by 1."
+  (add n 1))
+
+(defn dec [n]
+  "Decrement n by 1."
+  (sub n 1))
 
 (defn contains? [xs target]
   (var seen? false)
@@ -12,6 +21,10 @@
                (set seen? true))
             xs)
   seen?)
+
+(def reduce foldl)
+
+(def map map)
 
 (defn run! [f xs]
   "Calls `f` on each item in iterable."
