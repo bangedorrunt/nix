@@ -1,5 +1,5 @@
 (module core.packer
-  {autoload {{: count : assoc} core.funs
+  {autoload {{: count : inc : assoc} core.funs
              : packer}})
 
 (defn- plugin_config [name]
@@ -32,7 +32,7 @@
     (packer.startup {1 (fn [use use-rocks]
                          (for [i 1 (count pkgs) 2]
                            (let [name (. pkgs i)
-                                 opts (. pkgs (+ i 1))]
+                                 opts (. pkgs (inc i))]
                              (if (. opts :rock)
                                (use-rocks name)
                                (. opts :color)

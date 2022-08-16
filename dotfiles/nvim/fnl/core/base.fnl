@@ -19,12 +19,12 @@
                :hint " "
                :information " "
                :prompt "❯"}
-       :pallete {:dark {:tokyonight "#1a1b26"
-                        :monokaipro_spectrum "#222222"
-                        :rose-pine "#191724"}
-                 :light {:tokyonight "#e1e2e7"
-                         :gruvbox "#fbf1c7"
-                         :rose-pine "#faf4ed"}}
+       :pallete {:dark {:tokyonight :#1a1b26
+                        :monokaipro_spectrum :#222222
+                        :rose-pine :#191724}
+                 :light {:tokyonight :#e1e2e7
+                         :gruvbox :#fbf1c7
+                         :rose-pine :#faf4ed}}
        :paths {:IS_MAC (= os-name :Darwin)
                :IS_LINUX (= os-name :Linux)
                :IS_WINDOWS (= os-name :Windows)
