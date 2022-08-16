@@ -1,4 +1,5 @@
-(local {: for_each
+(local {:operator {: add : sub}
+        : for_each
         : head
         : map
         : nth
@@ -9,11 +10,11 @@
 
 (fn inc [n]
   "Increment n by 1."
-  (+ n 1))
+  (add n 1))
 
 (fn dec [n]
   "Decrement n by 1."
-  (- n 1))
+  (sub n 1))
 
 (fn first [xs]
   (head xs))
@@ -67,7 +68,7 @@
   (if (quoted? expr) (quoted->fn expr) expr))
 
 ;;;; Macros Declaration
-;; NOTE: https://github.com/rktjmp/hotpot.nvim/discussions/6
+;; SEE: https://github.com/rktjmp/hotpot.nvim/discussions/6
 (fn pug [val prefix?]
   "Put Unique Global
   (val :any prefix? :string) -> (uuid :string)
@@ -86,7 +87,7 @@
   `(.. "v:lua." ,(pug what prefix?) "()"))
 
 (fn vlua->fn? [expr]
-  ;; WARNING: only use with anonymous function
+  ;; NOTE: only use with anonymous function
   "Evaluate expr
   If expr is a function, wrap expr with `vlua`"
   (if (quoted? expr)
@@ -143,6 +144,7 @@
        ,...)
      (vim.cmd.augroup "END")))
 
+;; TODO: use new API but remain the same syntax
 (fn autocmd! [...]
   "Defines an autocommand!"
   (match (select "#" ...)
@@ -191,11 +193,13 @@
 
 (fn t [key]
   "Returns the string with termcodes replaced"
+  (assert-compile (or (sym? key) (str? key)) "expected symbol for key" key)
   `(vim.api.nvim_replace_termcodes ,(tostring key) true true true))
 
 (fn feedkeys [key]
   "Sends input-keys to Nvim, subject to various quirks
   controlled by `mode` flags."
+  (assert-compile (or (sym? key) (str? key)) "expected symbol for key" key)
   `(vim.api.nvim_feedkeys ,(t key) :n true))
 
 (fn has? [property]

@@ -1,10 +1,7 @@
 (module core.packer
-  {autoload {{: count
-              : assoc} core.funs
-             : packer}
-   require-macros [core.macros]})
+  {autoload {{: count : assoc} core.funs
+             : packer}})
 
-;; fnlfmt: skip
 (defn- plugin_config [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup
@@ -12,14 +9,12 @@
   before requiring."
   (.. "require('plugins." name "')"))
 
-;; fnlfmt: skip
 (defn- plugin_init [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup
   configuration options."
   (.. "require('" name "').setup {}"))
 
-;; fnlfmt: skip
 (defn- color_init [name]
   "A shortcut to building a require string for your colorscheme
   configuration. Intended for use with packer's config or setup

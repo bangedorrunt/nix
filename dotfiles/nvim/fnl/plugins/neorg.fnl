@@ -8,10 +8,7 @@
           :core.norg.esupports.metagen {:config {:type :auto}}
           :core.norg.completion {:config {:engine :nvim-cmp}}
           :core.norg.dirman {:config {:workspaces {:learnyousome "~/workspace/notetoself/learn-you-some"
-                                                   :gtd "~/workspace/notetoself/gtd"}
-                                      :exclude ["learn-you-some/english.norg"]
-                                      :autodetect true
-                                      :autochdir true}}
+                                                   :gtd "~/workspace/notetoself/gtd"}}}
           :core.gtd.base {:config {:workspace :gtd}}
           :core.integrations.telescope {}}})
 

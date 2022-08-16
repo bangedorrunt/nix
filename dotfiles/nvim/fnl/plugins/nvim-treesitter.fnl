@@ -54,4 +54,5 @@
                              :goto_previous_end {"[M" "@function.outer"
                                                  "[]" "@class.outer"}}}
         :context_commentstring {:enable true
-                                :config {:fennel ";; %s"}}})
+                                :config {:fennel ";; %s"
+                                         :clojure ";; %s"}}})
