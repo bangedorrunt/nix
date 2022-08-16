@@ -1,11 +1,16 @@
 {:profiles
- {:babygau {:default true :sim 50 :delay 500 :alone 180 :held 200}}
+ {:babygau {;; NOTE: `:delay` and `:held` should be equal for `Mod-Tap`
+            :default true
+            :sim 50
+            :delay 145
+            :held 145
+            :alone 140}}
  ;; Create alias key for `:to`
  :tos {:hyper {:key :left_control :modi {:mandatory [:left_command :left_shift :left_option]}}
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
 
  :templates {:launch "osascript -e 'tell application \"%s\" to activate'"
-             :debug "osascript -e 'display notification \"%s\" with title \"Debug!\"'"}
+             :notify "osascript -e 'display notification \"%s\" with title \"Debug!\"'"}
  :layers {}
  :simlayers {}
  ;; Main contains multiple manipulators
@@ -17,18 +22,40 @@
                  [:!!k :up_arrow]
                  [:!!h :left_arrow]
                  [:!!l :right_arrow]]}
-        {:des "FuckerDuper Layout"
-         :rules [[[:f :d] ["fucker-duper-layout" 1] nil {:afterup ["fucker-duper-layout" 0]}]
-                 :fucker-duper-layout
-                 ;;;; Vim-like keybindings
-                 [:j :down_arrow]
-                 [:k :up_arrow]
-                 [:h :left_arrow]
-                 [:l :right_arrow]]}
-        {:des "SuperDuper Layout"
-         :rules [[[:s :d] ["super-duper-layout" 1] nil {:afterup ["super-duper-layout" 0]}]
-                 :super-duper-layout
+        {:des "Mod-Tap Layout"
+         ;; NOTE: When adding a new layer, if you want it to be able to cross with an old one,
+         ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
+         :rules [;; s-mode init
+                 [:s nil [:!d-mode :!f-mode :!g-mode]
+                  {:alone {:key :s :halt true}
+                   :delayed {:canceled {:key :s}}
+                   :held {:set ["s-mode" 1] :repeat false}
+                   :afterup {:set ["s-mode" 0]}}]
+                 ;; d-mode init
+                 [:d nil [:!s-mode :!f-mode :!g-mode]
+                  {:alone {:key :d :halt true}
+                   :delayed {:canceled {:key :d}}
+                   :held {:set ["d-mode" 1] :repeat false}
+                   :afterup {:set ["d-mode" 0]}}]
+                 ;; f-mode init
+                 [:f nil [:!s-mode :!d-mode :!g-mode]
+                  {:alone {:key :f :halt true}
+                   :delayed {:canceled {:key :f}}
+                   :held {:set ["f-mode" 1] :repeat false}
+                   :afterup {:set ["f-mode" 0]}}]
+                 ;; g-mode init
+                 [:g nil [:!s-mode :!d-mode :!f-mode]
+                  {:alone {:key :g :halt true}
+                   :delayed {:canceled {:key :g}}
+                   :held {:set ["g-mode" 1] :repeat false}
+                   :afterup {:set ["g-mode" 0]}}]
+
+                 ;; Reserved
+                 ;; :s-mode
+                 ;; :g-mode
+
                  ;;;; Amethyst keybindings
+                 :d-mode
                  ;; Cycle layouts
                  [:spacebar :!SOspacebar]
                  ;; Shrink and expand main pain
@@ -46,7 +73,14 @@
                  [:z :!SOz]
                  ;; Throw focused window to space left or right
                  [:!Tn :!SOTright_arrow]
-                 [:!Tp :!SOTleft_arrow]]}
+                 [:!Tp :!SOTleft_arrow]
+                 ;;;; Vim-like keybindings
+                 :f-mode
+                 [:j :down_arrow]
+                 [:k :up_arrow]
+                 [:h :left_arrow]
+                 [:l :right_arrow]]}
+
         {:des "Windows-like Shortcuts"
          ;; Copy/Paste/Undo/Redo
          :rules [:!Terminals
@@ -55,17 +89,27 @@
                  [:!Tv :!Cv]
                  [:!Tu :!Cz]
                  [:!Tr :!CSz]]}
+
         {:des "Remap <C-t> to <C-`> for iTerm"
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
+
         {:des "Remap `a` and `semicolon` to `ctrl` key"
-         :rules [[:a {:key :left_control :lazy :true} nil {:alone :a}]
-                 [:semicolon {:key :left_control :lazy :true} nil {:alone :semicolon}]]}
+         :rules [[:a nil [:!s-mode :!d-mode :!f-mode :!g-mode]
+                  {:alone {:key :a :halt true}
+                   :delayed {:canceled {:key :a}}
+                   :held {:key :left_control :lazy :true}}]
+                 [:semicolon nil [:!s-mode :!d-mode :!f-mode :!g-mode]
+                  {:alone {:key :semicolon :halt true}
+                   :delayed {:canceled {:key :semicolon}}
+                   :held {:key :left_control :lazy :true}}]]}
+
         {:des "Double tap `left_shift` key to enable capslock"
          :rules [[:##left_shift [:caps_lock ["caps-lock-on" 0]] ["caps-lock-on" 1]]
                  [:##left_shift
                   [["caps-lock-on" 1] :left_shift]
                   ["caps-lock-on" 0]
                   {:delayed {:invoked ["caps-lock-on" 0] :canceled ["caps-lock-on" 0]} :params {:delay 300}}]]}
+
         {:des "Double tap `right_shift` key to switch input setting"
          :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
@@ -96,5 +140,33 @@
  :devices {:keychron [{:vendor_id 1452 :product_id 591}]}
  :input-sources {:us {:input_mode_id ""
                       :input_source_id "com.apple.keylayout.ABC"
-                      :language "en"}}
- :simlayer-threshold 50}
+                      :language "en"}}}
+
+;; UNUSED LAYOUT
+;; NOTE: reserve for future reference only
+;; {:des "FuckerDuper Layout"
+;;  :rules [[[:f :d] ["fucker-duper-layout" 1] nil {:afterup ["fucker-duper-layout" 0]}]
+;;          :fucker-duper-layout
+;;          ;;;; Vim-like keybindings
+;;          [:j :down_arrow]
+;;          [:k :up_arrow]
+;;          [:h :left_arrow]
+;;          [:l :right_arrow]]}
+
+;; {:des "Mod-Tap Layout"
+;;  ;; When adding a new layer, if you want it to be able to cross with an old one,
+;;  ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
+;;  :rules [;; f-mode init
+;;          [:f nil [:!s-mode :!d-mode :!g-mode]
+;;           {:alone {:key :f :halt true}
+;;            :delayed {:canceled {:key :f}}
+;;            :held {:set ["f-mode" 1] :repeat false}
+;;            :afterup {:set ["f-mode" 0]}}
+;;            ;; We can define ms delays here
+;;            ; :params {:alone 140 :held 145 :delay 145}
+;;            ;;;; Vim-like keybindings
+;;            :f-mode
+;;            [:j :down_arrow]
+;;            [:k :up_arrow]
+;;            [:h :left_arrow]
+;;            [:l :right_arrow]]]}
