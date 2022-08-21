@@ -6,7 +6,7 @@ _G.__nvim_global_callbacks = __nvim_global_callbacks or {}
 _G.tdt = { _store = __tdt_global_callbacks }
 _G.nvim = { _store = __nvim_global_callbacks }
 
-require 'impatient'
+-- require 'impatient'
 
 require('hotpot').setup {
   provide_require_fennel = true,

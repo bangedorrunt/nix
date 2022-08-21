@@ -63,8 +63,8 @@
 
 ;; Cmdline completions
 (setup.cmdline "/" {:mapping (mapping.preset.cmdline)
-               :sources (config.sources [{:name :buffer}])})
+               :sources [{:name :buffer}]})
 (setup.cmdline ":" {:mapping (mapping.preset.cmdline)
                :sources (config.sources
-                          [{:name :path}
-                           {:name :cmdline}])})
+                          [{:name :path}]
+                          [{:name :cmdline}])})

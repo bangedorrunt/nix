@@ -4,7 +4,7 @@
 ;; NOTE: lua use % as escape in pattern
 (use
   ;;;; Dependencies
-  :lewis6991/impatient.nvim {}
+  ;; :lewis6991/impatient.nvim {}
   :wbthomason/packer.nvim {:opt true}
   ;; :Olical/aniseed {:branch :develop}
   :rktjmp/hotpot.nvim {:branch :nightly}
@@ -72,7 +72,7 @@
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
-  :hrsh7th/nvim-cmp {:commit :706371f1300e7c0acb98b346f80dad2dd9b5f679
+  :hrsh7th/nvim-cmp {;; :commit :706371f1300e7c0acb98b346f80dad2dd9b5f679
                      :event :BufRead
                      :module_pattern "cmp.*"
                      :mod :nvim-cmp}
