@@ -69,10 +69,6 @@
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter] :as :ts-context}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.modules.*"}
   :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg :ft [:norg]}
-<<<<<<< HEAD
-  ;; :babygau/aniseed-playground {:cmd :AniseedPlayground}
-=======
->>>>>>> 508d14b (Neovim(feat): make transition to `hotpot`)
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
