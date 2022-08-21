@@ -1,5 +1,5 @@
 (module core.packer
-  {autoload {{: count : inc : assoc} core.funs
+  {autoload {{: count : inc : into} core.funs
              : packer}})
 
 (defn- plugin_config [name]
@@ -36,19 +36,18 @@
                              (if (. opts :rock)
                                (use-rocks name)
                                (. opts :color)
-                               (use (assoc opts 1 name
-                                           :event :VimEnter
-                                           :as :colorscheme
-                                           :config (color_init (. opts :color))))
+                               (use (into opts 1 name
+                                          :event :VimEnter
+                                          :as :colorscheme
+                                          :config (color_init (. opts :color))))
                                (. opts :mod)
-                               (use (assoc opts 1 name :config (plugin_config (. opts :mod))))
+                               (use (into opts 1 name :config (plugin_config (. opts :mod))))
                                (. opts :init)
-                               (use (assoc opts 1 name :config (plugin_init (. opts :init))))
-                               (use (assoc opts 1 name))))))
+                               (use (into opts 1 name :config (plugin_init (. opts :init))))
+                               (use (into opts 1 name))))))
                      :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
                               :git {:clone_timeout 180 :depth 1}
-                              ;; TODO:
-                              ;; Temporarily disable this due to
+                              ;; FIXME: Temporarily disable this due to
                               ;; https://github.com/wbthomason/packer.nvim/issues/751
                               ;; :max_jobs 60
                               :profile {:enable true :threshold 0}}})))

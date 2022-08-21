@@ -1,11 +1,16 @@
 (module core.funs
   {autoload {{:operator {: add : sub}
-              :length length_
+              :length count
+              :tomap totable
+              :totable tosequence
+              : any : every
               : for_each
-              : foldl} aniseed.deps.fun}})
+              : head : nth
+              : map : reduce
+              : filter : chain} aniseed.deps.fun
+             view aniseed.view}})
 
-
-(def count length_)
+(def count count)
 
 (defn inc [n]
   "Increment n by 1."
@@ -15,16 +20,69 @@
   "Decrement n by 1."
   (sub n 1))
 
-(defn contains? [xs target]
-  (var seen? false)
-  (for_each #(when (= $ target)
-               (set seen? true))
-            xs)
-  seen?)
+(defn second [xs]
+  (nth 2 xs))
 
-(def reduce foldl)
+(defn last [xs]
+  (nth (count xs) xs))
 
-(def map map)
+(defn llast [xs]
+  (nth (dec (count xs)) xs))
+
+(defn empty? [xs]
+  (= 0 (count xs)))
+
+(def any? any)
+
+(def every? every)
+
+(defn has? [xs v]
+  (any? (fn [x] (= x v)) xs))
+
+(defn nil? [x]
+  "True if the value is equal to Lua `nil`."
+  (= nil x))
+
+(defn number? [x]
+  "True if the value is of type 'number'."
+  (= "number" (type x)))
+
+(defn boolean? [x]
+  "True if the value is of type 'boolean'."
+  (= "boolean" (type x)))
+
+(defn string? [x]
+  "True if the value is of type 'string'."
+  (= "string" (type x)))
+
+(defn table? [x]
+  "True if the value is of type 'table'."
+  (= "table" (type x)))
+
+(defn keys [t]
+  "Get all keys of a table."
+  (let [result []]
+    (when t
+      (for_each (fn [k _] (table.insert result k)) t))
+    result))
+
+(defn vals [t]
+  "Get all values of a table."
+  (let [result []]
+    (when t
+      (for_each (fn [_ v] (table.insert result v)) t))
+    result))
+
+(defn kv_pairs [t]
+  "Get all values of a table."
+  (let [result []]
+    (when t
+      (for_each (fn [k v] (table.insert result [k v])) t))
+    result))
+
+(defn map_indexed [f xs]
+  "Map xs to a new sequential table by calling (f [k v]) on each item. "
+  (map f (kv_pairs xs)))
 
 (defn run! [f xs]
   "Calls `f` on each item in iterable."
@@ -33,18 +91,133 @@
     nil
     xs))
 
-(defn merge [...]
+(defn merge [base ...]
   (reduce
-    (fn [acc v]
-      (for_each #(tset acc $1 $2) v)
+    (fn [acc x]
+      (for_each (fn [k v] (tset acc k v)) x)
       acc)
-    {}
+    (or base {})
     [...]))
 
-(defn assoc [tbl ...]
+(defn into [tbl ...]
   "Adds any number of key/value pairs to `tbl`, returning `tbl`. Like [[tset]]
   but for multiple pairs."
   (for [i 1 (select "#" ...) 2]
     (let [(k v) (select i ...)]
       (tset tbl k v)))
   tbl)
+
+(defn concat [...]
+  "Concatenates the sequential table arguments together."
+  (let [result []]
+    (run! (fn [xs]
+            (run!
+              (fn [x]
+                (table.insert result x))
+              xs))
+          [...])
+    result))
+
+(defn mapcat [f xs]
+  (concat (unpack (map f xs))))
+
+(defn pr_str [...]
+  (let [s (table.concat
+            (map (fn [x]
+                   (view.serialise x {:one-line true}))
+                 [...])
+            " ")]
+    (if (or (nil? s) (= "" s))
+      "nil"
+      s)))
+
+(defn str [...]
+  (->> [...]
+       (map
+         (fn [s]
+           (if (string? s)
+             s
+             (pr_str s))))
+       (reduce
+         (fn [acc s]
+           (.. acc s))
+         "")))
+
+(defn println [...]
+  (->> [...]
+       (map
+         (fn [s]
+           (if (string? s)
+             s
+             (pr_str s))))
+       (map_indexed
+         (fn [[i s]]
+           (if (= 1 i)
+             s
+             (.. " " s))))
+       (reduce
+         (fn [acc s]
+           (.. acc s))
+         "")
+       print))
+
+(defn pr [...]
+  (println (pr_str ...)))
+
+;;;; String
+(defn join [...]
+  "(join xs) (join sep xs)
+  Joins all items of a table together with an optional separator.
+  Separator defaults to an empty string.
+  Values that aren't a string or nil will go through aniseed.core/pr-str."
+  (let [args [...]
+        [sep xs] (if (= 2 (count args))
+                   args
+                   ["" (first args)])
+        len (count xs)]
+
+    (var result [])
+
+    (when (> len 0)
+      (for [i 1 len]
+        (let [x (. xs i)]
+          (-?>> (if
+                  (= :string (type x)) x
+                  (= nil x) x
+                  (pr_str x))
+                (table.insert result)))))
+
+    (table.concat result sep)))
+
+(defn split [s pat]
+  "Split the given string into a sequential table using the pattern."
+  (var done? false)
+  (var acc [])
+  (var index 1)
+  (while (not done?)
+    (let [(start end) (string.find s pat index)]
+      (if (= :nil (type start))
+        (do
+          (table.insert acc (string.sub s index))
+          (set done? true))
+        (do
+          (table.insert acc (string.sub s index (dec start)))
+          (set index (inc end))))))
+  acc)
+
+(defn blank? [s]
+  "Check if the string is nil, empty or only whitespace."
+  (or (empty? s)
+      (not (string.find s "[^%s]"))))
+
+(defn triml [s]
+  "Removes whitespace from the left side of string."
+  (string.gsub s "^%s*(.-)" "%1"))
+
+(defn trimr [s]
+  "Removes whitespace from the right side of string."
+  (string.gsub s "(.-)%s*$" "%1"))
+
+(defn trim [s]
+  "Removes whitespace from both ends of string."
+  (string.gsub s "^%s*(.-)%s*$" "%1"))

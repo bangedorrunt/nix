@@ -1,7 +1,6 @@
 (module plugins.telescope
   {autoload {{: run! : merge} core.funs
              {: setup : load_extension} telescope
-             {: get_os_command_output} telescope.utils
              {: close} telescope.actions
              builtin telescope.builtin}
    require-macros [core.macros]})
@@ -33,15 +32,16 @@
 
 (defn- builtin? [_ key]
   (if-let [picker (. builtin key)]
-    #(-> $ custom_opts picker)
+    (fn [opts] (-> opts custom_opts picker))
     (error "Invalid key, please check :h telescope.builtin")))
 
 (def- builtin (setmetatable {} {:__index builtin?}))
 
 ;; SEE: https://www.reddit.com/r/neovim/comments/p1xj92/make_telescope_git_files_revert_back_to_find
 (defn- project []
-  (let [(_ ret _) (get_os_command_output [:git :rev-parse :--is-inside-work-tree])]
-    (if (= ret 0) (builtin.git_files) (builtin.find_files))))
+  (let [[ret _] (vim.fn.systemlist "git rev-parse --is-inside-work-tree")
+        git? (= ret :true)]
+    (if git? (builtin.git_files) (builtin.find_files {:cwd "%:h"}))))
 
 ;; Telescope keymaps
 ;; fnlfmt: skip
@@ -49,6 +49,7 @@
 (noremap n nowait "<Leader><Leader>" '(project))
 (noremap n nowait "<Leader>;"        '(builtin.live_grep))
 (noremap n nowait "<Leader>*"        '(builtin.grep_string))
+(noremap n nowait "<Leader>p"        "<Cmd>Telescope projects<CR>")
 (noremap n nowait "<Leader>sg"       '(builtin.git_files))
 (noremap n nowait "<Leader>sb"       '(builtin.buffers))
 (noremap n nowait "<Leader>so"       '(builtin.oldfiles))

@@ -3,24 +3,30 @@
              {: setup} nvim-web-devicons}})
 
 (setup
-  {:override {:fnl {:icon tab.lua
+  {:override {".zshrc" {:icon tab.terminal-alt
+                        :color :#c2d94c
+                        :name :Zsh}
+              ".zshenv" {:icon tab.terminal-alt
+                         :color :#c2d94c
+                         :name :Zshenv}
+              ".zprofile" {:icon tab.terminal-alt
+                           :color :#c2d94c
+                           :name :Zshprofile}
+              :fnl {:icon tab.lua
                     :color :#c2d94c
-                    :name :fennel}
-              :hy {:icon tab.python
-                   :color :#519aba
-                   :name :hy}
-              :Makefile {:icon tab.large-m
+                    :name :Fennel}
+              :makefile {:icon tab.large-m
                          :color :#6d8086
-                         :name :makefile}
+                         :name :Makefile}
               :toml {:icon tab.document
                      :color :#c2d94c
-                     :name :toml}
+                     :name :Toml}
               :yml {:icon tab.document
-                     :color :#c2d94c
-                     :name :yaml}
+                    :color :#c2d94c
+                    :name :Yaml}
               :conf {:icon tab.document
                      :color :#c2d94c
                      :name :conf}
               :norg {:icon tab.sticky-note
                      :color :#36a3d9
-                     :name :norg}}})
+                     :name :Neorg}}})

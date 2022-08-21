@@ -108,20 +108,20 @@
                :p "Markdown Preview"
                :s "Scratch"
                :t "Tree"}
-:w {:name "Windows"
-    := "Ballance Windows"
-    :s "Split Window"
-    :v "Vertical Split Window"
-    :w "Jump Between"
-    :c "Window Close"
-    :d "Window Close"
-    :h "Jump Left"
-    :j "Jump Down"
-    :k "Jump Up"
-    :l "Jump Right"
-    :H "Move Left"
-    :J "Move Down"
-    :K "Move Up"
-    :L "Move Right"}
-:x {:name "Text Edit"}}
-{:prefix "<Leader>"})
+           :w {:name "Windows"
+               := "Ballance Windows"
+               :s "Split Window"
+               :v "Vertical Split Window"
+               :w "Jump Between"
+               :c "Window Close"
+               :d "Window Close"
+               :h "Jump Left"
+               :j "Jump Down"
+               :k "Jump Up"
+               :l "Jump Right"
+               :H "Move Left"
+               :J "Move Down"
+               :K "Move Up"
+               :L "Move Right"}
+           :x {:name "Text Edit"}}
+          {:prefix "<Leader>"})

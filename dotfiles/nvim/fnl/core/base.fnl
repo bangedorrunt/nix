@@ -1,17 +1,17 @@
 (module core.base
-   {require-macros [core.macros]})
+  {require-macros [core.macros]})
 
-(def os-name (. (vim.loop.os_uname) :sysname))
+(def os_name (. (vim.loop.os_uname) :sysname))
 
 ;; fnlfmt: skip
-(def path-sep (match os-name
+(def path_sep (match os_name
                 :Windows "\\\\"
                 _ "/"))
 
-(def data-path (string.format "%s/site/" (vim.fn.stdpath :data)))
-(def config-path (vim.fn.stdpath :config))
-(def cache-path (vim.fn.stdpath :cache))
-(def state-path (vim.fn.stdpath :state))
+(def data_path (string.format "%s/site/" (vim.fn.stdpath :data)))
+(def config_path (vim.fn.stdpath :config))
+(def cache_path (vim.fn.stdpath :cache))
+(def state_path (vim.fn.stdpath :state))
 
 (tset _G :tdt
       {:signs {:error " "
@@ -25,17 +25,17 @@
                  :light {:tokyonight :#e1e2e7
                          :gruvbox :#fbf1c7
                          :rose-pine :#faf4ed}}
-       :paths {:IS_MAC (= os-name :Darwin)
-               :IS_LINUX (= os-name :Linux)
-               :IS_WINDOWS (= os-name :Windows)
-               :PATH_SEP path-sep
-               :NVIM_PATH config-path
+       :paths {:IS_MAC (= os_name :Darwin)
+               :IS_LINUX (= os_name :Linux)
+               :IS_WINDOWS (= os_name :Windows)
+               :PATH_SEP path_sep
+               :NVIM_PATH config_path
                :HOME (os.getenv :HOME)
-               :CACHE_PATH cache-path
-               :DATA_PATH data-path
-               :STATE_PATH state-path
-               :PACKER_PATH (.. data-path :pack/packer/opt/packer.nvim)
-               :PACKER_COMPILED_PATH (.. data-path :lua/packer_compiled.lua)}})
+               :CACHE_PATH cache_path
+               :DATA_PATH data_path
+               :STATE_PATH state_path
+               :PACKER_PATH (.. data_path :pack/packer/opt/packer.nvim)
+               :PACKER_COMPILED_PATH (.. data_path :lua/packer_compiled.lua)}})
 
 ;; Disable built-in plugins and host providers
 ;; (g loaded_netrw 1)

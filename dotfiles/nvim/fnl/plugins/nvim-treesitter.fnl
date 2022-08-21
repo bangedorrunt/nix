@@ -1,18 +1,5 @@
 (module plugins.nvim-treesitter
-  {autoload {{: setup} nvim-treesitter.configs
-             parser nvim-treesitter.parsers}})
-
-(let [parser_config (parser.get_parser_configs)]
-  (set parser_config.norg_meta
-       {:install_info
-        {:url "https://github.com/nvim-neorg/tree-sitter-norg-meta"
-         :files [:src/parser.c]
-         :branch :main}})
-  (set parser_config.norg_table
-       {:install_info
-        {:url "https://github.com/nvim-neorg/tree-sitter-norg-table"
-         :files [:src/parser.c]
-         :branch :main}}))
+  {autoload {{: setup} nvim-treesitter.configs}})
 
 (def- languages
   [:bash :comment
@@ -22,7 +9,7 @@
    :rust :c :cpp
    :toml :yaml :json :json5 :jsonc
    :lua :vim :nix :python
-   :markdown :norg :norg_meta :norg_table])
+   :markdown :norg])
 
 (setup {:ensure_installed languages
         :highlight {:enable true

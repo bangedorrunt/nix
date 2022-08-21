@@ -18,7 +18,7 @@
   :akinsho/bufferline.nvim {:after :colorscheme :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :colorscheme :mod :lualine}
   :folke/which-key.nvim {:event :BufRead :mod :which-key}
-  :folke/todo-comments.nvim {:event :BufRead :init :todo-comments}
+  :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments}
   :kyazdani42/nvim-tree.lua {:event :BufRead :mod :nvim-tree}
   ;;;; Editor plugins
   :tpope/vim-eunuch {:event :BufWinEnter}
@@ -61,6 +61,7 @@
   :williamboman/mason-lspconfig.nvim {:event :BufReadPre :mod :lsp}
   :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
+                                    :run :TSUpdate
                                     :mod :nvim-treesitter}
   :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
   :p00f/nvim-ts-rainbow {:after :treesitter}

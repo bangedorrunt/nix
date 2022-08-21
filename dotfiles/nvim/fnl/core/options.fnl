@@ -4,7 +4,7 @@
 ;;;; RENDERING
 (opt background :light)
 
-(if (has? :termguicolors)
+(if (vim_has? :termguicolors)
     (do
       (vim.cmd "let &t_8f = '\\<Esc>[38;2;%lu;%lu;%lum'")
       (vim.cmd "let &t_8b = '\\<Esc>[48;2;%lu;%lu;%lum'")
@@ -38,7 +38,7 @@
 (opt showmode false)
 (opt laststatus 2)
 (opt textwidth 80)
-;; Let vim-sleuth handle indent options
+;; Let `vim-sleuth` handle indent options
 ;; (opt expandtab)
 ;; (opt shiftwidth 2)
 (opt tabstop 2)
@@ -75,7 +75,7 @@
 (opt whichwrap "b,s,<,>,h,l,[,],~")
 (opt nolinebreak)
 (opt virtualedit :block)
-(opt fileformats "unix,mac,dos")
+(opt fileformats [:unix :mac :dos])
 (opt clipboard :unnamedplus)
 (opt completeopt [:menu :menuone :preview :noselect])
 (opt diffopt+ [:vertical
