@@ -1,13 +1,12 @@
-(module core.init
-  {require [core.base
-            core.options
-            core.mappings
-            core.autocmds]})
+(require :core.base)
+(require :core.options)
+(require :core.mappings)
+(require :core.autocmds)
 
-(defn- file_exist? [path]
+(fn file_exist? [path]
   (= (vim.fn.filereadable path) 1))
 
-(defn- load_packer_plugins []
+(fn load_packer_plugins []
   (vim.cmd.packadd "packer.nvim")
   (require :plugins))
 

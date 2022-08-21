@@ -1,7 +1,7 @@
-(module core.icons
-  {autoload {{: map : reduce : inc} core.funs}})
 
-(def tab
+(local {: map : reduce : inc} (require :core.funs))
+
+(local tab
   {:vim-classic " "
    :vim " "
    :clojure " "
@@ -227,7 +227,7 @@
    :pix-l " "
    :pix-r " "})
 
-(def popfix-border-chars
+(local popfix_border_chars
   {:TOP_LEFT "┌"
    :TOP_RIGHT "┐"
    :MID_HORIZONTAL "─"
@@ -235,7 +235,7 @@
    :BOTTOM_LEFT "└"
    :BOTTOM_RIGHT "┘"})
 
-(def popfix-border-chars-alt
+(local popfix_border_chars_alt
   {:TOP_LEFT "╭"
    :TOP_RIGHT "╮"
    :MID_HORIZONTAL "─"
@@ -243,7 +243,7 @@
    :BOTTOM_LEFT "╰"
    :BOTTOM_RIGHT "╯"})
 
-(def brailles
+(local brailles
   ["⠀" "⠁" "⠂" "⠃" "⠄" "⠅" "⠆" "⠇" "⡀" "⡁" "⡂" "⡃" "⡄" "⡅" "⡆" "⡇"
    "⠈" "⠉" "⠊" "⠋" "⠌" "⠍" "⠎" "⠏" "⡈" "⡉" "⡊" "⡋" "⡌" "⡍" "⡎" "⡏"
    "⠐" "⠑" "⠒" "⠓" "⠔" "⠕" "⠖" "⠗" "⡐" "⡑" "⡒" "⡓" "⡔" "⡕" "⡖" "⡗"
@@ -265,7 +265,7 @@
 ;; (pos->braille [0 0]
 ;;               [1 1]
 ;;               [1 2])
-(defn pos->braille [...]
+(fn pos->braille [...]
   (let [->idx (fn [[x y]]
                 (* (^ 2 y) (^ 16 x)))]
     ;; returns an index to enable specified place (x, y) of braille.
@@ -276,3 +276,8 @@
                    (+ acc x)) 0)
          (inc)
          (. brailles))))
+
+{: tab
+ : popfix_border_chars
+ : popfix_border_chars_alt
+ : pos->braille}

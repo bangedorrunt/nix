@@ -1,5 +1,4 @@
-(module plugins.bufferline
-  {autoload {{: setup} bufferline}})
+(local {: setup} (require :bufferline))
 
 (setup {:options {:buffer_close_icon :x
                   :modified_icon "+"

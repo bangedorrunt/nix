@@ -1,5 +1,5 @@
-(module core.autocmds
-  {require-macros [core.macros]})
+(import-macros {: augroup : autocmd : autocmd!
+                : opt : opt_local} :core.macros)
 
 ;; Smart `q` close windows
 (autocmd FileType [help startuptime qf lspinfo] "nnoremap <buffer><silent> q :close<CR>")

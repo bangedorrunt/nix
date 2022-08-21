@@ -1,47 +1,13 @@
-;; TODO: use `core.funs` instead when `Aniseed` bug is fixed
 (local {: for_each
-        : head
-        : nth
-        : map
-        : chain
-        :operator {: add : sub}
-        :tomap totable
-        :totable tosequence
-        :length count} (require :aniseed.deps.fun))
+       : count
+       : inc : dec
+       : first : second : last : llast
+       : nil? : string? : number? : boolean?
+       : map : chain
+       : totable : tosequence
+       } (require :core.funs))
 
-(fn inc [n]
-  "Increment n by 1."
-  (add n 1))
-
-(fn dec [n]
-  "Decrement n by 1."
-  (sub n 1))
-
-(fn first [xs]
-  (head xs))
-
-(fn second [xs]
-  (nth 2 xs))
-
-(fn last [xs]
-  (nth (count xs) xs))
-
-(fn llast [xs]
-  (nth (dec (count xs)) xs))
-
-(fn nil? [x]
-  "True if the value is equal to Lua `nil`."
-  (= nil x))
-
-(fn string? [x]
-  (= :string (type x)))
-
-(fn number? [x]
-  (= :number (type x)))
-
-(fn boolean? [x]
-  (= :boolean (type x)))
-
+;;;; Helper functions
 (fn fn? [x]
   "Checks if `x` is a function definition.
   Cannot check if a symbol is a function in compile time."
@@ -163,7 +129,6 @@
 
 (fn nmap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API"
-  ;; TODO: figure out why I cant use outer function in macro
   (let [args [...]
         modes (-> modes tostring tosequence)
         rhs (-> args last quoted->fn?)
@@ -202,7 +167,51 @@
      0 false
      _# nil))
 
-{: opt
+;;; Clojure if-let and when-let
+(fn conditional-let [branch bindings ...]
+  (assert (= 2 (length bindings)) "expected a single binding pair")
+
+  (let [[bind-expr value-expr] bindings]
+    (if
+      ;; Simple symbols
+      ;; [foo bar]
+      (sym? bind-expr)
+      `(let [,bind-expr ,value-expr]
+         (,branch ,bind-expr ,...))
+
+      ;; List / values destructure
+      ;; [(a b) c]
+      (list? bind-expr)
+      (do
+        ;; Even if the user isn't using the first slot, we will.
+        ;; [(_ val) (pcall #:foo)]
+        ;;  => [(bindGENSYM12345 val) (pcall #:foo)]
+        (when (= '_ (. bind-expr 1))
+          (tset bind-expr 1 (gensym "bind")))
+
+        `(let [,bind-expr ,value-expr]
+           (,branch ,(. bind-expr 1) ,...)))
+
+      ;; Sequential and associative table destructure
+      ;; [[a b] c]
+      ;; [{: a : b} c]
+      (table? bind-expr)
+      `(let [value# ,value-expr
+             ,bind-expr (or value# {})]
+         (,branch value# ,...))
+
+      ;; We should never get here, but just in case.
+      (assert (.. "unknown bind-expr type: " (type bind-expr))))))
+
+(fn if-let [bindings ...]
+  (assert (<= (length [...]) 2) (.. "if-let does not support more than two branches"))
+  (conditional-let 'if bindings ...))
+
+(fn when-let [bindings ...]
+  (conditional-let 'when bindings ...))
+
+{: if-let : when-let
+ : opt
  : opt_local
  : g
  : command

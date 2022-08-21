@@ -1,6 +1,6 @@
-(module colorschemes.tokyonight
-  {autoload {: tokyonight}
-   require-macros [core.macros]})
+(import-macros {: g : hi} :core.macros)
+
+(local tokyonight  (require :tokyonight))
 
 (g tokyonight_style "day")
 (g tokyonight_day_brightness 0.3)

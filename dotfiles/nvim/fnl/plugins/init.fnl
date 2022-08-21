@@ -1,5 +1,4 @@
-(module plugins.init
-  {autoload {{: use} core.packer}})
+ (local {: use} (require :core.packer))
 
 ;; fnlfmt: skip
 ;; NOTE: lua use % as escape in pattern
@@ -7,7 +6,9 @@
   ;;;; Dependencies
   :lewis6991/impatient.nvim {}
   :wbthomason/packer.nvim {:opt true}
-  :Olical/aniseed {:branch :develop}
+  ;; :Olical/aniseed {:branch :develop}
+  :rktjmp/hotpot.nvim {:branch :nightly}
+  :babygau/luafun.nvim {:branch :neovim}
   :antoinemadec/FixCursorHold.nvim {}
   :nvim-lua/plenary.nvim {:as :plenary :module_pattern "plenary.*"}
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
@@ -61,7 +62,6 @@
   :williamboman/mason-lspconfig.nvim {:event :BufReadPre :mod :lsp}
   :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
-                                    :run :TSUpdate
                                     :mod :nvim-treesitter}
   :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
   :p00f/nvim-ts-rainbow {:after :treesitter}
@@ -69,7 +69,7 @@
   :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.modules.*"}
   :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg :ft [:norg]}
-  :babygau/aniseed-playground {:cmd :AniseedPlayground}
+  ;; :babygau/aniseed-playground {:cmd :AniseedPlayground}
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}

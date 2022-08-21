@@ -3,9 +3,10 @@ CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache/nvim}"
 STATE_PATH="${XDG_STATE_HOME:-$HOME/.local/state/nvim}"
 OLD_PATH="${XDG_DATA_HOME:-$HOME/.local/share/nvim/site}"
 PACK_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start"
-ANISEED_PATH="${PACK_PATH}/aniseed"
+# ANISEED_PATH="${PACK_PATH}/aniseed"
 IMPATIENT_PATH="${PACK_PATH}/impatient.nvim"
-# HOTPOT_PATH="${PACK_PATH}/hotpot.nvim"
+LUAFUN_PATH="${PACK_PATH}/luafun.nvim"
+HOTPOT_PATH="${PACK_PATH}/hotpot.nvim"
 PACKER_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/packer.nvim"
 # T9_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/cmp-tabnine"
 
@@ -36,19 +37,27 @@ fi
 
 mkdir -p "$PACK_PATH"
 
-echo 'Downloading Aniseed ...'
+# echo 'Downloading Aniseed ...'
 
-if [ ! -d "$ANISEED_PATH" ]; then
-  git clone "https://github.com/Olical/aniseed.git" "$ANISEED_PATH"
-fi
-
-cd "$ANISEED_PATH" && git fetch && git checkout develop
-
-# echo 'Downloading Hotpot...'
-
-# if [ ! -d "$HOTPOT_PATH" ]; then
-#   git clone "https://github.com/rktjmp/hotpot.nvim.git" "$HOTPOT_PATH"
+# if [ ! -d "$ANISEED_PATH" ]; then
+#   git clone "https://github.com/Olical/aniseed.git" "$ANISEED_PATH"
 # fi
+
+# cd "$ANISEED_PATH" && git fetch && git checkout develop
+
+echo 'Downloading Luafun ...'
+
+if [ ! -d "$LUAFUN_PATH" ]; then
+  git clone "https://github.com/babygau/luafun.nvim" "$LUAFUN_PATH"
+fi
+cd "$LUAFUN_PATH" && git fetch && git checkout neovim
+
+echo 'Downloading Hotpot...'
+
+if [ ! -d "$HOTPOT_PATH" ]; then
+  git clone "https://github.com/rktjmp/hotpot.nvim.git" "$HOTPOT_PATH"
+fi
+cd "$HOTPOT_PATH" && git fetch && git checkout nightly
 
 echo 'Downloading Packer ...'
 

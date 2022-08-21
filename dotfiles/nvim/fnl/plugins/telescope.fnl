@@ -1,9 +1,9 @@
-(module plugins.telescope
-  {autoload {{: run! : merge} core.funs
-             {: setup : load_extension} telescope
-             {: close} telescope.actions
-             builtin telescope.builtin}
-   require-macros [core.macros]})
+(import-macros {: nmap : noremap : if-let} :core.macros)
+
+(local {: run! : merge} (require :core.funs))
+(local {: setup : load_extension} (require :telescope))
+(local {: close} (require :telescope.actions))
+(local builtin (require :telescope.builtin))
 
 (setup {:defaults {:cache_picker {:num_pickers 20}
                    :prompt_prefix "❯ "
@@ -27,18 +27,18 @@
 (run! load_extension [:fzf :projects])
 
 ;; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
-(defn- custom_opts [opts]
+(fn custom_opts [opts]
   (->> {:disable_devicons false} (merge (or opts {}))))
 
-(defn- builtin? [_ key]
+(fn builtin? [_ key]
   (if-let [picker (. builtin key)]
     (fn [opts] (-> opts custom_opts picker))
     (error "Invalid key, please check :h telescope.builtin")))
 
-(def- builtin (setmetatable {} {:__index builtin?}))
+(local builtin (setmetatable {} {:__index builtin?}))
 
 ;; SEE: https://www.reddit.com/r/neovim/comments/p1xj92/make_telescope_git_files_revert_back_to_find
-(defn- project []
+(fn project []
   (let [[ret _] (vim.fn.systemlist "git rev-parse --is-inside-work-tree")
         git? (= ret :true)]
     (if git? (builtin.git_files) (builtin.find_files {:cwd "%:h"}))))

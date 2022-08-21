@@ -1,5 +1,4 @@
-(module plugins.toggleterm
-  {autoload {{: setup} toggleterm}})
+(local {: setup} (require :toggleterm))
 
 (setup {:size 20
         :hide_numbers true

@@ -1,5 +1,4 @@
-(module core.options
-  {require-macros [core.macros]})
+(import-macros {: opt : vim_has?} :core.macros)
 
 ;;;; RENDERING
 (opt background :light)

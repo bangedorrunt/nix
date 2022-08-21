@@ -1,6 +1,6 @@
-(module colorschemes.base16-onedark
-  {autoload {{: setup} base16-colorscheme}
-   require-macros [core.macros]})
+(import-macros {: hi} :core.macros)
+
+(local {: setup} (require :base16-colorscheme))
 
 (setup {:base00 "#17181c"
         :base01 "#353b45"

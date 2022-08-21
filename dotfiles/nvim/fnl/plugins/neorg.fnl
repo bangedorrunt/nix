@@ -1,6 +1,5 @@
-(module plugins.neorg
-  {autoload {{: setup} neorg
-             {: on_event} neorg.callbacks}})
+(local {: setup} (require :neorg))
+(local {: on_event} (require :neorg.callbacks))
 
 (setup
   {:load {:core.defaults {}

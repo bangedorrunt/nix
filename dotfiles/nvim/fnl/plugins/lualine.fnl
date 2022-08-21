@@ -1,8 +1,8 @@
-(module plugins.lualine
-  {autoload {{: setup} lualine}
-   require-macros [core.macros]})
+(import-macros {: hi} :core.macros)
 
-(def- colors {:fg "#bbc2cf"
+(local {: setup} (require :lualine))
+
+(local colors {:fg "#bbc2cf"
               ;; Dark mode
               ;; :bg "#191724"
               ;; Light Mode
@@ -17,7 +17,7 @@
               :blue "#51afef"
               :red "#ec5f67"})
 
-(def- conditions
+(local conditions
   {:buffer_not_empty (fn []
                        (not= (vim.fn.empty (vim.fn.expand "%:t")) 1))
    :hide_in_width (fn []
@@ -29,7 +29,7 @@
                             (and (and gitdir (> (length gitdir) 0))
                                  (< (length gitdir) (length filepath)))))})
 
-(def- config {:options {:component_separators ""
+(local config {:options {:component_separators ""
                         :section_separators ""
                         :theme {:normal {:c {:fg colors.fg :bg colors.bg}}
                                 :inactive {:c {:fg colors.fg :bg colors.bg}}}}
@@ -46,10 +46,10 @@
                                   :lualine_c {}
                                   :lualine_x {}}})
 
-(defn- ins-left [component]
+(fn ins-left [component]
   (table.insert config.sections.lualine_c component))
 
-(defn- ins-right [component]
+(fn ins-right [component]
   (table.insert config.sections.lualine_x component))
 
 (ins-left {1 (fn [] "▊")

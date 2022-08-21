@@ -1,6 +1,5 @@
-(module plugins.devicons
-  {autoload {{: tab} core.icons
-             {: setup} nvim-web-devicons}})
+(local {: setup} (require :nvim-web-devicons))
+(local {: tab} (require :core.icons))
 
 (setup
   {:override {".zshrc" {:icon tab.terminal-alt

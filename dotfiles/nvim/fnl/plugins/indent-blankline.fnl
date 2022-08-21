@@ -1,5 +1,4 @@
-(module plugins.indent-blankline
-  {require-macros [core.macros]})
+(import-macros {: g} :core.macros)
 
 (g indent_blankline_filetype_exclude [:help :packer
                                       :NvimTree :fern

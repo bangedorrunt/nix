@@ -1,25 +1,26 @@
-(module plugins.nvim-cmp
-  {autoload {{: setup
-              : visible
-              : complete
-              : select_next_item
-              : select_prev_item
-              : mapping
-              : config} cmp
-             {: expand_or_jumpable
-              : expand_or_jump
-              : jumpable
-              : jump
-              : lsp_expand} luasnip
-             {: cmp_format} lspkind}})
+(local {: setup
+        : visible
+        : complete
+        : select_next_item
+        : select_prev_item
+        : mapping
+        : config} (require :cmp))
 
-(def- cmp_menu_items {:nvim_lsp :LSP
+(local {: expand_or_jumpable
+        : expand_or_jump
+        : jumpable
+        : jump
+        : lsp_expand} (require :luasnip))
+
+(local {: cmp_format} (require :lspkind))
+
+(local cmp_menu_items {:nvim_lsp :LSP
                       :luasnip :LuaSnip
                       :conjure :Conjure
                       :buffer :Buffer
                       :calc :Calc
                       :path :Path})
-(def- cmp_srcs [{:name :nvim_lsp}
+(local cmp_srcs [{:name :nvim_lsp}
                 {:name :conjure}
                 {:name :luasnip}
                 {:name :buffer :keyword_length 5}
@@ -29,7 +30,7 @@
                 {:name :calc}])
 
 ;; Check backspace
-(defn has_words_before? []
+(fn has_words_before? []
   (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))]
     (and (not= col 0)
          (= (: (: (. (vim.api.nvim_buf_get_lines 0 (- line 1) line true)
@@ -38,13 +39,13 @@
                :match "%s")
             nil))))
 ;; Supertab
-(defn- super_cn [fallback]
+(fn super_cn [fallback]
   (if (visible) (select_next_item)
     (expand_or_jumpable) (expand_or_jump)
     (has_words_before?) (complete)
     (fallback)))
 
-(defn- super_cp [fallback]
+(fn super_cp [fallback]
   (if (visible) (select_prev_item)
     (jumpable -1) (jump -1)
     (fallback)))

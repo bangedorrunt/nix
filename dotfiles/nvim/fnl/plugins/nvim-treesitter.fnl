@@ -1,7 +1,6 @@
-(module plugins.nvim-treesitter
-  {autoload {{: setup} nvim-treesitter.configs}})
+(local {: setup} (require :nvim-treesitter.configs))
 
-(def- languages
+(local languages
   [:bash :comment
    :clojure :commonlisp :fennel
    :html :css

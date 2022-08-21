@@ -1,21 +1,20 @@
-(module core.packer
-  {autoload {{: count : inc : into} core.funs
-             : packer}})
+(local packer (require :packer))
+(local {: count : inc : into} (require :core.funs))
 
-(defn- plugin_config [name]
+(fn plugin_config [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup
   configuration options. Will prefix the name with `plugins.`
   before requiring."
   (.. "require('plugins." name "')"))
 
-(defn- plugin_init [name]
+(fn plugin_init [name]
   "A shortcut to building a require string for your plugin
   configuration. Intended for use with packer's config or setup
   configuration options."
   (.. "require('" name "').setup {}"))
 
-(defn- color_init [name]
+(fn color_init [name]
   "A shortcut to building a require string for your colorscheme
   configuration. Intended for use with packer's config or setup
   configuration options. Will prefix the name with `colorscheme.`
@@ -24,7 +23,7 @@
 
 ;;;; Courtesy of Olical with rocks changes
 ;; fnlfmt: skip
-(defn use [...]
+(fn use [...]
   "Iterates through the arguments as pairs and calls packer's use function for
   each of them. Works around Fennel not liking mixed associative and sequential
   tables as well."
@@ -51,3 +50,4 @@
                               ;; https://github.com/wbthomason/packer.nvim/issues/751
                               ;; :max_jobs 60
                               :profile {:enable true :threshold 0}}})))
+{: use}

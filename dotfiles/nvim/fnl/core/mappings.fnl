@@ -1,5 +1,4 @@
-(module core.mappings
-  {require-macros [core.macros]})
+(import-macros {: nmap : noremap : g : t} :core.macros)
 
 ;; DEFAULT MAP
 ;; -----------
@@ -133,4 +132,4 @@
 (noremap n :<Leader>ws :<Cmd>sp<CR>)
 (noremap n :<Leader>wv :<Cmd>vsplit<CR>)
 ;; Open scratch
-(noremap n nowait silent :<Leader>ts :<Cmd>AniseedPlayground<CR>)
+;; (noremap n nowait silent :<Leader>ts :<Cmd>AniseedPlayground<CR>)

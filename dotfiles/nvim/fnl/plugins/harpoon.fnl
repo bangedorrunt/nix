@@ -1,5 +1,4 @@
-(module plugins.harpoon
-  {require-macros [core.macros]})
+(import-macros {: nmap : noremap} :core.macros)
 
 (noremap n :<Leader>mf "<CMD>lua require('harpoon.mark').add_file()<CR>")
 (noremap n :<Leader>md "<CMD>lua require('harpoon.mark').rm_file()<CR>")

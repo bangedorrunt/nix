@@ -1,97 +1,95 @@
-(module core.funs
-  {autoload {{:operator {: add : sub}
-              :length count
-              :tomap totable
-              :totable tosequence
-              : any : every
-              : for_each
-              : head : nth
-              : map : reduce
-              : filter : chain} aniseed.deps.fun
-             view aniseed.view}})
+(local {:operator {: add : sub}
+        :length count
+        :tomap totable
+        :totable tosequence
+        : any : every
+        : for_each
+        : head : nth
+        : map : reduce
+        : filter : chain} (require :luafun.fun))
 
-(def count count)
-
-(defn inc [n]
+(fn inc [n]
   "Increment n by 1."
   (add n 1))
 
-(defn dec [n]
+(fn dec [n]
   "Decrement n by 1."
   (sub n 1))
 
-(defn second [xs]
+(local first head)
+
+(fn second [xs]
   (nth 2 xs))
 
-(defn last [xs]
+(fn last [xs]
   (nth (count xs) xs))
 
-(defn llast [xs]
+(fn llast [xs]
   (nth (dec (count xs)) xs))
 
-(defn empty? [xs]
+(fn empty? [xs]
   (= 0 (count xs)))
 
-(def any? any)
+(local any? any)
 
-(def every? every)
+(local every? every)
 
-(defn has? [xs v]
+(fn has? [xs v]
   (any? (fn [x] (= x v)) xs))
 
-(defn nil? [x]
+(fn nil? [x]
   "True if the value is equal to Lua `nil`."
   (= nil x))
 
-(defn number? [x]
+(fn number? [x]
   "True if the value is of type 'number'."
   (= "number" (type x)))
 
-(defn boolean? [x]
+(fn boolean? [x]
   "True if the value is of type 'boolean'."
   (= "boolean" (type x)))
 
-(defn string? [x]
+(fn string? [x]
   "True if the value is of type 'string'."
   (= "string" (type x)))
 
-(defn table? [x]
+(fn table? [x]
   "True if the value is of type 'table'."
   (= "table" (type x)))
 
-(defn keys [t]
+(fn keys [t]
   "Get all keys of a table."
   (let [result []]
     (when t
       (for_each (fn [k _] (table.insert result k)) t))
     result))
 
-(defn vals [t]
+(fn vals [t]
   "Get all values of a table."
   (let [result []]
     (when t
       (for_each (fn [_ v] (table.insert result v)) t))
     result))
 
-(defn kv_pairs [t]
+(fn kv_pairs [t]
   "Get all values of a table."
   (let [result []]
     (when t
       (for_each (fn [k v] (table.insert result [k v])) t))
     result))
 
-(defn map_indexed [f xs]
+(fn map_indexed [f xs]
   "Map xs to a new sequential table by calling (f [k v]) on each item. "
   (map f (kv_pairs xs)))
 
-(defn run! [f xs]
+(fn run! [f xs]
   "Calls `f` on each item in iterable."
   (reduce
     (fn [_ ...] (f ...) nil)
     nil
     xs))
 
-(defn merge [base ...]
+(fn merge [base ...]
   (reduce
     (fn [acc x]
       (for_each (fn [k v] (tset acc k v)) x)
@@ -99,7 +97,7 @@
     (or base {})
     [...]))
 
-(defn into [tbl ...]
+(fn into [tbl ...]
   "Adds any number of key/value pairs to `tbl`, returning `tbl`. Like [[tset]]
   but for multiple pairs."
   (for [i 1 (select "#" ...) 2]
@@ -107,7 +105,7 @@
       (tset tbl k v)))
   tbl)
 
-(defn concat [...]
+(fn concat [...]
   "Concatenates the sequential table arguments together."
   (let [result []]
     (run! (fn [xs]
@@ -118,10 +116,10 @@
           [...])
     result))
 
-(defn mapcat [f xs]
+(fn mapcat [f xs]
   (concat (unpack (map f xs))))
 
-(defn pr_str [...]
+(fn pr_str [...]
   (let [s (table.concat
             (map (fn [x]
                    (view.serialise x {:one-line true}))
@@ -131,7 +129,7 @@
       "nil"
       s)))
 
-(defn str [...]
+(fn str [...]
   (->> [...]
        (map
          (fn [s]
@@ -143,7 +141,7 @@
            (.. acc s))
          "")))
 
-(defn println [...]
+(fn println [...]
   (->> [...]
        (map
          (fn [s]
@@ -161,11 +159,11 @@
          "")
        print))
 
-(defn pr [...]
+(fn pr [...]
   (println (pr_str ...)))
 
 ;;;; String
-(defn join [...]
+(fn join [...]
   "(join xs) (join sep xs)
   Joins all items of a table together with an optional separator.
   Separator defaults to an empty string.
@@ -189,7 +187,7 @@
 
     (table.concat result sep)))
 
-(defn split [s pat]
+(fn split [s pat]
   "Split the given string into a sequential table using the pattern."
   (var done? false)
   (var acc [])
@@ -205,19 +203,33 @@
           (set index (inc end))))))
   acc)
 
-(defn blank? [s]
+(fn blank? [s]
   "Check if the string is nil, empty or only whitespace."
   (or (empty? s)
       (not (string.find s "[^%s]"))))
 
-(defn triml [s]
+(fn triml [s]
   "Removes whitespace from the left side of string."
   (string.gsub s "^%s*(.-)" "%1"))
 
-(defn trimr [s]
+(fn trimr [s]
   "Removes whitespace from the right side of string."
   (string.gsub s "(.-)%s*$" "%1"))
 
-(defn trim [s]
+(fn trim [s]
   "Removes whitespace from both ends of string."
   (string.gsub s "^%s*(.-)%s*$" "%1"))
+
+{: count
+ : inc : dec
+ : first : second : nth : last : llast
+ : empty? : any? : every?
+ : has? : nil?
+ : number? : boolean? : string? : table?
+ : keys : vals : kv_pairs
+ : totable : tosequence
+ : for_each
+ : map : reduce : filter : chain : run!
+ : merge : into : concat : mapcat
+ : join : split : blank? : triml : trimr : trim
+ }

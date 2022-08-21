@@ -1,6 +1,6 @@
-(module colorschemes.rosepine
-  {autoload {{: setup} rose-pine}
-   require-macros [core.macros]})
+(import-macros {: colorscheme} :core.macros)
+
+(local {: setup} (require :rose-pine))
 
 (setup {:dark_variant :dawn
         :bold_vert_split true
@@ -26,4 +26,5 @@
          :CmpItemAbbrMatchFuzzy {:fg :#73daca}
          :CmpDocumentation {:fg :#c0caf5}
          :CmpDocumentationBorder {:fg :#c0caf5 :bg :#191724}}})
+
 (colorscheme rose-pine)

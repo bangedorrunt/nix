@@ -1,5 +1,4 @@
-(module plugins.gitsigns
-  {autoload {{: setup} gitsigns}})
+(local {: setup} (require :gitsigns))
 
 ;; fnlfmt: skip
 (setup {:signs {:add          {:text "+"}
@@ -19,4 +18,3 @@
         :sign_priority 6
         :update_debounce 100
         :status_formatter nil})
-

@@ -1,5 +1,4 @@
-(module plugins.which-key
-  {autoload {{: setup : register} which-key}})
+(local {: setup : register} (require :which-key))
 
 (setup {:plugins  {:marks  false
                    :registers false}

@@ -1,5 +1,4 @@
-(module plugins.conjure
-  {require-macros [core.macros]})
+(import-macros {: g } :core.macros)
 
 (g conjure#client#fennel#aniseed#aniseed_module_prefix "aniseed.")
 (g conjure#log#botright true)

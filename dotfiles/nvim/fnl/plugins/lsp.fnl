@@ -1,13 +1,15 @@
-(module plugins.lsp
-  {autoload {{: has?} core.funs
-             : lspconfig
-             : mason
-             mason_lspconfig mason-lspconfig
-             rust_tools rust-tools
-             null_ls null-ls
-             {: formatting : diagnostics} null-ls.builtins
-             telescope_builtin telescope.builtin}
-   require-macros [core.macros]})
+(import-macros {: augroup : autocmd : autocmd!
+                : nmap : noremap
+                : command} :core.macros)
+
+(local {: has?} (require :core.funs))
+(local lspconfig  (require :lspconfig))
+(local mason (require :mason))
+(local mason_lspconfig (require :mason-lspconfig))
+(local rust_tools (require :rust-tools))
+(local null_ls (require :null-ls))
+(local {: formatting : diagnostics} (require :null-ls.builtins))
+(local telescope_builtin (require :telescope.builtin))
 
 ;;;; LSP UI
 (let [{: with : handlers} vim.lsp]
@@ -19,12 +21,12 @@
 ;; More general LSP commands
 
 ;; fnlfmt: skip
-(defn- reload_lsp []
+(fn reload_lsp []
   (vim.lsp.stop_client (vim.lsp.get_active_clients))
   (vim.cmd.edit))
 
 ;; fnlfmt: skip
-(defn- open_lsp_log []
+(fn open_lsp_log []
   (let [path (vim.lsp.get_log_path)]
     (vim.cmd.edit path)))
 
@@ -47,9 +49,9 @@
   (sign_define :DiagnosticSignHint {:text "" :texthl :DiagnosticSignHint}))
 
 ;;;; LSP server config
-(defn- capable? [client capability] (. client.server_capabilities capability))
+(fn capable? [client capability] (. client.server_capabilities capability))
 
-(def- capabilities
+(local capabilities
   (let [c (vim.lsp.protocol.make_client_capabilities)]
     ;; NOTE: use `cmp_nvim_lsp.update_capabilities` is unneccessary
     ;; https://github.com/hrsh7th/cmp-nvim-lsp/blob/f6f471898bc4b45eacd36eef9887847b73130e0e/lua/cmp_nvim_lsp/init.lua#L23
@@ -67,7 +69,7 @@
                                         :detail
                                         :additionalTextEdits]}})))
 
-(defn- enhanced_attach [client bufnr]
+(fn enhanced_attach [client bufnr]
   (let [{:hover open_doc_float!
          :declaration goto_declaration!
          :definition goto_definition!
@@ -113,7 +115,7 @@
         (noremap n buffer :<Leader>lf `(vim.lsp.buf.format {: bufnr})))
       (print "LSP not support formatting."))))
 
-(def- servers [:bashls
+(local servers [:bashls
                :clojure_lsp
                :cssls
                :diagnosticls
@@ -141,7 +143,7 @@
 
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
 ;; make sure respective sources are installed
-(def- null_sources
+(local null_sources
   [formatting.prettier
    formatting.stylua
    formatting.trim_whitespace

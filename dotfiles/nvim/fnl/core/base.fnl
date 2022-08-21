@@ -1,17 +1,16 @@
-(module core.base
-  {require-macros [core.macros]})
+(import-macros {: g : command} :core.macros)
 
-(def os_name (. (vim.loop.os_uname) :sysname))
+(local os_name (. (vim.loop.os_uname) :sysname))
 
 ;; fnlfmt: skip
-(def path_sep (match os_name
+(local path_sep (match os_name
                 :Windows "\\\\"
                 _ "/"))
 
-(def data_path (string.format "%s/site/" (vim.fn.stdpath :data)))
-(def config_path (vim.fn.stdpath :config))
-(def cache_path (vim.fn.stdpath :cache))
-(def state_path (vim.fn.stdpath :state))
+(local data_path (string.format "%s/site/" (vim.fn.stdpath :data)))
+(local config_path (vim.fn.stdpath :config))
+(local cache_path (vim.fn.stdpath :cache))
+(local state_path (vim.fn.stdpath :state))
 
 (tset _G :tdt
       {:signs {:error " "
@@ -62,3 +61,18 @@
 (g loaded_python3_provider 0)
 (g loaded_node_provider 0)
 (g loaded_ruby_provider 0)
+
+
+(local {: build} (require :hotpot.api.make))
+;; Build all fnl files inside config dir
+(fn hotpot_aot []
+  (build "~/.config/nvim"
+         ;; ~/.config/nvim/fnl/*.fnl -> ~/.config/nvim/lua/*.lua
+         "(.+)/fnl/(.+)"
+         (fn [root path {: join-path}] ;; root is the first match, path is the second
+           ;; ignore our own macro file (init-macros.fnl is ignored by default)
+           (if (not (string.match path "macros%.fnl$"))
+               ;; join-path automatically uses the os-appropriate path separator
+               (join-path root :lua path)))))
+
+(command HotpotAOT '(hotpot_aot))

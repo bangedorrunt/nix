@@ -1,5 +1,4 @@
-(module plugins.vim-fugitive
-  {require-macros [core.macros]})
+(import-macros {: nmap : noremap} :core.macros)
 
 (noremap n "<Leader>gs" "<Cmd>Git<CR>")
 (noremap n "<Leader>gc" "<Cmd>Git commit<CR>")

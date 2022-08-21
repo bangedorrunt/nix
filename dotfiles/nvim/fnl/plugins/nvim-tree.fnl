@@ -1,9 +1,8 @@
-(module plugins.nvim-tree
-  {autoload {{: setup} nvim-tree
-             {: on_nvim_tree_ready} nvim-tree.events}
-   require-macros [core.macros]})
+(import-macros {: nmap : noremap} :core.macros)
 
-;; fnlfmt: skip
+(local {: setup} (require :nvim-tree))
+(local {: on_nvim_tree_ready} (require :nvim-tree.events))
+
 (setup {:hijack_cursor true
         :update_cwd true
         :update_focused_file {:enable true

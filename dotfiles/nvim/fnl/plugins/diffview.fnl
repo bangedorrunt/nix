@@ -1,5 +1,4 @@
-(module plugins.diffview
-  {require-macros [core.macros]})
+(import-macros {: nmap : noremap} :core.macros)
 
 (noremap n "<Leader>gvv" "<Cmd>DiffviewOpen<CR>")
 (noremap n "<Leader>gvc" "<Cmd>DiffviewClose<CR>")
