@@ -6,16 +6,15 @@ _G.__nvim_global_callbacks = __nvim_global_callbacks or {}
 _G.tdt = { _store = __tdt_global_callbacks }
 _G.nvim = { _store = __nvim_global_callbacks }
 
--- Enable Aniseed's automatic compilation and loading of Fennel source code.
--- Aniseed looks for this when it's loaded then loads the rest of your
--- configuration if it's set.
--- vim.g['aniseed#env'] = true
-
 require 'impatient'
 
 require('hotpot').setup {
-  enable_hotpot_diagnostics = true,
   provide_require_fennel = true,
+  enable_hotpot_diagnostics = false,
+  compiler = {
+    modules = { correlate = true },
+    macros = { env = '_COMPILER', compilerEnv = _G, allowedGlobals = false },
+  },
 }
 
 require 'core'

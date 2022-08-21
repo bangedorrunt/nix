@@ -8,7 +8,7 @@
   :wbthomason/packer.nvim {:opt true}
   ;; :Olical/aniseed {:branch :develop}
   :rktjmp/hotpot.nvim {:branch :nightly}
-  :babygau/luafun.nvim {:branch :neovim}
+  :babygau/luafun.nvim {}
   :antoinemadec/FixCursorHold.nvim {}
   :nvim-lua/plenary.nvim {:as :plenary :module_pattern "plenary.*"}
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
@@ -22,10 +22,10 @@
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments}
   :kyazdani42/nvim-tree.lua {:event :BufRead :mod :nvim-tree}
   ;;;; Editor plugins
+  :tpope/vim-commentary {:event :BufRead :as :vim-commentary}
   :tpope/vim-eunuch {:event :BufWinEnter}
   :tpope/vim-abolish {:event :BufWinEnter}
   :tpope/vim-repeat {:event :BufWinEnter}
-  :tpope/vim-commentary {:event :BufRead}
   :tpope/vim-surround {:event :BufRead}
   :tpope/vim-sleuth {:event :BufRead}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
@@ -63,17 +63,20 @@
   :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
                                     :mod :nvim-treesitter}
-  :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
+  ;; :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
-  :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter]}
+  :JoosepAlviste/nvim-ts-context-commentstring {:after [:vim-commentary :treesitter] :as :ts-context}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.modules.*"}
   :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg :ft [:norg]}
+<<<<<<< HEAD
   ;; :babygau/aniseed-playground {:cmd :AniseedPlayground}
+=======
+>>>>>>> 508d14b (Neovim(feat): make transition to `hotpot`)
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
-  :hrsh7th/nvim-cmp {:commit "706371f1300e7c0acb98b346f80dad2dd9b5f679"
+  :hrsh7th/nvim-cmp {:commit :706371f1300e7c0acb98b346f80dad2dd9b5f679
                      :event :BufRead
                      :module_pattern "cmp.*"
                      :mod :nvim-cmp}
@@ -91,4 +94,8 @@
   ;; :github/copilot.vim {}
   ;; :tzachar/cmp-tabnine {:mod :cmp-tabnine :after :nvim-cmp}
   ;; :mg979/vim-visual-multi {:event :BufRead}
+  ;; :RRethy/nvim-base16 {:color :base16-onedark}
+  ;; :numToStr/Comment.nvim {:after :ts-context :mod :comment}
   )
+
+(require :plugins.scratch)

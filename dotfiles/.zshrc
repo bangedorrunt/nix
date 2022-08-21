@@ -1,7 +1,6 @@
 #!/usr/bin/zsh
 #          ^----- get shellcheck hints based on bash
 # https://github.com/koalaman/shellcheck/issues/809
-# shellcheck disable=SC1090 # sourced filenames with variables
 
 # If you come from bash you might have to change your $PATH.
 export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:$PATH

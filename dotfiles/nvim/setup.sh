@@ -42,6 +42,20 @@ mkdir -p "$PACK_PATH"
 # if [ ! -d "$ANISEED_PATH" ]; then
 #   git clone "https://github.com/Olical/aniseed.git" "$ANISEED_PATH"
 # fi
+# cd "$ANISEED_PATH" && git fetch && git checkout develop
+
+echo 'Downloading Luafun ...'
+
+if [ ! -d "$LUAFUN_PATH" ]; then
+  git clone "https://github.com/babygau/luafun.nvim" "$LUAFUN_PATH"
+fi
+
+echo 'Downloading Hotpot...'
+
+if [ ! -d "$HOTPOT_PATH" ]; then
+  git clone "https://github.com/rktjmp/hotpot.nvim.git" "$HOTPOT_PATH"
+fi
+cd "$HOTPOT_PATH" && git fetch && git checkout nightly
 
 # cd "$ANISEED_PATH" && git fetch && git checkout develop
 

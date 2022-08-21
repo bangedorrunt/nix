@@ -59,12 +59,12 @@
                     :<C-n> (mapping super_cn [:i :s])
                     :<C-p> (mapping super_cp [:i :s])})
         :snippet {:expand #(lsp_expand $.body)}
-        :sources cmp_srcs})
+        :sources (config.sources cmp_srcs)})
 
 ;; Cmdline completions
 (setup.cmdline "/" {:mapping (mapping.preset.cmdline)
-                    :sources [{:name :buffer}]})
+               :sources (config.sources [{:name :buffer}])})
 (setup.cmdline ":" {:mapping (mapping.preset.cmdline)
-                    :sources (config.sources
-                               [{:name :path}]
-                               [{:name :cmdline}])})
+               :sources (config.sources
+                          [{:name :path}
+                           {:name :cmdline}])})

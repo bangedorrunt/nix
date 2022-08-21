@@ -2,7 +2,6 @@
 
 (local os_name (. (vim.loop.os_uname) :sysname))
 
-;; fnlfmt: skip
 (local path_sep (match os_name
                 :Windows "\\\\"
                 _ "/"))

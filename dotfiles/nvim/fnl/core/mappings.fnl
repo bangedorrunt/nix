@@ -131,5 +131,3 @@
 (noremap n :<Leader>w= :<C-w>=)
 (noremap n :<Leader>ws :<Cmd>sp<CR>)
 (noremap n :<Leader>wv :<Cmd>vsplit<CR>)
-;; Open scratch
-;; (noremap n nowait silent :<Leader>ts :<Cmd>AniseedPlayground<CR>)
