@@ -60,18 +60,3 @@
 (g loaded_python3_provider 0)
 (g loaded_node_provider 0)
 (g loaded_ruby_provider 0)
-
-
-(local {: build} (require :hotpot.api.make))
-;; Build all fnl files inside config dir
-(fn hotpot_aot []
-  (build "~/.config/nvim"
-         ;; ~/.config/nvim/fnl/*.fnl -> ~/.config/nvim/lua/*.lua
-         "(.+)/fnl/(.+)"
-         (fn [root path {: join-path}] ;; root is the first match, path is the second
-           ;; ignore our own macro file (init-macros.fnl is ignored by default)
-           (if (not (string.match path "macros%.fnl$"))
-               ;; join-path automatically uses the os-appropriate path separator
-               (join-path root :lua path)))))
-
-(command HotpotAOT '(hotpot_aot))
