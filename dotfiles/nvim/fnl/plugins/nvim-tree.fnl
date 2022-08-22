@@ -4,11 +4,11 @@
 (local {: on_nvim_tree_ready} (require :nvim-tree.events))
 
 (setup {:hijack_cursor true
-        :update_cwd true
+        :hijack_netrw true
+        :sync_root_with_cwd true
         :update_focused_file {:enable true
-                              :update_cwd true}
+                              :update_root true}
         :respect_buf_cwd true
-        :update_focused_file {:enable true :update_cwd true}
         :renderer {:icons {:show {:git false
                                   :folder true
                                   :folder_arrow false
