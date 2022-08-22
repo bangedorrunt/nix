@@ -1,9 +1,13 @@
 (import-macros {: augroup : autocmd : autocmd!
-                : opt : opt_local} :core.macros)
+                : opt : opt_local
+                : nmap : noremap} :core.macros)
+
+;; Open help vertically
+(autocmd FileType [help startuptime lspinfo man] '(vim.api.nvim_cmd {:cmd :wincmd :args ["L"]} {}))
 
 ;; Smart `q` close windows
-(autocmd FileType [help startuptime qf lspinfo] "nnoremap <buffer><silent> q :close<CR>")
-(autocmd FileType man "nnoremap <buffer><silent> q :quit<CR>")
+(autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))
+(autocmd FileType man '(noremap n buffer silent :q "<Cmd>quit<CR>"))
 
 ;; Restore cursor on exit
 (augroup restore_cursor_on_exit
@@ -47,8 +51,8 @@
 ;; Remove highlight
 (augroup clear_hl_search
          (autocmd!)
-         (autocmd CmdlineEnter [/ ?] "set hlsearch")
-         (autocmd CmdlineLeave [/ ?] "set nohlsearch"))
+         (autocmd CmdlineEnter [/ ?] '(opt hlsearch))
+         (autocmd CmdlineLeave [/ ?] '(opt nohlsearch)))
 
 ;; Set terminal options
 (augroup terminal_options
