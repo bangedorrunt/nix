@@ -28,7 +28,10 @@
 
 ;; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
 (fn custom_opts [opts]
-  (->> {:disable_devicons false} (merge (or opts {}))))
+  (->> {:disable_devicons false
+        :layout_strategy :bottom_pane
+        :layout_config {:prompt_position :bottom}}
+       (merge (or opts {}))))
 
 (fn builtin? [_ key]
   (if-let [picker (. builtin key)]
@@ -46,14 +49,14 @@
 ;; Telescope keymaps
 ;; fnlfmt: skip
 (noremap n nowait "<Leader>ht"       :<Cmd>Telescope<CR>)
-(noremap n nowait "<Leader><Leader>" '(project))
-(noremap n nowait "<Leader>;"        '(builtin.live_grep))
-(noremap n nowait "<Leader>*"        '(builtin.grep_string))
 (noremap n nowait "<Leader>p"        "<Cmd>Telescope projects<CR>")
-(noremap n nowait "<Leader>sg"       '(builtin.git_files))
-(noremap n nowait "<Leader>sb"       '(builtin.buffers))
-(noremap n nowait "<Leader>so"       '(builtin.oldfiles))
-(noremap n nowait "<Leader>sc"       '(builtin.commands))
-(noremap n nowait "<Leader>sC"       '(builtin.command_history))
-(noremap n nowait "<Leader>sk"       '(builtin.keymaps))
-(noremap n nowait "<Leader>sr"       '(builtin.resume))
+(noremap n nowait "<Leader><Leader>" project)
+(noremap n nowait "<Leader>;"        builtin.live_grep)
+(noremap n nowait "<Leader>*"        builtin.grep_string)
+(noremap n nowait "<Leader>sg"       builtin.git_files)
+(noremap n nowait "<Leader>sb"       builtin.buffers)
+(noremap n nowait "<Leader>so"       builtin.oldfiles)
+(noremap n nowait "<Leader>sc"       builtin.commands)
+(noremap n nowait "<Leader>sC"       builtin.command_history)
+(noremap n nowait "<Leader>sk"       builtin.keymaps)
+(noremap n nowait "<Leader>sr"       builtin.resume)
