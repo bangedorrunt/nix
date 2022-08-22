@@ -1,11 +1,10 @@
 (local {: for_each
-       : count
-       : inc : dec
-       : first : second : last : llast
-       : nil? : string? : number? : boolean?
-       : map : chain
-       : totable : tosequence
-       } (require :core.funs))
+        : count
+        : inc : dec
+        : first : second : last : llast
+        : nil? : string? : number? : boolean?
+        : map : chain
+        : totable : tosequence} (require :core.funs))
 
 ;;;; Helper functions
 (fn fn? [x]

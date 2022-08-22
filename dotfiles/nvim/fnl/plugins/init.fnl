@@ -77,7 +77,6 @@
   :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
   ;;;; Git plugins
   :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
-  :tpope/vim-rhubarb {:after :vim-fugitive :cmd :GBrowse}
   :sindrets/diffview.nvim {:after :treesitter :mod :diffview}
   :lewis6991/gitsigns.nvim {:after :colorscheme :mod :gitsigns}
   ;;;; Tool plugins
