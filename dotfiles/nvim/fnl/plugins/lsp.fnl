@@ -30,8 +30,8 @@
   (let [path (vim.lsp.get_log_path)]
     (vim.cmd.edit path)))
 
-(command LspLog '(open_lsp_log))
-(command LspRestart '(reload_lsp))
+(command LspLog open_lsp_log)
+(command LspRestart reload_lsp)
 
 ;;;; Diagnostics Configuration
 (let [{: config : severity} vim.diagnostic
@@ -124,6 +124,7 @@
                :eslint
                :html
                :jsonls
+               :marksman
                :rust_analyzer
                :sumneko_lua
                :tailwindcss

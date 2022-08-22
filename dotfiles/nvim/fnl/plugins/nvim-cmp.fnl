@@ -15,19 +15,20 @@
 (local {: cmp_format} (require :lspkind))
 
 (local cmp_menu_items {:nvim_lsp :LSP
-                      :luasnip :LuaSnip
-                      :conjure :Conjure
-                      :buffer :Buffer
-                      :calc :Calc
-                      :path :Path})
+                       :luasnip :LuaSnip
+                       :conjure :Conjure
+                       :buffer :Buffer
+                       :calc :Calc
+                       :path :Path})
+
 (local cmp_srcs [{:name :nvim_lsp}
-                {:name :conjure}
-                {:name :luasnip}
-                {:name :buffer :keyword_length 5}
-                {:name :path}
-                {:name :neorg}
-                {:name :nvim_lua}
-                {:name :calc}])
+                 {:name :conjure}
+                 {:name :luasnip}
+                 {:name :buffer :keyword_length 5}
+                 {:name :path}
+                 {:name :neorg}
+                 {:name :nvim_lua}
+                 {:name :calc}])
 
 ;; Check backspace
 (fn has_words_before? []
@@ -41,14 +42,14 @@
 ;; Supertab
 (fn super_cn [fallback]
   (if (visible) (select_next_item)
-    (expand_or_jumpable) (expand_or_jump)
-    (has_words_before?) (complete)
-    (fallback)))
+      (expand_or_jumpable) (expand_or_jump)
+      (has_words_before?) (complete)
+      (fallback)))
 
 (fn super_cp [fallback]
   (if (visible) (select_prev_item)
-    (jumpable -1) (jump -1)
-    (fallback)))
+      (jumpable -1) (jump -1)
+      (fallback)))
 
 (setup {:formatting {:format (cmp_format {:with_text false
                                           :menu cmp_menu_items})}

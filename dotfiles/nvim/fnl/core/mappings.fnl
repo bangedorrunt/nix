@@ -26,6 +26,10 @@
 (nmap n :o :o<ESC>)
 (nmap n :O :O<ESC>)
 
+;; Fix n and N. Keeping cursor in center
+(nmap n silent :n :nzz)
+(nmap n silent :N :Nzz)
+
 ;; Vim map
 ;; (map n "Y" "y$")
 (nmap n :<C-h> :<C-w>h)

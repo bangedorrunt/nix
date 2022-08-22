@@ -37,4 +37,4 @@
         (vim.fn.win_gotoid winid)))))
 
 ;; Open scratch
-(noremap n nowait silent :<Leader>ts '(show))
+(noremap n nowait silent :<Leader>ts show)
