@@ -1,8 +1,10 @@
+(local {: view} (require :fennel))
+
 (local {:operator {: add : sub}
         :length count
         :tomap totable
         :totable tosequence
-        : any : every
+        :any any? :every every?
         : for_each
         : head : nth
         : map : reduce
@@ -29,10 +31,6 @@
 
 (fn empty? [xs]
   (= 0 (count xs)))
-
-(local any? any)
-
-(local every? every)
 
 (fn has? [xs v]
   (any? (fn [x] (= x v)) xs))

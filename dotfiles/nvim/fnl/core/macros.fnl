@@ -169,42 +169,42 @@
 
 ;;; Clojure if-let and when-let
 (fn conditional-let [branch bindings ...]
-  (assert (= 2 (length bindings)) "expected a single binding pair")
+  (assert (= 2 (count bindings)) "expected a single binding pair")
 
-  (let [[bind-expr value-expr] bindings]
+  (let [[bind_expr value_expr] bindings]
     (if
       ;; Simple symbols
       ;; [foo bar]
-      (sym? bind-expr)
-      `(let [,bind-expr ,value-expr]
-         (,branch ,bind-expr ,...))
+      (sym? bind_expr)
+      `(let [,bind_expr ,value_expr]
+         (,branch ,bind_expr ,...))
 
       ;; List / values destructure
       ;; [(a b) c]
-      (list? bind-expr)
+      (list? bind_expr)
       (do
         ;; Even if the user isn't using the first slot, we will.
         ;; [(_ val) (pcall #:foo)]
         ;;  => [(bindGENSYM12345 val) (pcall #:foo)]
-        (when (= '_ (. bind-expr 1))
-          (tset bind-expr 1 (gensym "bind")))
+        (when (= '_ (first bind_expr))
+          (tset bind_expr 1 (gensym "bind")))
 
-        `(let [,bind-expr ,value-expr]
-           (,branch ,(. bind-expr 1) ,...)))
+        `(let [,bind_expr ,value_expr]
+           (,branch ,(first bind_expr) ,...)))
 
       ;; Sequential and associative table destructure
       ;; [[a b] c]
       ;; [{: a : b} c]
-      (table? bind-expr)
-      `(let [value# ,value-expr
-             ,bind-expr (or value# {})]
+      (table? bind_expr)
+      `(let [value# ,value_expr
+             ,bind_expr (or value# {})]
          (,branch value# ,...))
 
       ;; We should never get here, but just in case.
-      (assert (.. "unknown bind-expr type: " (type bind-expr))))))
+      (assert (.. "unknown bind_expr type: " (type bind_expr))))))
 
 (fn if-let [bindings ...]
-  (assert (<= (length [...]) 2) (.. "if-let does not support more than two branches"))
+  (assert (<= (count [...]) 2) (.. "if-let does not support more than two branches"))
   (conditional-let 'if bindings ...))
 
 (fn when-let [bindings ...]

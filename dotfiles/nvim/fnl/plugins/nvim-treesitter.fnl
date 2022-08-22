@@ -8,7 +8,7 @@
    :rust :c :cpp
    :toml :yaml :json :json5 :jsonc
    :lua :vim :nix :python
-   :markdown :norg])
+   :markdown :markdown_inline :norg])
 
 (setup {:ensure_installed languages
         :highlight {:enable true
@@ -38,7 +38,8 @@
                              :goto_previous_start {"[m" "@function.outer"
                                                    "[[" "@class.outer"}
                              :goto_previous_end {"[M" "@function.outer"
-                                                 "[]" "@class.outer"}}}
-        :context_commentstring {:enable true
-                                :config {:fennel ";; %s"
-                                         :clojure ";; %s"}}})
+														 "[]" "@class.outer"}}}
+		   :context_commentstring {:enable true
+															 :enable_autocmd false
+															 :config {:fennel ";; %s"
+																	      :clojure ";; %s"}}})
