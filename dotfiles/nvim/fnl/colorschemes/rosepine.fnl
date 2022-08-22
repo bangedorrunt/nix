@@ -8,7 +8,7 @@
         :disable_background false
         :disable_float_background false
         :disable_italics false
-        :groups {:background :#fff0ec}
+        ;; :groups {:background :#fff0ec}
         :highlight_groups
         {:CursorLine {:bg :None}
          :Error {:fg :None :bg :None}

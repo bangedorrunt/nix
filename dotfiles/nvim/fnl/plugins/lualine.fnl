@@ -4,9 +4,9 @@
 
 (local colors {:fg "#bbc2cf"
               ;; Dark mode
-              ;; :bg "#191724"
+              :bg "#191724"
               ;; Light Mode
-              :bg "#fff0ec"
+              ;; :bg "#fff0ec"
               :yellow "#ecbe7b"
               :cyan "#008080"
               :darkblue "#081633"
@@ -89,8 +89,8 @@
 ;; Harpoon indicator
 ;; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
 (ins-left {1 (fn []
-               (let [harpoon-number ((. (require :harpoon.mark) :get_index_of) (vim.fn.bufname))]
-                 (if harpoon-number (.. "ﯠ " harpoon-number) "ﯡ ")))
+               (let [harpoon_number ((. (require :harpoon.mark) :get_index_of) (vim.fn.bufname))]
+                 (if harpoon_number (.. "ﯠ " harpoon_number) "ﯡ ")))
            :color (fn []
                     (if ((. (require :harpoon.mark) :get_index_of) (vim.fn.bufname))
                       {:fg "#98be65" :gui :bold} {:fg "#ec5f67"}))})

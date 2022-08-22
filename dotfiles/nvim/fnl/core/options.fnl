@@ -1,7 +1,7 @@
 (import-macros {: opt : vim_has?} :core.macros)
 
 ;;;; RENDERING
-(opt background :light)
+;; (opt background :light)
 
 (if (vim_has? :termguicolors)
     (do
@@ -75,7 +75,7 @@
 (opt virtualedit :block)
 (opt fileformats [:unix :mac :dos])
 (opt clipboard :unnamedplus)
-(opt completeopt [:menu :menuone :preview :noselect])
+(opt completeopt [:menu :menuone :preview :noinsert])
 (opt diffopt+ [:vertical
                :iwhite
                :hiddenoff
