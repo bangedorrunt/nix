@@ -18,7 +18,7 @@
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
   :folke/which-key.nvim {:event :BufRead :mod :which-key}
-  :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments}
+  :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
   :kyazdani42/nvim-tree.lua {:event :BufRead :mod :nvim-tree}
   ;;;; Editor plugins
   :tpope/vim-repeat {:event :BufRead}

@@ -32,7 +32,7 @@
 (opt cmdwinheight 12)
 (opt conceallevel 2)
 (opt concealcursor :nc)
-(opt signcolumn "auto:1-3")
+(opt signcolumn "yes:3")
 ;; Statusline
 (opt showmode false)
 (opt laststatus 2)

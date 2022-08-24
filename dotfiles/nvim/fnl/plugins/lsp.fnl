@@ -88,7 +88,7 @@
     (noremap n buffer :K open_doc_float!)
     (noremap nv buffer :gr rename!)
     (noremap n buffer "[d" goto_diag_prev!)
-                        (noremap n buffer "]d" goto_diag_next!)
+    (noremap n buffer "]d" goto_diag_next!)
     (noremap n buffer :gD goto_declaration!)
     (noremap n buffer :gd goto_definition!)
     (noremap n buffer :gt goto_type_definition!)

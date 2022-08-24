@@ -3,11 +3,11 @@
                 : nmap : noremap} :core.macros)
 
 ;; Packer autocommands
-(autocmd BufWritePost */plugins/init.fnl "PackerCompile profile=true")
-(autocmd VimLeavePre [*/plugins/init.fnl */plugins/**/*.fnl] "PackerCompile profile=true")
+(autocmd BufWritePost */plugins/init.fnl '(vim.cmd "PackerCompile profile=true"))
+(autocmd VimLeavePre [*/plugins/init.fnl */plugins/**/*.fnl] '(vim.cmd "PackerCompile profile=true"))
 
 ;; Open help vertically
-(autocmd FileType [help startuptime lspinfo man] '(vim.api.nvim_cmd {:cmd :wincmd :args ["L"]} {}))
+(autocmd FileType [help startuptime lspinfo man] '(vim.cmd.wincmd "L"))
 
 ;; Smart `q` close windows
 (autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))

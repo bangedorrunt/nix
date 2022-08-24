@@ -1,3 +1,5 @@
+(local {: first : dec} (require :core.funs))
+
 (local {: setup
         : visible
         : complete
@@ -32,12 +34,13 @@
 
 ;; Check backspace
 (fn has_words_before? []
-  (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))]
+  (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))
+        buf_get_lines vim.api.nvim_buf_get_lines]
     (and (not= col 0)
-         (= (: (: (. (vim.api.nvim_buf_get_lines 0 (- line 1) line true)
-                     1)
-                  :sub col col)
-               :match "%s")
+         (= (-> (buf_get_lines 0 (dec line) line true)
+                (first)
+                (string.sub col col)
+                (string.match "%s"))
             nil))))
 ;; Supertab
 (fn super_cn [fallback]
