@@ -117,7 +117,8 @@
                   ["macos-input-source" 0]
                   {:delayed {:invoked ["macos-input-source" 0] :canceled ["macos-input-source" 0]} :params {:delay 300}}]]}]
 
- :applications {:Terminals ["^com\\.apple\\.Terminal$"
+ :applications {:Terminals ["^com\\.github\\.wez\\.wezterm$"
+                            "^com\\.apple\\.Terminal$"
                             "^com\\.googlecode\\.iterm2$"
                             "^io\\.alacritty"]
                 :Finder    ["^com\\.apple\\.finder$"]
