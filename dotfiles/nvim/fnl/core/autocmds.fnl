@@ -2,6 +2,10 @@
                 : opt : opt_local
                 : nmap : noremap} :core.macros)
 
+;; Packer autocommands
+(autocmd BufWritePost */plugins/init.fnl "PackerCompile profile=true")
+(autocmd VimLeavePre [*/plugins/init.fnl */plugins/**/*.fnl] "PackerCompile profile=true")
+
 ;; Open help vertically
 (autocmd FileType [help startuptime lspinfo man] '(vim.api.nvim_cmd {:cmd :wincmd :args ["L"]} {}))
 
