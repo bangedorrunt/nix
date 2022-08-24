@@ -14,17 +14,11 @@
  :colors (colors)
  :window_frame (window_frame)
  :font (wezterm.font_with_fallback
-         [{:family "OperatorMonoSSm Nerd Font"
-           :weight "Book"
-           :harfbuzz_features [:calt=0 :clig=0 :liga=0]}
-          {:family "Iosevka Nerd Font Mono"
-           :weight "Regular"}])
- :font_rules [{:italic true
-               :font (wezterm.font "OperatorMonoSSm Nerd Font"
-                                   {:italic true
-                                    :weight "Book"})}]
+         [{:family "OperatorMonoSSm Nerd Font" :weight "Light"}
+          {:family "Iosevka Nerd Font Mono" :weight "Regular"}])
  :font_size 18.0
  :freetype_load_target :Light
+ :foreground_text_hsb {:hue 1.0 :saturation 1.0 :brightness 1.5}
  :line_height 1.5
  :cell_width 0.90
  :enable_tab_bar true
