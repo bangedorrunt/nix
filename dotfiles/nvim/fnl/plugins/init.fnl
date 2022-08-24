@@ -13,10 +13,10 @@
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
 
   ;;;; UI plugins
-  :rose-pine/neovim {:color :rosepine}
-  :lukas-reineke/indent-blankline.nvim {:after :colorscheme :mod :indent-blankline}
-  :akinsho/bufferline.nvim {:after :colorscheme :mod :bufferline}
-  :nvim-lualine/lualine.nvim {:after :colorscheme :mod :lualine}
+  :rose-pine/neovim {:color :rose-pine}
+  :lukas-reineke/indent-blankline.nvim {:after :themer :mod :indent-blankline}
+  :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
+  :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
   :folke/which-key.nvim {:event :BufRead :mod :which-key}
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments}
   :kyazdani42/nvim-tree.lua {:event :BufRead :mod :nvim-tree}
@@ -78,7 +78,7 @@
   ;;;; Git plugins
   :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
   :sindrets/diffview.nvim {:after :treesitter :mod :diffview}
-  :lewis6991/gitsigns.nvim {:after :colorscheme :mod :gitsigns}
+  :lewis6991/gitsigns.nvim {:after :themer :mod :gitsigns}
   ;;;; Tool plugins
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
   ;;;; Unused plugins

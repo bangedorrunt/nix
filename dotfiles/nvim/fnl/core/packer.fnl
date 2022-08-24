@@ -14,12 +14,12 @@
   configuration options."
   (.. "require('" name "').setup {}"))
 
-(fn color_init [name]
+(fn theme_config [name]
   "A shortcut to building a require string for your colorscheme
   configuration. Intended for use with packer's config or setup
   configuration options. Will prefix the name with `colorscheme.`
   before requiring."
-  (.. "require('colorschemes." name "')"))
+  (.. "require('themer." name "')"))
 
 ;;;; Courtesy of Olical with rocks changes
 ;; fnlfmt: skip
@@ -37,8 +37,8 @@
                                (. opts :color)
                                (use (into opts 1 name
                                           :event :VimEnter
-                                          :as :colorscheme
-                                          :config (color_init (. opts :color))))
+                                          :as :themer
+                                          :config (theme_config (. opts :color))))
                                (. opts :mod)
                                (use (into opts 1 name :config (plugin_config (. opts :mod))))
                                (. opts :init)
