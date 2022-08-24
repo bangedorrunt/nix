@@ -1,8 +1,11 @@
-(import-macros {: g} :core.macros)
+(local {: setup} (require :indent_blankline))
 
-(g indent_blankline_filetype_exclude [:help :packer
-                                      :NvimTree :fern
-                                      :Trouble :neogitstatus
-                                      :fennel :lisp :clojure
-                                      :markdown])
-(g indent_blankline_use_treesitter true)
+(setup {:filetype_exclude [:help :packer
+                           :NvimTree :fern
+                           :Trouble :neogitstatus
+                           :fennel :lisp :clojure
+                           :markdown]
+       :buftype_exclude [:terminal]
+       :use_treesitter true
+       :show_current_context true
+       :show_current_context_start true})
