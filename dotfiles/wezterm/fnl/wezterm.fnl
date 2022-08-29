@@ -16,11 +16,11 @@
  :font (wezterm.font_with_fallback
          [{:family "OperatorMonoSSm Nerd Font" :weight "Light"}
           {:family "Iosevka Nerd Font Mono" :weight "Regular"}])
- :font_size 18.0
+ :font_size 19.5
  :freetype_load_target :Light
  :foreground_text_hsb {:hue 1.0 :saturation 1.0 :brightness 1.5}
  :line_height 1.5
- :cell_width 0.90
+ :cell_width 0.85
  :enable_tab_bar true
  :enable_scroll_bar false
  :exit_behavior "Close"

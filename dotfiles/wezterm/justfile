@@ -11,6 +11,7 @@ fennel_themer_folder := 'fnl/themer'
 # Remove compiled lua file
 @clean:
   rm -f *.lua
+  rm -f themer/*.lua
 
 # Compile every fennel file into lua files
 @compile: clean
