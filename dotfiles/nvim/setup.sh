@@ -45,8 +45,9 @@ fi
 echo 'Downloading Hotpot...'
 
 if [ ! -d "$HOTPOT_PATH" ]; then
-  git clone "https://github.com/rktjmp/hotpot.nvim.git" "$HOTPOT_PATH"
+  git clone "https://github.com/rktjmp/hotpot.nvim" "$HOTPOT_PATH"
 fi
+
 cd "$HOTPOT_PATH" && git fetch && git checkout nightly
 
 echo 'Downloading Packer ...'

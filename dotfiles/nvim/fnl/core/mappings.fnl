@@ -2,18 +2,24 @@
 
 ;; DEFAULT MAP
 ;; -----------
-(g mapleader (t :<Space>))
+(g mapleader (t "<Space>"))
 (g maplocalleader (t ","))
 
 ;; Disable SPC key
 ;; NOTE: `which-key` already implemented this
-;; (map n "<Space>" :<Nop>)
+(nmap n "<Space>" :<Nop>)
 
 ;; (noremap n :j :gj)
 ;; (noremap n :k :gk)
-;; (noremap n :n :nzzzv)
-;; (noremap n :N :Nzzzv)
-;; (noremap n :J "mzJ`z")
+
+(noremap n silent :n :nzzzv)
+(noremap n silent :N :Nzzzv)
+(noremap n silent :<C-d> :<C-d>zzz)
+(noremap n silent :<C-u> :<C-u>zzz)
+(noremap n silent :J "mzJ`z")
+(noremap n silent :Y "yg$")
+(noremap v silent :J ":<C-u>m '>+1<CR>gv=gv")
+(noremap v silent :K ":<C-u>m '>-2<CR>gv=gv")
 
 (noremap i :jj :<Esc>)
 (noremap i :jk :<Esc>)
@@ -26,12 +32,7 @@
 (nmap n :o :o<ESC>)
 (nmap n :O :O<ESC>)
 
-;; Fix n and N. Keeping cursor in center
-(nmap n silent :n :nzz)
-(nmap n silent :N :Nzz)
-
 ;; Vim map
-;; (map n "Y" "y$")
 (nmap n :<C-h> :<C-w>h)
 (nmap n :<C-l> :<C-w>l)
 (nmap n :<C-j> :<C-w>j)
@@ -113,11 +114,11 @@
 ;; ------------------------
 ;; Packer
 
-(noremap n nowait :<Leader>hpu :<Cmd>PackerUpdate<CR>)
-(noremap n nowait :<Leader>hpi :<Cmd>PackerInstall<CR>)
-(noremap n nowait :<Leader>hpc :<Cmd>PackerCompile<CR>)
-(noremap n nowait :<Leader>hps :<Cmd>PackerSync<CR>)
-(noremap n nowait :<Leader>hpp :<Cmd>PackerProfile<CR>)
+(noremap n :<Leader>hpu :<Cmd>PackerUpdate<CR>)
+(noremap n :<Leader>hpi :<Cmd>PackerInstall<CR>)
+(noremap n :<Leader>hpc :<Cmd>PackerCompile<CR>)
+(noremap n :<Leader>hps :<Cmd>PackerSync<CR>)
+(noremap n :<Leader>hpp :<Cmd>PackerProfile<CR>)
 
 ;; ------------------------
 ;; WINDOWS NAVIGATION

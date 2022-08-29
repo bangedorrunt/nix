@@ -3,12 +3,11 @@
 ;;;; RENDERING
 ;; (opt background :light)
 
-(if (vim_has? :termguicolors)
-    (do
-      (vim.cmd "let &t_8f = '\\<Esc>[38;2;%lu;%lu;%lum'")
-      (vim.cmd "let &t_8b = '\\<Esc>[48;2;%lu;%lu;%lum'")
-      (opt termguicolors))
-    nil)
+(when (vim_has? :termguicolors)
+  (do
+    (vim.cmd "let &t_8f = '\\<Esc>[38;2;%lu;%lu;%lum'")
+    (vim.cmd "let &t_8b = '\\<Esc>[48;2;%lu;%lu;%lum'")
+    (opt termguicolors)))
 
 ;;;; UI
 (opt lz)
@@ -32,7 +31,7 @@
 (opt cmdwinheight 12)
 (opt conceallevel 2)
 (opt concealcursor :nc)
-(opt signcolumn "yes:3")
+(opt signcolumn "yes:2")
 ;; Statusline
 (opt showmode false)
 (opt laststatus 2)
@@ -118,7 +117,7 @@
 (opt timeout)
 (opt ttimeout)
 (opt updatetime 100)
-(opt timeoutlen 350)
+(opt timeoutlen 500)
 (opt ttimeoutlen 10)
 (opt redrawtime 1500)
 ;; Search

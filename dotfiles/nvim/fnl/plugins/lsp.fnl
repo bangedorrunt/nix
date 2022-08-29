@@ -1,16 +1,6 @@
 (import-macros {: augroup : autocmd : autocmd!
                 : nmap : noremap
                 : command} :core.macros)
-
-(local {: has?} (require :core.funs))
-(local lspconfig  (require :lspconfig))
-(local mason (require :mason))
-(local mason_lspconfig (require :mason-lspconfig))
-(local rust_tools (require :rust-tools))
-(local null_ls (require :null-ls))
-(local {: formatting : diagnostics} (require :null-ls.builtins))
-(local telescope_builtin (require :telescope.builtin))
-
 ;;;; LSP UI
 (let [{: with : handlers} vim.lsp]
   (set vim.lsp.handlers.textDocument/signatureHelp
@@ -70,20 +60,18 @@
                                         :additionalTextEdits]}})))
 
 (fn enhanced_attach [client bufnr]
-  (let [{:hover open_doc_float!
+  (let [{: has?} (require :core.funs)
+        {:hover open_doc_float!
          :declaration goto_declaration!
          :definition goto_definition!
+         :implementation goto_implementation!
          :type_definition goto_type_definition!
          :code_action open_code_action_float!
+         :references open_references_float!
          :rename rename!} vim.lsp.buf
         {:open_float open_line_diag_float!
          :goto_prev goto_diag_prev!
-         :goto_next goto_diag_next!} vim.diagnostic
-        {:lsp_implementations open_impl_float!
-         :lsp_references open_ref_float!
-         :diagnostics open_diag_float!
-         :lsp_document_symbols open_local_symbol_float!
-         :lsp_workspace_symbols open_workspace_symbol_float!} telescope_builtin]
+         :goto_next goto_diag_next!} vim.diagnostic]
     ;; LSP keymap
     (noremap n buffer :K open_doc_float!)
     (noremap nv buffer :gr rename!)
@@ -92,14 +80,10 @@
     (noremap n buffer :gD goto_declaration!)
     (noremap n buffer :gd goto_definition!)
     (noremap n buffer :gt goto_type_definition!)
-    (noremap nv buffer :<leader>la open_code_action_float!)
-    (noremap n buffer :<leader>ll open_line_diag_float!)
-    (noremap n buffer :<leader>li open_impl_float!)
-    (noremap n buffer :<leader>lr open_ref_float!)
-    (noremap n buffer :<leader>ld `(open_diag_float! {:bufnr 0}))
-    (noremap n buffer :<leader>lD open_diag_float!)
-    (noremap n buffer :<leader>ls open_local_symbol_float!)
-    (noremap n buffer :<leader>lS open_workspace_symbol_float!)
+    (noremap n buffer :gi goto_implementation!)
+    (noremap nv buffer :<LocalLeader>la open_code_action_float!)
+    (noremap n buffer :<LocalLeader>ll open_line_diag_float!)
+    (noremap n buffer :<LocalLeader>lr open_references_float!)
     ;; LSP format
     (if (capable? client :documentFormattingProvider)
       (do
@@ -112,10 +96,10 @@
                                                                         client.name)))
                                                 : bufnr}
                                                {:buffer bufnr})))
-        (noremap n buffer :<Leader>lf `(vim.lsp.buf.format {: bufnr})))
+        (noremap n buffer :<LocalLeader>lf `(vim.lsp.buf.format {: bufnr})))
       (print "LSP not support formatting."))))
 
-(local servers [:bashls
+(let [servers [:bashls
                :clojure_lsp
                :cssls
                :diagnosticls
@@ -130,26 +114,31 @@
                :tailwindcss
                :tsserver
                :vimls
-               :yamlls])
-
-(mason.setup)
-(mason_lspconfig.setup {:ensure_installed servers})
-(mason_lspconfig.setup_handlers
-  {1 (fn [server]
-       (let [lsp_installed_server (. lspconfig server)]
-         (-> {:on_attach enhanced_attach
-              : capabilities}
-             (lsp_installed_server.setup))))
-   :rust_analyzer #(rust_tools.setup)})
+               :yamlls]
+      lspconfig  (require :lspconfig)
+      mason (require :mason)
+      mason_lspconfig (require :mason-lspconfig)
+      rust_tools (require :rust-tools)]
+  (mason.setup)
+  (mason_lspconfig.setup {:ensure_installed servers})
+  (mason_lspconfig.setup_handlers
+    {1 (fn [server]
+         (let [lsp_installed_server (. lspconfig server)]
+           (-> {:on_attach enhanced_attach
+               : capabilities}
+               (lsp_installed_server.setup))))
+    :rust_analyzer #(rust_tools.setup)}))
 
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
 ;; make sure respective sources are installed
-(local null_sources
-  [formatting.prettier
-   formatting.stylua
-   formatting.trim_whitespace
-   formatting.shfmt])
+(let [null_ls (require :null-ls)
+      {: formatting
+       : diagnostics} (require :null-ls.builtins)
+      null_sources [formatting.prettier
+                    formatting.stylua
+                    formatting.trim_whitespace
+                    formatting.shfmt]]
 
-(-> {:on_attach enhanced_attach
-     :sources null_sources}
-    null_ls.setup)
+  (-> {:on_attach enhanced_attach
+      :sources null_sources}
+      null_ls.setup))

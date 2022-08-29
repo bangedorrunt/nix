@@ -17,29 +17,29 @@
   :lukas-reineke/indent-blankline.nvim {:after :themer :mod :indent-blankline}
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
-  :folke/which-key.nvim {:event :BufRead :mod :which-key}
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
   :kyazdani42/nvim-tree.lua {:event :BufRead :mod :nvim-tree}
   ;;;; Editor plugins
+  :tpope/vim-eunuch {:event :BufRead}
   :tpope/vim-repeat {:event :BufRead}
+  ;; :tpope/vim-sleuth {:event :BufRead}
   :NMAC427/guess-indent.nvim {:event :BufRead :init :guess-indent}
   :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
-  :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
   :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
   :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
   :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
   :romainl/vim-qf {:ft :qf}
-  :ahmedkhalf/project.nvim {:as :rooter :module_pattern "project.*" :init :project_nvim}
   :NvChad/nvim-colorizer.lua {:ft [:html :css
                                    :sass :vim
                                    :typescript :typescriptreact]}
   ;;;; Fuzzy search engine
   :ThePrimeagen/harpoon {:event :BufRead :mod :harpoon}
-  :nvim-telescope/telescope-fzf-native.nvim {:as :fzf-native :module_pattern "fzf.*" :run "make"}
+  :ahmedkhalf/project.nvim {:module_pattern "project.*" :init :project_nvim}
+  :nvim-telescope/telescope-fzf-native.nvim {:module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:as :telescope
+                                  :event :BufRead
                                   :module_pattern "telescope.*"
-                                  :branch "0.1.x"
                                   :mod :telescope}
   ;;;; Lang plugins
   :folke/trouble.nvim {:cmd :Trouble}
@@ -76,9 +76,9 @@
   :PaterJason/cmp-conjure {:after [:nvim-cmp :conjure]}
   :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
   ;;;; Git plugins
-  :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
-  :sindrets/diffview.nvim {:after :treesitter :mod :diffview}
   :lewis6991/gitsigns.nvim {:after :themer :mod :gitsigns}
+  :sindrets/diffview.nvim {:after :treesitter :mod :diffview}
+  :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
   ;;;; Tool plugins
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
   ;;;; Unused plugins
@@ -89,9 +89,9 @@
   ;; :RRethy/nvim-base16 {:color :base16-onedark}
   ;; :tpope/vim-commentary {:event :BufRead :as :vim-commentary}
   ;; :tpope/vim-surround {:event :BufRead}
-  ;; :tpope/vim-sleuth {:event :BufRead}
-  ;; :tpope/vim-eunuch {:event :BufWinEnter}
   ;; :tpope/vim-abolish {:event :BufWinEnter}
+  ;; :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
+  ;; :folke/which-key.nvim {:event :BufRead :mod :which-key}
   )
 
 (require :plugins.scratch)

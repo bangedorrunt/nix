@@ -1,4 +1,3 @@
-
 (local {: map : reduce : inc} (require :core.funs))
 
 (local tab

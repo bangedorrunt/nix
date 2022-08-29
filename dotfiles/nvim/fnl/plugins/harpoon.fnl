@@ -1,17 +1,19 @@
 (import-macros {: nmap : noremap} :core.macros)
 
-(noremap n :<Leader>mf "<CMD>lua require('harpoon.mark').add_file()<CR>")
-(noremap n :<Leader>md "<CMD>lua require('harpoon.mark').rm_file()<CR>")
-(noremap n :<Leader>mD "<CMD>lua require('harpoon.mark').clear_all()<CR>")
-(noremap n :<Leader>mm "<CMD>lua require('harpoon.ui').toggle_quick_menu()<CR>")
-(noremap n :<Leader>mn "<CMD>lua require('harpoon.ui').nav_next()<CR>")
-(noremap n :<Leader>mp "<CMD>lua require('harpoon.ui').nav_prev()<CR>")
-(noremap n :<Leader>1 "<CMD>lua require('harpoon.ui').nav_file(1)<CR>")
-(noremap n :<Leader>2 "<CMD>lua require('harpoon.ui').nav_file(2)<CR>")
-(noremap n :<Leader>3 "<CMD>lua require('harpoon.ui').nav_file(3)<CR>")
-(noremap n :<Leader>4 "<CMD>lua require('harpoon.ui').nav_file(4)<CR>")
-(noremap n :<Leader>5 "<CMD>lua require('harpoon.ui').nav_file(5)<CR>")
-(noremap n :<Leader>6 "<CMD>lua require('harpoon.ui').nav_file(6)<CR>")
-(noremap n :<Leader>7 "<CMD>lua require('harpoon.ui').nav_file(7)<CR>")
-(noremap n :<Leader>8 "<CMD>lua require('harpoon.ui').nav_file(8)<CR>")
-(noremap n :<Leader>9 "<CMD>lua require('harpoon.ui').nav_file(9)<CR>")
+(let [{: setup} (require :harpoon)
+      {: add_file : rm_file : clear_all} (require :harpoon.mark)
+      {: toggle_quick_menu
+       : nav_file : nav_next : nav_prev} (require :harpoon.ui)
+      format string.format]
+
+  (setup {:global_settings {:enter_on_sendcmd true}})
+
+  (noremap n silent :<Leader>mf add_file)
+  (noremap n silent :<Leader>md rm_file)
+  (noremap n silent :<Leader>mD clear_all)
+  (noremap n silent :<Leader>mm toggle_quick_menu)
+  (noremap n silent :<Leader>mn nav_next)
+  (noremap n silent :<Leader>mp nav_prev)
+
+  (for [v 1 9]
+    (noremap n silent (format "<Leader>%s" v) '(nav_file v))))

@@ -1,39 +1,36 @@
-(import-macros {: g : command} :core.macros)
+(import-macros {: g} :core.macros)
 
-(local os_name (. (vim.loop.os_uname) :sysname))
-
-(local path_sep (match os_name
+(let [os_name (. (vim.loop.os_uname) :sysname)
+      path_sep (match os_name
                 :Windows "\\\\"
-                _ "/"))
-
-(local data_path (string.format "%s/site/" (vim.fn.stdpath :data)))
-(local config_path (vim.fn.stdpath :config))
-(local cache_path (vim.fn.stdpath :cache))
-(local state_path (vim.fn.stdpath :state))
-
-(tset _G :tdt
-      {:signs {:error " "
-               :warning " "
-               :hint " "
-               :information " "
-               :prompt "❯"}
-       :pallete {:dark {:tokyonight :#1a1b26
-                        :monokaipro_spectrum :#222222
-                        :rose-pine :#191724}
-                 :light {:tokyonight :#e1e2e7
-                         :gruvbox :#fbf1c7
-                         :rose-pine :#faf4ed}}
-       :paths {:IS_MAC (= os_name :Darwin)
-               :IS_LINUX (= os_name :Linux)
-               :IS_WINDOWS (= os_name :Windows)
-               :PATH_SEP path_sep
-               :NVIM_PATH config_path
-               :HOME (os.getenv :HOME)
-               :CACHE_PATH cache_path
-               :DATA_PATH data_path
-               :STATE_PATH state_path
-               :PACKER_PATH (.. data_path :pack/packer/opt/packer.nvim)
-               :PACKER_COMPILED_PATH (.. data_path :lua/packer_compiled.lua)}})
+                _ "/")
+      data_path (string.format "%s/site/" (vim.fn.stdpath :data))
+      config_path (vim.fn.stdpath :config)
+      cache_path (vim.fn.stdpath :cache)
+      state_path (vim.fn.stdpath :state)]
+  (tset _G :tdt
+        {:signs {:error " "
+                 :warning " "
+                 :hint " "
+                 :information " "
+                 :prompt "❯"}
+         :pallete {:dark {:tokyonight :#1a1b26
+                          :monokaipro_spectrum :#222222
+                          :rose-pine :#191724}
+                   :light {:tokyonight :#e1e2e7
+                           :gruvbox :#fbf1c7
+                           :rose-pine :#faf4ed}}
+         :paths {:IS_MAC (= os_name :Darwin)
+                 :IS_LINUX (= os_name :Linux)
+                 :IS_WINDOWS (= os_name :Windows)
+                 :PATH_SEP path_sep
+                 :NVIM_PATH config_path
+                 :HOME (os.getenv :HOME)
+                 :CACHE_PATH cache_path
+                 :DATA_PATH data_path
+                 :STATE_PATH state_path
+                 :PACKER_PATH (.. data_path :pack/packer/opt/packer.nvim)
+                 :PACKER_COMPILED_PATH (.. data_path :lua/packer_compiled.lua)}}))
 
 ;; Disable built-in plugins and host providers
 (g loaded_netrw 1)
