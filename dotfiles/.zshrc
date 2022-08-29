@@ -2,8 +2,23 @@
 #          ^----- get shellcheck hints based on bash
 # https://github.com/koalaman/shellcheck/issues/809
 
-# If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:$PATH
+# Handle macOS platforms
+CPU=$(uname -p)
+if [[ "$CPU" == "arm" ]]; then
+	export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+else
+  export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+fi
+
+# Editor and pager
+# export EDITOR=nvim
+# export MANPAGER='nvim +Man!'
+# export VISUAL="$EDITOR"
+#
+# export PAGER=less
+# export LESS="-FiQMXRwJ --incsearch --status-col-width 1"
+# export LESSCHARSET="UTF-8"
+
 
 ### Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # initialization code that may require console input (password prompts, [y/n]
@@ -13,7 +28,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 ### Fzf config
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg+:#cc1919,bg+:-1,hl+:#5fd7ff'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS"
+--color=fg:#e0def4,bg:#1f1d2e,hl:#6e6a86
+--color=fg+:#908caa,bg+:#191724,hl+:#908caa
+--color=info:#9ccfd8,prompt:#f6c177,pointer:#c4a7e7
+--color=marker:#ebbcba,spinner:#eb6f92,header:#ebbcba"
 # export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
@@ -22,7 +41,8 @@ alias fv='nvim $(fzf)'
 
 ### Nvm config
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 ### Zoxide config
 eval "$(zoxide init zsh --cmd j)"
@@ -96,21 +116,6 @@ zinit wait"1" lucid for \
 
 ### End of zinit's installer chunk
 
-### You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-### Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
-
-export PAGER=less
-
-### Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
 ### SSH
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
@@ -172,3 +177,4 @@ alias rmconflict='fd --hidden conflicted ~/Dropbox'
 # alias rmds='find . -type f -name '*.DS_Store' | xargs rm'
 alias rmds='fd -H -I \.DS\_Store -x rm -v'
 alias rsync='rsync -a --delete'
+alias lg='lazygit'
