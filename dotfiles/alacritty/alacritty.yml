@@ -1,23 +1,35 @@
-env:
-  # TERM env customization.
-  #
-  # if this property is not set, alacritty will set it to xterm-256color.
-  #
-  # Note that some xterm terminfo databases don't declare support for italics.
-  # TERM: xterm-256color
-  TERM: alacritty
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+
+# Import additional configuration files
+# All imports must either be absolute paths starting with `/`, or paths relative
+# to the user's home directory starting with `~/`.
+import:
+  - ~/.config/alacritty/themer/rose-pine.yml
+
+# Any items in the `env` entry below will be added as
+# environment variables. Some entries may override variables
+# set by alacritty itself.
+#env:
+# TERM variable
+#
+# This value is used to set the `$TERM` environment variable for
+# each instance of Alacritty. If it is not present, alacritty will
+# check the local terminfo database and use `alacritty` if it is
+# available, otherwise `xterm-256color` is used.
+#TERM: alacritty
+
 window:
   # Window dimensions in character columns and lines (changes require restart)
-  dimensions:
-    columns: 120
-    lines: 80
+  # dimensions:
+  # columns: 120
+  # lines: 80
 
-    # Adds this many blank pixels of padding around the window
-    # Units are physical pixels; this is not dpi aware.
-    # (Change requires restart)
-    # padding:
-    x: 25
-    y: 25
+  # Adds this many blank pixels of padding around the window
+  # Units are physical pixels; this is not dpi aware.
+  # (Change requires restart)
+  padding:
+    x: 10
+    y: 10
 
   dynamic_padding: true
   # Window decorations
@@ -27,7 +39,13 @@ window:
   #     - none: neither borders nor title bar
   #     - buttonless: title bar, transparent background and title bar buttons
   #     - transparent: title bar, transparent background, but no title bar buttons
-  decorations: buttonless
+  decorations: transparent
+
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  #opacity: 1.0
 
   dynamic_title: true
 
@@ -51,16 +69,13 @@ scrolling:
   # Scrollback is enabled (history > 0).
   multiplier: 3
 
-# When true, bold text is drawn using the bright variant of colors.
-# draw_bold_text_with_bright_colors: true
-
 # Font configuration (changes require restart)
 font:
   normal:
-    family: Operator Mono SSm Lig
+    family: OperatorMonoSSm Nerd Font
     style: Light
   italic:
-    family: Operator Mono SSm Lig
+    family: OperatorMonoSSm Nerd Font
     style: Light Italic
   # bold:
   #   family: Operator Mono SSm Lig
@@ -72,16 +87,11 @@ font:
   # Point size of the font
   size: 19.0
 
-  # OS X only: Use thin stroke font rendering. Thin strokes are suitable
-  # for retina displays, but for non-retina you probably want this set to
-  # false.
-  # use_thin_strokes: true
-
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
-  # offset:
-  #   x: 0
-  #   y: 6
+  offset:
+    x: -1
+    y: 18
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
@@ -89,6 +99,20 @@ font:
   # glyph_offset:
   #   x: 0
   #   y: 0
+
+  # OS X only: Use thin stroke font rendering. Thin strokes are suitable
+  # for retina displays, but for non-retina you probably want this set to
+  # false.
+  use_thin_strokes: true
+
+  # Use built-in font for box drawing characters.
+  # If `true`, Alacritty will use a custom built-in font for box drawing
+  # characters (Unicode points 2500 - 259f).
+  builtin_box_drawing: true
+
+# If `true`, bold text is drawn using the bright color variants.
+draw_bold_text_with_bright_colors: true
+
 debug:
   # Display the time it takes to redraw each frame.
   render_timer: false
@@ -177,10 +201,10 @@ live_config_reload: true
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
 # entries in shell.args are passed unmodified as arguments to the shell.
 #
-# shell:
-#   program: /usr/local/bin/zsh
-#   args:
-#     - -l
+shell:
+  program: /usr/local/bin/zsh
+  args:
+    - -l
 
 # Keybinding
 key_bindings:
@@ -415,6 +439,3 @@ key_bindings:
   - { key: Slash, mods: Control|Shift, chars: "\x1b+\x1b+\x43\x3f" }
   - { key: Q, mods: Control, chars: "\x11" }
   - { key: K, mods: Command, chars: "\x1b+\x1b+\x44\x6b" }
-
-import:
-  - ./themes.yml
