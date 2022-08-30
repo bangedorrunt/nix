@@ -11,13 +11,12 @@ else
 fi
 
 # Editor and pager
-# export EDITOR=nvim
-# export MANPAGER='nvim +Man!'
-# export VISUAL="$EDITOR"
-#
-# export PAGER=less
-# export LESS="-FiQMXRwJ --incsearch --status-col-width 1"
-# export LESSCHARSET="UTF-8"
+export EDITOR=nvim
+export MANPAGER='nvim +Man!'
+export VISUAL="$EDITOR"
+export PAGER=less
+export LESS="-FiQMXRwJ --incsearch --status-col-width 1"
+export LESSCHARSET="UTF-8"
 
 
 ### Enable powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
