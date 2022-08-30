@@ -10,7 +10,7 @@
   (setup {:ensure_installed languages
           :highlight {:enable true
                       :use_languagetree true}
-          ;; :indent {:enable true}
+          :indent {:enable true}
           :matchup {:enable true}
           :rainbow {:enable true
                     :extended_mode true
@@ -39,4 +39,4 @@
           :context_commentstring {:enable true
                                   :enable_autocmd false
                                   :config {:fennel ";; %s"
-                                  :clojure ";; %s"}}}))
+                                           :clojure ";; %s"}}}))

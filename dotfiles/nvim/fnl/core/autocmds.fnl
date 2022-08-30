@@ -10,8 +10,12 @@
 (autocmd FileType [help startuptime lspinfo man] '(vim.cmd.wincmd "L"))
 
 ;; Smart `q` close windows
-(autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))
-(autocmd FileType man '(noremap n buffer silent :q "<Cmd>quit<CR>"))
+(augroup smart_q
+         (autocmd!)
+         (autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))
+         (autocmd FileType man '(noremap n buffer silent :q "<Cmd>quit<CR>"))
+         ;; BUG: q don't work with fugitive
+         (autocmd FileType [fugitive fugitiveblame] '(nmap n buffer :q :gq)))
 
 ;; Restore cursor on exit
 (augroup restore_cursor_on_exit

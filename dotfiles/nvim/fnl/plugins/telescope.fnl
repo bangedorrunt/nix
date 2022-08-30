@@ -35,8 +35,8 @@
           :layout_config {:height 0.35}
           :mappings {:i {:<ESC> close}}
           :file_ignore_patterns [:.git/
-                                  :node_modules/.*
-                                  :alfred2/.*]}
+                                 :node_modules/.*
+                                 :alfred2/.*]}
           :extensions {:fzf {:fuzzy true
                              :override_generic_sorter false
                              :override_file_sorter true

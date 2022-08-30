@@ -66,7 +66,7 @@
 
 ;;;; BEHAVIOUR
 (opt magic)
-;; (opt hidden)
+(opt hidden)
 (opt scrolloff 10)
 ;; (opt autoread)
 (opt wrap)
@@ -117,8 +117,8 @@
 (opt timeout)
 (opt ttimeout)
 (opt updatetime 100)
-(opt timeoutlen 500)
-(opt ttimeoutlen 10)
+(opt timeoutlen 350)
+(opt ttimeoutlen 150)
 (opt redrawtime 1500)
 ;; Search
 (opt ignorecase)
