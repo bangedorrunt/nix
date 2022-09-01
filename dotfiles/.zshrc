@@ -36,7 +36,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS"
 export FZF_DEFAULT_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_CTRL_T_COMMAND="rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
 export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --exclude .git"
-alias fv='nvim $(fzf)'
+alias f='nvim $(fzf)'
 
 ### Nvm config
 export NVM_DIR="$HOME/.nvm"
