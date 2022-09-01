@@ -28,6 +28,7 @@
 
       config {:options {:component_separators ""
                         :section_separators ""
+                        :globalstatus true
                         :theme {:normal {:c {:fg colors.fg :bg colors.bg}}
                         :inactive {:c {:fg colors.fg :bg colors.bg}}}}
                         :sections {:lualine_a {}
