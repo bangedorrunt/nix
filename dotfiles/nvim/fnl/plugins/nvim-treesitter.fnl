@@ -6,10 +6,10 @@
                  :rust :c :cpp
                  :toml :yaml :json :json5 :jsonc
                  :lua :vim :nix :python
-                 :markdown :markdown_inline :norg]]
+                 :norg :markdown :markdown_inline]]
   (setup {:ensure_installed languages
-          :highlight {:enable true
-                      :use_languagetree true}
+          :sync_install true
+          :highlight {:enable true}
           :indent {:enable true}
           :matchup {:enable true}
           :rainbow {:enable true

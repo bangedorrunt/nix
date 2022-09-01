@@ -1,6 +1,6 @@
 (local {: view} (require :fennel))
 
-(local {:operator {: add : sub}
+(local {:operator {: add : sub :concat join+}
         :length count
         :tomap totable
         :totable tosequence
@@ -94,6 +94,15 @@
       acc)
     (or base {})
     [...]))
+
+(fn get [t k d]
+  (let [res (when (table? t)
+              (let [val (. t k)]
+                (when (not (nil? val))
+                  val)))]
+    (if (nil? res)
+        d
+        res)))
 
 (fn into [tbl ...]
   "Adds any number of key/value pairs to `tbl`, returning `tbl`. Like [[tset]]
@@ -228,6 +237,6 @@
  : totable : tosequence
  : for_each
  : map : reduce : filter : chain : run!
- : merge : into : concat : mapcat
- : join : split : blank? : triml : trimr : trim
+ : merge : into : get : concat : mapcat
+ : join : join+ : split : blank? : triml : trimr : trim
  }

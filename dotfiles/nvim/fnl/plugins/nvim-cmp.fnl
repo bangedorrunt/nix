@@ -1,25 +1,61 @@
 (let
-  [{: first : dec} (require :core.funs)
+  [{: first : dec : get : join+} (require :core.funs)
    {: setup : visible : complete
     : select_next_item : select_prev_item
     : mapping : config} (require :cmp)
    {: expand_or_jumpable : expand_or_jump
     : jumpable : jump : lsp_expand} (require :luasnip)
-   {: cmp_format} (require :lspkind)
+   ;; VSCode icons
+   vscode_kinds  {:Array " "
+                  :Boolean " "
+                  :Class " "
+                  :Color " "
+                  :Constant " "
+                  :Constructor " "
+                  :Enum " "
+                  :EnumMember " "
+                  :Event " "
+                  :Field " "
+                  :File " "
+                  :Folder " "
+                  :Function " "
+                  :Interface " "
+                  :Keyword " "
+                  :Method " "
+                  :Module " "
+                  :Namespace " "
+                  :Null "ﳠ "
+                  :Number " "
+                  :Object " "
+                  :Operator " "
+                  :Package " "
+                  :Property " "
+                  :Reference " "
+                  :Snippet " "
+                  :Struct " "
+                  :String " "
+                  :Text " "
+                  :TypeParameter " "
+                  :Unit " "
+                  :Value " "
+                  :Variable " "}
   cmp_menu_items {:nvim_lsp :LSP
                   :luasnip :LuaSnip
                   :conjure :Conjure
                   :buffer :Buffer
                   :calc :Calc
                   :path :Path}
-  cmp_srcs [{:name :nvim_lsp}
-            {:name :conjure}
-            {:name :luasnip}
-            {:name :buffer :keyword_length 5}
-            {:name :path}
-            {:name :neorg}
-            {:name :nvim_lua}
-            {:name :calc}]
+  cmp_srcs      [{:name :nvim_lsp}
+                 {:name :conjure}
+                 {:name :luasnip}
+                 {:name :buffer :keyword_length 5}
+                 {:name :path}
+                 {:name :neorg}
+                 {:name :nvim_lua}
+                 {:name :calc}]
+  cmp_format
+  (fn [_ item]
+    (doto item (tset :kind (join+ (get vscode_kinds item.kind "") item.kind))))
   ;; Check backspace
   has_words_before?
   (fn []
@@ -45,8 +81,7 @@
         (jumpable -1) (jump -1)
         (fallback)))]
 
-  (setup {:formatting {:format (cmp_format {:with_text false
-                                            :menu cmp_menu_items})}
+  (setup {:formatting {:format cmp_format}
           :mapping (mapping.preset.insert
                      {:<CR> (mapping.confirm {:select true})
                       :<C-Space> (mapping.complete)
@@ -58,8 +93,7 @@
 
   ;; Cmdline completions
   (setup.cmdline "/" {:mapping (mapping.preset.cmdline)
-                 :sources [{:name :buffer}]})
+                      :sources [{:name :buffer}]})
   (setup.cmdline ":" {:mapping (mapping.preset.cmdline)
-                 :sources (config.sources
-                            [{:name :path}]
-                            [{:name :cmdline}])}))
+                      :sources (config.sources [{:name :path}]
+                                               [{:name :cmdline}])}))

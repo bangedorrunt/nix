@@ -25,22 +25,22 @@
           (if git? (builtin.git_files) (builtin.find_files {:cwd "%:h"}))))]
 
   (setup {:defaults {:cache_picker {:num_pickers 20}
-          :prompt_prefix "❯ "
-          :selection_caret "❯ "
-          :borderchars ["─" "│" "─" "│" "┌" "┐" "┘" "└"]
-          :path_display ["truncate" "smart"]
-          :winblend 0
-          :sorting_strategy :descending
-          :layout_strategy :cursor
-          :layout_config {:height 0.35}
-          :mappings {:i {:<ESC> close}}
-          :file_ignore_patterns [:.git/
-                                 :node_modules/.*
-                                 :alfred2/.*]}
-          :extensions {:fzf {:fuzzy true
-                             :override_generic_sorter false
-                             :override_file_sorter true
-                             :case_mode :smart_case}}})
+                     :prompt_prefix "❯ "
+                     :selection_caret "❯ "
+                     :borderchars ["─" "│" "─" "│" "┌" "┐" "┘" "└"]
+                     :path_display ["truncate" "smart"]
+                     :winblend 0
+                     :sorting_strategy :descending
+                     :layout_strategy :cursor
+                     :layout_config {:height 0.35}
+                     :mappings {:i {:<ESC> close}}
+                     :file_ignore_patterns [:.git/
+                                           :node_modules/.*
+                                           :alfred2/.*]}
+                     :extensions {:fzf {:fuzzy true
+                                       :override_generic_sorter false
+                                       :override_file_sorter true
+                                       :case_mode :smart_case}}})
 
   ;; Load extensions
   (run! load_extension [:fzf :projects])

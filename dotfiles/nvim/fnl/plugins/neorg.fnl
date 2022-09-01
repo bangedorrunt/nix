@@ -36,4 +36,4 @@
              [:<Leader>f :core.integrations.telescope.find_linkable]]
          :i [[:<C-l> :core.integrations.telescope.insert_link]]}
         {:silent true
-        :noremap true}))))
+         :noremap true}))))

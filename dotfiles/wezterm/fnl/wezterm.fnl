@@ -15,7 +15,11 @@
  :window_frame (window_frame)
  :font (wezterm.font_with_fallback
          [{:family "OperatorMonoSSm Nerd Font" :weight "Light"}
-          {:family "Iosevka Nerd Font Mono" :weight "Regular"}])
+          ;; {:family "Iosevka Nerd Font Mono" :weight "Regular"}
+          {:family "codicon" :weight "Regular"
+           :use_cap_height_to_scale_fallback_fonts true
+           :scale 0.8}
+          {:family "devicon" :weight "Regular"}])
  :font_size 19.5
  :freetype_load_target :Light
  :foreground_text_hsb {:hue 1.0 :saturation 1.0 :brightness 1.1}

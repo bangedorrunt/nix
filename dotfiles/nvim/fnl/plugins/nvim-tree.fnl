@@ -11,7 +11,14 @@
           :renderer {:icons {:show {:git false
                                     :folder true
                                     :folder_arrow false
-                                    :file true}}}}
+                                    :file true}
+                             :glyphs {:default ""
+                                      :symlink ""
+                                      :bookmark ""
+                                      :folder {:default""
+                                               :open ""
+                                               :empty ""
+                                               :empty_open ""}}}}}
           :view {:width 30 :side :left})
   (on_nvim_tree_ready #(vim.cmd :NvimTreeRefresh))
   (noremap n :<Leader>tt :<Cmd>NvimTreeToggle<CR>))

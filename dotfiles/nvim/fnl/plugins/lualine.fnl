@@ -49,11 +49,12 @@
       ins_right (fn [component]
                   (table.insert config.sections.lualine_x component))]
 
-  (ins_left {1 (fn [] "▊")
+  (ins_left {1 (fn [] "")
              :color {:fg colors.blue}
              :padding {:left 0 :right 1}})
 
-  (ins_left {1
+  (ins_left {1 (fn [] "")
+             :color
              (fn []
                (let [mode-color {:n colors.red
                                 :i colors.green
@@ -75,10 +76,8 @@
                                 :r? colors.cyan
                                 :! colors.red
                                 :t colors.red}]
-                 (hi LualineMode {:fg  (. mode-color (vim.fn.mode)) :bg colors.bg})
-                 ""))
-            :color :LualineMode
-            :padding {:right 1}})
+                 {:fg  (. mode-color (vim.fn.mode)) :bg colors.bg}))
+             :padding {:right 1}})
 
   (ins_left {1 :filesize :cond conditions.buffer_not_empty})
   (ins_left {1 :filename
@@ -88,9 +87,9 @@
   ;; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
   (ins_left {1 (fn [] (if harpoon_number (.. "ﯠ " harpoon_number) "ﯡ "))
              :color (fn [] (if harpoon_number {:fg "#98be65" :gui :bold} {:fg "#ec5f67"}))})
-  (ins_left {1 :branch :icon "" :color {:fg colors.violet :gui :bold}})
+  (ins_left {1 :branch :icon "" :color {:fg colors.violet :gui :bold}})
   (ins_left {1 :diff
-             :symbols {:added " " :modified " " :removed " "}
+             :symbols {:added " " :modified " " :removed " "}
              :diff_color {:added {:fg colors.green}
              :modified {:fg colors.orange}
              :removed {:fg colors.red}}
@@ -99,7 +98,7 @@
   (ins_left {1 :progress :color {:fg colors.fg :gui :bold}})
   (ins_left {1 :diagnostics
              :sources {1 :nvim_diagnostic}
-             :symbols {:error " " :warn " " :info " "}
+             :symbols {:error " " :warn " " :info " "}
              :diagnostics_color {:color_error {:fg colors.red}
              :color_warn {:fg colors.yellow}
              :color_info {:fg colors.cyan}}})
@@ -117,7 +116,7 @@
               :icons_enabled false
               :color {:fg colors.green :gui :bold}})
 
-  (ins_right {1 (fn [] "▊")
+  (ins_right {1 (fn [] "")
               :color {:fg colors.blue}
               :padding {:left 1}})
 
