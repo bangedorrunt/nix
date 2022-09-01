@@ -59,7 +59,7 @@
                                         :detail
                                         :additionalTextEdits]}})))
 
-(fn enhanced_attach [client bufnr]
+(fn on_attach [client bufnr]
   (let [{: has?} (require :core.funs)
         {:hover open_doc_float!
          :declaration goto_declaration!
@@ -124,8 +124,8 @@
   (mason_lspconfig.setup_handlers
     {1 (fn [server]
          (let [lsp_installed_server (. lspconfig server)]
-           (-> {:on_attach enhanced_attach
-               : capabilities}
+           (-> {: on_attach
+                : capabilities}
                (lsp_installed_server.setup))))
     :rust_analyzer #(rust_tools.setup)}))
 
@@ -134,11 +134,11 @@
 (let [null_ls (require :null-ls)
       {: formatting
        : diagnostics} (require :null-ls.builtins)
-      null_sources [formatting.prettier
-                    formatting.stylua
-                    formatting.trim_whitespace
-                    formatting.shfmt]]
+      sources [formatting.prettier
+               formatting.stylua
+               formatting.trim_whitespace
+               formatting.shfmt]]
 
-  (-> {:on_attach enhanced_attach
-      :sources null_sources}
+  (-> {: on_attach
+       : sources}
       null_ls.setup))
