@@ -39,21 +39,21 @@ mkdir -p "$PACK_PATH"
 echo 'Downloading Luafun ...'
 
 if [ ! -d "$LUAFUN_PATH" ]; then
-  git clone "https://github.com/babygau/luafun.nvim" "$LUAFUN_PATH"
+  git clone --depth 1 "https://github.com/babygau/luafun.nvim" "$LUAFUN_PATH"
 fi
 
 echo 'Downloading Hotpot...'
 
 if [ ! -d "$HOTPOT_PATH" ]; then
-  git clone "https://github.com/rktjmp/hotpot.nvim" "$HOTPOT_PATH"
+  git clone --depth 1 "https://github.com/rktjmp/hotpot.nvim" "$HOTPOT_PATH"
 fi
 
-cd "$HOTPOT_PATH" && git fetch && git checkout nightly
+# cd "$HOTPOT_PATH" && git fetch && git checkout nightly
 
 echo 'Downloading Packer ...'
 
 if [ ! -d "$PACKER_PATH" ]; then
-  git clone "https://github.com/wbthomason/packer.nvim" "$PACKER_PATH"
+  git clone --depth 1 "https://github.com/wbthomason/packer.nvim" "$PACKER_PATH"
 fi
 
 if [ ! -e "${STATE_PATH}/swap" ]; then
