@@ -10,6 +10,7 @@
           ;; :groups {:background :#fff0ec}
           :highlight_groups
           {:CursorLine {:bg :None}
+           :WinSeparator {:fg :#191724 :bg :None}
            :Error {:fg :None :bg :None}
            :ErrorMsg {:fg :None :bg :None}
            :NvimInternalError {:bg :None}
