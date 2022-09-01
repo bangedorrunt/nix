@@ -14,8 +14,7 @@
          (autocmd!)
          (autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))
          (autocmd FileType man '(noremap n buffer silent :q "<Cmd>quit<CR>"))
-         ;; BUG: q don't work with fugitive
-         (autocmd FileType [fugitive fugitiveblame] '(nmap n buffer :q :gq)))
+         (autocmd FileType [fugitive fugitiveblame] '(noremap n :q :gq)))
 
 ;; Restore cursor on exit
 (augroup restore_cursor_on_exit
