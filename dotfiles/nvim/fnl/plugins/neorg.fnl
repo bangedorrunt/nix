@@ -1,14 +1,16 @@
 (let [{: setup} (require :neorg)
       {: on_event} (require :neorg.callbacks)]
   (setup
-    {:load {:core.defaults {}
-     :core.norg.concealer {}
-     :core.norg.esupports.metagen {:config {:type :auto}}
-     :core.norg.completion {:config {:engine :nvim-cmp}}
-     :core.norg.dirman {:config {:workspaces {:learnyousome "~/workspace/notetoself/learn-you-some"
-                                 :gtd "~/workspace/notetoself/gtd"}}}
-     :core.gtd.base {:config {:workspace :gtd}}
-     :core.integrations.telescope {}}})
+    {:load
+      {:core.defaults {}
+       :core.norg.concealer {}
+       :core.norg.completion {:config {:engine :nvim-cmp}}
+       :core.norg.dirman
+         {:config {:autochdir false
+                   :workspaces {:notetoself "$HOME/workspace/notetoself"
+                                :gtd "$HOME/workspace/gtd"}}}
+       :core.gtd.base {:config {:workspace :gtd}}
+       :core.integrations.telescope {}}})
 
   (on_event
     :core.keybinds.events.enable_keybinds
