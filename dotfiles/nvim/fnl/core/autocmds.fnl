@@ -3,18 +3,28 @@
                 : nmap : noremap} :core.macros)
 
 ;; Packer autocommands
-(autocmd BufWritePost */plugins/init.fnl '(vim.cmd "PackerCompile profile=true"))
-(autocmd VimLeavePre [*/plugins/init.fnl */plugins/**/*.fnl] '(vim.cmd "PackerCompile profile=true"))
+(augroup packer_compile
+         (autocmd!)
+         (autocmd BufWritePost */plugins/init.fnl '(vim.cmd "PackerCompile profile=true"))
+         (autocmd VimLeavePre [*/plugins/init.fnl */plugins/**/*.fnl] '(vim.cmd "PackerCompile profile=true")))
 
 ;; Open help vertically
-(autocmd FileType [help startuptime lspinfo man] '(vim.cmd.wincmd "L"))
+(augroup open_help_vertically
+         (autocmd!)
+         (autocmd FileType [help startuptime lspinfo man] '(vim.cmd.wincmd "L")))
 
 ;; Smart `q` close windows
-(augroup smart_q
+(augroup smart_quit
          (autocmd!)
          (autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))
          (autocmd FileType man '(noremap n buffer silent :q "<Cmd>quit<CR>"))
-         (autocmd FileType [fugitive fugitiveblame] '(noremap n :q :gq)))
+         (autocmd FileType [fugitive fugitiveblame] "nmap <buffer> q gq"))
+
+;; Toggle relative number
+(augroup toggle_relative_number
+         (autocmd!)
+         (autocmd InsertEnter * '(opt norelativenumber))
+         (autocmd InsertLeave * '(opt relativenumber)))
 
 ;; Restore cursor on exit
 (augroup restore_cursor_on_exit
