@@ -18,12 +18,10 @@
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
   :kyazdani42/nvim-tree.lua {:after :treesitter :mod :nvim-tree}
-  :vigoux/notifier.nvim {:after [:lspconfig :treesitter] :init :notifier}
+  :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
   ;;;; Editor plugins
   :tpope/vim-eunuch {:event :BufRead}
   :tpope/vim-repeat {:event :BufRead}
-  ;; :tpope/vim-sleuth {:event :BufRead}
-  :NMAC427/guess-indent.nvim {:event :BufRead :init :guess-indent}
   :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
   :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
@@ -34,7 +32,7 @@
                                    :sass :vim
                                    :typescript :typescriptreact]}
   ;;;; Fuzzy search engine
-  :ThePrimeagen/harpoon {:module :harpoon :mod :harpoon}
+  :ThePrimeagen/harpoon {:event :BufRead :mod :harpoon}
   :ahmedkhalf/project.nvim {:module_pattern "project.*" :init :project_nvim}
   :nvim-telescope/telescope-fzf-native.nvim {:module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:as :telescope
@@ -48,13 +46,13 @@
   :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
   :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
   :williamboman/mason-lspconfig.nvim {:event :BufRead :mod :lsp}
-  :nvim-treesitter/nvim-treesitter {:commit :1baf751fb0b03015c4c9883a87923cc4a7a4812e
+  :nvim-treesitter/nvim-treesitter {:commit :b56659f15e1d1396271b4938889ed92aca043b75
                                     :event :BufRead
                                     :as :treesitter
                                     :mod :nvim-treesitter}
-  :nvim-treesitter/nvim-treesitter-textobjects {:commit :775c5dbcb6937954d5861465e7c3ec23b855af93
+  :nvim-treesitter/nvim-treesitter-textobjects {:commit :e63c2ff8e38fad77299dd74e14c7c9360e1b3181
                                                 :after :treesitter}
-  :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
+  ;; :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
   :p00f/nvim-ts-rainbow {:after :treesitter}
   :andymass/vim-matchup {:after :treesitter}
   :JoosepAlviste/nvim-ts-context-commentstring {:after :treesitter :as :ts-context}
@@ -64,7 +62,7 @@
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
-  :hrsh7th/nvim-cmp {:commit :706371f1300e7c0acb98b346f80dad2dd9b5f679
+  :hrsh7th/nvim-cmp {:commit :33fbb2c3d2c512bd79ea03cf11fea405cbe618a9
                      :event :BufRead
                      :module_pattern "cmp.*"
                      :mod :nvim-cmp}
@@ -80,6 +78,7 @@
   :lewis6991/gitsigns.nvim {:after :themer :mod :gitsigns}
   :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
   ;;;; Tool plugins
+  :aserowy/tmux.nvim {:event :BufRead :mod :tmux}
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
   ;;;; Unused plugins
   ;; :lewis6991/impatient.nvim {}
@@ -90,6 +89,8 @@
   ;; :tpope/vim-commentary {:event :BufRead :as :vim-commentary}
   ;; :tpope/vim-surround {:event :BufRead}
   ;; :tpope/vim-abolish {:event :BufWinEnter}
+  ;; :tpope/vim-sleuth {:event :BufRead}
+  ;; :NMAC427/guess-indent.nvim {:event :BufRead :init :guess-indent}
   ;; :sindrets/diffview.nvim {:after :treesitter :mod :diffview}
   ;; :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
   ;; :folke/which-key.nvim {:event :BufRead :mod :which-key}
