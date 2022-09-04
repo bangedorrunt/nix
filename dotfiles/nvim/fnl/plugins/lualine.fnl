@@ -1,8 +1,4 @@
-(import-macros {: hi} :core.macros)
-
 (let [{: setup} (require :lualine)
-      {:get_index_of harpoon_index_of} (require :harpoon.mark)
-      harpoon_number (harpoon_index_of (vim.fn.bufname))
       colors {:fg "#bbc2cf"
               ;; Dark mode
               :bg "#191724"
@@ -28,7 +24,6 @@
 
       config {:options {:component_separators ""
                         :section_separators ""
-                        :globalstatus true
                         :theme {:normal {:c {:fg colors.fg :bg colors.bg}}
                         :inactive {:c {:fg colors.fg :bg colors.bg}}}}
                         :sections {:lualine_a {}
@@ -84,10 +79,6 @@
   (ins_left {1 :filename
             :cond conditions.buffer_not_empty
             :color {:fg colors.magenta :gui :bold}})
-  ;; Harpoon indicator
-  ;; REF: https://discord.com/channels/478925420616482816/823558498620276856/999648971553259611
-  (ins_left {1 (fn [] (if harpoon_number (.. "ﯠ " harpoon_number) "ﯡ "))
-             :color (fn [] (if harpoon_number {:fg "#98be65" :gui :bold} {:fg "#ec5f67"}))})
   (ins_left {1 :branch :icon "" :color {:fg colors.violet :gui :bold}})
   (ins_left {1 :diff
              :symbols {:added " " :modified " " :removed " "}
