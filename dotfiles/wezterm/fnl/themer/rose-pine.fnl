@@ -47,7 +47,8 @@
              :inactive_tab_edge palette.muted}})
 
 (fn window_frame []
-  {:active_titlebar_bg palette.base :inactive_titlebar_bg palette.base})
+  {:active_titlebar_bg palette.base
+   :inactive_titlebar_bg palette.base})
 
 {: colors
  : window_frame
