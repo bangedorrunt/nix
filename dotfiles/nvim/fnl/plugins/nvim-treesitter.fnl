@@ -7,7 +7,8 @@
                  :toml :yaml :json :json5 :jsonc
                  :lua :vim :nix :python
                  :norg :markdown :markdown_inline]]
-  (setup {:ensure_installed languages
+  (setup {:parser_install_dir tdt.paths.TREESITTER_PATH
+          :ensure_installed languages
           :sync_install true
           :highlight {:enable true}
           :indent {:enable true}

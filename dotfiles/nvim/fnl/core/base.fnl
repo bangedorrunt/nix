@@ -1,10 +1,11 @@
-(import-macros {: g} :core.macros)
+(import-macros {: g : opt} :core.macros)
 
 (let [os_name (. (vim.loop.os_uname) :sysname)
       path_sep (match os_name
                 :Windows "\\\\"
                 _ "/")
-      data_path (string.format "%s/site/" (vim.fn.stdpath :data))
+      share_path (vim.fn.stdpath :data)
+      data_path (string.format "%s/site/" share_path)
       config_path (vim.fn.stdpath :config)
       cache_path (vim.fn.stdpath :cache)
       state_path (vim.fn.stdpath :state)]
@@ -29,8 +30,11 @@
                  :CACHE_PATH cache_path
                  :DATA_PATH data_path
                  :STATE_PATH state_path
+                 :TREESITTER_PATH (.. share_path :/treesitter)
                  :PACKER_PATH (.. data_path :pack/packer/opt/packer.nvim)
                  :PACKER_COMPILED_PATH (.. data_path :lua/packer_compiled.lua)}}))
+
+(opt runtimepath+ tdt.paths.TREESITTER_PATH)
 
 ;; Disable built-in plugins and host providers
 (g loaded_netrw 1)
