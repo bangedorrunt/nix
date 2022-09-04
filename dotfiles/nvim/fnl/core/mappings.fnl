@@ -6,20 +6,19 @@
 (g maplocalleader (t ","))
 
 ;; Disable SPC key
-;; NOTE: `which-key` already implemented this
 (nmap n "<Space>" :<Nop>)
 
 ;; (noremap n :j :gj)
 ;; (noremap n :k :gk)
 
-(noremap n silent :n :nzzzv)
-(noremap n silent :N :Nzzzv)
-(noremap n silent :<C-d> :<C-d>zzz)
-(noremap n silent :<C-u> :<C-u>zzz)
-(noremap n silent :J "mzJ`z")
-(noremap n silent :Y "yg$")
-(noremap v silent :J ":<C-u>m '>+1<CR>gv=gv")
-(noremap v silent :K ":<C-u>m '>-2<CR>gv=gv")
+(noremap n :n :nzzzv)
+(noremap n :N :Nzzzv)
+(noremap n :<C-d> :<C-d>zz)
+(noremap n :<C-u> :<C-u>zz)
+(noremap n :J "mzJ`z")
+(noremap n :Y "yg$")
+(noremap v :J ":<C-u>m '>+1<CR>gv=gv")
+(noremap v :K ":<C-u>m '>-2<CR>gv=gv")
 
 (noremap i :jj :<Esc>)
 (noremap i :jk :<Esc>)

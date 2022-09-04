@@ -59,7 +59,7 @@ fi
 if [ ! -e "${STATE_PATH}/swap" ]; then
   echo "Creating vim swap/backup/undo/view folders inside ${STATE_PATH}/nvim ..."
   mkdir -p "${STATE_PATH}/backup"
-  mkdir -p "${STATE_PATH}/session"
+  mkdir -p "${STATE_PATH}/sessions"
   mkdir -p "${STATE_PATH}/swap"
   mkdir -p "${STATE_PATH}/tags"
   mkdir -p "${STATE_PATH}/undo"

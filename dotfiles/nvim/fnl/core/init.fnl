@@ -1,3 +1,14 @@
+;; Automatically compile on the fly
+;; NOTE: don't need this if using Aniseed
+(let [{: build} (require :hotpot.api.make)]
+  (build "~/.config/nvim"
+         {:verbosity 0}
+         ;; ~/.config/nvim/fnl/*.fnl -> ~/.config/nvim/lua/*.lua
+         "(.+)/fnl/(.+)"
+         (fn [root path {: join-path}]
+           (if (not (string.match path "macros%.fnl$"))
+               (join-path root :lua path)))))
+
 (require :core.base)
 (require :core.options)
 (require :core.mappings)
@@ -17,16 +28,3 @@
       ;; No need to load this immediately, since we have packer_compiled
       (vim.defer_fn load_packer_plugins 0))
     (load_packer_plugins))
-
-;; Automatically compile on the fly
-;; NOTE: don't need this if using Aniseed
-(let [{: build} (require :hotpot.api.make)]
-  (build "~/.config/nvim"
-         {:verbosity 0}
-         ;; ~/.config/nvim/fnl/*.fnl -> ~/.config/nvim/lua/*.lua
-         "(.+)/fnl/(.+)"
-         (fn [root path {: join-path}] ;; root is the first match, path is the second
-           ;; ignore our own macro file (init-macros.fnl is ignored by default)
-           (if (not (string.match path "macros%.fnl$"))
-               ;; join-path automatically uses the os-appropriate path separator
-               (join-path root :lua path)))))

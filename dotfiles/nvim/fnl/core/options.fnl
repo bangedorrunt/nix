@@ -12,6 +12,7 @@
 ;;;; UI
 (opt lz)
 (opt number)
+(opt relativenumber)
 (opt report 0)
 (opt visualbell false)
 (opt errorbells false)
@@ -19,8 +20,8 @@
 (opt cursorline)
 (opt showmatch)
 (opt matchtime 2)
-(opt shortmess :filnxtToOFatsc)
-(opt pumblend 0)
+(opt shortmess :filnxtToOFc)
+(opt pumblend 15)
 (opt pumheight 15)
 (opt winblend 0)
 (opt winwidth 30)
@@ -33,9 +34,8 @@
 (opt conceallevel 2)
 (opt concealcursor :nc)
 (opt signcolumn "yes:2")
-;; Statusline
 (opt showmode false)
-(opt laststatus 3)
+(opt laststatus 2)
 (opt textwidth 80)
 (opt expandtab)
 (opt shiftwidth 2)
@@ -66,10 +66,10 @@
                 :foldclose "▸"})
 
 ;;;; BEHAVIOUR
+(opt noautochdir)
 (opt magic)
 (opt hidden)
 (opt scrolloff 10)
-;; (opt autoread)
 (opt wrap)
 (opt whichwrap "b,s,<,>,h,l,[,],~")
 (opt nolinebreak)
@@ -118,8 +118,8 @@
 (opt timeout)
 (opt ttimeout)
 (opt updatetime 100)
-(opt timeoutlen 350)
-(opt ttimeoutlen 150)
+(opt timeoutlen 750)
+(opt ttimeoutlen 50)
 (opt redrawtime 1500)
 ;; Search
 (opt ignorecase)
