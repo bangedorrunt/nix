@@ -74,6 +74,6 @@
 
   (for [v 1 9]
     (noremap n silent (format "<Leader>%s" v) '(nav_file v))
-    ;; Send command to specific Tmux pane position including:
-    ;; "{down-of}"|"{top-of}"|"{right-of}"|"{left-of}"
-    (noremap n silent (format "<LocalLeader>%s" v) '(sendCommand "{down-of}" v))))
+    ;; Send command to specific Tmux pane position with its ID or Token:
+    ;; See: https://man7.org/linux/man-pages/man1/tmux.1.html#COMMANDS
+    (noremap n silent (format "<LocalLeader>%s" v) '(sendCommand "{next}" v))))
