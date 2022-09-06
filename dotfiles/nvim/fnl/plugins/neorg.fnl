@@ -3,7 +3,18 @@
   (setup
     {:load
       {:core.defaults {}
-       :core.norg.concealer {}
+       :core.norg.concealer {:config {:icons {:heading {:level_4 {:icon "   "}
+                                                        :level_5 {:icon "    "}
+                                                        :level_6 {:icon "     "}}
+                                              :marker {:icon ""}
+                                              :todo {:done {:icon ""}
+                                                     :pending {:icon ""}
+                                                     :undone {:icon ""}
+                                                     :uncertain {:icon ""}
+                                                     :on_hold {:icon ""}
+                                                     :cancelled {:icon ""}
+                                                     :recurring {:icon ""}
+                                                     :urgent {:icon ""}}}}}
        :core.norg.completion {:config {:engine :nvim-cmp}}
        :core.norg.dirman
          {:config {:autochdir false
