@@ -27,10 +27,19 @@
                    (use (into opts 1 name :config (plugin_init (. opts :init))))
                    (use (into opts 1 name))))))
       :config {:compile_path tdt.paths.PACKER_COMPILED_PATH
-      :git {:clone_timeout 180 :depth 1}
-      ;; FIXME: Temporarily disable this due to
-      ;; https://github.com/wbthomason/packer.nvim/issues/751
-      ;; :max_jobs 60
-      :profile {:enable true :threshold 0}}})))
+               :display {:compact true
+                         :working_sym ""
+                         :error_sym ""
+                         :done_sym ""
+                         :removed_sym ""
+                         :moved_sym ""
+                         :header_sym ""}
+               :auto_reload_compiled false
+               :preview_updates true
+               :git {:clone_timeout 180 :depth 1}
+               ;; BUG: Temporarily disable this due to
+               ;; https://github.com/wbthomason/packer.nvim/issues/751
+               :max_jobs 60
+               :profile {:enable true :threshold 0}}})))
 
 {: use}
