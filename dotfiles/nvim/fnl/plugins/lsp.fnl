@@ -127,6 +127,9 @@
            (-> {: on_attach
                 : capabilities}
                (lsp_installed_server.setup))))
+    :sumneko_lua #(let [{: sumneko_lua} lspconfig
+                        {:setup lua_dev} (require :lua-dev)]
+                    (sumneko_lua.setup (lua_dev)))
     :rust_analyzer #(rust_tools.setup)}))
 
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
