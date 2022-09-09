@@ -10,7 +10,6 @@ require('hotpot').setup {
   provide_require_fennel = true,
   enable_hotpot_diagnostics = false,
   compiler = {
-    modules = { correlate = true },
     macros = { env = '_COMPILER', compilerEnv = _G, allowedGlobals = false },
   },
 }

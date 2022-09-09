@@ -49,7 +49,7 @@
              :color {:fg colors.blue}
              :padding {:left 0 :right 1}})
 
-  (ins_left {1 (fn [] "")
+  (ins_left {1 (fn [] "")
              :color
              (fn []
                (let [mode-color {:n colors.red

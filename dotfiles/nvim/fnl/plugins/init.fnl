@@ -5,20 +5,19 @@
 (use
   ;;;; Dependencies
   :wbthomason/packer.nvim {:opt true}
-  ;; :Olical/aniseed {:branch :develop}
   :rktjmp/hotpot.nvim {}
   :babygau/luafun.nvim {}
   :nvim-lua/plenary.nvim {}
   :antoinemadec/FixCursorHold.nvim {}
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
   ;;;; UI plugins
-  :rose-pine/neovim {:color :rose-pine}
+  "~/workspace/rose-pine.nvim" {:color :rose-pine}
   :lukas-reineke/indent-blankline.nvim {:after :treesitter :mod :indent-blankline}
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
   :kyazdani42/nvim-tree.lua {:after :treesitter :mod :nvim-tree}
-  :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
+  ;; :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
   ;;;; Editor plugins
   :tpope/vim-eunuch {:event :BufRead}
   :tpope/vim-repeat {:event :BufRead}
@@ -28,9 +27,11 @@
   :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
   :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
   :romainl/vim-qf {:ft :qf}
-  :NvChad/nvim-colorizer.lua {:ft [:html :css
-                                   :sass :vim
-                                   :typescript :typescriptreact]}
+  :NvChad/nvim-colorizer.lua {:init :colorizer
+                              :cmd [:ColorizerToggle
+                                    :ColorizerAttachToBuffer
+                                    :ColorizerDetachFromBuffer
+                                    :ColorizerReloadAllBuffers]} ;; fork version
   ;;;; Fuzzy search engine
   :ThePrimeagen/harpoon {:event :BufRead :mod :harpoon}
   :ahmedkhalf/project.nvim {:module_pattern "project.*" :init :project_nvim}
@@ -40,9 +41,12 @@
                                   :module_pattern "telescope.*"
                                   :mod :telescope}
   ;;;; Lang plugins
+  ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
+  :folke/lua-dev.nvim {:module "lua-dev"}
+  :simrat39/rust-tools.nvim {:module "rust-tools"}
+  :ericpruitt/tmux.vim {:ft :tmux}
   :folke/trouble.nvim {:cmd :Trouble}
   :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
-  :simrat39/rust-tools.nvim {:module "rust-tools"}
   :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
   :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
   :williamboman/mason-lspconfig.nvim {:event :BufRead :mod :lsp}
@@ -79,9 +83,12 @@
   :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
   ;;;; Tool plugins
   :aserowy/tmux.nvim {:event :BufRead :mod :tmux}
+  :jbyuki/venn.nvim {:cmd :VBox}
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
+  :glacambre/firenvim {:opt true :run (fn [] ((. vim.fn "firenvim#install") 0))}
   ;;;; Unused plugins
   ;; :lewis6991/impatient.nvim {}
+  ;; :Olical/aniseed {:branch :develop}
   ;; :github/copilot.vim {}
   ;; :tzachar/cmp-tabnine {:mod :cmp-tabnine :after :nvim-cmp}
   ;; :mg979/vim-visual-multi {:event :BufRead}
@@ -93,6 +100,7 @@
   ;; :NMAC427/guess-indent.nvim {:event :BufRead :init :guess-indent}
   ;; :sindrets/diffview.nvim {:after :treesitter :mod :diffview}
   ;; :akinsho/toggleterm.nvim {:event :BufRead :mod :toggleterm}
+  ;; :anuvyklack/hydra.nvim {:after :themer :mod :hydra}
   ;; :folke/which-key.nvim {:event :BufRead :mod :which-key}
   ;; :onsails/lspkind-nvim {:module_pattern "lspkind"}
   )

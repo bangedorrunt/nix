@@ -1,79 +1,82 @@
 (let [{: setup : set_default_icon} (require :nvim-web-devicons)]
-  (set_default_icon "" :c2d94c)
+  (set_default_icon "" :#ff79c6)
   ;; Insert codicons using `C-v u {code}`
   (setup
     {:override {:.zshrc {:icon ""
-                         :color :#c2d94c
+                         :color :#ff79c6
                          :name :Zsh}
                 :.zshenv {:icon ""
-                          :color :#c2d94c
+                          :color :#ff79c6
                           :name :Zshenv}
                 :.zprofile {:icon ""
-                            :color :#c2d94c
+                            :color :#ff79c6
                             :name :Zshprofile}
                 :.bashrc {:icon ""
-                          :color :#c2d94c
+                          :color :#ff79c6
                           :name :Bashrc}
                 :.bash_profile {:icon ""
-                                :color :#c2d94c
+                                :color :#ff79c6
                                 :name :BashProfile}
                 :.gitconfig {:icon ""
-                             :color :#c2d94c
+                             :color :#ff79c6
                              :name :GitConfig}
                 :.gitignore {:icon ""
-                             :color :#c2d94c
+                             :color :#ff79c6
                              :name :GitIgnore}
                 :.gitmodules {:icon ""
-                              :color :#c2d94c
+                              :color :#ff79c6
                               :name :GitModules}
                 :.gitattributes {:icon ""
-                                 :color :#c2d94c
+                                 :color :#ff79c6
                                  :name :GitAttributes}
                 :lock {:icon ""
-                       :color :#c2d94c
+                       :color :#ff79c6
                        :name :Lock}
                 :fnl {:icon  ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :Fennel}
                 :makefile {:icon ""
-                           :color :#c2d94c
+                           :color :#ff79c6
                            :name :Makefile}
                 :toml {:icon ""
-                       :color :#c2d94c
+                       :color :#ff79c6
                        :name :Toml}
                 :yml {:icon ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :Yaml}
                 :conf {:icon ""
-                       :color :#c2d94c
+                       :color :#ff79c6
                        :name :conf}
                 :markdown {:icon ""
-                           :color :#c2d94c
+                           :color :#ff79c6
                            :name :Markdown}
                 :md {:icon ""
-                     :color :#c2d94c
+                     :color :#ff79c6
                      :name :Md}
                 :mdx {:icon ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :Mdx}
                 :lua {:icon ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :Lua}
                 :rs {:icon ""
-                     :color :#c2d94c
+                     :color :#ff79c6
                      :name :Rust}
                 :nix {:icon ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :Nix}
                 :norg {:icon ""
-                       :color :#c2d94c
+                       :color :#ff79c6
                        :name :Neorg}
+                :LICENSE {:icon ""
+                          :color :#ff79c6
+                          :name :License}
                 :log {:icon ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :Log}
                 :ps1 {:icon ""
-                      :color :#c2d94c
+                      :color :#ff79c6
                       :name :PromptPs1}
                 :sh {:icon ""
-                     :color :#c2d94c
+                     :color :#ff79c6
                      :name :Sh}}}))

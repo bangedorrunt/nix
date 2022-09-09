@@ -3,10 +3,19 @@
   (setup
     {:load
       {:core.defaults {}
-       :core.norg.concealer {:config {:icons {:heading {:level_4 {:icon "   "}
-                                                        :level_5 {:icon "    "}
-                                                        :level_6 {:icon "     "}}
-                                              :marker {:icon ""}
+       :core.norg.concealer {:config {:icons {:heading {:level_1 {:icon ""}
+                                                        :level_2 {:icon " "}
+                                                        :level_3 {:icon "  "}
+                                                        :level_4 {:icon "   "}
+                                                        :level_5 {:icon "    "}
+                                                        :level_6 {:icon "     "}}
+                                              :list {:level_1 {:icon ""}
+                                                     :level_2 {:icon " "}
+                                                     :level_3 {:icon "  "}
+                                                     :level_4 {:icon "   "}
+                                                     :level_5 {:icon "    "}
+                                                     :level_6 {:icon "     "}}
+                                              :marker {:icon ""}
                                               :todo {:done {:icon ""}
                                                      :pending {:icon ""}
                                                      :undone {:icon ""}
@@ -28,24 +37,22 @@
     (fn [_ keybinds]
       (keybinds.map_event_to_mode
         :norg
-        {:n [[:<Leader>zn :core.norg.dirman.new.note]
-             [:<Leader>zc :core.gtd.base.capture]
-             [:<Leader>ze :core.gtd.base.edit]
-             [:<Leader>zv :core.gtd.base.views]
+        {:n [[:<LocalLeader>zn :core.norg.dirman.new.note]
+             [:<LocalLeader>zc :core.gtd.base.capture]
+             [:<LocalLeader>ze :core.gtd.base.edit]
+             [:<LocalLeader>zv :core.gtd.base.views]
              ["[d" :core.integrations.treesitter.previous.heading]
              ["]d" :core.integrations.treesitter.next.heading]
              [:K :core.norg.esupports.hop.hop-link]
              [:gd :core.norg.esupports.hop.hop-link]
-             [:<Leader>zdz :core.norg.qol.todo_items.todo.task_cycle]
-             [:<Leader>zdd :core.norg.qol.todo_items.todo.task_done]
-             [:<Leader>zdu :core.norg.qol.todo_items.todo.task_undone]
-             [:<Leader>zdp :core.norg.qol.todo_items.todo.task_pending]
-             [:<Leader>zdh :core.norg.qol.todo_items.todo.task_on_hold]
-             [:<Leader>zdc :core.norg.qol.todo_items.todo.task_cancelled]
-             [:<Leader>zdr :core.norg.qol.todo_items.todo.task_recurring]
-             [:<Leader>zdi :core.norg.qol.todo_items.todo.task_important]
-             [:<Up> :core.norg.manoeuvre.item_up]
-             [:<Down> :core.norg.manoeuvre.item_down]
+             [:<LocalLeader>zdz :core.norg.qol.todo_items.todo.task_cycle]
+             [:<LocalLeader>zdd :core.norg.qol.todo_items.todo.task_done]
+             [:<LocalLeader>zdu :core.norg.qol.todo_items.todo.task_undone]
+             [:<LocalLeader>zdp :core.norg.qol.todo_items.todo.task_pending]
+             [:<LocalLeader>zdh :core.norg.qol.todo_items.todo.task_on_hold]
+             [:<LocalLeader>zdc :core.norg.qol.todo_items.todo.task_cancelled]
+             [:<LocalLeader>zdr :core.norg.qol.todo_items.todo.task_recurring]
+             [:<LocalLeader>zdi :core.norg.qol.todo_items.todo.task_important]
              [:<Leader>f :core.integrations.telescope.find_linkable]]
          :i [[:<C-l> :core.integrations.telescope.insert_link]]}
         {:silent true
