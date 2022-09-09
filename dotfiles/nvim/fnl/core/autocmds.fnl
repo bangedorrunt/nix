@@ -31,6 +31,12 @@
          (autocmd!)
          (autocmd VimLeave * '(opt guicursor ["a:ver100-blinkon0"])))
 
+;; Show cursor line only in active window
+(augroup cursor_line_in_active_window
+         (autocmd!)
+         (autocmd [InsertLeave WinEnter] * '(opt cursorline))
+         (autocmd [InsertEnter WinLeave] * '(opt nocursorline)))
+
 ;; Automatically resize splits when window is resized
 (augroup resize_splits_on_resize
          (autocmd!)
@@ -77,9 +83,8 @@
          ;; enter terminal-mode (insert) automatically
          (autocmd TermOpen * "startinsert")
          ;; disables line number on terminal buffers
-         (autocmd TermOpen * '(do
-                                (opt_local nonumber)
-                                (opt_local norelativenumber)))
+         (autocmd TermOpen * '(do (opt_local nonumber)
+                                  (opt_local norelativenumber)))
          ;; disables spell on terminal buffers
          (autocmd TermOpen * '(opt_local nospell))
          ;; disables sign column on terminal buffers
