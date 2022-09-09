@@ -1,27 +1,21 @@
-(import-macros {: opt : vim_has?} :core.macros)
+(import-macros {: opt} :core.macros)
 
 ;;;; RENDERING
 ;; (opt background :light)
-
-(when (vim_has? :termguicolors)
-  (do
-    (vim.cmd "let &t_8f = '\\<Esc>[38;2;%lu;%lu;%lum'")
-    (vim.cmd "let &t_8b = '\\<Esc>[48;2;%lu;%lu;%lum'")
-    (opt termguicolors)))
 
 ;;;; UI
 (opt lz)
 (opt number)
 (opt relativenumber)
+(opt termguicolors)
+(opt cursorline)
 (opt report 0)
 (opt visualbell false)
 (opt errorbells false)
 (opt mouse :a)
-(opt cursorline)
 (opt showmatch)
 (opt matchtime 2)
 (opt shortmess :filnxtToOFc)
-(opt pumblend 15)
 (opt pumheight 15)
 (opt winblend 0)
 (opt winwidth 30)
@@ -30,13 +24,13 @@
 (opt helpheight 12)
 (opt previewheight 12)
 (opt cmdwinheight 12)
-(opt cmdheight 0)
+;; (opt cmdheight 0)
 (opt conceallevel 2)
 (opt concealcursor :nc)
-(opt signcolumn "yes:2")
+(opt signcolumn "yes")
+(opt colorcolumn :80)
 (opt showmode false)
 (opt laststatus 2)
-(opt textwidth 80)
 (opt expandtab)
 (opt shiftwidth 2)
 (opt tabstop 2)
@@ -46,33 +40,38 @@
 (opt smartindent)
 (opt preserveindent)
 (opt shiftround)
-(opt showbreak "↳ ")
+(opt showbreak " ")
 (opt breakindentopt "shift:2,min:20")
 ;; Invisibles
 (opt list)
 (opt listchars {:tab "»·"
                 :nbsp "+"
                 :trail "·"
-                :extends "→"
-                :precedes "←"})
+                :extends ""
+                :precedes ""})
 
-(opt fillchars {:vert "▕"
+(opt fillchars {:vert ""
                 :fold "·"
                 :diff ""
                 :msgsep "‾"
                 :eob " "
-                :foldopen "▾"
-                :foldsep "│"
-                :foldclose "▸"})
+                :foldopen ""
+                :foldsep ""
+                :foldclose ""})
 
 ;;;; BEHAVIOUR
 (opt noautochdir)
 (opt magic)
 (opt hidden)
 (opt scrolloff 10)
+;; See: https://stackoverflow.com/a/50415982
 (opt wrap)
+(opt wrapmargin 0)
 (opt whichwrap "b,s,<,>,h,l,[,],~")
-(opt nolinebreak)
+(opt textwidth 80)
+;; (opt columns 80)
+(opt linebreak)
+
 (opt virtualedit :block)
 (opt fileformats [:unix :mac :dos])
 (opt clipboard :unnamedplus)
@@ -117,9 +116,9 @@
 ;; Time
 (opt timeout)
 (opt ttimeout)
-(opt updatetime 100)
-(opt timeoutlen 750)
-(opt ttimeoutlen 50)
+(opt updatetime 50)
+(opt timeoutlen 750) ;; give me more time to do key sequences
+(opt ttimeoutlen 50) ;; make escape more responsive
 (opt redrawtime 1500)
 ;; Search
 (opt ignorecase)

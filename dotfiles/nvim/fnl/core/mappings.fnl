@@ -8,8 +8,10 @@
 ;; Disable SPC key
 (nmap n "<Space>" :<Nop>)
 
-;; (noremap n :j :gj)
-;; (noremap n :k :gk)
+;; In favour of moving by visual lines except when count is provided
+;; which is used when targeting specific line with `relativenumber`
+(noremap nv expr :j '(if (not= vim.v.count 0) :j :gj))
+(noremap nv expr :k '(if (not= vim.v.count 0) :k :gk))
 
 (noremap n :n :nzzzv)
 (noremap n :N :Nzzzv)
@@ -17,9 +19,12 @@
 (noremap n :<C-u> :<C-u>zz)
 (noremap n :J "mzJ`z")
 (noremap n :Y "yg$")
+
+;; Move line up and down
 (noremap v :J ":<C-u>m '>+1<CR>gv=gv")
 (noremap v :K ":<C-u>m '>-2<CR>gv=gv")
 
+;; Escape is hurt
 (noremap i :jj :<Esc>)
 (noremap i :jk :<Esc>)
 (noremap i :fd :<Esc>)
@@ -36,9 +41,9 @@
 (nmap n :<C-l> :<C-w>l)
 (nmap n :<C-j> :<C-w>j)
 (nmap n :<C-k> :<C-w>k)
-(nmap n "<A-[>" "<Cmd>vertical resize -5<CR>")
-(nmap n "<A-]>" "<Cmd>vertical resize +5<CR>")
-;; Insert
+(nmap n :<C-t> :<Nop>) ;; Reserved for Tmux zoom
+
+;; Emacs map
 (noremap i :<C-w> "<C-[>diwa")
 (noremap i :<C-h> :<BS>)
 (noremap i :<C-d> :<Del>)
