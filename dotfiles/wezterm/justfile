@@ -7,6 +7,7 @@
 @themer:
   rm -f themer/*.lua
   fennel  --compile fnl/themer/rose-pine.fnl > themer/rose-pine.lua
+  fennel  --compile fnl/themer/rose-pine-moon.fnl > themer/rose-pine-moon.lua
   fennel  --compile fnl/themer/rose-pine-dawn.fnl > themer/rose-pine-dawn.lua
 
 @compile:
