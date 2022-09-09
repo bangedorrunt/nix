@@ -1,6 +1,6 @@
 (local {: view} (require :fennel))
 
-(local {:operator {: add : sub :concat join+}
+(local {:operator {: add : sub : concat}
         :length count
         :tomap totable
         :totable tosequence
@@ -112,7 +112,7 @@
       (tset tbl k v)))
   tbl)
 
-(fn concat [...]
+(fn concat+ [...]
   "Concatenates the sequential table arguments together."
   (let [result []]
     (run! (fn [xs]
@@ -123,8 +123,8 @@
           [...])
     result))
 
-(fn mapcat [f xs]
-  (concat (unpack (map f xs))))
+(fn mapcat+ [f xs]
+  (concat+ (unpack (map f xs))))
 
 (fn pr_str [...]
   (let [s (table.concat
@@ -237,6 +237,6 @@
  : totable : tosequence
  : for_each
  : map : reduce : filter : chain : run!
- : merge : into : get : concat : mapcat
- : join : join+ : split : blank? : triml : trimr : trim
+ : merge : into : get : concat+ : mapcat+
+ : join : concat : split : blank? : triml : trimr : trim
  }

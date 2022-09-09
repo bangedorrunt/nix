@@ -1,5 +1,5 @@
 (let
-  [{: first : dec : get : join+} (require :core.funs)
+  [{: first : dec : get : concat} (require :core.funs)
    {: setup : visible : complete
     : select_next_item : select_prev_item
     : mapping : config} (require :cmp)
@@ -53,9 +53,9 @@
                  {:name :neorg}
                  {:name :nvim_lua}
                  {:name :calc}]
-  cmp_format
+  cmp_fmt
   (fn [_ item]
-    (doto item (tset :kind (join+ (get vscode_kinds item.kind "") item.kind))))
+    (doto item (tset :kind (concat (get vscode_kinds item.kind "") item.kind))))
   ;; Check backspace
   has_words_before?
   (fn []
@@ -81,7 +81,7 @@
         (jumpable -1) (jump -1)
         (fallback)))]
 
-  (setup {:formatting {:format cmp_format}
+  (setup {:formatting {:format cmp_fmt}
           :mapping (mapping.preset.insert
                      {:<CR> (mapping.confirm {:select true})
                       :<C-Space> (mapping.complete)
