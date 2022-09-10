@@ -134,14 +134,22 @@
         lhs (llast args)
         options (->> [(unpack args 1 (- (count args) 2))]
                      (map tostring)
-                     (map (fn [v] (values v true)))
-                     totable)]
+                     (map #(values $ true)))
+        options (into_table options {:remap true})]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API
   Automatically includes the `:noremap` option."
-  `(nmap ,modes :noremap ,...))
+  (let [args [...]
+        modes (-> modes tostring tosequence)
+        rhs (-> args last quoted->fn?)
+        lhs (llast args)
+        options (->> [(unpack args 1 (- (count args) 2))]
+                     (map tostring)
+                     (map #(values $ true)))
+        options (into_table options {:noremap true})]
+    `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn hi [name colors]
   `(vim.api.nvim_set_hl 0 ,(tostring name) ,colors))

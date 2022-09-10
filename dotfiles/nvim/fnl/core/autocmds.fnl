@@ -18,7 +18,7 @@
          (autocmd!)
          (autocmd FileType [help startuptime qf lspinfo] '(noremap n buffer silent :q "<Cmd>close<CR>"))
          (autocmd FileType man '(noremap n buffer silent :q "<Cmd>quit<CR>"))
-         (autocmd FileType [fugitive fugitiveblame] "nmap <buffer> q gq"))
+         (autocmd FileType [fugitive fugitiveblame] '(nmap n buffer silent :q :gq)))
 
 ;; Toggle relative number
 (augroup toggle_relative_number
