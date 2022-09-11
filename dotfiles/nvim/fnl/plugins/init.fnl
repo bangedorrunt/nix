@@ -19,9 +19,9 @@
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
   :kyazdani42/nvim-tree.lua {:after :treesitter :mod :nvim-tree}
-  ;; :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
   ;;;; Editor plugins
   :tpope/vim-eunuch {:event :BufRead}
+  :tpope/vim-rsi {:event :InsertEnter}
   :tpope/vim-repeat {:event :BufRead}
   :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
@@ -107,6 +107,7 @@
   ;; :lukas-reineke/indent-blankline.nvim {:after :treesitter :mod :indent-blankline}
   ;; :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
   ;; :declancm/cinnamon.nvim {:event :BufRead :init :cinnamon}
+  ;; :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
   )
 
 (require :plugins.scratch)

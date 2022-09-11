@@ -55,17 +55,17 @@
 (nmap n :<C-t> :<Nop>) ;; Reserved for Tmux zoom
 
 ;; Emacs map
-(noremap i :<C-w> "<C-[>diwa")
-(noremap i :<C-h> :<BS>)
-(noremap i :<C-d> :<Del>)
-(noremap i :<C-u> :<C-G>u<C-U>)
-(noremap i :<C-b> :<Left>)
-(noremap i :<C-f> :<Right>)
-(noremap i :<C-a> :<ESC>^i)
-(noremap i :<C-j> :<Esc>o)
-(noremap i :<C-k> :<Esc>O)
-(noremap i :<C-s> :<Cmd>w<CR>)
-(noremap i :<C-q> :<Cmd>wq<CR>)
+;; (noremap i :<C-w> "<C-[>diwa")
+;; (noremap i :<C-h> :<BS>)
+;; (noremap i :<C-d> :<Del>)
+;; (noremap i :<C-u> :<C-G>u<C-U>)
+;; (noremap i :<C-b> :<Left>)
+;; (noremap i :<C-f> :<Right>)
+;; (noremap i :<C-a> :<ESC>^i)
+;; (noremap i :<C-j> :<Esc>o)
+;; (noremap i :<C-k> :<Esc>O)
+;; (noremap i :<C-s> :<Cmd>w<CR>)
+;; (noremap i :<C-q> :<Cmd>wq<CR>)
 
 ;; Command line
 (noremap c :<C-b> :<Left>)
