@@ -24,7 +24,7 @@
 (opt helpheight 12)
 (opt previewheight 12)
 (opt cmdwinheight 12)
-(opt cmdheight 0)
+;; (opt cmdheight 0) ;; crashed nvim when using vim-fugitive
 (opt conceallevel 2)
 (opt concealcursor :nc)
 (opt signcolumn "yes")
