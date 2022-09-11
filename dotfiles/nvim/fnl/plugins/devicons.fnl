@@ -67,7 +67,7 @@
                 :nix {:icon ""
                       :color :#ff79c6
                       :name :Nix}
-                :norg {:icon ""
+                :norg {:icon ""
                        :color :#ff79c6
                        :name :Neorg}
                 :LICENSE {:icon ""

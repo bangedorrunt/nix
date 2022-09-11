@@ -9,6 +9,9 @@ version: 0.0.13
 
 * TODO
   #contexts nvim
+  - [ ] `luasnip` snippet for autopair
+  -- [Manual autopair]{https://github.com/josephsdavid/neovim2/blob/f8c267a81bae13df6a8fbc7f5e05a6085ad5c50b/lua/config/snippets/init.lua#L212}
+  - [x] `nvim-ufo`
   - [?] `fidget.nvim`
   - [-] Open file in current nvim instance
   -- Flag [remote]{https://github.com/neovim/neovim/pull/18414} is broken for now
