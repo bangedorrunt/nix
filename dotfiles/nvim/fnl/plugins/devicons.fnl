@@ -1,4 +1,6 @@
-(let [{: setup : set_default_icon} (require :nvim-web-devicons)]
+(import-macros {: lazyreq} :core.macros)
+
+(let [{: setup : set_default_icon} (lazyreq :nvim-web-devicons)]
   (set_default_icon "" :#ff79c6)
   ;; Insert codicons using `C-v u {code}`
   (setup

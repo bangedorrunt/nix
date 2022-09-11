@@ -1,7 +1,7 @@
-(import-macros {: nmap : noremap} :core.macros)
+(import-macros {: nmap : noremap : lazyreq : lazyfunc} :core.macros)
 
-(let [{: setup} (require :nvim-tree)
-      {: on_nvim_tree_ready} (require :nvim-tree.events)]
+(let [{: setup} (lazyreq :nvim-tree)
+      {: on_nvim_tree_ready} (lazyfunc :nvim-tree.events)]
   (setup {:hijack_cursor true
           :hijack_netrw true
           :sync_root_with_cwd true

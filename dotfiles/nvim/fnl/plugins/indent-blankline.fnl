@@ -3,8 +3,8 @@
                              :NvimTree :fern
                              :Trouble :neogitstatus
                              :fennel :lisp :clojure
-                             :markdown]
+                             :markdown :norg]
           :buftype_exclude [:terminal]
           :use_treesitter true
-          :show_current_context true
-          :show_current_context_start true}))
+          :show_current_context false
+          :show_current_context_start false}))

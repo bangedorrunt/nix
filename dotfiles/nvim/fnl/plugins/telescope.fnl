@@ -1,9 +1,10 @@
-(import-macros {: nmap : noremap : if-let} :core.macros)
+(import-macros {: nmap : noremap : if-let
+                : lazyreq : lazyfunc} :core.macros)
 
-(let [{: run! : merge} (require :core.funs)
-      {: setup : load_extension} (require :telescope)
-      {: close} (require :telescope.actions)
-      telescope_builtin (require :telescope.builtin)
+(let [{: run! : merge} (lazyfunc :core.funs)
+      {: setup : load_extension} (lazyfunc :telescope)
+      {: close} (lazyfunc :telescope.actions)
+      telescope_builtin (lazyfunc :telescope.builtin)
       ;; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
       override_opts
       (fn [opts]

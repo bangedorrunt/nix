@@ -1,5 +1,3 @@
-(local {: view} (require :fennel))
-
 (local {:operator {: add : sub : concat}
         :length count
         :tomap totable
@@ -127,7 +125,8 @@
   (concat+ (unpack (map f xs))))
 
 (fn pr_str [...]
-  (let [s (table.concat
+  (let [{: view} (require :fennel)
+        s (table.concat
             (map (fn [x]
                    (view.serialise x {:one-line true}))
                  [...])

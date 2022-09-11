@@ -1,6 +1,6 @@
-(import-macros {: nmap : noremap} :core.macros)
+(import-macros {: nmap : noremap : lazyreq} :core.macros)
 
-(let [{: setup} (require :gitsigns)
+(let [{: setup} (lazyreq :gitsigns)
       {: stage_buffer
        : undo_stage_hunk
        : reset_buffer

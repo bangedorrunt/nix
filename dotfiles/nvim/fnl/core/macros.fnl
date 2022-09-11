@@ -174,6 +174,34 @@
      0 false
      _# nil))
 
+;; See: https://github.com/tjdevries/lazy.nvim/blob/master/lua/lazy.lua
+;; Will only require the module after the first index of a module.
+;; Only works for modules that export a table.
+(fn lazyreq [module]
+  `(setmetatable
+     {}
+     {:__index (fn [_# key#] (. (require ,module) key#))
+      :__newindex (fn [_# key# value#]
+                    (tset (require ,module) key#
+                          value#))}))
+
+;; Requires only when you call the _module_ itself.
+(fn lazymod [module]
+  `(setmetatable
+     {}
+     {:__call (fn [_# ...] ((require ,module) ...))}))
+
+;; Require when an exported method is called.
+;; Creates a new function. Cannot be used to compare functions,
+;; set new values, etc. Only useful for waiting to do the require until you
+;; actually call the code.
+(fn lazyfunc [module]
+  `(setmetatable
+     {}
+     {:__index (fn [_# k#]
+                 (fn [...]
+                   ((. (require ,module) k#) ...)))}))
+
 ;;; Clojure if-let and when-let
 (fn conditional-let [branch bindings ...]
   (assert (= 2 (count bindings)) "expected a single binding pair")
@@ -218,6 +246,7 @@
   (conditional-let 'when bindings ...))
 
 {: if-let : when-let
+ : lazyreq : lazymod : lazyfunc
  : opt
  : opt_local
  : g

@@ -1,4 +1,6 @@
-(let [{: setup} (require :nvim-treesitter.configs)
+(import-macros {: lazyreq} :core.macros)
+
+(let [{: setup} (lazyreq :nvim-treesitter.configs)
       languages [:bash :comment
                  :clojure :commonlisp :fennel
                  :html :css

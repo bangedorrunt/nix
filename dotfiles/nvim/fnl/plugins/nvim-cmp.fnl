@@ -1,10 +1,12 @@
+(import-macros {: lazyreq : lazyfunc} :core.macros)
+
 (let
-  [{: first : dec : get : concat} (require :core.funs)
+  [{: first : dec : get : concat} (lazyfunc :core.funs)
    {: setup : visible : complete
     : select_next_item : select_prev_item
-    : mapping : config} (require :cmp)
+    : mapping : config} (lazyreq :cmp)
    {: expand_or_jumpable : expand_or_jump
-    : jumpable : jump : lsp_expand} (require :luasnip)
+    : jumpable : jump : lsp_expand} (lazyfunc :luasnip)
    ;; VSCode icons
    vscode_kinds  {:Array " "
                   :Boolean " "
@@ -93,6 +95,8 @@
 
   ;; Cmdline completions
   (setup.cmdline "/" {:mapping (mapping.preset.cmdline)
+                      :sources [{:name :buffer}]})
+  (setup.cmdline "?" {:mapping (mapping.preset.cmdline)
                       :sources [{:name :buffer}]})
   (setup.cmdline ":" {:mapping (mapping.preset.cmdline)
                       :sources (config.sources [{:name :path}]

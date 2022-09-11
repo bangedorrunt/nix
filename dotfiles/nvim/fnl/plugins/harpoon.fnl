@@ -1,14 +1,18 @@
-(import-macros {: nmap : noremap} :core.macros)
+(import-macros {: nmap : noremap : lazyreq : lazyfunc} :core.macros)
 
-(let [{: setup} (require :harpoon)
-      {: add_file : rm_file : clear_all} (require :harpoon.mark)
+(let [{: setup} (lazyreq :harpoon)
+      {: add_file : rm_file : clear_all} (lazyfunc :harpoon.mark)
       {:toggle_quick_menu ui_menu
-       : nav_file : nav_next : nav_prev} (require :harpoon.ui)
-      {:toggle_quick_menu term_menu} (require :harpoon.cmd-ui)
-      {: sendCommand} (require :harpoon.tmux)
-      format string.format]
+       : nav_file : nav_next : nav_prev} (lazyfunc :harpoon.ui)
+      {:toggle_quick_menu term_menu} (lazyfunc :harpoon.cmd-ui)
+      {: sendCommand} (lazyfunc :harpoon.tmux)
+      fmt string.format]
 
   (setup {:global_settings {:enter_on_sendcmd true}
+          :menu {:borderchars ["─" "│" "─" "│" "┌" "┐" "┘" "└"]}
+          ;; NOTE: `Harpoon` will throw error if no command at menu index
+          ;; use `echo 'Hello Harpoon'` as a placeholder to keep me from
+          ;; send empty command by accident
           :projects
           {"$HOME/nix"
            {:mark {:marks [{:filename "dotfiles/nvim/TODO.norg"}
@@ -21,10 +25,10 @@
                            {:filename "dotfiles/.zshrc"}]}
             :term {:cmds ["cd $HOME/nix/dotfiles/wezterm && just compile && cd $HOME/nix"
                           "cd $HOME/nix/dotfiles/wezterm && just themer && cd $HOME/nix"
-                          "goku"
                           "cd $HOME/nix/dotfiles/nvim && ./setup.sh && cd $HOME/nix"
-                          "echo 'Hello Harpoon!'"
-                          "echo 'Hello Harpoon!'"
+                          "brew reinstall neovim"
+                          "brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest"
+                          "goku"
                           "echo 'Hello Harpoon!'"
                           "echo 'Hello Harpoon!'"
                           "echo 'Hello Harpoon!'"]}}
@@ -51,7 +55,7 @@
                           "echo 'Hello Harpoon!'"
                           "echo 'Hello Harpoon!'"]}}
           "$HOME/workspace/notetoself"
-           {:mark {:marks [{:filename "index.norg"}
+           {:mark {:marks [{:filename "inbox.norg"}
                            {:filename "learn-you-some/neovim/neovim.norg"}
                            {:filename "learn-you-some/git/git.norg"}]}
             :term {:cmds ["echo 'Hello Harpoon!'"
@@ -73,7 +77,7 @@
   (noremap n silent :<LocalLeader>m term_menu)
 
   (for [v 1 9]
-    (noremap n silent (format "<Leader>%s" v) '(nav_file v))
+    (noremap n silent (fmt "<Leader>%s" v) '(nav_file v))
     ;; Send command to specific Tmux pane position with its ID or Token:
     ;; See: https://man7.org/linux/man-pages/man1/tmux.1.html#COMMANDS
-    (noremap n silent (format "<LocalLeader>%s" v) '(sendCommand "{next}" v))))
+    (noremap n silent (fmt "<LocalLeader>%s" v) '(sendCommand "{next}" v))))

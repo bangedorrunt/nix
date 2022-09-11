@@ -1,5 +1,7 @@
-(let [{: setup} (require :neorg)
-      {: on_event} (require :neorg.callbacks)]
+(import-macros {: lazyreq : lazyfunc} :core.macros)
+
+(let [{: setup} (lazyreq :neorg)
+      {: on_event} (lazyfunc :neorg.callbacks)]
   (setup
     {:load
       {:core.defaults {}

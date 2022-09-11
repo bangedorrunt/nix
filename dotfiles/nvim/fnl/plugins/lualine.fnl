@@ -1,4 +1,6 @@
-(let [{: setup} (require :lualine)
+(import-macros {: lazyreq} :core.macros)
+
+(let [{: setup} (lazyreq :lualine)
       colors {:fg "#bbc2cf"
               ;; Dark mode
               :bg "#191724"

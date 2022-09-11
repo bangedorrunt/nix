@@ -1,10 +1,12 @@
+(import-macros {: lazyfunc} :core.macros)
+
 ;;;; Courtesy of Olical with rocks changes
 (fn use [...]
   "Iterates through the arguments as pairs and calls packer's use function for
   each of them. Works around Fennel not liking mixed associative and sequential
   tables as well."
-  (let [packer (require :packer)
-        {: count : inc : into} (require :core.funs)
+  (let [packer (lazyfunc :packer)
+        {: count : inc : into} (lazyfunc :core.funs)
         plugin_config (fn [name] (.. "require('plugins." name "')"))
         plugin_init (fn [name] (.. "require('" name "').setup {}"))
         theme_config (fn [name] (.. "require('themer." name "')"))

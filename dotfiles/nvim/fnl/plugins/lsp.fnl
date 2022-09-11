@@ -1,6 +1,7 @@
 (import-macros {: augroup : autocmd : autocmd!
                 : nmap : noremap
-                : command} :core.macros)
+                : command
+                : lazyfunc : lazyreq} :core.macros)
 ;;;; LSP UI
 (let [{: with : handlers} vim.lsp]
   (set vim.lsp.handlers.textDocument/signatureHelp
@@ -60,7 +61,7 @@
                                         :additionalTextEdits]}})))
 
 (fn on_attach [client bufnr]
-  (let [{: has?} (require :core.funs)
+  (let [{: has?} (lazyfunc :core.funs)
         {:hover open_doc_float!
          :declaration goto_declaration!
          :definition goto_definition!
@@ -91,7 +92,8 @@
                  (autocmd! {:buffer bufnr})
                  (autocmd BufWritePre <buffer>
                           `(vim.lsp.buf.format {:filter
-                                                (fn [client] (not (has? [:jsonls
+                                                (fn [client] (not (has? [:fennel
+                                                                         :jsonls
                                                                          :tsserver]
                                                                         client.name)))
                                                 : bufnr}
@@ -115,10 +117,9 @@
                :tsserver
                :vimls
                :yamlls]
-      lspconfig  (require :lspconfig)
-      mason (require :mason)
-      mason_lspconfig (require :mason-lspconfig)
-      rust_tools (require :rust-tools)]
+      lspconfig (lazyreq :lspconfig)
+      mason (lazyreq :mason)
+      mason_lspconfig (lazyreq :mason-lspconfig)]
   (mason.setup)
   (mason_lspconfig.setup {:ensure_installed servers})
   (mason_lspconfig.setup_handlers
@@ -127,16 +128,17 @@
            (-> {: on_attach
                 : capabilities}
                (lsp_installed_server.setup))))
-    :sumneko_lua #(let [{: sumneko_lua} lspconfig
-                        {:setup lua_dev} (require :lua-dev)]
-                    (sumneko_lua.setup (lua_dev)))
-    :rust_analyzer #(rust_tools.setup)}))
+     :sumneko_lua #(let [{: sumneko_lua} lspconfig
+                         {:setup lua_dev} (lazyreq :lua-dev)]
+                     (sumneko_lua.setup (lua_dev)))
+     :rust_analyzer #(let [rust_tools (lazyreq :rust-tools)]
+                       (rust_tools.setup))}))
 
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
 ;; make sure respective sources are installed
-(let [null_ls (require :null-ls)
+(let [null_ls (lazyreq :null-ls)
       {: formatting
-       : diagnostics} (require :null-ls.builtins)
+       : diagnostics} (lazyreq :null-ls.builtins)
       sources [formatting.prettier
                formatting.stylua
                formatting.trim_whitespace

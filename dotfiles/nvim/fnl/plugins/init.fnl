@@ -1,4 +1,6 @@
- (local {: use} (require :core.packer))
+(import-macros {: lazyreq} :core.macros)
+
+ (local {: use} (lazyreq :core.packer))
 
 ;; fnlfmt: skip
 ;; NOTE: lua use % as escape in pattern
@@ -11,8 +13,8 @@
   :antoinemadec/FixCursorHold.nvim {}
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
   ;;;; UI plugins
-  "~/workspace/rose-pine.nvim" {:color :rose-pine}
-  :lukas-reineke/indent-blankline.nvim {:after :treesitter :mod :indent-blankline}
+  "~/workspace/rose-pine.nvim.git/main" {:color :rose-pine}
+  ;; "babygau/rose-pine.nvim" {:color :rose-pine}
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
   :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
@@ -23,9 +25,7 @@
   :tpope/vim-repeat {:event :BufRead}
   :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
-  :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
   :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
-  :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
   :romainl/vim-qf {:ft :qf}
   :NvChad/nvim-colorizer.lua {:init :colorizer
                               :cmd [:ColorizerToggle
@@ -41,10 +41,8 @@
                                   :module_pattern "telescope.*"
                                   :mod :telescope}
   ;;;; Lang plugins
-  ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
   :folke/lua-dev.nvim {:module "lua-dev"}
   :simrat39/rust-tools.nvim {:module "rust-tools"}
-  :ericpruitt/tmux.vim {:ft :tmux}
   :folke/trouble.nvim {:cmd :Trouble}
   :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
   :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
@@ -82,10 +80,12 @@
   :lewis6991/gitsigns.nvim {:after :themer :mod :gitsigns}
   :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
   ;;;; Tool plugins
+  ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
+  :ericpruitt/tmux.vim {:ft :tmux}
   :aserowy/tmux.nvim {:event :BufRead :mod :tmux}
   :jbyuki/venn.nvim {:cmd :VBox}
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
-  :glacambre/firenvim {:opt true :run (fn [] ((. vim.fn "firenvim#install") 0))}
+  ;; :glacambre/firenvim {:run (fn [] ((. vim.fn "firenvim#install") 1))}
   ;;;; Unused plugins
   ;; :lewis6991/impatient.nvim {}
   ;; :Olical/aniseed {:branch :develop}
@@ -103,6 +103,10 @@
   ;; :anuvyklack/hydra.nvim {:after :themer :mod :hydra}
   ;; :folke/which-key.nvim {:event :BufRead :mod :which-key}
   ;; :onsails/lspkind-nvim {:module_pattern "lspkind"}
+  ;; :rktjmp/highlight-current-n.nvim {:event :BufRead :mod :highlight-current-n}
+  ;; :lukas-reineke/indent-blankline.nvim {:after :treesitter :mod :indent-blankline}
+  ;; :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
+  ;; :declancm/cinnamon.nvim {:event :BufRead :init :cinnamon}
   )
 
 (require :plugins.scratch)

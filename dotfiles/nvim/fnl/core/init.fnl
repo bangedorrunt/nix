@@ -1,6 +1,8 @@
+(import-macros {: lazyfunc} :core.macros)
+
 ;; Automatically compile on the fly
 ;; NOTE: don't need this if using Aniseed
-(let [{: build} (require :hotpot.api.make)]
+(let [{: build} (lazyfunc :hotpot.api.make)]
   (build "~/.config/nvim"
          {:verbosity 0}
          ;; ~/.config/nvim/fnl/*.fnl -> ~/.config/nvim/lua/*.lua
