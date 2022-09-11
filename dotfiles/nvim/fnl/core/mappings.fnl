@@ -7,22 +7,33 @@
 
 ;; Disable SPC key
 (nmap n "<Space>" :<Nop>)
+(nmap n :q :<Nop>)
 
-;; In favour of moving by visual lines except when count is provided
-;; which is used when targeting specific line with `relativenumber`
+;; In favour of moving by displayed line rather than physical line
+;; except when count is provided which is used when targeting specific
+;; line with `relativenumber`
 (noremap nv expr :j '(if (not= vim.v.count 0) :j :gj))
 (noremap nv expr :k '(if (not= vim.v.count 0) :k :gk))
+(noremap n :0 :g0)
+(noremap n :$ :g$)
 
+;; Keep screen at the center when jump
 (noremap n :n :nzzzv)
 (noremap n :N :Nzzzv)
 (noremap n :<C-d> :<C-d>zz)
 (noremap n :<C-u> :<C-u>zz)
-(noremap n :J "mzJ`z")
-(noremap n :Y "yg$")
+
+(noremap n :J "mzJ`z") ;; a better J
+(noremap n :Y "yg$") ;; a better Y
+
 
 ;; Move line up and down
 (noremap v :J ":<C-u>m '>+1<CR>gv=gv")
 (noremap v :K ":<C-u>m '>-2<CR>gv=gv")
+
+;; Indent level in visual map
+(noremap v ">" ">gv")
+(noremap v "<" "<gv")
 
 ;; Escape is hurt
 (noremap i :jj :<Esc>)

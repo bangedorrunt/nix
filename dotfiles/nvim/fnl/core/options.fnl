@@ -24,24 +24,21 @@
 (opt helpheight 12)
 (opt previewheight 12)
 (opt cmdwinheight 12)
-;; (opt cmdheight 0)
+(opt cmdheight 0)
 (opt conceallevel 2)
 (opt concealcursor :nc)
 (opt signcolumn "yes")
 (opt colorcolumn :80)
 (opt showmode false)
 (opt laststatus 2)
-(opt expandtab)
-(opt shiftwidth 2)
+(opt expandtab) ;; use space instead of tab
 (opt tabstop 2)
+(opt shiftwidth 0) ;; in favour of tabstop
 (opt softtabstop -1)
-(opt smarttab)
-(opt copyindent)
 (opt smartindent)
-(opt preserveindent)
-(opt shiftround)
+(opt breakindent) ;; maintain indentation on break
 (opt showbreak " ")
-(opt breakindentopt "shift:2,min:20")
+(opt breakindentopt "shift:2")
 ;; Invisibles
 (opt list)
 (opt listchars {:tab "»·"
