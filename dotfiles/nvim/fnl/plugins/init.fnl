@@ -9,7 +9,8 @@
   :wbthomason/packer.nvim {:opt true}
   :rktjmp/hotpot.nvim {}
   :babygau/luafun.nvim {}
-  :nvim-lua/plenary.nvim {}
+  :nvim-lua/plenary.nvim {:module :plenary}
+  :kevinhwang91/promise-async {:module :promise}
   :antoinemadec/FixCursorHold.nvim {}
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
   ;;;; UI plugins
@@ -17,12 +18,13 @@
   ;; "babygau/rose-pine.nvim" {:color :rose-pine}
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
-  :b4mbus/todo-comments.nvim {:event :BufRead :init :todo-comments} ;; fork version
+  :folke/todo-comments.nvim {:event :BufRead :init :todo-comments}
   :kyazdani42/nvim-tree.lua {:after :treesitter :mod :nvim-tree}
   ;;;; Editor plugins
   :tpope/vim-eunuch {:event :BufRead}
   :tpope/vim-rsi {:event :InsertEnter}
   :tpope/vim-repeat {:event :BufRead}
+  :kevinhwang91/nvim-ufo {:after :treesitter :mod :ufo}
   :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
   :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
