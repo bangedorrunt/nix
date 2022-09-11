@@ -34,7 +34,7 @@
                 :lock {:icon ""
                        :color :#ff79c6
                        :name :Lock}
-                :fnl {:icon  ""
+                :fnl {:icon  ""
                       :color :#ff79c6
                       :name :Fennel}
                 :makefile {:icon ""

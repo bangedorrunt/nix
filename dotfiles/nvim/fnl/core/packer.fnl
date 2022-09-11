@@ -15,7 +15,7 @@
       {1 (fn [use use-rocks]
            (for [i 1 (count pkgs) 2]
              (let [name (. pkgs i)
-                        opts (. pkgs (inc i))]
+                   opts (. pkgs (inc i))]
                (if (. opts :rock)
                    (use-rocks name)
                    (. opts :color)
@@ -36,7 +36,7 @@
                          :removed_sym ""
                          :moved_sym ""
                          :header_sym ""}
-               :auto_reload_compiled false
+               :auto_reload_compiled true
                :preview_updates true
                :git {:clone_timeout 180 :depth 1}
                ;; BUG: Temporarily disable this due to
