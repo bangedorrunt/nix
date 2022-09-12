@@ -10,6 +10,9 @@
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
 
  :templates {:launch "osascript -e 'tell application \"%s\" to activate'"
+             :open   "open \"%s\""
+             :show   "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'\n"
+             :toggle "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else if frontmost of process appName then\n    set visible of process appName to false\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'"
              :notify "osascript -e 'display notification \"%s\" with title \"Debug!\"'"}
  :layers {}
  :simlayers {}
@@ -52,7 +55,6 @@
 
                  ;; Reserved
                  ;; :s-mode
-                 ;; :g-mode
 
                  ;;;; Amethyst keybindings
                  :d-mode
@@ -72,8 +74,35 @@
                  ;; Force window to be reevaluated
                  [:z :!SOz]
                  ;; Throw focused window to space left or right
-                 [:!Tn :!SOTright_arrow]
-                 [:!Tp :!SOTleft_arrow]
+                 [:quote :!SOTright_arrow]
+                 [:semicolon :!SOTleft_arrow]
+
+                 ;;;; App navigation
+                 ;; Discord
+                 :g-mode
+                 [:slash :!Cslash :Discord]
+                 [:spacebar :!Ck :Discord]
+                 [:j :!Odown_arrow :Discord]
+                 [:k :!Oup_arrow :Discord]
+                 [:l :!COdown_arrow :Discord]
+                 [:h :!COup_arrow :Discord]
+                 [:quote :page_down :Discord]
+                 [:semicolon :page_up :Discord]
+                 [:m :!Spage_down :Discord]
+                 [:i :!Ce :Discord]
+                 [:y :!Cg :Discord]
+                 ;; Element
+                 [:slash :!Cslash :Element]
+                 [:spacebar :!Ck :Element]
+                 [:j :!Odown_arrow :Element]
+                 [:k :!Oup_arrow :Element]
+                 [:l :!SOdown_arrow :Element]
+                 [:h :!SOup_arrow :Element]
+                 [:quote :page_down :Element]
+                 [:semicolon :page_up :Element]
+                 [:m :!Tend :Element]
+                 [:n :!Thome :Element]
+
                  ;;;; Vim-like keybindings
                  :f-mode
                  [:j :down_arrow]
@@ -121,6 +150,8 @@
                             "^com\\.apple\\.Terminal$"
                             "^com\\.googlecode\\.iterm2$"
                             "^io\\.alacritty"]
+                :Discord   ["^com\\.hnc\\.Discord$"]
+                :Element   ["^im\\.riot\\.app$"]
                 :Finder    ["^com\\.apple\\.finder$"]
                 :Debuggers ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"
@@ -136,6 +167,8 @@
                             "^org\\.chromium\\.Chromium$"
                             "^com\\.google\\.Chrome\\.canary$"
                             "^com\\.apple\\.Safari$"]
+                :Edge      ["^com\\.microsoft\\.edgemac\\.Beta$"
+                            "^com\\.microsoft\\.edgemac$"]
                 :Firefoxes ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"]}
  :devices {:keychron [{:vendor_id 1452 :product_id 591}]}
