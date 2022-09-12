@@ -1,4 +1,4 @@
-(import-macros {: nmap : noremap} :core.macros)
+(import-macros {: noremap} :core.macros)
 
 (noremap n "<LocalLeader>gs" "<Cmd>Git<CR>")
 (noremap n "<LocalLeader>gc" "<Cmd>Git commit<CR>")

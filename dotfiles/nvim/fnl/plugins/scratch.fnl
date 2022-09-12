@@ -1,4 +1,4 @@
-(import-macros {: nmap : noremap} :core.macros)
+(import-macros {: noremap} :core.macros)
 
 (local state {:bufnr nil})
 

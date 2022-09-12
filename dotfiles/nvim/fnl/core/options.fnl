@@ -8,6 +8,7 @@
 (opt number)
 (opt relativenumber)
 (opt termguicolors)
+(opt spell)
 (opt cursorline)
 (opt report 0)
 (opt visualbell false)
@@ -40,7 +41,7 @@
 (opt showbreak " ")
 (opt breakindentopt "shift:2")
 ;; Invisibles
-(opt list)
+(opt list) ;; show invisible chars
 (opt listchars {:tab "»·"
                 :nbsp "+"
                 :trail "·"
@@ -80,8 +81,10 @@
                "context:4"
                "algorithm:histogram"
                :indent-heuristic])
+(opt foldenable true)
 (opt foldcolumn :1)
 (opt foldlevel 99) ;; Unfold them all
+(opt foldnestmax 0)
 (opt foldlevelstart 99)
 (opt splitright)
 (opt splitbelow)
@@ -133,6 +136,7 @@
 
 ;;;; VIM DIRECTORIES
 (opt undofile)
+(opt undolevels 10000)
 (opt swapfile false)
 (opt backup false)
 (opt history 5000)

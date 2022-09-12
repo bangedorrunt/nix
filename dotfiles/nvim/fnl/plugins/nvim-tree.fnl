@@ -1,4 +1,4 @@
-(import-macros {: nmap : noremap : lazyreq : lazyfunc} :core.macros)
+(import-macros {: noremap : lazyreq : lazyfunc} :core.macros)
 
 (let [{: setup} (lazyreq :nvim-tree)
       {: on_nvim_tree_ready} (lazyfunc :nvim-tree.events)]

@@ -1,4 +1,4 @@
-(import-macros {: nmap : noremap : if-let
+(import-macros {: noremap : if-let
                 : lazyreq : lazyfunc} :core.macros)
 
 (let [{: run! : merge} (lazyfunc :core.funs)

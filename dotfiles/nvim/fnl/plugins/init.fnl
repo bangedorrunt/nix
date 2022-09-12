@@ -84,7 +84,7 @@
   ;;;; Tool plugins
   ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
   :ericpruitt/tmux.vim {:ft :tmux}
-  :aserowy/tmux.nvim {:event :BufRead :mod :tmux}
+  :aserowy/tmux.nvim {:event :BufRead}
   :jbyuki/venn.nvim {:cmd :VBox}
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
   ;; :glacambre/firenvim {:run (fn [] ((. vim.fn "firenvim#install") 1))}
@@ -110,6 +110,7 @@
   ;; :xiyaowong/accelerated-jk.nvim {:event :BufRead :init :accelerated-jk}
   ;; :declancm/cinnamon.nvim {:event :BufRead :init :cinnamon}
   ;; :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
+  ;; :hrsh7th/nvim-pasta {:event :BufReadPost}
   )
 
 (require :plugins.scratch)

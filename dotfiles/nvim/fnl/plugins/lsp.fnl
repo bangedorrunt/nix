@@ -1,6 +1,5 @@
 (import-macros {: augroup : autocmd : autocmd!
-                : nmap : noremap
-                : command
+                : noremap : command
                 : lazyfunc : lazyreq} :core.macros)
 ;;;; LSP UI
 (let [{: with : handlers} vim.lsp]

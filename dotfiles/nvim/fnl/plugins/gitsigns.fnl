@@ -1,4 +1,4 @@
-(import-macros {: nmap : noremap : lazyreq} :core.macros)
+(import-macros {: noremap : lazyreq} :core.macros)
 
 (let [{: setup} (lazyreq :gitsigns)
       {: stage_buffer
