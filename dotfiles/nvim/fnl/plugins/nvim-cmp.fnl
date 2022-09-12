@@ -55,6 +55,7 @@
                  {:name :neorg}
                  {:name :nvim_lua}
                  {:name :calc}]
+  cmp_window {:border ["┌" "─" "┐" "│" "┘" "─" "└" "│"]}
   cmp_fmt
   (fn [_ item]
     (doto item (tset :kind (concat (get vscode_kinds item.kind "") item.kind))))
@@ -83,7 +84,9 @@
         (jumpable -1) (jump -1)
         (fallback)))]
 
-  (setup {:formatting {:format cmp_fmt}
+  (setup {:window {:completion (config.window.bordered cmp_window)
+                   :documentation (config.window.bordered cmp_window)}
+          :formatting {:format cmp_fmt}
           :mapping (mapping.preset.insert
                      {:<CR> (mapping.confirm {:select true})
                       :<C-Space> (mapping.complete)

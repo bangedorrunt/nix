@@ -158,14 +158,14 @@
   "Sets a vim colorscheme."
   `(vim.cmd.colorscheme ,(tostring name)))
 
-(fn t [key]
+(fn termcodes [key]
   "Returns the string with termcodes replaced"
   `(vim.api.nvim_replace_termcodes ,(tostring key) true true true))
 
 (fn feedkeys [key]
   "Sends input-keys to Nvim, subject to various quirks
   controlled by `mode` flags."
-  `(vim.api.nvim_feedkeys ,(t key) :n true))
+  `(vim.api.nvim_feedkeys ,(termcodes key) :n true))
 
 (fn vim_has? [property]
   "Returns true if vim has a propety"
@@ -258,6 +258,6 @@
  : noremap
  : hi
  : colorscheme
- : t
+ : termcodes
  : feedkeys
  : vim_has?}

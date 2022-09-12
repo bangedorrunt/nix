@@ -1,13 +1,20 @@
-(import-macros {: nmap : noremap : g : t} :core.macros)
+(import-macros {: nmap : noremap
+                : g : termcodes} :core.macros)
 
 ;; DEFAULT MAP
 ;; -----------
-(g mapleader (t "<Space>"))
-(g maplocalleader (t ","))
+(g mapleader (termcodes "<Space>"))
+(g maplocalleader (termcodes ","))
 
 ;; Disable SPC key
 (nmap n "<Space>" :<Nop>)
 (nmap n :q :<Nop>)
+
+;; Theprimeagens greatest remap ever
+(noremap x  :<Leader>p "\"_dP")
+(noremap nv :<Leader>d "\"_d")
+(noremap nv :<Leader>y "\"+y")
+(nmap    n  :<Leader>Y "\"+Y")
 
 ;; In favour of moving by displayed line rather than physical line
 ;; except when count is provided which is used when targeting specific
