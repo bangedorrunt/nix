@@ -153,21 +153,18 @@
                 :Discord   ["^com\\.hnc\\.Discord$"]
                 :Element   ["^im\\.riot\\.app$"]
                 :Finder    ["^com\\.apple\\.finder$"]
-                :Debuggers ["^org\\.mozilla\\.firefox$"
-                            "^org\\.mozilla\\.firefoxdeveloperedition$"
-                            "^com\\.google\\.Chrome$"
-                            "^org\\.chromium\\.Chromium$"
-                            "^com\\.google\\.Chrome\\.canary$"
-                            "^com\\.apple\\.Safari$"
-                            "^com\\.microsoft\\.VSCode$"]
                 :VSCODE    ["^com\\.microsoft\\.VSCode"]
                 :Browsers  ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"
+                            "^com\\.microsoft\\.edgemac\\.Beta$"
+                            "^com\\.microsoft\\.edgemac\\.Dev$"
+                            "^com\\.microsoft\\.edgemac$"
                             "^com\\.google\\.Chrome$"
                             "^org\\.chromium\\.Chromium$"
                             "^com\\.google\\.Chrome\\.canary$"
                             "^com\\.apple\\.Safari$"]
                 :Edge      ["^com\\.microsoft\\.edgemac\\.Beta$"
+                            "^com\\.microsoft\\.edgemac\\.Dev$"
                             "^com\\.microsoft\\.edgemac$"]
                 :Firefoxes ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"]}
