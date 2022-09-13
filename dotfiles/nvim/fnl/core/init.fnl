@@ -1,16 +1,5 @@
 (import-macros {: lazyfunc} :core.macros)
 
-;; Automatically compile on the fly
-;; NOTE: don't need this if using Aniseed
-(let [{: build} (lazyfunc :hotpot.api.make)]
-  (build "~/.config/nvim"
-         {:verbosity 0}
-         ;; ~/.config/nvim/fnl/*.fnl -> ~/.config/nvim/lua/*.lua
-         "(.+)/fnl/(.+)"
-         (fn [root path {: join-path}]
-           (if (not (string.match path "macros%.fnl$"))
-               (join-path root :lua path)))))
-
 (require :core.base)
 (require :core.options)
 (require :core.mappings)

@@ -13,5 +13,19 @@ require('hotpot').setup {
     macros = { env = '_COMPILER', compilerEnv = _G, allowedGlobals = false },
   },
 }
+-- AOT compile
+-- stylua: ignore
+require('hotpot.api.make').build(
+  vim.fn.stdpath 'config',
+  { verbosity = 0 },
+  '(.+)/fnl/(.+)',
+  function(root, path, opts)
+    local join_path = opts['join-path']
+    if not string.match(path, 'macros%.fnl$') then
+      return join_path(root, 'lua', path)
+    else
+      return nil
+    end
+  end)
 
 require 'core'
