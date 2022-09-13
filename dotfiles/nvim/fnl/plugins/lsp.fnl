@@ -8,6 +8,14 @@
   (set vim.lsp.handlers.textDocument/hover
        (with handlers.hover {:border :solid})))
 
+; Override configuration for floating windows
+(let [open_floating_preview vim.lsp.util.open_floating_preview]
+  (fn vim.lsp.util.open_floating_preview [...]
+    (let [(bufnr winid) (open_floating_preview ...)]
+      ;; (vim.api.nvim_win_set_option winid :winhl "Normal:NormalFloat")
+      (vim.api.nvim_win_set_option winid :breakindentopt "")
+      (vim.api.nvim_win_set_option winid :showbreak "NONE"))))
+
 ;; More general LSP commands
 
 ;; fnlfmt: skip
