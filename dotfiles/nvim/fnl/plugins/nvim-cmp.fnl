@@ -1,14 +1,14 @@
 (import-macros {: lazyreq : lazyfunc} :core.macros)
 
 (let
-  [{: first : dec : get : concat} (lazyfunc :core.funs)
+  [{: first : second : dec : get : concat : into} (lazyfunc :core.funs)
    {: setup : visible : complete
     : select_next_item : select_prev_item
     : mapping : config} (lazyreq :cmp)
    {: expand_or_jumpable : expand_or_jump
     : jumpable : jump : lsp_expand} (lazyfunc :luasnip)
-   ;; VSCode icons
-   vscode_kinds  {:Array " "
+   ;; codicons
+   codicons_kind {:Array " "
                   :Boolean " "
                   :Class " "
                   :Color " "
@@ -47,18 +47,23 @@
                   :buffer :Buffer
                   :calc :Calc
                   :path :Path}
-  cmp_srcs      [{:name :nvim_lsp}
-                 {:name :conjure}
-                 {:name :luasnip}
-                 {:name :buffer :keyword_length 5}
-                 {:name :path}
-                 {:name :neorg}
-                 {:name :nvim_lua}
-                 {:name :calc}]
+  cmp_srcs [{:name :nvim_lsp}
+            {:name :conjure}
+            {:name :luasnip}
+            {:name :buffer :keyword_length 5}
+            {:name :path}
+            {:name :neorg}
+            {:name :nvim_lua}
+            {:name :calc}]
   cmp_window {:border ["┌" "─" "┐" "│" "┘" "─" "└" "│"]}
   cmp_fmt
   (fn [_ item]
-    (doto item (tset :kind (concat (get vscode_kinds item.kind "") item.kind))))
+    (let [codicons
+          (into item :kind (concat (get codicons_kind item.kind "") item.kind))
+          codicons_item (vim.split codicons.kind "%s" {:trimempty true})
+          codicons_kind (first codicons_item)
+          codicons_menu (second codicons_item)]
+      (into item :kind codicons_kind :menu codicons_menu)))
   ;; Check backspace
   has_words_before?
   (fn []
@@ -86,7 +91,8 @@
 
   (setup {:window {:completion (config.window.bordered cmp_window)
                    :documentation (config.window.bordered cmp_window)}
-          :formatting {:format cmp_fmt}
+          :formatting {:fields [:kind :abbr :menu]
+                       :format cmp_fmt}
           :mapping (mapping.preset.insert
                      {:<CR> (mapping.confirm {:select true})
                       :<C-Space> (mapping.complete)
