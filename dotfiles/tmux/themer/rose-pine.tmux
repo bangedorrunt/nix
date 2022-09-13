@@ -1,5 +1,5 @@
 # Rose Pine Term Colors Default
-white=#f8f8f2
+white=#fff
 red=#ff5555
 yellow=#f1fa8c
 cyan=#8be9fd
