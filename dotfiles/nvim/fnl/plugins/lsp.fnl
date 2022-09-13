@@ -1,50 +1,37 @@
 (import-macros {: augroup : autocmd : autocmd!
                 : noremap : command
                 : lazyfunc : lazyreq} :core.macros)
-;;;; LSP UI
-(let [{: with : handlers} vim.lsp]
-  (set vim.lsp.handlers.textDocument/signatureHelp
-       (with handlers.signature_help {:border :solid}))
-  (set vim.lsp.handlers.textDocument/hover
-       (with handlers.hover {:border :solid})))
 
-; Override configuration for floating windows
+;;;; LSP UI
+;; Override configuration for floating windows
 (let [open_floating_preview vim.lsp.util.open_floating_preview]
   (fn vim.lsp.util.open_floating_preview [...]
     (let [(bufnr winid) (open_floating_preview ...)]
-      ;; (vim.api.nvim_win_set_option winid :winhl "Normal:NormalFloat")
       (vim.api.nvim_win_set_option winid :breakindentopt "")
-      (vim.api.nvim_win_set_option winid :showbreak "NONE"))))
+      (vim.api.nvim_win_set_option winid :showbreak "NONE")
+      (values bufnr winid))))
 
-;; More general LSP commands
+(let [{: with : handlers} vim.lsp
+      border tdt.border]
+  (set vim.lsp.handlers.textDocument/signatureHelp
+       (with handlers.signature_help {: border}))
+  (set vim.lsp.handlers.textDocument/hover
+       (with handlers.hover {: border})))
 
-;; fnlfmt: skip
-(fn reload_lsp []
-  (vim.lsp.stop_client (vim.lsp.get_active_clients))
-  (vim.cmd.edit))
-
-;; fnlfmt: skip
-(fn open_lsp_log []
-  (let [path (vim.lsp.get_log_path)]
-    (vim.cmd.edit path)))
-
-(command LspLog open_lsp_log)
-(command LspRestart reload_lsp)
-
-;;;; Diagnostics Configuration
-(let [{: config : severity} vim.diagnostic
-      {: sign_define} vim.fn]
+(let [{: sign_define} vim.fn
+      {: config : severity} vim.diagnostic
+      border tdt.border
+      signs tdt.signs]
   (config {:underline {:severity {:min severity.INFO}}
            :signs {:severity {:min severity.INFO}}
            :virtual_text false
-           ;; lsp_lines handles this
            :update_in_insert true
            :severity_sort true
-           :float {:show_header false :border :rounded}})
-  (sign_define :DiagnosticSignError {:text "" :texthl :DiagnosticSignError})
-  (sign_define :DiagnosticSignWarn {:text "" :texthl :DiagnosticSignWarn})
-  (sign_define :DiagnosticSignInfo {:text "" :texthl :DiagnosticSignInfo})
-  (sign_define :DiagnosticSignHint {:text "" :texthl :DiagnosticSignHint}))
+           :float {:show_header false : border}})
+  (sign_define :DiagnosticSignError {:text signs.error :texthl :DiagnosticSignError})
+  (sign_define :DiagnosticSignWarn {:text signs.warning :texthl :DiagnosticSignWarn})
+  (sign_define :DiagnosticSignInfo {:text signs.info :texthl :DiagnosticSignInfo})
+  (sign_define :DiagnosticSignHint {:text signs.hint :texthl :DiagnosticSignHint}))
 
 ;;;; LSP server config
 (fn capable? [client capability] (. client.server_capabilities capability))
@@ -69,29 +56,29 @@
 
 (fn on_attach [client bufnr]
   (let [{: has?} (lazyfunc :core.funs)
-        {:hover open_doc_float!
-         :declaration goto_declaration!
-         :definition goto_definition!
-         :implementation goto_implementation!
-         :type_definition goto_type_definition!
-         :code_action open_code_action_float!
-         :references open_references_float!
-         :rename rename!} vim.lsp.buf
-        {:open_float open_line_diag_float!
-         :goto_prev goto_diag_prev!
-         :goto_next goto_diag_next!} vim.diagnostic]
+        {: hover
+         : declaration
+         : definition
+         : implementation
+         : type_definition
+         : code_action
+         : references
+         : rename} vim.lsp.buf
+        {: open_float
+         : goto_prev
+         : goto_next} vim.diagnostic]
     ;; LSP keymap
-    (noremap n buffer :K open_doc_float!)
-    (noremap nv buffer :gr rename!)
-    (noremap n buffer "[d" goto_diag_prev!)
-    (noremap n buffer "]d" goto_diag_next!)
-    (noremap n buffer :gD goto_declaration!)
-    (noremap n buffer :gd goto_definition!)
-    (noremap n buffer :gt goto_type_definition!)
-    (noremap n buffer :gi goto_implementation!)
-    (noremap nv buffer :<LocalLeader>la open_code_action_float!)
-    (noremap n buffer :<LocalLeader>ll open_line_diag_float!)
-    (noremap n buffer :<LocalLeader>lr open_references_float!)
+    (noremap n buffer :K hover)
+    (noremap nv buffer :gr rename)
+    (noremap n buffer "[d" goto_prev)
+    (noremap n buffer "]d" goto_next)
+    (noremap n buffer :gD declaration)
+    (noremap n buffer :gd definition)
+    (noremap n buffer :gt type_definition)
+    (noremap n buffer :gi implementation)
+    (noremap nv buffer :<LocalLeader>la code_action)
+    (noremap n buffer :<LocalLeader>ll open_float)
+    (noremap n buffer :<LocalLeader>lr references)
     ;; LSP format
     (if (capable? client :documentFormattingProvider)
       (do
@@ -99,8 +86,7 @@
                  (autocmd! {:buffer bufnr})
                  (autocmd BufWritePre <buffer>
                           `(vim.lsp.buf.format {:filter
-                                                (fn [client] (not (has? [:fennel
-                                                                         :jsonls
+                                                (fn [client] (not (has? [:jsonls
                                                                          :tsserver]
                                                                         client.name)))
                                                 : bufnr}
@@ -148,9 +134,24 @@
        : diagnostics} (lazyreq :null-ls.builtins)
       sources [formatting.prettier
                formatting.stylua
+               ;; formatting.fnlfmt
                formatting.trim_whitespace
                formatting.shfmt]]
 
   (-> {: on_attach
        : sources}
       null_ls.setup))
+
+;; More general LSP commands
+;; fnlfmt: skip
+(fn reload_lsp []
+  (vim.lsp.stop_client (vim.lsp.get_active_clients))
+  (vim.cmd.edit))
+
+;; fnlfmt: skip
+(fn open_lsp_log []
+  (let [path (vim.lsp.get_log_path)]
+    (vim.cmd.edit path)))
+
+(command LspLog open_lsp_log)
+(command LspRestart reload_lsp)
