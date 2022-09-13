@@ -46,9 +46,9 @@
   :folke/lua-dev.nvim {:module "lua-dev"}
   :simrat39/rust-tools.nvim {:module "rust-tools"}
   :folke/trouble.nvim {:cmd :Trouble}
-  :jose-elias-alvarez/null-ls.nvim {:module_pattern "null.ls.*"}
-  :neovim/nvim-lspconfig {:as :lspconfig :module_pattern "lspconfig.*"}
-  :williamboman/mason.nvim {:as :mason :module_pattern "mason"}
+  :jose-elias-alvarez/null-ls.nvim {:module "null-ls"}
+  :neovim/nvim-lspconfig {:as :lspconfig :module :lspconfig}
+  :williamboman/mason.nvim {:as :mason :module :mason}
   :williamboman/mason-lspconfig.nvim {:event :BufRead :mod :lsp}
   :nvim-treesitter/nvim-treesitter {:commit :b56659f15e1d1396271b4938889ed92aca043b75
                                     :event :BufRead
@@ -62,7 +62,7 @@
   :JoosepAlviste/nvim-ts-context-commentstring {:after :treesitter :as :ts-context}
   :numToStr/Comment.nvim {:after :ts-context :mod :comment}
   :nvim-neorg/neorg-telescope {:module_pattern "neorg.modules.*"}
-  :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg :ft [:norg]}
+  :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg}
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
@@ -84,7 +84,7 @@
   ;;;; Tool plugins
   ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
   :ericpruitt/tmux.vim {:ft :tmux}
-  :aserowy/tmux.nvim {:event :BufRead}
+  :aserowy/tmux.nvim {:event :BufRead :mod :tmux}
   :jbyuki/venn.nvim {:cmd :VBox}
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
   ;; :glacambre/firenvim {:run (fn [] ((. vim.fn "firenvim#install") 1))}
