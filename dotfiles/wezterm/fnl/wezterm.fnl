@@ -8,7 +8,7 @@
 (fn fallback [name]
   (font_with_fallback
     [name
-     {:family "codicon" :stretch :UltraCondensed :scale 0.95}
+     {:family "codicon" :scale 0.95}
      :neorg
      :devicon]))
 
@@ -22,9 +22,6 @@
  :font (fallback {:family "Operator Mono SSm" :weight 325})
  :font_rules [{:italic true
                :font (fallback {:family "Operator Mono SSm" :weight 325 :style :Italic})}
-              {:italic true
-               :intensity :Normal
-               :font (fallback {:family "Operator Mono SSm" :weight 325})}
               {:intensity :Bold
                :font (fallback {:family "Operator Mono SSm" :weight :DemiLight})}
               {:italic true
