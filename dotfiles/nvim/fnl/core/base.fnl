@@ -21,6 +21,40 @@
                    :light {:tokyonight :#e1e2e7
                            :gruvbox :#fbf1c7
                            :rose-pine :#faf4ed}}
+         :lsp {:Array " "
+               :Boolean " "
+               :Class " "
+               :Color " "
+               :Constant " "
+               :Constructor " "
+               :Enum " "
+               :EnumMember " "
+               :Event " "
+               :Field " "
+               :File " "
+               :Folder " "
+               :Function " "
+               :Interface " "
+               :Keyword " "
+               :Method " "
+               :Module " "
+               :Namespace " "
+               :Null "ﳠ "
+               :Number " "
+               :Object " "
+               :Operator " "
+               :Package " "
+               :Property " "
+               :Reference " "
+               :Snippet " "
+               :Struct " "
+               :String " "
+               :Text " "
+               :TypeParameter " "
+               :Unit " "
+               :Value " "
+               :Variable " "}
+         :border ["┌" "─" "┐" "│" "┘" "─" "└" "│"]
          :paths {:IS_MAC (= os_name :Darwin)
                  :IS_LINUX (= os_name :Linux)
                  :IS_WINDOWS (= os_name :Windows)

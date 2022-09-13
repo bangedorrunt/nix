@@ -7,40 +7,6 @@
     : mapping : config} (lazyreq :cmp)
    {: expand_or_jumpable : expand_or_jump
     : jumpable : jump : lsp_expand} (lazyfunc :luasnip)
-   ;; codicons
-   codicons_kind {:Array " "
-                  :Boolean " "
-                  :Class " "
-                  :Color " "
-                  :Constant " "
-                  :Constructor " "
-                  :Enum " "
-                  :EnumMember " "
-                  :Event " "
-                  :Field " "
-                  :File " "
-                  :Folder " "
-                  :Function " "
-                  :Interface " "
-                  :Keyword " "
-                  :Method " "
-                  :Module " "
-                  :Namespace " "
-                  :Null "ﳠ "
-                  :Number " "
-                  :Object " "
-                  :Operator " "
-                  :Package " "
-                  :Property " "
-                  :Reference " "
-                  :Snippet " "
-                  :Struct " "
-                  :String " "
-                  :Text " "
-                  :TypeParameter " "
-                  :Unit " "
-                  :Value " "
-                  :Variable " "}
   cmp_menu_items {:nvim_lsp :LSP
                   :luasnip :LuaSnip
                   :conjure :Conjure
@@ -55,11 +21,11 @@
             {:name :neorg}
             {:name :nvim_lua}
             {:name :calc}]
-  cmp_window {:border ["┌" "─" "┐" "│" "┘" "─" "└" "│"]}
+  cmp_window {:border tdt.border}
   cmp_fmt
   (fn [_ item]
     (let [codicons
-          (into item :kind (concat (get codicons_kind item.kind "") item.kind))
+          (into item :kind (concat (get tdt.lsp item.kind "") item.kind))
           codicons_item (vim.split codicons.kind "%s" {:trimempty true})
           codicons_kind (first codicons_item)
           codicons_menu (second codicons_item)]
