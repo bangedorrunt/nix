@@ -21,7 +21,8 @@
             {:name :neorg}
             {:name :nvim_lua}
             {:name :calc}]
-  cmp_window {:border tdt.border}
+  cmp_window {:border tdt.border
+              :winhighlight "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"}
   cmp_fmt
   (fn [_ item]
     (let [codicons
