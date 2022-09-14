@@ -4,19 +4,18 @@
 
 ;;;; LSP UI
 ;; Override configuration for floating windows
-(let [open_floating_preview vim.lsp.util.open_floating_preview]
+(let [{: with : handlers} vim.lsp
+      border tdt.border
+      open_floating_preview vim.lsp.util.open_floating_preview]
+  (set vim.lsp.handlers.textDocument/signatureHelp
+       (with handlers.signature_help {: border}))
+  (set vim.lsp.handlers.textDocument/hover
+       (with handlers.hover {: border}))
   (fn vim.lsp.util.open_floating_preview [...]
     (let [(bufnr winid) (open_floating_preview ...)]
       (vim.api.nvim_win_set_option winid :breakindentopt "")
       (vim.api.nvim_win_set_option winid :showbreak "NONE")
       (values bufnr winid))))
-
-(let [{: with : handlers} vim.lsp
-      border tdt.border]
-  (set vim.lsp.handlers.textDocument/signatureHelp
-       (with handlers.signature_help {: border}))
-  (set vim.lsp.handlers.textDocument/hover
-       (with handlers.hover {: border})))
 
 (let [{: sign_define} vim.fn
       {: config : severity} vim.diagnostic
