@@ -1,28 +1,27 @@
-(import-macros {: nmap : noremap
-                : g : termcodes} :core.macros)
+(import-macros {: nmap : noremap : g : termcodes} :core.macros)
 
 ;; DEFAULT MAP
 ;; -----------
-(g mapleader (termcodes "<Space>"))
+(g mapleader (termcodes :<Space>))
 (g maplocalleader (termcodes ","))
 
 ;; Disable SPC key
-(nmap n "<Space>" :<Nop>)
+(nmap n :<Space> :<Nop>)
 (nmap n :q :<Nop>)
 
 ;; Theprimeagens greatest remap ever
-(noremap x  :<Leader>p "\"_dP")
+(noremap x :<Leader>p "\"_dP")
 (noremap nv :<Leader>d "\"_d")
 (noremap nv :<Leader>y "\"+y")
-(nmap    n  :<Leader>Y "\"+Y")
+(nmap n :<Leader>Y "\"+Y")
 
 ;; In favour of moving by displayed line rather than physical line
 ;; except when count is provided which is used when targeting specific
 ;; line with `relativenumber`
-(noremap nv expr :j '(if (not= vim.v.count 0) :j :gj))
-(noremap nv expr :k '(if (not= vim.v.count 0) :k :gk))
+(noremap nv expr :j `(if (not= vim.v.count 0) :j :gj))
+(noremap nv expr :k `(if (not= vim.v.count 0) :k :gk))
 (noremap n :0 :g0)
-(noremap n :$ :g$)
+(noremap n "$" :g$)
 
 ;; Keep screen at the center when jump
 (noremap n :n :nzzzv)
@@ -30,17 +29,20 @@
 (noremap n :<C-d> :<C-d>zz)
 (noremap n :<C-u> :<C-u>zz)
 
-(noremap n :J "mzJ`z") ;; a better J
-(noremap n :Y "yg$") ;; a better Y
+(noremap n :J "mzJ`z")
 
+;; a better J
+(noremap n :Y :yg$)
+
+;; a better Y
 
 ;; Move line up and down
 (noremap v :J ":<C-u>m '>+1<CR>gv=gv")
 (noremap v :K ":<C-u>m '>-2<CR>gv=gv")
 
 ;; Indent level in visual map
-(noremap v ">" ">gv")
-(noremap v "<" "<gv")
+(noremap v ">" :>gv)
+(noremap v "<" :<gv)
 
 ;; Escape is hurt
 (noremap i :jj :<Esc>)
@@ -59,7 +61,9 @@
 (nmap n :<C-l> :<C-w>l)
 (nmap n :<C-j> :<C-w>j)
 (nmap n :<C-k> :<C-w>k)
-(nmap n :<C-t> :<Nop>) ;; Reserved for Tmux zoom
+(nmap n :<C-t> :<Nop>)
+
+;; Reserved for Tmux zoom
 
 ;; Emacs map
 ;; (noremap i :<C-w> "<C-[>diwa")

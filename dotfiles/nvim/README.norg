@@ -3,6 +3,7 @@
   repos:
 
   - [datwaft/nvim]{https://github.com/datwaft/nvim}
+  - [~xerool/dotfiles]{https://git.sr.ht/~xerool/dotfilesJ}
   - [Olical/dotfiles]{https://github.com/Olical/dotfiles}
   - [rinx/dotfiles]{https://github.com/rinx/dotfiles}
   - [davidmh/dot-files]{https://github.com/davidmh/dot-files}
@@ -12,5 +13,6 @@
   - [kabouzeid/dotfiles]{https://github.com/kabouzeid/dotfiles}
   - [glepnir/nvim]{https://github.com/glepnir/nvim}
   - [akinsho/dotfiles]{https://github.com/akinsho/dotfiles}
+  - [sindrets/dotfiles]{https://github.com/sindrets/dotfiles}
 
   All credits go to these great author, without them, my config is impossible.

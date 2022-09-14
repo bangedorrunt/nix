@@ -8,7 +8,7 @@ _G.nvim = { _store = __nvim_global_callbacks }
 
 require('hotpot').setup {
   provide_require_fennel = true,
-  enable_hotpot_diagnostics = true,
+  enable_hotpot_diagnostics = false,
   compiler = {
     macros = { env = '_COMPILER', compilerEnv = _G, allowedGlobals = false },
   },

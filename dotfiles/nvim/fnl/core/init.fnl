@@ -5,17 +5,17 @@
 (require :core.mappings)
 (require :core.autocmds)
 
-(fn file_exist? [path]
+(fn file-exist? [path]
   (= (vim.fn.filereadable path) 1))
 
-(fn load_packer_plugins []
-  (vim.cmd.packadd "packer.nvim")
+(fn load-packer-plugins []
+  (vim.cmd.packadd :packer.nvim)
   (require :plugins))
 
-(if (file_exist? tdt.paths.PACKER_COMPILED_PATH)
+(if (file-exist? tdt.paths.PACKER-COMPILED-PATH)
     (do
       (require :packer_compiled)
       ;; REF: folke/dot
       ;; No need to load this immediately, since we have packer_compiled
-      (vim.defer_fn load_packer_plugins 0))
-    (load_packer_plugins))
+      (vim.defer_fn load-packer-plugins 0))
+    (load-packer-plugins))

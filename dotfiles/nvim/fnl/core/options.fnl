@@ -1,157 +1,177 @@
-(import-macros {: opt} :core.macros)
+(import-macros {: set!} :core.macros)
 
 ;;;; RENDERING
-;; (opt background :light)
+;; (set! background :light)
 
 ;;;; UI
-(opt lz)
-(opt number)
-(opt relativenumber)
-(opt termguicolors)
-(opt spell)
-(opt cursorline)
-(opt report 0)
-(opt visualbell false)
-(opt errorbells false)
-(opt mouse :a)
-(opt showmatch)
-(opt matchtime 2)
-(opt shortmess :filnxtToOFc)
-(opt pumheight 15)
-(opt winblend 0)
-(opt winwidth 30)
-(opt winminwidth 10)
-(opt winminheight 0)
-(opt helpheight 12)
-(opt previewheight 12)
-(opt cmdwinheight 12)
-;; (opt cmdheight 0) ;; crashed nvim when using vim-fugitive
-(opt conceallevel 2)
-(opt concealcursor :nc)
-(opt signcolumn "yes")
-(opt colorcolumn :80)
-(opt showmode false)
-(opt laststatus 2)
-(opt expandtab) ;; use space instead of tab
-(opt tabstop 2)
-(opt shiftwidth 0) ;; in favour of tabstop
-(opt softtabstop -1)
-(opt smartindent)
-(opt breakindent) ;; maintain indentation on break
-(opt showbreak " ")
-(opt breakindentopt "shift:2")
-;; Invisibles
-(opt list) ;; show invisible chars
-(opt listchars {:tab "»·"
-                :nbsp "+"
-                :trail "·"
-                :extends ""
-                :precedes ""})
+(set! lz)
+(set! number)
+(set! relativenumber)
+(set! termguicolors)
+(set! spell)
+(set! cursorline)
+(set! report 0)
+(set! visualbell false)
+(set! errorbells false)
+(set! mouse :a)
+(set! showmatch)
+(set! matchtime 2)
+(set! shortmess :filnxtToOFc)
+(set! pumheight 15)
+(set! winblend 0)
+(set! winwidth 30)
+(set! winminwidth 10)
+(set! winminheight 0)
+(set! helpheight 12)
+(set! previewheight 12)
+(set! cmdwinheight 12)
+(set! cmdheight 0)
 
-(opt fillchars {:vert ""
-                :fold "·"
-                :diff ""
-                :msgsep "‾"
-                :eob " "
-                :foldopen ""
-                :foldsep ""
-                :foldclose ""})
+;; crashed nvim when using vim-fugitive
+(set! conceallevel 2)
+(set! concealcursor :nc)
+(set! signcolumn :yes)
+(set! colorcolumn :80)
+(set! showmode false)
+(set! laststatus 3)
+
+;; global status
+(set! expandtab)
+
+;; use space instead of tab
+(set! tabstop 2)
+(set! shiftwidth 0)
+
+;; in favour of tabstop
+(set! softtabstop -1)
+(set! smartindent)
+(set! breakindent)
+
+;; maintain indentation on break
+(set! showbreak " ")
+(set! breakindentopt "shift:2")
+;; Invisibles
+(set! list)
+
+;; show invisible chars
+(set! listchars {:tab "»·"
+                 :nbsp "+"
+                 :trail "·"
+                 :extends ""
+                 :precedes ""})
+
+(set! fillchars {:vert ""
+                 :fold "·"
+                 :diff ""
+                 :msgsep "‾"
+                 :eob " "
+                 :foldopen ""
+                 :foldsep ""
+                 :foldclose ""})
 
 ;;;; BEHAVIOUR
-(opt noautochdir)
-(opt magic)
-(opt hidden)
-(opt scrolloff 10)
+(set! noautochdir)
+(set! magic)
+(set! hidden)
+(set! scrolloff 10)
 ;; See: https://stackoverflow.com/a/50415982
-(opt wrap)
-(opt wrapmargin 0)
-(opt whichwrap "b,s,<,>,h,l,[,],~")
-(opt textwidth 80)
-;; (opt columns 80)
-(opt linebreak)
+(set! wrap)
+(set! wrapmargin 0)
+(set! whichwrap "b,s,<,>,h,l,[,],~")
+(set! textwidth 80)
+;; (set! columns 80)
+(set! linebreak)
 
-(opt virtualedit :block)
-(opt fileformats [:unix :mac :dos])
-(opt clipboard :unnamedplus)
-(opt completeopt [:menu :menuone :preview :noinsert])
-(opt diffopt+ [:vertical
-               :iwhite
-               :hiddenoff
-               "foldcolumn:0"
-               "context:4"
-               "algorithm:histogram"
-               :indent-heuristic])
-(opt foldenable true)
-(opt foldcolumn :1)
-(opt foldlevel 99) ;; Unfold them all
-(opt foldnestmax 0)
-(opt foldlevelstart 99)
-(opt splitright)
-(opt splitbelow)
-(opt backspace "indent,eol,start")
-(opt switchbuf "useopen,uselast")
-(opt eadirection :hor)
-(opt sessionoptions "curdir,help,tabpages,winsize")
-(opt viewoptions "folds,cursor,curdir,slash,unix")
+(set! virtualedit :block)
+(set! fileformats [:unix :mac :dos])
+(set! clipboard :unnamedplus)
+(set! completeopt [:menu :menuone :preview :noinsert])
+(set! diffopt+ [:vertical
+                :iwhite
+                :hiddenoff
+                "foldcolumn:0"
+                "context:4"
+                "algorithm:histogram"
+                :indent-heuristic])
+
+(set! foldenable true)
+(set! foldcolumn :1)
+(set! foldlevel 99)
+
+;; Unfold them all
+(set! foldnestmax 0)
+(set! foldlevelstart 99)
+(set! splitright)
+(set! splitbelow)
+(set! backspace "indent,eol,start")
+(set! switchbuf "useopen,uselast")
+(set! eadirection :hor)
+(set! sessionoptions "curdir,help,tabpages,winsize")
+(set! viewoptions "folds,cursor,curdir,slash,unix")
 ;; Wildmenu
-(opt wildmenu)
-(opt wildignorecase)
-(opt wildignore+ [:.git
-                  :.hg
-                  :.svn
-                  :*.o
-                  :*.out
-                  :*.jpg
-                  :*.jpeg
-                  :*.png
-                  :*.gif
-                  :*.zip
-                  "*~"
-                  "**/tmp/** *.DS_Store"
-                  :**/node_modules/**
-                  :**/bower_modules/**
-                  :*.pyc
-                  :*pycache*])
+(set! wildmenu)
+(set! wildignorecase)
+(set! wildignore+ [:.git
+                   :.hg
+                   :.svn
+                   :*.o
+                   :*.out
+                   :*.jpg
+                   :*.jpeg
+                   :*.png
+                   :*.gif
+                   :*.zip
+                   "*~"
+                   "**/tmp/** *.DS_Store"
+                   :**/node_modules/**
+                   :**/bower_modules/**
+                   :*.pyc
+                   :*pycache*])
 
-(opt wildoptions :pum)
-(opt wildmode "longest:full,full")
+(set! wildoptions :pum)
+(set! wildmode "longest:full,full")
 ;; Time
-(opt timeout)
-(opt ttimeout)
-(opt updatetime 50)
-(opt timeoutlen 750) ;; give me more time to do key sequences
-(opt ttimeoutlen 50) ;; make escape more responsive
-(opt redrawtime 1500)
+(set! timeout)
+(set! ttimeout)
+(set! updatetime 50)
+(set! timeoutlen 750)
+
+;; give me more time to do key sequences
+(set! ttimeoutlen 50)
+
+;; make escape more responsive
+(set! redrawtime 1500)
 ;; Search
-(opt ignorecase)
-(opt incsearch)
-(opt hlsearch)
-(opt smartcase)
-(opt infercase)
-(opt wrapscan)
-(opt inccommand :nosplit)
-(opt complete ".,w,b,k")
-(opt grepformat "%f:%l:%c:%m")
-(opt grepprg "rg --hidden --vimgrep --smart-case --")
+(set! ignorecase)
+(set! incsearch)
+(set! hlsearch)
+(set! smartcase)
+(set! infercase)
+(set! wrapscan)
+(set! inccommand :nosplit)
+(set! complete ".,w,b,k")
+(set! grepformat "%f:%l:%c:%m")
+(set! grepprg "rg --hidden --vimgrep --smart-case --")
 
 ;;;; VIM DIRECTORIES
-(opt undofile)
-(opt undolevels 10000)
-(opt swapfile false)
-(opt backup false)
-(opt history 5000)
-(opt writebackup false)
-(opt directory (.. tdt.paths.STATE_PATH :/swag/))
-(opt undodir (.. tdt.paths.STATE_PATH :/undo/))
-(opt backupdir (.. tdt.paths.STATE_PATH :/backup/))
-(opt viewdir (.. tdt.paths.STATE_PATH :/view/))
-(opt spellfile (.. tdt.paths.STATE_PATH :/spell/en.uft-8.add))
-(opt backupskip [:/tmp/*
-                 :$TMPDIR/*
-                 :$TMP/*
-                 :$TEMP/*
-                 :*/shm/*
-                 :/private/var/*
-                 :.vault.vim])
+(set! undofile)
+(set! undolevels 10000)
+(set! swapfile false)
+(set! backup false)
+(set! history 5000)
+(set! writebackup false)
+(set! directory (.. tdt.paths.STATE-PATH :/swag/))
+(set! undodir (.. tdt.paths.STATE-PATH :/undo/))
+(set! backupdir (.. tdt.paths.STATE-PATH :/backup/))
+(set! viewdir (.. tdt.paths.STATE-PATH :/view/))
+(set! spellfile (.. tdt.paths.STATE-PATH :/spell/en.uft-8.add))
+(set! backupskip [:/tmp/*
+                  :$TMPDIR/*
+                  :$TMP/*
+                  :$TEMP/*
+                  :*/shm/*
+                  :/private/var/*
+                  :.vault.vim])
+
 ;; fnlfmt: skip
-(opt shada ["!" "'1000" "<50" "@100" "s10" "h"])
+(set! shada ["!" "'1000" "<50" "@100" "s10" "h"])

@@ -9,6 +9,7 @@ version: 0.0.13
 
 * TODO
 ** Nvim
+   - [ ] Move to `vim-jetpack`
    - [ ] `foldoptions`
    -- [PR]{https://github.com/neovim/neovim/pull/17446}
    - [ ] `luasnip` snippet for autopair

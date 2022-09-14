@@ -1,9 +1,10 @@
 (import-macros {: lazyreq} :core.macros)
 
- (local {: use} (lazyreq :core.packer))
+(local {: use} (lazyreq :core.packer))
+
+;; NOTE: lua use % as escape in pattern
 
 ;; fnlfmt: skip
-;; NOTE: lua use % as escape in pattern
 (use
   ;;;; Dependencies
   :wbthomason/packer.nvim {:opt true}
@@ -12,7 +13,7 @@
   :nvim-lua/plenary.nvim {:module :plenary}
   :kevinhwang91/promise-async {:module :promise}
   :antoinemadec/FixCursorHold.nvim {}
-  :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
+  :kyazdani42/nvim-web-devicons {:module "nvim-web-devicons" :mod :devicons}
   ;;;; UI plugins
   "~/workspace/rose-pine.nvim.git/main" {:color :rose-pine}
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
@@ -40,14 +41,14 @@
                                   :module_pattern "telescope.*"
                                   :mod :telescope}
   ;;;; Lang plugins
+  :jaawerth/fennel.vim {}
   :folke/lua-dev.nvim {:module "lua-dev"}
   :simrat39/rust-tools.nvim {:module "rust-tools"}
   :jose-elias-alvarez/null-ls.nvim {:module "null-ls"}
   :neovim/nvim-lspconfig {:as :lspconfig :module :lspconfig}
   :williamboman/mason.nvim {:as :mason :module :mason}
   :williamboman/mason-lspconfig.nvim {:event :BufRead :mod :lsp}
-  :nvim-treesitter/nvim-treesitter {:commit :b56659f15e1d1396271b4938889ed92aca043b75
-                                    :event :BufRead
+  :nvim-treesitter/nvim-treesitter {:event :BufRead
                                     :as :treesitter
                                     :mod :nvim-treesitter}
   :nvim-treesitter/playground {:after :treesitter}
@@ -63,7 +64,7 @@
   :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
   ;;;; Completion plugins
   :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
-  :hrsh7th/nvim-cmp {:commit :33fbb2c3d2c512bd79ea03cf11fea405cbe618a9
+  :hrsh7th/nvim-cmp {:commit :913eb8599816b0b71fe959693080917d8063b26a
                      :event :BufRead
                      :module_pattern "cmp.*"
                      :mod :nvim-cmp}

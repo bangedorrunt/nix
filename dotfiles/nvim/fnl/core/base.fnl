@@ -1,14 +1,14 @@
-(import-macros {: g : opt} :core.macros)
+(import-macros {: g : set!} :core.macros)
 
-(let [os_name (. (vim.loop.os_uname) :sysname)
-      path_sep (match os_name
+(let [os-name (. (vim.loop.os_uname) :sysname)
+      path-sep (match os-name
                 :Windows "\\\\"
                 _ "/")
-      share_path (vim.fn.stdpath :data)
-      data_path (string.format "%s/site/" share_path)
-      config_path (vim.fn.stdpath :config)
-      cache_path (vim.fn.stdpath :cache)
-      state_path (vim.fn.stdpath :state)]
+      share-path (vim.fn.stdpath :data)
+      data-path (string.format "%s/site/" share-path)
+      config-path (vim.fn.stdpath :config)
+      cache-path (vim.fn.stdpath :cache)
+      state-path (vim.fn.stdpath :state)]
   (tset _G :tdt
         {:signs {:error " "
                  :warning " "
@@ -16,7 +16,7 @@
                  :information " "
                  :prompt "❯"}
          :pallete {:dark {:tokyonight :#1a1b26
-                          :monokaipro_spectrum :#222222
+                          :monokaipro-spectrum :#222222
                           :rose-pine :#191724}
                    :light {:tokyonight :#e1e2e7
                            :gruvbox :#fbf1c7
@@ -55,20 +55,21 @@
                :Value " "
                :Variable " "}
          :border ["┌" "─" "┐" "│" "┘" "─" "└" "│"]
-         :paths {:IS_MAC (= os_name :Darwin)
-                 :IS_LINUX (= os_name :Linux)
-                 :IS_WINDOWS (= os_name :Windows)
-                 :PATH_SEP path_sep
-                 :NVIM_PATH config_path
+         :border-alt ["─" "│" "─" "│" "┌" "┐" "┘" "└"]
+         :paths {:IS-MAC (= os-name :Darwin)
+                 :IS-LINUX (= os-name :Linux)
+                 :IS-WINDOWS (= os-name :Windows)
+                 :PATH-SEP path-sep
+                 :NVIM-PATH config-path
                  :HOME (os.getenv :HOME)
-                 :CACHE_PATH cache_path
-                 :DATA_PATH data_path
-                 :STATE_PATH state_path
-                 :TREESITTER_PATH (.. share_path :/treesitter)
-                 :PACKER_PATH (.. data_path :pack/packer/opt/packer.nvim)
-                 :PACKER_COMPILED_PATH (.. data_path :lua/packer_compiled.lua)}}))
+                 :CACHE-PATH cache-path
+                 :DATA-PATH data-path
+                 :STATE-PATH state-path
+                 :TREESITTER-PATH (.. share-path :/treesitter)
+                 :PACKER-PATH (.. data-path :pack/packer/opt/packer.nvim)
+                 :PACKER-COMPILED-PATH (.. data-path :lua/packer_compiled.lua)}}))
 
-(opt runtimepath+ tdt.paths.TREESITTER_PATH)
+(set! runtimepath+ tdt.paths.TREESITTER-PATH)
 
 ;; Disable built-in plugins and host providers
 (g loaded_netrw 1)
