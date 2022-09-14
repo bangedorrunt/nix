@@ -15,10 +15,8 @@
   :kyazdani42/nvim-web-devicons {:module_pattern "nvim.web.devicons" :mod :devicons}
   ;;;; UI plugins
   "~/workspace/rose-pine.nvim.git/main" {:color :rose-pine}
-  ;; "babygau/rose-pine.nvim" {:color :rose-pine}
   :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
   :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
-  :folke/todo-comments.nvim {:event :BufRead :init :todo-comments}
   :kyazdani42/nvim-tree.lua {:after :treesitter :mod :nvim-tree}
   ;;;; Editor plugins
   :tpope/vim-eunuch {:event :BufRead}
@@ -27,7 +25,6 @@
   :kevinhwang91/nvim-ufo {:after :treesitter :mod :ufo}
   :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
   :ggandor/leap.nvim {:event :BufRead :mod :leap}
-  :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
   :romainl/vim-qf {:ft :qf}
   :NvChad/nvim-colorizer.lua {:init :colorizer
                               :cmd [:ColorizerToggle
@@ -35,7 +32,7 @@
                                     :ColorizerDetachFromBuffer
                                     :ColorizerReloadAllBuffers]} ;; fork version
   ;;;; Fuzzy search engine
-  :ThePrimeagen/harpoon {:event :BufRead :mod :harpoon}
+  "~/workspace/son-of-harpoon.git/main" {:event :BufRead :as :harpoon :mod :harpoon}
   :ahmedkhalf/project.nvim {:module_pattern "project.*" :init :project_nvim}
   :nvim-telescope/telescope-fzf-native.nvim {:module_pattern "fzf.*" :run "make"}
   :nvim-telescope/telescope.nvim {:as :telescope
@@ -45,7 +42,6 @@
   ;;;; Lang plugins
   :folke/lua-dev.nvim {:module "lua-dev"}
   :simrat39/rust-tools.nvim {:module "rust-tools"}
-  :folke/trouble.nvim {:cmd :Trouble}
   :jose-elias-alvarez/null-ls.nvim {:module "null-ls"}
   :neovim/nvim-lspconfig {:as :lspconfig :module :lspconfig}
   :williamboman/mason.nvim {:as :mason :module :mason}
@@ -54,6 +50,7 @@
                                     :event :BufRead
                                     :as :treesitter
                                     :mod :nvim-treesitter}
+  :nvim-treesitter/playground {:after :treesitter}
   :nvim-treesitter/nvim-treesitter-textobjects {:commit :e63c2ff8e38fad77299dd74e14c7c9360e1b3181
                                                 :after :treesitter}
   ;; :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
@@ -111,6 +108,12 @@
   ;; :declancm/cinnamon.nvim {:event :BufRead :init :cinnamon}
   ;; :vigoux/notifier.nvim {:event :BufEnter :init :notifier}
   ;; :hrsh7th/nvim-pasta {:event :BufReadPost}
+  ;; :stevearc/dressing.nvim {:event :BufReadPost}
+  ;; :j-hui/fidget.nvim {:event :BufReadPost :mod :fidget}
+  ;; :folke/trouble.nvim {:cmd :Trouble}
+  ;; :folke/todo-comments.nvim {:event :BufRead :init :todo-comments}
+  ;; "babygau/rose-pine.nvim" {:color :rose-pine}
+  ;; :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
   )
 
 (require :plugins.scratch)
