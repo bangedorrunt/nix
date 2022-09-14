@@ -8,65 +8,61 @@ version: 0.0.13
 @end
 
 * TODO
-  #contexts nvim
-  - [ ] `luasnip` snippet for autopair
-  -- [Manual autopair]{https://github.com/josephsdavid/neovim2/blob/f8c267a81bae13df6a8fbc7f5e05a6085ad5c50b/lua/config/snippets/init.lua#L212}
-  - [x] `nvim-ufo`
-  - [?] `fidget.nvim`
-  - [-] Open file in current nvim instance
-  -- Flag [remote]{https://github.com/neovim/neovim/pull/18414} is broken for now
-  -- [Use absolute path]{https://github.com/neovim/neovim/issues/18519}
-  - [_]  Use `hydra.nvim`
-  -- How to make art code block compatible with my font?
-  -- I don't need it
-  #contexts tmux
-  - [_]  Use `tmux-tilish`
-  #contexts karabiner
-  - [!] Rebind Discord keymaps
-  -- Opt up/down: navigate between channels
-  -- Cmd Opt up/down: navigate between servers
-  -- Opt Shift up/down: navigate between unread channels
-  -- PageU/PageD: scroll chat
-  -- Cmd \]/\[: navigate history
-  -- Cmd K: toggle quick switches
-  -- Cmd E: toggle emoji
-  -- Cmd G: toggle gif
-  -- Cmd S: toggle sticker
+** Nvim
+   - [ ] `foldoptions`
+   -- [PR]{https://github.com/neovim/neovim/pull/17446}
+   - [ ] `luasnip` snippet for autopair
+   -- [Manual autopair]{https://github.com/josephsdavid/neovim2/blob/f8c267a81bae13df6a8fbc7f5e05a6085ad5c50b/lua/config/snippets/init.lua#L212}
+   - [-] Completely remap key using <Leader> and <LocalLeader>
+   -- Use 2 sequences at most
+   - [ ] `venn.vim` keybinds
+   - [-] `fidget.Nvim`
+   -- Got performance hit
+   - [-] Open file in current Nvim instance
+   -- Flag [remote]{https://github.com/neovim/neovim/pull/18414} is broken for now
+   -- [Use absolute path]{https://github.com/neovim/neovim/issues/18519}
+   - [_]  Use `hydra.Nvim`
+   -- How to make art code block compatible with my font?
+   -- I don't need it
+** Tmux
+   - [_]  Use `Tmux-tilish`
+** Karabiner
+   - [x] Rebind Discord keymaps
+   - [x] Rebind Element keymaps
 
 * FIX
-  #contexts nvim
-  - [x] Could not remap `q` to `gq` for `vim-fugitive` using `nmap` macro
-  -- `nmap` macro need to set `:remap true`
-  - [x] `Neorg` dirman automatically change `cwd`
-  -- It's upstream but, @vhyrro is aware of the issue
-  -- Solution:
-  --- `notetoself` has nested `gtd` workspace
-  --- Move `gtd` out of `notetoself`
-  #contexts wezterm
-  - [x] Live loading error occured when switching themes
-  -- Solution:
-  --- change `justfile` to make fennel compile properly
-  --- change `harpoon` cmd accordingly
-  - [x] Open terminal using Alfred
-  -- Spotlight got no issue
-  -- Solution: `/usr/local/bin/zsh -l -c "tmux attach || tmux"`
+** Nvim
+   - [x] Could not remap `q` to `gq` for `vim-fugitive` using `nmap` macro
+   -- `nmap` macro need to set `:remap true`
+   - [x] `Neorg` dirman automatically change `cwd`
+   -- It's upstream but, @vhyrro is aware of the issue
+   -- Solution:
+   --- `notetoself` has nested `gtd` workspace
+   --- Move `gtd` out of `notetoself`
+** Wezterm
+   - [x] Live loading error occured when switching themes
+   -- Solution:
+   --- change `justfile` to make fennel compile properly
+   --- change `harpoon` cmd accordingly
+   - [x] Open terminal using Alfred
+   -- Spotlight got no issue
+   -- Solution: `/usr/local/bin/zsh -l -c "Tmux attach || tmux"`
 
 * DONE
-  #context nvim
-  - [x] `ladyreq` macro
-  -- [lazy-require!]{https://github.com/NTBBloodbath/nvim.fnl/blob/d3dcf0a29b722d92ebd92f3951cff43b1458d317/fnl/core/macros.fnl#L63-L67}
-  - [-] Completely remap key using <Leader> and <LocalLeader>
-  -- Use 2 sequences at most
-  - [x] Fork `rose-pine` and edit in my own flavour
-  -- [x] Forked repo
-  -- [x] Edit color based from `Dracula` or `Monokai Pro`
-  --- Current color is quite muted, wanna make it more vibrant
-  --- I don't like `pine` color
-  --- Turn out `Dracula` pallete is best fit
-  - [x] Change `neorg` todo icons
-  #contexts tmux
-  - [x] Edit `rose-pine` theme
-  - [x] bind `<C-t>` to `<C-a> z` to toggle zoom pane.
-  -- `bind-key -n 'C-t' resize-pane -Z`
-  #contexts wezterm #nvim #tmux
-  - [x] Add light theme
+** Nvim
+   - [x] `Nvim-ufo`
+   - [x] `ladyreq` macro
+   -- [lazy-require!]{https://github.com/NTBBloodbath/Nvim.fnl/blob/d3dcf0a29b722d92ebd92f3951cff43b1458d317/fnl/core/macros.fnl#L63-L67}
+   - [x] Fork `rose-pine` and edit in my own flavour
+   -- [x] Forked repo
+   -- [x] Edit color based from `Dracula` or `Monokai Pro`
+   --- Current color is quite muted, wanna make it more vibrant
+   --- I don't like `pine` color
+   --- Turn out `Dracula` pallete is best fit
+   - [x] Change `neorg` todo icons
+** Tmux
+   - [x] Edit `rose-pine` theme
+   - [x] bind `<C-t>` to `<C-a> z` to toggle zoom pane.
+   -- `bind-key -n 'C-t' resize-pane -Z`
+** Wezterm
+   - [x] Add light theme
