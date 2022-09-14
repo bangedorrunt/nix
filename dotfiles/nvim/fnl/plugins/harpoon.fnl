@@ -9,7 +9,7 @@
       fmt string.format]
 
   (setup {:global_settings {:enter_on_sendcmd true}
-          :menu {:borderchars ["─" "│" "─" "│" "┌" "┐" "┘" "└"]}
+          :menu {:borderchars tdt.border_alt}
           ;; NOTE: `Harpoon` will throw error if no command at menu index
           ;; use `echo 'Hello Harpoon'` as a placeholder to keep me from
           ;; send empty command by accident
@@ -29,6 +29,17 @@
                           "brew reinstall neovim"
                           "brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest"
                           "goku"
+                          "echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"]}}
+          "$HOME/workspace/son-of-harpoon.git/main"
+           {:mark {:marks [{:filename "days-of-harpoon.norg"}]}
+            :term {:cmds ["echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"
+                          "echo 'Hello Harpoon!'"
                           "echo 'Hello Harpoon!'"
                           "echo 'Hello Harpoon!'"
                           "echo 'Hello Harpoon!'"]}}
