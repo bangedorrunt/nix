@@ -63,9 +63,11 @@
                  ;; Shrink and expand main pain
                  [:h :!SOh]
                  [:l :!SOl]
-                 ;; Cycle focus windows
+                 ;; Cycle focus window
                  [:j :!SOj]
                  [:k :!SOk]
+                 ;; Focus to main window
+                 [:m :!SOm]
                  ;; Swap focused window with main window
                  [:return_or_enter :!SOreturn_or_enter]
                  ;; Move to space left or right
@@ -78,8 +80,8 @@
                  [:semicolon :!SOTleft_arrow]
 
                  ;;;; App navigation
-                 ;; Discord
                  :g-mode
+                 ;; Discord
                  [:slash :!Cslash :Discord]
                  [:spacebar :!Ck :Discord]
                  [:j :!Odown_arrow :Discord]
