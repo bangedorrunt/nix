@@ -1,6 +1,4 @@
-(local {: for_each
-        : count
-        : inc
+(local {: inc
         : dec
         : first
         : second
@@ -11,11 +9,15 @@
         : number?
         : boolean?
         : map
-        : chain
-        : totable
-        : tosequence} (require :core.funs))
+        : reduce
+        : into} (require :core.funs))
 
 ;;;; Helper functions
+(fn str->seq [s]
+  "Convert an string into a sequence of characters."
+  (icollect [c (string.gmatch s ".")]
+    c))
+
 (fn fn? [x]
   "Checks if `x` is a function definition.
   Cannot check if a symbol is a function in compile time."
@@ -39,7 +41,7 @@
 (fn expand-exprs [exprs]
   "Converts a list of expressions into either an expression - if only one
   expression is in the list - or a do-expression containing the expressions."
-  (if (> (count exprs) 1)
+  (if (> (length exprs) 1)
       `(do
          ,(unpack exprs))
       (first exprs)))
@@ -98,70 +100,67 @@
 (fn autocmd [event pattern command ?options]
   "Create an autocommand using the nvim_create_autocmd API. "
   (let [event (if (sequence? event)
-                  (->> event (map tostring) tosequence)
+                  (->> event (map tostring))
                   (tostring event))
         pattern (if (sequence? pattern)
-                    (->> pattern (map tostring) tosequence)
+                    (->> pattern (map tostring))
                     (tostring pattern))
         options (or ?options {})
         options (if (nil? options.buffer)
                     (if (= :<buffer> pattern)
-                        (into-table options {:buffer 0})
-                        (into-table options {: pattern}))
+                        (doto options (tset :buffer 0))
+                        (doto options (tset :pattern pattern)))
                     options)
         options (if (string? command)
-                    (into-table options {: command})
-                    (into-table options {:callback (quoted->fn? command)}))]
+                    (doto options (tset :command command))
+                    (doto options (tset :callback (quoted->fn? command))))]
     `(vim.api.nvim_create_autocmd ,event ,options)))
 
 (fn autocmd! [name ?options]
   "Clears an augroup using the nvim_clear_autocmds API. "
   (let [name (tostring name)
-        options (into-table (or ?options {}) {:group name})]
+        options (doto (or ?options {}) (tset :group name))]
     `(vim.api.nvim_clear_autocmds ,options)))
 
 (fn augroup [name ...]
   "Create an augroup using the nvim_create_augroup API.
   Accepts either a name or a name and a list of autocmd statements. "
-  (expand-exprs (let [name (tostring name)
-                      exprs (map (fn [expr]
-                                   (if (= `autocmd (first expr))
-                                       (let [[_ event pattern command ?options] expr
-                                             options (into-table (or ?options
-                                                                     {})
-                                                                 {:group name})]
-                                         `(autocmd ,event ,pattern ,command
-                                                   ,options))
-                                       (let [[_ ?options] expr]
-                                         `(autocmd! ,name ,?options))))
-                                 [...])]
-                  (into-sequence [`(vim.api.nvim_create_augroup ,name
-                                                                {:clear false})]
-                                 exprs))))
+  (expand-exprs (let [name (tostring name)]
+                  (icollect [_ expr (ipairs [...]) :into [`(vim.api.nvim_create_augroup ,name
+                                                                                        {:clear false})]]
+                    (if (= `autocmd (first expr))
+                        (let [[_ event pattern command ?options] expr
+                              options (or ?options {})
+                              options (doto options (tset :group name))]
+                          `(autocmd ,event ,pattern ,command ,options))
+                        (let [[_ ?options] expr]
+                          `(autocmd! ,name ,?options)))))))
 
 (fn nmap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API"
   (let [args [...]
-        modes (-> modes tostring tosequence)
+        modes (-> modes tostring str->seq)
         rhs (-> args last quoted->fn?)
         lhs (llast args)
-        options (->> [(unpack args 1 (- (count args) 2))]
+        tmp {}
+        options (->> [(unpack args 1 (- (length args) 2))]
                      (map tostring)
-                     (map #(values $ true)))
-        options (into-table options {:remap true})]
+                     (map #(tset tmp $ true)))
+        options (into tmp :remap true)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
   "Defines a vim mapping using the `vim.keymap.set` API
   Automatically includes the `:noremap` option."
   (let [args [...]
-        modes (-> modes tostring tosequence)
+        modes (-> modes tostring str->seq)
         rhs (-> args last quoted->fn?)
         lhs (llast args)
-        options (->> [(unpack args 1 (- (count args) 2))]
+        tmp {}
+        options (->> [(unpack args 1 (- (length args) 2))]
                      (map tostring)
-                     (map #(values $ true)))
-        options (into-table options {:noremap true})]
+                     (map #(tset tmp $ true)))
+        options (into tmp :noremap true)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn hi [name colors]
@@ -234,7 +233,7 @@
 ;;;; Clojure if-let and when-let
 ;;;; ---------------------------
 (fn conditional-let [branch bindings ...]
-  (assert (= 2 (count bindings)) "expected a single binding pair")
+  (assert (= 2 (length bindings)) "expected a single binding pair")
   (let [[bind-expr value-expr] bindings]
     (if ;; Simple symbols
         ;; [foo bar]
@@ -263,7 +262,7 @@
         (assert (.. "unknown bind-expr type: " (type bind-expr))))))
 
 (fn if-let [bindings ...]
-  (assert (<= (count [...]) 2)
+  (assert (<= (length [...]) 2)
           (.. "if-let does not support more than two branches"))
   (conditional-let `if bindings ...))
 

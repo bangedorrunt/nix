@@ -1,42 +1,38 @@
-(local {:operator {: add : sub : concat}
-        :length count
-        :tomap totable
-        :totable tosequence
-        :any any?
-        :every every?
-        : for_each
-        : head
-        : nth
-        : map
-        : reduce
-        : filter
-        : chain} (require :luafun.fun))
-
 (fn inc [n]
   "Increment n by 1."
-  (add n 1))
+  (+ n 1))
 
 (fn dec [n]
   "Decrement n by 1."
-  (sub n 1))
+  (- n 1))
 
-(local first head)
+(fn first [xs]
+  (when xs
+    (. xs 1)))
 
 (fn second [xs]
-  (nth 2 xs))
+  (when xs
+    (. xs 2)))
 
 (fn last [xs]
-  (nth (count xs) xs))
+  (when xs
+    (. xs (length xs))))
 
 (fn llast [xs]
-  (nth (dec (count xs)) xs))
+  (. xs (dec (length xs))))
 
 (fn empty? [xs]
-  (= 0 (count xs)))
+  (= 0 (length xs)))
 
-(fn has? [xs v]
-  (any? (fn [x]
-          (= x v)) xs))
+(fn any? [pred xs]
+  (accumulate [any? false _ v (ipairs xs) :until any?]
+    (pred v)))
+
+(fn every? [pred xs]
+  (not (any? #(not (pred $)) xs)))
+
+(fn has? [xs x]
+  (any? #(= $ x) xs))
 
 (fn nil? [x]
   "True if the value is equal to Lua `nil`."
@@ -62,29 +58,31 @@
   "Get all keys of a table."
   (let [result []]
     (when t
-      (for_each (fn [k _]
-                  (table.insert result k)) t))
+      (each [k _ (pairs t)]
+        (table.insert result k)))
     result))
 
 (fn vals [t]
   "Get all values of a table."
   (let [result []]
     (when t
-      (for_each (fn [_ v]
-                  (table.insert result v)) t))
+      (each [_ v (pairs t)]
+        (table.insert result v)))
     result))
 
 (fn kv-pairs [t]
   "Get all values of a table."
   (let [result []]
     (when t
-      (for_each (fn [k v]
-                  (table.insert result [k v])) t))
+      (each [k v (pairs t)]
+        (table.insert result [k v])))
     result))
 
-(fn map-indexed [f xs]
-  "Map xs to a new sequential table by calling (f [k v]) on each item. "
-  (map f (kv-pairs xs)))
+(fn reduce [f init xs]
+  "Reduce xs into a result by passing each subsequent value into the fn with
+  the previous value as the first arg. Starting with init."
+  (accumulate [acc init _ v (ipairs xs)]
+    (f acc v)))
 
 (fn run! [f xs]
   "Calls `f` on each item in iterable."
@@ -92,11 +90,77 @@
             (f ...)
             nil) nil xs))
 
-(fn merge [base ...]
-  (reduce (fn [acc x]
-            (for_each (fn [k v]
-                        (tset acc k v)) x)
+(fn filter [f xs]
+  "Filter xs down to a new sequential table containing every value that (f x) returned true for."
+  (let [result []]
+    (run! (fn [x]
+            (when (f x)
+              (table.insert result x))) xs)
+    result))
+
+(fn map [f xs]
+  "Map xs to a new sequential table by calling (f x) on each item."
+  (let [result []]
+    (run! (fn [x]
+            (let [mapped (f x)]
+              (table.insert result
+                            (if (= 0 (select "#" mapped))
+                                nil
+                                mapped)))) xs)
+    result))
+
+(fn map-indexed [f xs]
+  "Map xs to a new sequential table by calling (f [k v]) on each item. "
+  (map f (kv-pairs xs)))
+
+(fn identity [x]
+  "Returns what you pass it."
+  x)
+
+(fn some [f xs]
+  "Return the first truthy result from (f x) or nil."
+  (var result nil)
+  (var n 1)
+  (while (and (nil? result) (<= n (length xs)))
+    (let [candidate (f (. xs n))]
+      (when candidate
+        (set result candidate))
+      (set n (inc n))))
+  result)
+
+(fn butlast [xs]
+  (let [total (length xs)]
+    (->> (kv-pairs xs)
+         (filter (fn [[n v]]
+                   (not= n total)))
+         (map second))))
+
+(fn rest [xs]
+  (->> (kv-pairs xs)
+       (filter (fn [[n v]]
+                 (not= n 1)))
+       (map second)))
+
+(fn concat+ [...]
+  "Concatenates the sequential table arguments together."
+  (let [result []]
+    (run! (fn [xs]
+            (run! (fn [x]
+                    (table.insert result x)) xs)) [...])
+    result))
+
+(fn mapcat+ [f xs]
+  (concat+ (unpack (map f xs))))
+
+(fn merge! [base ...]
+  (reduce (fn [acc m]
+            (when m
+              (each [k v (pairs m)]
+                (tset acc k v)))
             acc) (or base {}) [...]))
+
+(fn merge [...]
+  (merge! {} ...))
 
 (fn get [t k d]
   (let [res (when (table? t)
@@ -114,17 +178,6 @@
     (let [(k v) (select i ...)]
       (tset tbl k v)))
   tbl)
-
-(fn concat+ [...]
-  "Concatenates the sequential table arguments together."
-  (let [result []]
-    (run! (fn [xs]
-            (run! (fn [x]
-                    (table.insert result x)) xs)) [...])
-    result))
-
-(fn mapcat+ [f xs]
-  (concat+ (unpack (map f xs))))
 
 (fn pr-str [...]
   (let [{: view} (require :fennel)
@@ -166,10 +219,10 @@
   Separator defaults to an empty string.
   Values that aren't a string or nil will go through aniseed.core/pr-str."
   (let [args [...]
-        [sep xs] (if (= 2 (count args))
+        [sep xs] (if (= 2 (length args))
                      args
                      ["" (first args)])
-        len (count xs)]
+        len (length xs)]
     (var result [])
     (when (> len 0)
       (for [i 1 len]
@@ -212,12 +265,10 @@
   "Removes whitespace from both ends of string."
   (string.gsub s "^%s*(.-)%s*$" "%1"))
 
-{: count
- : inc
+{: inc
  : dec
  : first
  : second
- : nth
  : last
  : llast
  : empty?
@@ -232,21 +283,17 @@
  : keys
  : vals
  : kv-pairs
- : totable
- : tosequence
- : for_each
  : map
  : reduce
  : filter
- : chain
  : run!
  : merge
+ : merge!
  : into
  : get
  : concat+
  : mapcat+
  : join
- : concat
  : split
  : blank?
  : triml

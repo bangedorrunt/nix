@@ -9,80 +9,65 @@
   ;;;; Dependencies
   :wbthomason/packer.nvim {:opt true}
   :rktjmp/hotpot.nvim {}
-  :babygau/luafun.nvim {}
-  :nvim-lua/plenary.nvim {:module :plenary}
-  :kevinhwang91/promise-async {:module :promise}
+  :nvim-lua/plenary.nvim {}
+  :kevinhwang91/promise-async {}
   :antoinemadec/FixCursorHold.nvim {}
-  :kyazdani42/nvim-web-devicons {:module "nvim-web-devicons" :mod :devicons}
+  :kyazdani42/nvim-web-devicons {:mod :devicons}
   ;;;; UI plugins
   "~/workspace/rose-pine.nvim.git/main" {:color :rose-pine}
-  :akinsho/bufferline.nvim {:after :themer :mod :bufferline}
-  :nvim-lualine/lualine.nvim {:after :themer :mod :lualine}
-  :kyazdani42/nvim-tree.lua {:after :treesitter :mod :nvim-tree}
+  :akinsho/bufferline.nvim {:mod :bufferline}
+  :nvim-lualine/lualine.nvim {:mod :lualine}
+  :kyazdani42/nvim-tree.lua {:mod :nvim-tree}
   ;;;; Editor plugins
-  :tpope/vim-eunuch {:event :BufRead}
-  :tpope/vim-rsi {:event :InsertEnter}
-  :tpope/vim-repeat {:event :BufRead}
-  :kevinhwang91/nvim-ufo {:after :treesitter :mod :ufo}
-  :kylechui/nvim-surround {:event :BufRead :tag :* :init :nvim-surround}
-  :ggandor/leap.nvim {:event :BufRead :mod :leap}
-  :romainl/vim-qf {:ft :qf}
-  :NvChad/nvim-colorizer.lua {:init :colorizer
-                              :cmd [:ColorizerToggle
-                                    :ColorizerAttachToBuffer
-                                    :ColorizerDetachFromBuffer
-                                    :ColorizerReloadAllBuffers]} ;; fork version
+  :tpope/vim-eunuch {}
+  :tpope/vim-rsi {}
+  :tpope/vim-repeat {}
+  :kevinhwang91/nvim-ufo {:mod :ufo}
+  :kylechui/nvim-surround {:init :nvim-surround}
+  :ggandor/leap.nvim {:mod :leap}
+  :romainl/vim-qf {}
+  :NvChad/nvim-colorizer.lua {:init :colorizer} ;; fork version
   ;;;; Fuzzy search engine
-  "~/workspace/son-of-harpoon.git/main" {:event :BufRead :as :harpoon :mod :harpoon}
-  :ahmedkhalf/project.nvim {:module_pattern "project.*" :init :project_nvim}
-  :nvim-telescope/telescope-fzf-native.nvim {:module_pattern "fzf.*" :run "make"}
-  :nvim-telescope/telescope.nvim {:as :telescope
-                                  :event :BufRead
-                                  :module_pattern "telescope.*"
-                                  :mod :telescope}
+  "~/workspace/son-of-harpoon.git/main" {:as :harpoon :mod :harpoon}
+  :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
+  :nvim-telescope/telescope.nvim {:mod :telescope}
   ;;;; Lang plugins
+  :neovim/nvim-lspconfig {}
+  :williamboman/mason.nvim {}
+  :williamboman/mason-lspconfig.nvim {:mod :lsp}
   :jaawerth/fennel.vim {}
-  :folke/lua-dev.nvim {:module "lua-dev"}
-  :simrat39/rust-tools.nvim {:module "rust-tools"}
-  :jose-elias-alvarez/null-ls.nvim {:module "null-ls"}
-  :neovim/nvim-lspconfig {:as :lspconfig :module :lspconfig}
-  :williamboman/mason.nvim {:as :mason :module :mason}
-  :williamboman/mason-lspconfig.nvim {:event :BufRead :mod :lsp}
-  :nvim-treesitter/nvim-treesitter {:event :BufRead
-                                    :as :treesitter
+  :folke/lua-dev.nvim {}
+  :simrat39/rust-tools.nvim {}
+  :jose-elias-alvarez/null-ls.nvim {}
+  :nvim-treesitter/nvim-treesitter {:as :treesitter
                                     :mod :nvim-treesitter}
-  :nvim-treesitter/playground {:after :treesitter}
-  :nvim-treesitter/nvim-treesitter-textobjects {:commit :e63c2ff8e38fad77299dd74e14c7c9360e1b3181
-                                                :after :treesitter}
-  ;; :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
-  :p00f/nvim-ts-rainbow {:after :treesitter}
-  :andymass/vim-matchup {:after :treesitter}
-  :JoosepAlviste/nvim-ts-context-commentstring {:after :treesitter :as :ts-context}
-  :numToStr/Comment.nvim {:after :ts-context :mod :comment}
-  :nvim-neorg/neorg-telescope {:module_pattern "neorg.modules.*"}
-  :nvim-neorg/neorg {:after [:treesitter :telescope] :mod :neorg}
-  :Olical/conjure {:branch :develop :mod :conjure :ft [:clojure :fennel :hy]}
+  :nvim-treesitter/playground {}
+  :nvim-treesitter/nvim-treesitter-textobjects {}
+  :p00f/nvim-ts-rainbow {}
+  :andymass/vim-matchup {}
+  :JoosepAlviste/nvim-ts-context-commentstring {}
+  :numToStr/Comment.nvim {:mod :comment}
+  :nvim-neorg/neorg-telescope {}
+  :nvim-neorg/neorg {:mod :neorg}
+  :Olical/conjure {:branch :develop :mod :conjure}
   ;;;; Completion plugins
-  :L3MON4D3/LuaSnip {:module_pattern "luasnip.*"}
+  :L3MON4D3/LuaSnip {}
   :hrsh7th/nvim-cmp {:commit :913eb8599816b0b71fe959693080917d8063b26a
-                     :event :BufRead
-                     :module_pattern "cmp.*"
                      :mod :nvim-cmp}
-  :hrsh7th/cmp-cmdline {:after :nvim-cmp}
-  :hrsh7th/cmp-path {:after :nvim-cmp}
-  :hrsh7th/cmp-buffer {:after :nvim-cmp}
-  :hrsh7th/cmp-calc {:after :nvim-cmp}
-  :hrsh7th/cmp-nvim-lsp {:after :nvim-cmp}
-  :hrsh7th/cmp-nvim-lua {:after :nvim-cmp}
-  :PaterJason/cmp-conjure {:after [:nvim-cmp :conjure]}
-  :saadparwaiz1/cmp_luasnip {:after :nvim-cmp}
+  :hrsh7th/cmp-cmdline {}
+  :hrsh7th/cmp-path {}
+  :hrsh7th/cmp-buffer {}
+  :hrsh7th/cmp-calc {}
+  :hrsh7th/cmp-nvim-lsp {}
+  :hrsh7th/cmp-nvim-lua {}
+  :PaterJason/cmp-conjure {}
+  :saadparwaiz1/cmp_luasnip {}
   ;;;; Git plugins
-  :lewis6991/gitsigns.nvim {:after :themer :mod :gitsigns}
-  :tpope/vim-fugitive {:event :BufRead :mod :vim-fugitive}
+  :lewis6991/gitsigns.nvim {:mod :gitsigns}
+  :tpope/vim-fugitive {:mod :vim-fugitive}
   ;;;; Tool plugins
-  ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
-  :ericpruitt/tmux.vim {:ft :tmux}
-  :aserowy/tmux.nvim {:event :BufRead :mod :tmux}
+  :ericpruitt/tmux.vim {}
+  :aserowy/tmux.nvim {:mod :tmux}
   :jbyuki/venn.nvim {:cmd :VBox}
   :gpanders/editorconfig.nvim {:ft [:go :c :cpp :rust :typescript :javascript :vim :zig]}
   ;; :glacambre/firenvim {:run (fn [] ((. vim.fn "firenvim#install") 1))}
@@ -115,6 +100,10 @@
   ;; :folke/todo-comments.nvim {:event :BufRead :init :todo-comments}
   ;; "babygau/rose-pine.nvim" {:color :rose-pine}
   ;; :junegunn/vim-easy-align {:event :BufRead :mod :vim-easy-align}
+  ;; :ahmedkhalf/project.nvim {:init :project_nvim}
+  ;; :mfussenegger/nvim-dap {:ft [:rust :typescript :typescriptreact]}
+  ;; :lacygoill/vim-tmux {:ft :tmux} ;; not compatible with vim9script yet!
+  ;; :babygau/luafun.nvim {}
   )
 
 (require :plugins.scratch)

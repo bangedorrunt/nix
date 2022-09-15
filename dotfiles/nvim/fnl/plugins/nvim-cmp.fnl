@@ -1,6 +1,6 @@
 (import-macros {: lazyreq : lazyfunc} :core.macros)
 
-(local {: first : second : dec : get : concat : into} (lazyfunc :core.funs))
+(local {: first : second : dec : get : into} (lazyfunc :core.funs))
 (local {: setup
         : visible
         : complete
@@ -33,7 +33,7 @@
         :winhighlight "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"})
 
 (fn cmp-fmt [_ item]
-  (let [codicons (into item :kind (concat (get tdt.lsp item.kind "") item.kind))
+  (let [codicons (into item :kind (.. (get tdt.lsp item.kind "") item.kind))
         codicons-item (vim.split codicons.kind "%s" {:trimempty true})
         codicons-kind (first codicons-item)
         codicons-menu (second codicons-item)]
