@@ -6,16 +6,22 @@
 (fn is_macos? []
   (= target_triple :x86_64-apple-darwin))
 
+;; fnlfmt: skip
 (fn fallback [name]
-  (font_with_fallback [name {:family :codicon :scale 0.95} :neorg :devicon]))
+  (font_with_fallback [name
+                       :neorg
+                       "Symbols Nerd Font 1000-em"
+                       ]))
 
 {:term :wezterm
  :default_prog (if (is_macos?)
-                   [:/usr/local/bin/zsh :-c "tmux attach -d || tmux"]
-                   [:wsl.exe :zsh :-c "tmux attach -d || tmux"])
+                   [:/usr/local/bin/zsh :-l :-c "tmux attach -d || tmux"]
+                   [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
  :colors (colors)
  :window_frame (window_frame)
+ :window_background_opacity 0.7
+ :font_dirs [:/Users/babygau/Library/Fonts]
  :font (fallback {:family "Operator Mono SSm" :weight 325})
  :font_rules [{:italic true
                :font (fallback {:family "Operator Mono SSm"
@@ -30,7 +36,8 @@
                                 :style :Italic})}]
  :font_size 22
  :freetype_load_target :Light
- :line_height 1.2
+ ;; :use_cap_height_to_scale_fallback_fonts true
+ :line_height 1.4
  :cell_width 0.85
  :underline_position :-0.15cell
  :window_decorations :RESIZE
