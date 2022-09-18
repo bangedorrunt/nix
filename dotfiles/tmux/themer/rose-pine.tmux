@@ -11,7 +11,7 @@ magenta=#ff79c6
 set-option -g status-style fg=magenta,bg=#191724
 
 set -g status on
-set -g status-interval 2
+set -g status-interval 3
 
 # Left Status Bar
 set -g status-left-length 80
