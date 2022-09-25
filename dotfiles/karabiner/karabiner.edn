@@ -2,9 +2,9 @@
  {:babygau {;; NOTE: `:delay` and `:held` should be equal for `Mod-Tap`
             :default true
             :sim 50
-            :delay 145
-            :held 145
-            :alone 140}}
+            :delay 135
+            :held 135
+            :alone 130}}
  ;; Create alias key for `:to`
  :tos {:hyper {:key :left_control :modi {:mandatory [:left_command :left_shift :left_option]}}
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
@@ -13,7 +13,8 @@
              :open   "open \"%s\""
              :show   "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'\n"
              :toggle "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else if frontmost of process appName then\n    set visible of process appName to false\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'"
-             :notify "osascript -e 'display notification \"%s\" with title \"Debug!\"'"}
+             :notify "osascript -e 'display notification \"%s\" with title \"Debug!\"'"
+             :notify-layout "osascript -e 'display notification \"%s\" with title \"Yabai\"'"}
  :layers {}
  :simlayers {}
  ;; Main contains multiple manipulators
@@ -25,6 +26,13 @@
                  [:!!k :up_arrow]
                  [:!!h :left_arrow]
                  [:!!l :right_arrow]]}
+        {:des "C-n/C-p to Down/Up"
+         :rules [:Browsers
+                 [:!Tp :up_arrow]
+                 [:!Tn :down_arrow]
+                 :Element
+                 [:!Tp :up_arrow]
+                 [:!Tn :down_arrow]]}
         {:des "Mod-Tap Layout"
          ;; NOTE: When adding a new layer, if you want it to be able to cross with an old one,
          ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
@@ -56,30 +64,54 @@
                  ;; Reserved
                  ;; :s-mode
 
-                 ;;;; Amethyst keybindings
                  :d-mode
-                 ;; Cycle layouts
-                 [:spacebar :!SOspacebar]
-                 ;; Shrink and expand main pain
-                 [:h :!SOh]
-                 [:l :!SOl]
-                 ;; Cycle focus window
-                 [:j :!SOj]
-                 [:k :!SOk]
-                 ;; Focus to main window
-                 [:m :!SOm]
-                 ;; Swap focused window with main window
-                 [:return_or_enter :!SOreturn_or_enter]
-                 ;; Move to space left or right
-                 [:p :!Tleft_arrow]
-                 [:n :!Tright_arrow]
-                 ;; Force window to be reevaluated
-                 [:z :!SOz]
-                 ;; Throw focused window to space left or right
-                 [:quote :!SOTright_arrow]
-                 [:semicolon :!SOTleft_arrow]
+                 ;;;;Yabai babe
+                 [:spacebar ["yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == \"bsp\" then \"float\" else \"bsp\" end')" [:notify-layout "Cycle Layout"]]]
+                 ;; Cycle through windows
+                 [:j "yabai -m query --spaces --space \\
+                      | jq -re \".index\" \\
+                      | xargs -I{} yabai -m query --windows --space {} \\
+                      | jq -sre 'add | map(select(.\"is-minimized\"==false)) | sort_by(.display, .frame.y, .frame.x, .id) | . as $array | length as $array_length | index(map(select(.\"has-focus\"==true))) as $has_index | if $array_length - 1 > $has_index then nth($has_index + 1).id else nth(0).id end' \\
+                      | xargs -I{} yabai -m window --focus {}"]
+                 [:k "yabai -m query --spaces --space \\
+                      | jq -re \".index\" \\
+                      | xargs -I{} yabai -m query --windows --space {} \\
+                      | jq -sre 'add | map(select(.\"is-minimized\"==false)) | sort_by(.display, .frame.y, .frame.x, .id) | . as $array | length as $array_length | index(map(select(.\"has-focus\"==true))) as $has_index | if $has_index > 0 then nth($has_index - 1).id else nth($array_length - 1).id end'  \\
+                      | xargs -I{} yabai -m window --focus {}"]
+                 ;; Resize windows
+                 [:h "yabai -m window west --resize right:-40:0 2> /dev/null || yabai -m window --resize right:-40:0"]
+                 [:l "yabai -m window east --resize left:40:0 2> /dev/null || yabai -m window --resize left:40:0"]
+                 ;; Rotate tree
+                 [:o "yabai -m space --rotate 90"]
+                 ;; Mirror y axis
+                 ;; [:y "yabai -m space --mirror y-axis"]
+                 ;; Mirror x axis
+                 ;; [:x "yabai -m space --mirror x-axis"]
+                 ;; Split horizontal/vertical windows
+                 [:v "yabai -m window --toggle split"]
+                 ;; Move windows
+                 [:return_or_enter "cd ~/.config/yabai && ./stack.sh west"]
+                 [:down_arrow "cd ~/.config/yabai && ./stack.sh south"]
+                 [:left_arrow "cd ~/.config/yabai && ./stack.sh west"]
+                 [:up_arrow "cd ~/.config/yabai && ./stack.sh north"]
+                 [:right_arrow "cd ~/.config/yabai && ./stack.sh east"]
+                 ;; Resize float windows
+                 [:9 "yabai -m window --grid 1:1:0:0:1:1"]
+                 [:8 "yabai -m window --grid 8:8:1:1:6:6"]
+                 [:7 "yabai -m window --grid 1:2:0:0:1:1"]
+                 [:0 "yabai -m window --grid 1:2:1:0:1:1"]
+                 ;; Quick focus spaces with Yabai
+                 [:p "yabai -m space --focus prev"]
+                 [:n "yabai -m space --focus next"]
+                 ;; Send windows and focus to spaces
+                 [:quote "yabai -m window --space next && yabai -m space --focus next"]
+                 [:semicolon "yabai -m window --space prev && yabai -m space --focus prev"]
+                 ;; Switch layouts
+                 [:b ["yabai -m space --layout bsp" [:notify-layout "BSP Layout"]]]
+                 [:s ["yabai -m space --layout stack" [:notify-layout "Fullscreen Stack Layout"]]]
+                 [:f ["yabai -m space --layout float" [:notify-layout "Float Layout"]]]
 
-                 ;;;; App navigation
+;;;; App navigation
                  :g-mode
                  ;; Discord
                  [:slash :!Cslash :Discord]
@@ -174,32 +206,3 @@
  :input-sources {:us {:input_mode_id ""
                       :input_source_id "com.apple.keylayout.ABC"
                       :language "en"}}}
-
-;; UNUSED LAYOUT
-;; NOTE: reserve for future reference only
-;; {:des "FuckerDuper Layout"
-;;  :rules [[[:f :d] ["fucker-duper-layout" 1] nil {:afterup ["fucker-duper-layout" 0]}]
-;;          :fucker-duper-layout
-;;          ;;;; Vim-like keybindings
-;;          [:j :down_arrow]
-;;          [:k :up_arrow]
-;;          [:h :left_arrow]
-;;          [:l :right_arrow]]}
-
-;; {:des "Mod-Tap Layout"
-;;  ;; When adding a new layer, if you want it to be able to cross with an old one,
-;;  ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
-;;  :rules [;; f-mode init
-;;          [:f nil [:!s-mode :!d-mode :!g-mode]
-;;           {:alone {:key :f :halt true}
-;;            :delayed {:canceled {:key :f}}
-;;            :held {:set ["f-mode" 1] :repeat false}
-;;            :afterup {:set ["f-mode" 0]}}
-;;            ;; We can define ms delays here
-;;            ; :params {:alone 140 :held 145 :delay 145}
-;;            ;;;; Vim-like keybindings
-;;            :f-mode
-;;            [:j :down_arrow]
-;;            [:k :up_arrow]
-;;            [:h :left_arrow]
-;;            [:l :right_arrow]]]}
