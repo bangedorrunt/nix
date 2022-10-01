@@ -14,9 +14,9 @@
   (vim.api.nvim_buf_set_option bufnr :filetype :fennel)
   (vim.api.nvim_buf_set_option bufnr :buftype :nofile)
   (vim.api.nvim_buf_set_lines bufnr 0 0 true
-                              ["(import-macros {: if-let : when-let} :core.macros)"
-                               ""
-                               "(local fun (require :luafun.fun))"
+                              [";; Fennel Playground             "
+                               ";;                               "
+                               "(local funs (require :core.funs))"
                                ""
                                ""])
   (tset state :bufnr bufnr)

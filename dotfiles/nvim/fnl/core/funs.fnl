@@ -78,36 +78,36 @@
         (table.insert result [k v])))
     result))
 
+(fn kvize [xs t]
+  (match xs
+    [k v] (kvize (doto xs (table.remove 1) (table.remove 1))
+                 (doto t (tset k v)))
+    _ t))
+
+(fn map [f xs ?default]
+  "Map xs to a new sequential table by calling (f x) on each item."
+  (if (nil? ?default)
+      (icollect [_ v (ipairs xs)]
+        (f v))
+      (icollect [_ v (ipairs xs) &into ?default]
+        (f v))))
+
 (fn reduce [f init xs]
   "Reduce xs into a result by passing each subsequent value into the fn with
   the previous value as the first arg. Starting with init."
   (accumulate [acc init _ v (ipairs xs)]
     (f acc v)))
 
+;; fnlfmt: skip
 (fn run! [f xs]
   "Calls `f` on each item in iterable."
-  (reduce (fn [_ ...]
-            (f ...)
-            nil) nil xs))
+  (reduce (fn [_ ...] (f ...) nil) nil xs))
 
 (fn filter [f xs]
   "Filter xs down to a new sequential table containing every value that (f x) returned true for."
-  (let [result []]
-    (run! (fn [x]
-            (when (f x)
-              (table.insert result x))) xs)
-    result))
-
-(fn map [f xs]
-  "Map xs to a new sequential table by calling (f x) on each item."
-  (let [result []]
-    (run! (fn [x]
-            (let [mapped (f x)]
-              (table.insert result
-                            (if (= 0 (select "#" mapped))
-                                nil
-                                mapped)))) xs)
-    result))
+  (icollect [_ v (ipairs xs)]
+    (when (f v)
+      v)))
 
 (fn map-indexed [f xs]
   "Map xs to a new sequential table by calling (f [k v]) on each item. "
@@ -283,6 +283,7 @@
  : keys
  : vals
  : kv-pairs
+ : kvize
  : map
  : reduce
  : filter

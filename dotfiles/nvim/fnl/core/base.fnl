@@ -2,25 +2,37 @@
 
 (let [os-name (. (vim.loop.os_uname) :sysname)
       path-sep (match os-name
-                :Windows "\\\\"
-                _ "/")
+                 :Windows "\\\\"
+                 _ "/")
       share-path (vim.fn.stdpath :data)
       data-path (string.format "%s/site/" share-path)
       config-path (vim.fn.stdpath :config)
       cache-path (vim.fn.stdpath :cache)
       state-path (vim.fn.stdpath :state)]
-  (tset _G :tdt
-        {:signs {:error " "
+  (tset _G :bangedorrunt
+        {:ft {:conjure [:clojure :fennel :lisp :lua :rust]}
+         :signs {:error " "
                  :warning " "
                  :hint " "
                  :information " "
-                 :prompt "❯"}
-         :pallete {:dark {:tokyonight :#1a1b26
-                          :monokaipro-spectrum :#222222
-                          :rose-pine :#191724}
-                   :light {:tokyonight :#e1e2e7
-                           :gruvbox :#fbf1c7
-                           :rose-pine :#faf4ed}}
+                 :prompt "❯ "}
+         :pallete {:moon {:base "#191724"
+                          :surface "#1f1d2e"
+                          :overlay "#26233a"
+                          :subtle "#c0caf5"
+                          :text "#ffffff"
+                          :love "#ff5555"
+                          :gold "#f1fa8c"
+                          :rose "#ff79c6"
+                          :pine "#50fa7b"
+                          :foam "#8be9fd"
+                          :iris "#bd93f9"}
+                   :dark {:tokyonight "#1a1b26"
+                          :monokaipro-spectrum "#222222"
+                          :rose-pine "#191724"}
+                   :light {:tokyonight "#e1e2e7"
+                           :gruvbox "#fbf1c7"
+                           :rose-pine "#faf4ed"}}
          :lsp {:Array " "
                :Boolean " "
                :Class " "
@@ -69,7 +81,7 @@
                  :PACKER-PATH (.. data-path :pack/packer/opt/packer.nvim)
                  :PACKER-COMPILED-PATH (.. data-path :lua/packer_compiled.lua)}}))
 
-(set! runtimepath+ tdt.paths.TREESITTER-PATH)
+(set! runtimepath+ bangedorrunt.paths.TREESITTER-PATH)
 
 ;; Disable built-in plugins and host providers
 (g loaded_netrw 1)

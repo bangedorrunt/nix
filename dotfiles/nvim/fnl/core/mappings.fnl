@@ -15,6 +15,11 @@
 (noremap nv :<Leader>y "\"+y")
 (nmap n :<Leader>Y "\"+Y")
 
+(noremap v :<C-c> "\"+y")
+(noremap v :<C-x> "\"+d")
+(noremap v :<C-v> "\"+p")
+;; (noremap i :<C-v> :<C-r><C-o>+)
+
 ;; In favour of moving by displayed line rather than physical line
 ;; except when count is provided which is used when targeting specific
 ;; line with `relativenumber`

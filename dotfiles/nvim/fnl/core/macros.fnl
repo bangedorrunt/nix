@@ -8,8 +8,10 @@
         : string?
         : number?
         : boolean?
+        : kvize
         : map
         : reduce
+        : filter
         : into} (require :core.funs))
 
 ;;;; Helper functions
@@ -45,12 +47,6 @@
       `(do
          ,(unpack exprs))
       (first exprs)))
-
-(fn into-sequence [xs iterable]
-  (-> xs (chain iterable) tosequence))
-
-(fn into-table [tbl iterable]
-  (-> tbl (chain iterable) totable))
 
 ;;;; Neovim
 ;;;; ------
@@ -108,18 +104,18 @@
         options (or ?options {})
         options (if (nil? options.buffer)
                     (if (= :<buffer> pattern)
-                        (doto options (tset :buffer 0))
-                        (doto options (tset :pattern pattern)))
+                        (into options :buffer 0)
+                        (into options :pattern pattern))
                     options)
         options (if (string? command)
-                    (doto options (tset :command command))
-                    (doto options (tset :callback (quoted->fn? command))))]
+                    (into options :command command)
+                    (into options :callback (quoted->fn? command)))]
     `(vim.api.nvim_create_autocmd ,event ,options)))
 
 (fn autocmd! [name ?options]
   "Clears an augroup using the nvim_clear_autocmds API. "
   (let [name (tostring name)
-        options (doto (or ?options {}) (tset :group name))]
+        options (into (or ?options {}) :group name)]
     `(vim.api.nvim_clear_autocmds ,options)))
 
 (fn augroup [name ...]
@@ -130,8 +126,7 @@
                                                                                         {:clear false})]]
                     (if (= `autocmd (first expr))
                         (let [[_ event pattern command ?options] expr
-                              options (or ?options {})
-                              options (doto options (tset :group name))]
+                              options (into (or ?options {}) :group name)]
                           `(autocmd ,event ,pattern ,command ,options))
                         (let [[_ ?options] expr]
                           `(autocmd! ,name ,?options)))))))
@@ -142,11 +137,10 @@
         modes (-> modes tostring str->seq)
         rhs (-> args last quoted->fn?)
         lhs (llast args)
-        tmp {}
         options (->> [(unpack args 1 (- (length args) 2))]
                      (map tostring)
-                     (map #(tset tmp $ true)))
-        options (into tmp :remap true)]
+                     (reduce #(into $1 $2 true) {}))
+        options (into options :remap true :silent true)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn noremap [modes ...]
@@ -156,11 +150,10 @@
         modes (-> modes tostring str->seq)
         rhs (-> args last quoted->fn?)
         lhs (llast args)
-        tmp {}
         options (->> [(unpack args 1 (- (length args) 2))]
                      (map tostring)
-                     (map #(tset tmp $ true)))
-        options (into tmp :noremap true)]
+                     (reduce #(into $1 $2 true) {}))
+        options (into options :noremap true :silent true)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
 (fn hi [name colors]
@@ -215,63 +208,21 @@
 
 ;;;; Plugin Manager
 ;;;; --------------
-(fn before! [pluginname ...]
-  "Run code before a plugin loads"
-  `((. (lazyreq :core.jetpack) :before) ,pluginname
-                                        (fn []
-                                          ,...)))
 
-(fn after! [plugin-name ...]
+;; fnlfmt: skip
+(fn before! [plug ...]
+  "Run code before a plugin loads"
+  `((. (lazyreq :core.packer) :before) ,plug (fn [] ,...)))
+
+;; fnlfmt: skip
+(fn after! [plug ...]
   "Run code after a plugin loads"
-  `((. (lazyreq :core.jetpack) :after) ,plugin-name
-                                       (fn []
-                                         ,...)))
+  `((. (lazyreq :core.packer) :after) ,plug (fn [] ,...)))
 
 (fn setup! [module ...]
   `((. (lazyreq ,module) :setup) ,...))
 
-;;;; Clojure if-let and when-let
-;;;; ---------------------------
-(fn conditional-let [branch bindings ...]
-  (assert (= 2 (length bindings)) "expected a single binding pair")
-  (let [[bind-expr value-expr] bindings]
-    (if ;; Simple symbols
-        ;; [foo bar]
-        (sym? bind-expr)
-        `(let [,bind-expr ,value-expr]
-           (,branch ,bind-expr ,...))
-        ;; List / values destructure
-        ;; [(a b) c]
-        (list? bind-expr)
-        (do
-          ;; Even if the user isn't using the first slot, we will.
-          ;; [(_ val) (pcall #:foo)]
-          ;;  => [(bindGENSYM12345 val) (pcall #:foo)]
-          (when (= `_ (first bind-expr))
-            (tset bind-expr 1 (gensym :bind)))
-          `(let [,bind-expr ,value-expr]
-             (,branch ,(first bind-expr) ,...)))
-        ;; Sequential and associative table destructure
-        ;; [[a b] c]
-        ;; [{: a : b} c]
-        (table? bind-expr)
-        `(let [value# ,value-expr
-               ,bind-expr (or value# {})]
-           (,branch value# ,...))
-        ;; We should never get here, but just in case.
-        (assert (.. "unknown bind-expr type: " (type bind-expr))))))
-
-(fn if-let [bindings ...]
-  (assert (<= (length [...]) 2)
-          (.. "if-let does not support more than two branches"))
-  (conditional-let `if bindings ...))
-
-(fn when-let [bindings ...]
-  (conditional-let `when bindings ...))
-
-{: if-let
- : when-let
- : lazyreq
+{: lazyreq
  : lazymod
  : lazyfunc
  : before!

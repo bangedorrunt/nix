@@ -1,49 +1,80 @@
-(import-macros {: lazyfunc} :core.macros)
+(import-macros {: lazyfunc : lazyreq : setup! : before! : after! : set!} :core.macros)
+(local packer (lazyreq :packer))
+(local {: kvize : reduce : run!} (lazyfunc :core.funs))
 
-;;;; Courtesy of Olical with rocks changes
-(fn use [...]
-  "Iterates through the arguments as pairs and calls packer's use function for
-  each of them. Works around Fennel not liking mixed associative and sequential
-  tables as well."
-  (let [packer (lazyfunc :packer)
-        {: inc : into} (lazyfunc :core.funs)
-        plugin-config (fn [name]
-                        (.. "require('plugins." name "')"))
-        plugin-init (fn [name]
-                      (.. "require('" name "').setup {}"))
-        theme-config (fn [name]
-                       (.. "require('themer." name "')"))
-        pkgs [...]]
-    (packer.startup {1 (fn [use use-rocks]
-                         (for [i 1 (length pkgs) 2]
-                           (let [name (. pkgs i)
-                                 opts (. pkgs (inc i))]
-                             (if (. opts :rock)
-                                 (use-rocks name)
-                                 (. opts :color)
-                                 (use (into opts 1 name :as :themer :config
-                                            (theme-config (. opts :color))))
-                                 (. opts :mod)
-                                 (use (into opts 1 name :config
-                                            (plugin-config (. opts :mod))))
-                                 (. opts :init)
-                                 (use (into opts 1 name :config
-                                            (plugin-init (. opts :init))))
-                                 (use (into opts 1 name))))))
-                     :config {:compile_path tdt.paths.PACKER-COMPILED-PATH
+(fn use [[name & args]]
+  "feed a plugin to the plugin manager"
+  (if (= 0 (length args))
+    (packer.use name)
+    (->> {1 name}
+         (kvize args)
+         packer.use)))
+
+(fn plugin-present? [plug]
+  "check if a plugin or list of plugins is on your system"
+  (if (= :table (type plug))
+    (reduce #(and $1 (plugin-present? $2)) true plug)
+    (. packer_plugins plug)))
+
+;; State
+(var callbacks-for-after [])
+(var callbacks-for-before [])
+
+(fn before [plug callback]
+  (table.insert callbacks-for-before [plug callback]))
+
+(fn after [plug callback]
+  (table.insert callbacks-for-after [plug callback]))
+
+(fn run-callbacks [plugins]
+  (each [_ [plug callback] (ipairs plugins)]
+    (when (plugin-present? plug)
+      (callback))))
+
+(fn file-exist? [path]
+  (= (vim.fn.filereadable path) 1))
+
+(fn load-packer-plugins [plugins]
+  ;; Load packer
+  (vim.cmd.packadd :packer.nvim)
+  (packer.init {:compile_path bangedorrunt.paths.PACKER-COMPILED-PATH
                               :display {:compact true
                                         :working_sym ""
                                         :error_sym ""
                                         :done_sym ""
                                         :removed_sym ""
-                                        :moved_sym ""
+                                        :moved_sym ""
                                         :header_sym ""}
-                              :auto_reload_compiled false
-                              :preview_updates true
+                              :auto_reload_compiled true
+                              :preview_updates false
                               :git {:clone_timeout 180 :depth 1}
-                              ;; BUG: Temporarily disable this due to
-                              ;; https://github.com/wbthomason/packer.nvim/issues/751
                               :max_jobs 60
-                              :profile {:enable true :threshold 0}}})))
+                              :profile {:enable true :threshold 0}})
+  (packer.reset)
+  (run! use plugins)
+  )
 
-{: use}
+(fn setup [plugins]
+
+ ;; Re-enable syntax
+ (vim.cmd "syntax on")
+ (vim.cmd "filetype on")
+ (vim.cmd "filetype plugin indent on")
+ (set! shadafile "")
+ (vim.cmd "rshada!")
+
+  (if (file-exist? bangedorrunt.paths.PACKER-COMPILED-PATH)
+    (do
+      (require :packer_compiled)
+      (run-callbacks callbacks-for-before)
+      (run-callbacks callbacks-for-after)
+      ;; REF: folke/dot
+      ;; No need to load this immediately, since we have packer_compiled
+      (vim.defer_fn (fn [] (load-packer-plugins plugins)) 0))
+    (load-packer-plugins plugins))
+  )
+
+{: setup
+ : use
+ : before
+ : after}

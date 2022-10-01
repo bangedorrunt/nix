@@ -3,7 +3,6 @@ CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache/nvim}"
 STATE_PATH="${XDG_STATE_HOME:-$HOME/.local/state/nvim}"
 OLD_PATH="${XDG_DATA_HOME:-$HOME/.local/share/nvim/site}"
 PACK_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start"
-LUAFUN_PATH="${PACK_PATH}/luafun.nvim"
 HOTPOT_PATH="${PACK_PATH}/hotpot.nvim"
 PACKER_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/packer.nvim"
 
@@ -36,19 +35,11 @@ fi
 
 mkdir -p "$PACK_PATH"
 
-echo 'Downloading Luafun ...'
-
-if [ ! -d "$LUAFUN_PATH" ]; then
-  git clone --depth 1 "https://github.com/babygau/luafun.nvim" "$LUAFUN_PATH"
-fi
-
 echo 'Downloading Hotpot...'
 
 if [ ! -d "$HOTPOT_PATH" ]; then
   git clone --depth 1 "https://github.com/rktjmp/hotpot.nvim" "$HOTPOT_PATH"
 fi
-
-# cd "$HOTPOT_PATH" && git fetch && git checkout nightly
 
 echo 'Downloading Packer ...'
 

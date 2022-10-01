@@ -3,10 +3,11 @@
                 : autocmd!
                 : noremap
                 : command
+                : after!
                 : lazyfunc
                 : lazyreq} :core.macros)
 
-(local {: has? : concat} (lazyfunc :core.funs))
+(local {: has?} (lazyfunc :core.funs))
 
 (local rust-tools (lazyreq :rust-tools))
 (local lspconfig (lazyreq :lspconfig))
@@ -19,44 +20,52 @@
 (local sumneko-lua (get-server :sumneko_lua))
 (local {:setup lua-dev} (lazyreq :lua-dev))
 
-(local null-ls (lazyreq :null-ls))
-(local {: formatting : diagnostics} (lazyreq :null-ls.builtins))
-
-(local signs tdt.signs)
-(local border tdt.border)
+(local signs bangedorrunt.signs)
+(local border bangedorrunt.border)
 
 ;;;; LSP UI
 ;; Override configuration for floating windows
-(local {: with : handlers} vim.lsp)
-(local open-floating-preview vim.lsp.util.open_floating_preview)
-(set vim.lsp.handlers.textDocument/signatureHelp
-     (with handlers.signature_help {: border}))
+(fn override-lsp-ui []
+  (let [{: with : handlers} vim.lsp
+        open-floating-preview vim.lsp.util.open_floating_preview]
+    (set vim.lsp.handlers.textDocument/signatureHelp
+         (with handlers.signature_help {: border}))
 
-(set vim.lsp.handlers.textDocument/hover (with handlers.hover {: border}))
+    (set vim.lsp.handlers.textDocument/hover (with handlers.hover {: border}))
 
-(fn vim.lsp.util.open_floating_preview [...]
-  (let [(bufnr winid) (open-floating-preview ...)]
-    (vim.api.nvim_win_set_option winid :breakindentopt "")
-    (vim.api.nvim_win_set_option winid :showbreak :NONE)
-    (values bufnr winid)))
+    (fn vim.lsp.util.open_floating_preview [...]
+      (let [(bufnr winid) (open-floating-preview ...)]
+        (vim.api.nvim_win_set_option winid :breakindentopt "")
+        (vim.api.nvim_win_set_option winid :showbreak :NONE)
+        (values bufnr winid)))))
 
-(local {: sign_define} vim.fn)
-(local {: config : severity} vim.diagnostic)
-(config {:underline {:severity {:min severity.INFO}}
-         :signs {:severity {:min severity.INFO}}
-         :virtual_text false
-         :update_in_insert true
-         :severity_sort true
-         :float {:show_header false : border}})
+(fn override-lsp-diagnostics []
+  (let [{: sign_define} vim.fn
+        {: config : severity} vim.diagnostic]
+    (config {:underline {:severity {:min severity.INFO}}
+             :signs {:severity {:min severity.INFO}}
+             :virtual_text false
+             :update_in_insert true
+             :severity_sort true
+             :float {:show_header false : border}})
 
-(sign_define :DiagnosticSignError
-             {:text signs.error :texthl :DiagnosticSignError})
+    (sign_define :DiagnosticSignError
+                 {:text signs.error :texthl :DiagnosticSignError})
 
-(sign_define :DiagnosticSignWarn
-             {:text signs.warning :texthl :DiagnosticSignWarn})
+    (sign_define :DiagnosticSignWarn
+                 {:text signs.warning :texthl :DiagnosticSignWarn})
 
-(sign_define :DiagnosticSignInfo {:text signs.info :texthl :DiagnosticSignInfo})
-(sign_define :DiagnosticSignHint {:text signs.hint :texthl :DiagnosticSignHint})
+    (sign_define :DiagnosticSignInfo {:text signs.info :texthl :DiagnosticSignInfo})
+    (sign_define :DiagnosticSignHint {:text signs.hint :texthl :DiagnosticSignHint})))
+
+;; More general LSP commands
+(fn reload-lsp []
+  (vim.lsp.stop_client (vim.lsp.get_active_clients))
+  (vim.cmd.edit))
+
+(fn open-lsp-log []
+  (let [path (vim.lsp.get_log_path)]
+    (vim.cmd.edit path)))
 
 ;;;; LSP server config
 (fn capable? [client capability]
@@ -99,10 +108,11 @@
     (noremap n buffer :gd definition)
     (noremap n buffer :gt type_definition)
     (noremap n buffer :gi implementation)
-    (noremap nv buffer :<LocalLeader>la code_action)
-    (noremap n buffer :<LocalLeader>ll open_float)
-    (noremap n buffer :<LocalLeader>lr references)
+    (noremap nv buffer nowait :<LocalLeader>la code_action)
+    (noremap n buffer nowait :<LocalLeader>ll open_float)
+    (noremap n buffer nowait :<LocalLeader>lr references)
     ;; LSP format
+    ;; fnlfmt: skip
     (if (capable? client :documentFormattingProvider)
         (do
           (augroup LspFormatOnSave (autocmd! {:buffer bufnr})
@@ -114,7 +124,8 @@
                                                                        client.name)))
                                                   : bufnr}
                                                  {:buffer bufnr})))
-          (noremap n buffer :<LocalLeader>lf `(vim.lsp.buf.format {: bufnr})))
+          (noremap n buffer nowait :<LocalLeader>lf
+                   `(vim.lsp.buf.format {: bufnr})))
         (print "LSP not support formatting."))))
 
 (local servers [:bashls
@@ -135,48 +146,26 @@
                 :vimls
                 :yamlls])
 
-(mason.setup)
-(mason-lspconfig.setup {:ensure_installed servers})
-(mason-lspconfig.setup_handlers {1 (fn [name]
-                                     (let [server (get-server name)]
-                                       (-> {: on_attach : capabilities}
-                                           (server.setup))))
-                                 :sumneko_lua #(sumneko-lua.setup (lua-dev))
-                                 :rust_analyzer #(rust-tools.setup)})
+(fn setup []
+  (override-lsp-ui)
+  (override-lsp-diagnostics)
+  (mason.setup)
+  (mason-lspconfig.setup {:ensure_installed servers})
+  (mason-lspconfig.setup_handlers {1 (fn [name]
+                                       (let [server (get-server name)]
+                                         (-> {: on_attach : capabilities}
+                                             (server.setup))))
+                                   :sumneko_lua #(sumneko-lua.setup (lua-dev))
+                                   :rust_analyzer #(rust-tools.setup)})
+  ;; (tset server-configs :fennel-ls
+  ;;       {:default_config {:cmd [(.. (vim.fn.stdpath :data) :/mason/bin/fennel-ls)]
+  ;;                         :filetypes [:fennel]
+  ;;                         :root_dir (fn [dir] (lspconfig.util.find_git_ancestor dir))
+  ;;                         :settings {}}})
+  ;;
+  ;; (local fennel-ls (get-server :fennel-ls))
+  ;; (fennel-ls.setup {: capabilities})
+  (command LspLog open-lsp-log)
+  (command LspRestart reload-lsp))
 
-;; WARNING: when you experience any lag or unresponsive with Lsp,
-;; make sure respective sources are installed
-(local null-sources [formatting.prettier
-                     formatting.stylua
-                     formatting.fnlfmt
-                     formatting.trim_whitespace
-                     formatting.shfmt])
-
-(-> {: on_attach :sources null-sources}
-    null-ls.setup)
-
-(tset server-configs :fennel-ls
-      {:default_config {:cmd [(concat (vim.fn.stdpath :data)
-                                      :/mason/bin/fennel-ls)]
-                        :filetypes [:fennel]
-                        :root_dir (fn [dir]
-                                    (lspconfig.util.find_git_ancestor dir))
-                        :settings {}}})
-
-(local fennel-ls (get-server :fennel-ls))
-(fennel-ls.setup {: capabilities})
-
-;; More general LSP commands
-
-;; fnlfmt: skip
-(fn reload-lsp []
-  (vim.lsp.stop_client (vim.lsp.get_active_clients))
-  (vim.cmd.edit))
-
-;; fnlfmt: skip
-(fn open-lsp-log []
-  (let [path (vim.lsp.get_log_path)]
-    (vim.cmd.edit path)))
-
-(command LspLog open-lsp-log)
-(command LspRestart reload-lsp)
+{: setup}

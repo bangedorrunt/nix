@@ -16,8 +16,8 @@
 (set! mouse :a)
 (set! showmatch)
 (set! matchtime 2)
-(set! shortmess :filnxtToOFc)
-(set! pumheight 15)
+(set! shortmess :FOotnficTWlx)
+(set! pumheight 0)
 (set! winblend 0)
 (set! winwidth 30)
 (set! winminwidth 10)
@@ -25,15 +25,14 @@
 (set! helpheight 12)
 (set! previewheight 12)
 (set! cmdwinheight 12)
-(set! cmdheight 0)
+;; (set! cmdheight 0)
 (set! conceallevel 2)
 (set! concealcursor :nc)
 (set! signcolumn :yes)
-(set! colorcolumn :80)
+;; (set! colorcolumn :80)
 (set! showmode false)
 (set! laststatus 3)
 
-;; global status
 (set! expandtab)
 
 ;; use space instead of tab
@@ -46,7 +45,7 @@
 (set! breakindent)
 
 ;; maintain indentation on break
-(set! showbreak " ")
+(set! showbreak " ")
 (set! breakindentopt "shift:2")
 ;; Invisibles
 (set! list)
@@ -58,7 +57,7 @@
                  :extends ""
                  :precedes ""})
 
-(set! fillchars {:vert ""
+(set! fillchars {:vert "│"
                  :fold "·"
                  :diff ""
                  :msgsep "‾"
@@ -158,11 +157,11 @@
 (set! backup false)
 (set! history 5000)
 (set! writebackup false)
-(set! directory (.. tdt.paths.STATE-PATH :/swag/))
-(set! undodir (.. tdt.paths.STATE-PATH :/undo/))
-(set! backupdir (.. tdt.paths.STATE-PATH :/backup/))
-(set! viewdir (.. tdt.paths.STATE-PATH :/view/))
-(set! spellfile (.. tdt.paths.STATE-PATH :/spell/en.uft-8.add))
+(set! directory (.. bangedorrunt.paths.STATE-PATH :/swag/))
+(set! undodir (.. bangedorrunt.paths.STATE-PATH :/undo/))
+(set! backupdir (.. bangedorrunt.paths.STATE-PATH :/backup/))
+(set! viewdir (.. bangedorrunt.paths.STATE-PATH :/view/))
+(set! spellfile (.. bangedorrunt.paths.STATE-PATH :/spell/en.uft-8.add))
 (set! backupskip [:/tmp/*
                   :$TMPDIR/*
                   :$TMP/*

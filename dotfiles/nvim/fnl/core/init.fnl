@@ -1,21 +1,22 @@
-(import-macros {: lazyfunc} :core.macros)
+(import-macros {: lazyreq : lazymod : setup! : set!} :core.macros)
 
-(require :core.base)
-(require :core.options)
-(require :core.mappings)
-(require :core.autocmds)
+(local mod (lazyreq :mod))
 
-(fn file-exist? [path]
-  (= (vim.fn.filereadable path) 1))
+(fn main []
+  ;; Temporarily disable syntax and filetype to improve startup time
+  (vim.cmd "syntax off")
+  (vim.cmd "filetype off")
+  (vim.cmd "filetype plugin indent off")
+  (set! shadafile "NONE")
 
-(fn load-packer-plugins []
-  (vim.cmd.packadd :packer.nvim)
-  (require :plugins))
+  (require :core.base)
+  (require :core.options)
+  (require :core.mappings)
+  (require :core.autocmds)
 
-(if (file-exist? tdt.paths.PACKER-COMPILED-PATH)
-    (do
-      (require :packer_compiled)
-      ;; REF: folke/dot
-      ;; No need to load this immediately, since we have packer_compiled
-      (vim.defer_fn load-packer-plugins 0))
-    (load-packer-plugins))
+
+  (setup! :mod)
+  (setup! :core.packer mod.plugins))
+
+
+(main)

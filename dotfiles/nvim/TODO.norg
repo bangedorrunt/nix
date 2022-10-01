@@ -9,7 +9,9 @@ version: 0.0.13
 
 * TODO
 ** Nvim
-   - [ ] Move to `vim-jetpack`
+   - [ ] Write test for configuration
+   -- `fennel-test`
+   - [x] Remove `luafun`
    - [ ] `foldoptions`
    -- [PR]{https://github.com/neovim/neovim/pull/17446}
    - [ ] `luasnip` snippet for autopair
@@ -22,12 +24,15 @@ version: 0.0.13
    - [-] Open file in current Nvim instance
    -- Flag [remote]{https://github.com/neovim/neovim/pull/18414} is broken for now
    -- [Use absolute path]{https://github.com/neovim/neovim/issues/18519}
+   - [_] Move to `vim-jetpack`
    - [_]  Use `hydra.Nvim`
    -- How to make art code block compatible with my font?
    -- I don't need it
 ** Tmux
    - [_]  Use `Tmux-tilish`
 ** Karabiner
+   - [ ] Back to Yabai for transparent windows
+   -- Can I do better with mod-tap sensitivity?
    - [x] Rebind Discord keymaps
    - [x] Rebind Element keymaps
 
@@ -47,7 +52,7 @@ version: 0.0.13
    --- change `harpoon` cmd accordingly
    - [x] Open terminal using Alfred
    -- Spotlight got no issue
-   -- Solution: `/usr/local/bin/zsh -l -c "Tmux attach || tmux"`
+   -- Solution: `/usr/local/bin/zsh -l -c "Tmux attach -d || tmux"`
 
 * DONE
 ** Nvim
