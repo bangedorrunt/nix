@@ -15,7 +15,7 @@ yabai -m config window_animation_duration 0
 yabai -m config window_opacity on
 yabai -m config window_opacity_duration 0.3
 yabai -m config active_window_opacity 1.0
-yabai -m config normal_window_opacity 0.85
+yabai -m config normal_window_opacity 0.8
 yabai -m config window_border on
 yabai -m config window_border_width 3
 yabai -m config window_border_blur off
@@ -58,12 +58,13 @@ yabai -m rule --add label="Karabiner Elements" app="^Karabiner" manage=off
 yabai -m rule --add label="PDF Expert" app="^PDF Expert$" grid=1:2:1:0:1:1 manage=off
 yabai -m rule --add label="Books" app="^Books" space=^1
 yabai -m rule --add label="Calibre" app="^calibre" space=^4
-yabai -m rule --add label="Edge" app="^Microsoft Edge" space=^2
+yabai -m rule --add label="Edge" app="^Microsoft Edge" space=^2 opacity=0.9
 yabai -m rule --add label="Wezterm" app="Wezterm" space=^1
 yabai -m rule --add label="Alacritty" app="Alacritty" space=^1
 yabai -m rule --add label="iTerm2" app="iTerm2" space=^1
-yabai -m rule --add label="Discord" app="^Discord" space=^3
-yabai -m rule --add label="Element" app="^Element" space=^3
+yabai -m rule --add label="Discord" app="^Discord" space=^3 opacity=0.85
+yabai -m rule --add label="Element" app="^Element" space=^3 opacity=0.85
+yabai -m rule --add label="Messenger" app="^Messenger" space=^4 opacity=0.75
 
 # Signals
 
