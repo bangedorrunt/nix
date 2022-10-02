@@ -68,16 +68,9 @@
                  ;;;;Yabai babe
                  [:spacebar ["yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == \"bsp\" then \"float\" else \"bsp\" end')" [:notify-layout "Cycle Layout"]]]
                  ;; Cycle through windows
-                 [:j "yabai -m query --spaces --space \\
-                      | jq -re \".index\" \\
-                      | xargs -I{} yabai -m query --windows --space {} \\
-                      | jq -sre 'add | map(select(.\"is-minimized\"==false)) | sort_by(.display, .frame.y, .frame.x, .id) | . as $array | length as $array_length | index(map(select(.\"has-focus\"==true))) as $has_index | if $array_length - 1 > $has_index then nth($has_index + 1).id else nth(0).id end' \\
-                      | xargs -I{} yabai -m window --focus {}"]
-                 [:k "yabai -m query --spaces --space \\
-                      | jq -re \".index\" \\
-                      | xargs -I{} yabai -m query --windows --space {} \\
-                      | jq -sre 'add | map(select(.\"is-minimized\"==false)) | sort_by(.display, .frame.y, .frame.x, .id) | . as $array | length as $array_length | index(map(select(.\"has-focus\"==true))) as $has_index | if $has_index > 0 then nth($has_index - 1).id else nth($array_length - 1).id end'  \\
-                      | xargs -I{} yabai -m window --focus {}"]
+                 ;; SEE: https://github.com/koekeishiya/yabai/issues/203#issuecomment-700527407
+                 [:j "~/.config/yabai/cycle-backward.sh"]
+                 [:k "~/.config/yabai/cycle-forward.sh"]
                  ;; Resize windows
                  [:h "yabai -m window west --resize right:-40:0 2> /dev/null || yabai -m window --resize right:-40:0"]
                  [:l "yabai -m window east --resize left:40:0 2> /dev/null || yabai -m window --resize left:40:0"]
@@ -90,11 +83,11 @@
                  ;; Split horizontal/vertical windows
                  [:v "yabai -m window --toggle split"]
                  ;; Move windows
-                 [:return_or_enter "cd ~/.config/yabai && ./stack.sh west"]
-                 [:down_arrow "cd ~/.config/yabai && ./stack.sh south"]
-                 [:left_arrow "cd ~/.config/yabai && ./stack.sh west"]
-                 [:up_arrow "cd ~/.config/yabai && ./stack.sh north"]
-                 [:right_arrow "cd ~/.config/yabai && ./stack.sh east"]
+                 [:return_or_enter "~/.config/yabai/stack.sh west"]
+                 [:down_arrow "~/.config/yabai/stack.sh south"]
+                 [:left_arrow "~/.config/yabai/stack.sh west"]
+                 [:up_arrow "~/.config/yabai/stack.sh north"]
+                 [:right_arrow "~/.config/yabai/stack.sh east"]
                  ;; Resize float windows
                  [:9 "yabai -m window --grid 1:1:0:0:1:1"]
                  [:8 "yabai -m window --grid 8:8:1:1:6:6"]
@@ -111,7 +104,7 @@
                  [:s ["yabai -m space --layout stack" [:notify-layout "Fullscreen Stack Layout"]]]
                  [:f ["yabai -m space --layout float" [:notify-layout "Float Layout"]]]
 
-;;;; App navigation
+                 ;;;; App navigation
                  :g-mode
                  ;; Discord
                  [:slash :!Cslash :Discord]
@@ -136,6 +129,10 @@
                  [:semicolon :page_up :Element]
                  [:m :!Tend :Element]
                  [:n :!Thome :Element]
+                 ;; Messenger
+                 [:spacebar :!Ck :Messenger]
+                 [:j :!Cclose_bracket :Messenger]
+                 [:k :!Copen_bracket :Messenger]
 
                  ;;;; Vim-like keybindings
                  :f-mode
@@ -184,8 +181,9 @@
                             "^com\\.apple\\.Terminal$"
                             "^com\\.googlecode\\.iterm2$"
                             "^io\\.alacritty"]
-                :Discord   ["^com\\.hnc\\.Discord$"]
+                :Discord   ["^com\\.hnc\\.Discord"]
                 :Element   ["^im\\.riot\\.app$"]
+                :Messenger ["^com\\.facebook\\.archon\\.developerID$"]
                 :Finder    ["^com\\.apple\\.finder$"]
                 :VSCODE    ["^com\\.microsoft\\.VSCode"]
                 :Browsers  ["^org\\.mozilla\\.firefox$"

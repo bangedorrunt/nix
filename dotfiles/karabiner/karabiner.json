@@ -506,7 +506,7 @@
             "key_code" : "j"
           },
           "to" : [ {
-            "shell_command" : "yabai -m query --spaces --space \\\n                      | jq -re \".index\" \\\n                      | xargs -I{} yabai -m query --windows --space {} \\\n                      | jq -sre 'add | map(select(.\"is-minimized\"==false)) | sort_by(.display, .frame.y, .frame.x, .id) | . as $array | length as $array_length | index(map(select(.\"has-focus\"==true))) as $has_index | if $array_length - 1 > $has_index then nth($has_index + 1).id else nth(0).id end' \\\n                      | xargs -I{} yabai -m window --focus {}"
+            "shell_command" : "~/.config/yabai/cycle-backward.sh"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -519,7 +519,7 @@
             "key_code" : "k"
           },
           "to" : [ {
-            "shell_command" : "yabai -m query --spaces --space \\\n                      | jq -re \".index\" \\\n                      | xargs -I{} yabai -m query --windows --space {} \\\n                      | jq -sre 'add | map(select(.\"is-minimized\"==false)) | sort_by(.display, .frame.y, .frame.x, .id) | . as $array | length as $array_length | index(map(select(.\"has-focus\"==true))) as $has_index | if $has_index > 0 then nth($has_index - 1).id else nth($array_length - 1).id end'  \\\n                      | xargs -I{} yabai -m window --focus {}"
+            "shell_command" : "~/.config/yabai/cycle-forward.sh"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -584,7 +584,7 @@
             "key_code" : "return_or_enter"
           },
           "to" : [ {
-            "shell_command" : "cd ~/.config/yabai && ./stack.sh west"
+            "shell_command" : "~/.config/yabai/stack.sh west"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -597,7 +597,7 @@
             "key_code" : "down_arrow"
           },
           "to" : [ {
-            "shell_command" : "cd ~/.config/yabai && ./stack.sh south"
+            "shell_command" : "~/.config/yabai/stack.sh south"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -610,7 +610,7 @@
             "key_code" : "left_arrow"
           },
           "to" : [ {
-            "shell_command" : "cd ~/.config/yabai && ./stack.sh west"
+            "shell_command" : "~/.config/yabai/stack.sh west"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -623,7 +623,7 @@
             "key_code" : "up_arrow"
           },
           "to" : [ {
-            "shell_command" : "cd ~/.config/yabai && ./stack.sh north"
+            "shell_command" : "~/.config/yabai/stack.sh north"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -636,7 +636,7 @@
             "key_code" : "right_arrow"
           },
           "to" : [ {
-            "shell_command" : "cd ~/.config/yabai && ./stack.sh east"
+            "shell_command" : "~/.config/yabai/stack.sh east"
           } ],
           "conditions" : [ {
             "name" : "d-mode",
@@ -807,7 +807,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -824,7 +824,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -841,7 +841,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -858,7 +858,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -875,7 +875,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -892,7 +892,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -908,7 +908,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -924,7 +924,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -941,7 +941,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -958,7 +958,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -975,7 +975,7 @@
             "type" : "variable_if"
           }, {
             "type" : "frontmost_application_if",
-            "bundle_identifiers" : [ "^com\\.hnc\\.Discord$" ]
+            "bundle_identifiers" : [ "^com\\.hnc\\.Discord" ]
           } ],
           "type" : "basic"
         }, {
@@ -1144,6 +1144,57 @@
           }, {
             "type" : "frontmost_application_if",
             "bundle_identifiers" : [ "^im\\.riot\\.app$" ]
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "spacebar"
+          },
+          "to" : [ {
+            "key_code" : "k",
+            "modifiers" : [ "left_command" ]
+          } ],
+          "conditions" : [ {
+            "name" : "g-mode",
+            "value" : 1,
+            "type" : "variable_if"
+          }, {
+            "type" : "frontmost_application_if",
+            "bundle_identifiers" : [ "^com\\.facebook\\.archon\\.developerID$" ]
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "j"
+          },
+          "to" : [ {
+            "key_code" : "close_bracket",
+            "modifiers" : [ "left_command" ]
+          } ],
+          "conditions" : [ {
+            "name" : "g-mode",
+            "value" : 1,
+            "type" : "variable_if"
+          }, {
+            "type" : "frontmost_application_if",
+            "bundle_identifiers" : [ "^com\\.facebook\\.archon\\.developerID$" ]
+          } ],
+          "type" : "basic"
+        }, {
+          "from" : {
+            "key_code" : "k"
+          },
+          "to" : [ {
+            "key_code" : "open_bracket",
+            "modifiers" : [ "left_command" ]
+          } ],
+          "conditions" : [ {
+            "name" : "g-mode",
+            "value" : 1,
+            "type" : "variable_if"
+          }, {
+            "type" : "frontmost_application_if",
+            "bundle_identifiers" : [ "^com\\.facebook\\.archon\\.developerID$" ]
           } ],
           "type" : "basic"
         }, {
