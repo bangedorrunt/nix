@@ -2,7 +2,7 @@
 
 (local treesitter (lazyreq :nvim-treesitter.configs))
 
-(local languages [:bash
+(local languages [:bash :fish
                   :comment
                   :clojure
                   :commonlisp

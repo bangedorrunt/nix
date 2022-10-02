@@ -17,10 +17,10 @@
                   ;; send empty command by accident
                   :projects {:$HOME/nix {:mark {:marks [{:filename :dotfiles/nvim/TODO.norg}
                                                         {:filename :dotfiles/nvim/fnl/core/macros.fnl}
-                                                        {:filename :dotfiles/nvim/fnl/plugins/init.fnl}
-                                                        {:filename :dotfiles/nvim/fnl/plugins/harpoon.fnl}
-                                                        {:filename :dotfiles/nvim/fnl/plugins/lsp.fnl}
-                                                        {:filename :dotfiles/nvim/fnl/plugins/nvim-cmp.fnl}
+                                                        {:filename :dotfiles/nvim/fnl/mod/init.fnl}
+                                                        {:filename :dotfiles/nvim/fnl/mod/editor/harpoon.fnl}
+                                                        {:filename :dotfiles/nvim/fnl/mod/lsp/lsp.fnl}
+                                                        {:filename :dotfiles/nvim/fnl/mod/completion/nvim-cmp.fnl}
                                                         {:filename :dotfiles/karabiner/karabiner.edn}
                                                         {:filename :dotfiles/.zshrc}]}
                                          :term {:cmds ["cd $HOME/nix/dotfiles/wezterm && just compile && cd $HOME/nix"

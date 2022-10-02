@@ -50,7 +50,6 @@
 
   ;; Telescope keymaps
   (noremap n nowait :<Leader>ht :<Cmd>Telescope<CR>)
-  (noremap n nowait "<Leader>," "<Cmd>Telescope projects<CR>")
   (noremap n nowait :<Leader><Leader> project)
   (noremap n nowait "<Leader>;" builtin.live_grep)
   (noremap n nowait :<Leader>* builtin.grep_string)

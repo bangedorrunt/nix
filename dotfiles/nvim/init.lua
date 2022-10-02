@@ -4,6 +4,14 @@
 _G.__bangedorrunt_global_callbacks = __bangedorrunt_global_callbacks or {}
 _G.bangedorrunt = { _store = __bangedorrunt_global_callbacks }
 
+-- Temporarily disable syntax and filetype to improve startup time
+vim.api.nvim_command 'syntax off'
+vim.api.nvim_command 'filetype off'
+vim.api.nvim_command 'filetype plugin indent off'
+
+-- Temporarily disable Shada file to improve startup time
+vim.opt.shadafile = 'NONE'
+
 require('hotpot').setup {
   provide_require_fennel = true,
   enable_hotpot_diagnostics = true,
