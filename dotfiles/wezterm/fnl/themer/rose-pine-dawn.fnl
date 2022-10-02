@@ -1,7 +1,7 @@
-(local palette {:base :#faf4ed
+(local palette {:base :#fff0ec
                 :overlay :#f2e9e1
                 :muted :#9893a5
-                :text :#575279
+                :text :#191724
                 :love :#b4637a
                 :gold :#ea9d34
                 :rose :#d7827e
@@ -25,7 +25,7 @@
    :cursor_fg palette.text
    :selection_bg palette.overlay
    :selection_fg palette.text
-   :ansi ["#f2e9de"
+   :ansi [palette.overlay
           palette.love
           palette.pine
           palette.gold
@@ -33,7 +33,7 @@
           palette.iris
           palette.rose
           palette.text]
-   :brights ["#6e6a86"
+   :brights [palette.muted
              palette.love
              palette.pine
              palette.gold

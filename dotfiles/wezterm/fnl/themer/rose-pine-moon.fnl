@@ -17,8 +17,8 @@
 (fn colors []
   {:foreground palette.text
    :background palette.base
-   :cursor_bg palette.highlight_high
-   :cursor_border palette.highlight_high
+   :cursor_bg palette.pine
+   :cursor_border palette.pine
    :cursor_fg palette.text
    :selection_bg "#2a283e"
    :selection_fg palette.text
@@ -47,9 +47,6 @@
              :inactive_tab_edge palette.muted}})
 
 (fn window_frame []
-  {:active_titlebar_bg palette.base
-   :inactive_titlebar_bg palette.base})
+  {:active_titlebar_bg palette.base :inactive_titlebar_bg palette.base})
 
-{: colors
- : window_frame
-}
+{: colors : window_frame}

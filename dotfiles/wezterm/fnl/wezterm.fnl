@@ -15,30 +15,18 @@
 
 {:term :wezterm
  :default_prog (if (is_macos?)
-                   [:/usr/local/bin/zsh :-l :-c "tmux attach -d || tmux"]
+                   [:/usr/local/bin/fish :-l :-c "tmux attach -d || tmux"]
                    [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
  :colors (colors)
  :window_frame (window_frame)
- :window_background_opacity 0.7
- :font_dirs [:/Users/babygau/Library/Fonts]
- :font (fallback {:family "Operator Mono SSm" :weight 325})
- :font_rules [{:italic true
-               :font (fallback {:family "Operator Mono SSm"
-                                :weight 325
-                                :style :Italic})}
-              {:intensity :Bold
-               :font (fallback {:family "Operator Mono SSm" :weight :DemiLight})}
-              {:italic true
-               :intensity :Bold
-               :font (fallback {:family "Operator Mono SSm"
-                                :weight :DemiLight
-                                :style :Italic})}]
- :font_size 22
+ :window_background_opacity 0.85
+ :font_dirs [:/Users/bangedorrunt/Library/Fonts]
+ :font (fallback "Victor Mono")
+ :font_size 21
  :freetype_load_target :Light
- ;; :use_cap_height_to_scale_fallback_fonts true
- :line_height 1.4
- :cell_width 0.85
+ ;; :line_height 1.4
+ ;; :cell_width 0.85
  :underline_position :-0.15cell
  :window_decorations :RESIZE
  :enable_tab_bar true
