@@ -7,30 +7,28 @@ green=#50fa7b
 blue=#bd93f9
 magenta=#ff79c6
 
-# default window title colors
-# set-option -g status-style fg=magenta,bg=default
-
 set -g status on
 set -g status-interval 3
 
+# Default window title colors
+set-option -g status-style fg=#ff79c6,bg=default
+set-window-option -g window-status-style fg=#bd93f9,bg=default
+set-window-option -g window-status-current-style fg=#50fa7b,bg=default
+set-window-option -ga window-status-activity-style fg=#bd93f9,bg=default
+
 # Left Status Bar
 set -g status-left-length 80
-set -g status-left '#[fg=magenta,bg=default,nobold] #S #[fg=cyan,bg=default,nobold] '
+set -g status-left '#[bold]#S '
 
 # Right Status Bar
 set -g status-right-length 150
-set -g status-right '#[fg=black] #[fg=magenta,bg=default] #{pane_current_path} #[fg=magenta,bg=default] #[fg=blue,bg=default] #[fg=cyan,bg=default,bold] %H:%M %a-%m-%d-%Y'
-# Current Tab
-set -g window-status-current-format '#[fg=default,bg=default] #[fg=red,bg=default,bold] #I #[fg=red,nobold]#W #[fg=blue,bg=default,nobold] '
+set -g status-right '#[fg=#f1fa8c]#{pane_current_path} #[fg=#ff5555]%H:%M %a-%m-%d-%Y'
 
-# Inactive Tab
-set -g window-status-format '#[fg=blue,bg=default] #[fg=cyan,bg=default] #I #W #[fg=cyan,bg=default]#[fg=blue,bg=default,nobold] '
+# Current Window
+set -g window-status-current-format '#[bold][#I #W]'
 
-# Activity Tab
-set-window-option -ga window-status-activity-style fg=blue,bg=default
+# Inactive Window
+set -g window-status-format '[#I #W]'
 
 # Separator
-set -g window-status-separator ''
-
-# Highlight zoomed windows
-setw -g window-status-current-format '#{?window_zoomed_flag,#[fg=magenta],}#F#I [#W] '
+# set -g window-status-separator ''

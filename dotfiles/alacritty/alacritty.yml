@@ -72,11 +72,11 @@ scrolling:
 # Font configuration (changes require restart)
 font:
   normal:
-    family: OperatorMonoSSm Nerd Font
-    style: Light
+    family: Victor Mono
+    style: Regular
   italic:
-    family: OperatorMonoSSm Nerd Font
-    style: Light Italic
+    family: Victor Mono
+    style: Italic
   # bold:
   #   family: Operator Mono SSm Lig
   #   style: Book
@@ -85,12 +85,12 @@ font:
   #   style: Book Italic
 
   # Point size of the font
-  size: 19.0
+  size: 20.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
-    x: -1
+    x: -2
     y: 18
 
   # Glyph offset determines the locations of the glyphs within their cells with

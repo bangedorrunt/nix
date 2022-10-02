@@ -38,9 +38,14 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Fzf
 # ---
 # `rose-pine` theme
+# --color=fg:#e0def4,bg:#1f1d2e,hl:#6e6a86
+# --color=fg+:#908caa,bg+:#191724,hl+:#908caa
+# --color=info:#9ccfd8,prompt:#f6c177,pointer:#c4a7e7
+# --color=marker:#ebbcba,spinner:#eb6f92,header:#ebbcba"
+
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS"
---color=fg:#e0def4,bg:#1f1d2e,hl:#6e6a86
---color=fg+:#908caa,bg+:#191724,hl+:#908caa
+--color=fg:#e0def4,bg:-1,hl:#6e6a86
+--color=fg+:#908caa,bg+:-1,hl+:#908caa
 --color=info:#9ccfd8,prompt:#f6c177,pointer:#c4a7e7
 --color=marker:#ebbcba,spinner:#eb6f92,header:#ebbcba"
 
@@ -191,9 +196,9 @@ alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;ech
 alias hide='defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder'
 alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias rmds='fd -H -I \.DS\_Store -x rm -v'
+alias rmconflict='fd --hidden conflicted ~/Dropbox'
 alias nixup="sudo -i sh -c 'nix-channel --update && nix-env -iA nixpkgs.nix && launchctl remove org.nixos.nix-daemon && launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist'"
 alias nvup="brew reinstall neovim"
 alias wezup="brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest"
-alias rmconflict='fd --hidden conflicted ~/Dropbox'
-alias rmds='fd -H -I \.DS\_Store -x rm -v'
-alias rsync='rsync -a --delete'
+alias wezfont="wezterm ls-fonts --list-system"
