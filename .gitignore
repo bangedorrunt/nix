@@ -2,10 +2,8 @@
 flake.lock
 .direnv
 .vscode
-dotfiles/nvim-
-dotfiles/alfred2
+dotfiles/nvim-/**
 dotfiles/env
-dotfiles/iterm2
 dotfiles/karabiner/automatic_backups
 dotfiles/tmux/plugins
 result

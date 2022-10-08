@@ -14,14 +14,18 @@
 	<key>finderSelectionHotkey</key>
 	<dict>
 		<key>key</key>
-		<integer>46</integer>
+		<integer>-1</integer>
 		<key>mod</key>
-		<integer>1966080</integer>
+		<integer>-1</integer>
 		<key>string</key>
-		<string>M</string>
+		<string></string>
 	</dict>
-	<key>showWithRightArrow</key>
+	<key>showWithCtrl</key>
 	<false/>
+	<key>showWithFn</key>
+	<false/>
+	<key>showWithTab</key>
+	<true/>
 	<key>sortByUsage</key>
 	<true/>
 </dict>
