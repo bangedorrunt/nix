@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache/nvim}"
-STATE_PATH="${XDG_STATE_HOME:-$HOME/.local/state/nvim}"
-OLD_PATH="${XDG_DATA_HOME:-$HOME/.local/share/nvim/site}"
+CACHE_PATH="${XDG_CACHE_HOME:-$HOME/.cache}/nvim"
+STATE_PATH="${XDG_STATE_HOME:-$HOME/.local/state}/nvim"
+OLD_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site"
 PACK_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start"
 HOTPOT_PATH="${PACK_PATH}/hotpot.nvim"
 PACKER_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/opt/packer.nvim"
@@ -47,14 +47,14 @@ if [ ! -d "$PACKER_PATH" ]; then
   git clone --depth 1 "https://github.com/wbthomason/packer.nvim" "$PACKER_PATH"
 fi
 
-if [ ! -e "${STATE_PATH}/swap" ]; then
-  echo "Creating vim swap/backup/undo/view folders inside ${STATE_PATH}/nvim ..."
-  mkdir -p "${STATE_PATH}/backup"
-  mkdir -p "${STATE_PATH}/sessions"
-  mkdir -p "${STATE_PATH}/swap"
-  mkdir -p "${STATE_PATH}/tags"
-  mkdir -p "${STATE_PATH}/undo"
-  mkdir -p "${STATE_PATH}/view"
+if [ ! -e "$STATE_PATH/swap" ]; then
+  echo "Creating vim swap/backup/undo/view folders inside $STATE_PATH/nvim ..."
+  mkdir -p "$STATE_PATH/backup"
+  mkdir -p "$STATE_PATH/sessions"
+  mkdir -p "$STATE_PATH/swap"
+  mkdir -p "$STATE_PATH/tags"
+  mkdir -p "$STATE_PATH/undo"
+  mkdir -p "$STATE_PATH/view"
 fi
 
 echo 'Installing Packer plugins ...'
