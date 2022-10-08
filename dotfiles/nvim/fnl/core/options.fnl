@@ -25,7 +25,7 @@
 (set! helpheight 12)
 (set! previewheight 12)
 (set! cmdwinheight 12)
-;; (set! cmdheight 0)
+(set! cmdheight 0)
 (set! conceallevel 2)
 (set! concealcursor :nc)
 (set! signcolumn :yes)
@@ -67,6 +67,9 @@
                  :foldclose ""})
 
 ;;;; BEHAVIOUR
+(set! splitright)
+(set! splitbelow)
+(set! splitkeep :screen)
 (set! noautochdir)
 (set! magic)
 (set! hidden)
@@ -94,12 +97,8 @@
 (set! foldenable true)
 (set! foldcolumn :1)
 (set! foldlevel 99)
-
-;; Unfold them all
 (set! foldnestmax 0)
 (set! foldlevelstart 99)
-(set! splitright)
-(set! splitbelow)
 (set! backspace "indent,eol,start")
 (set! switchbuf "useopen,uselast")
 (set! eadirection :hor)
