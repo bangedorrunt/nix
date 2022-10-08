@@ -3,7 +3,6 @@
                 : autocmd!
                 : noremap
                 : command
-                : after!
                 : lazyfunc
                 : lazyreq} :core.macros)
 

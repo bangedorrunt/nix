@@ -1,14 +1,9 @@
-(import-macros {: lazyreq : after! : setup!} :core.macros)
-
-(local plugins
-  [[:neovim/nvim-lspconfig]
-   [:williamboman/mason.nvim]
-   [:williamboman/mason-lspconfig.nvim]
-   [:jose-elias-alvarez/null-ls.nvim]])
+(import-macros {: use : after-loaded : setup!} :core.macros)
 
 (fn setup []
-  (after! :mason-lspconfig.nvim (setup! :mod.lsp.lsp))
-  (after! :null-ls.nvim (setup! :mod.lsp.null-ls)))
+  (use neovim/nvim-lspconfig)
+  (use williamboman/mason.nvim)
+  (use williamboman/mason-lspconfig.nvim (after-loaded mod.lsp.lsp))
+  (use jose-elias-alvarez/null-ls.nvim (after-loaded mod.lsp.null-ls)))
 
-{: plugins
- : setup}
+{: setup}

@@ -1,12 +1,8 @@
-(import-macros {: lazyreq : after! : setup!} :core.macros)
-
-(local plugins
-  [[:ericpruitt/tmux.vim]
-   [:aserowy/tmux.nvim :mod :tmux]
-   [:gpanders/editorconfig.nvim]])
+(import-macros {: use : after-loaded : setup!} :core.macros)
 
 (fn setup []
-  (after! :tmux.nvim (setup! :mod.tool.tmux)))
+  (use ericpruitt/tmux.vim)
+  (use aserowy/tmux.nvim (after-loaded mod.tool.tmux))
+  (use gpanders/editorconfig.nvim))
 
-{: plugins
- : setup}
+{: setup}

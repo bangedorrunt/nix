@@ -43,7 +43,6 @@
                                        :node_incremental :grn
                                        :scope_incremental :grc
                                        :node_decremental :grm}}
-     :playground {:enable true}
      :textobjects {:select {:enable true}
                    :lookahead true
                    :keymaps {:af "@function.outer"

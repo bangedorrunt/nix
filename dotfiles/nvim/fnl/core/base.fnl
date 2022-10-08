@@ -33,6 +33,7 @@
                    :light {:tokyonight "#e1e2e7"
                            :gruvbox "#fbf1c7"
                            :rose-pine "#faf4ed"}}
+         :plugins []
          :lsp {:Array " "
                :Boolean " "
                :Class " "

@@ -1,23 +1,14 @@
-(import-macros {: lazyreq : after! : before! : setup! : g} :core.macros)
-
-(local plugins
-  [[:ii14/autosplit.nvim]
-   [:linty-org/readline.nvim]
-   [:tpope/vim-eunuch]
-   [:tpope/vim-repeat]
-   [:kylechui/nvim-surround]
-   [:NvChad/nvim-colorizer.lua]
-   ["~/workspace/son-of-harpoon.git/main" :as :harpoon]
-   [:nvim-telescope/telescope-fzf-native.nvim :run "make"]
-   [:nvim-telescope/telescope.nvim]])
+(import-macros {: use : after-loaded : setup!} :core.macros)
 
 (fn setup []
-  (before! :vim-eunuch (g eunuch_no_maps true))
-  (after! :readline.nvim (setup! :mod.editor.readline))
-  (after! :nvim-surround (setup! :nvim-surround))
-  (after! :nvim-colorizer.lua (setup! :colorizer))
-  (after! :harpoon (setup! :mod.editor.harpoon))
-  (after! :telescope.nvim (setup! :mod.editor.telescope)))
+  (use ii14/autosplit.nvim)
+  (use tpope/vim-eunuch)
+  (use tpope/vim-repeat)
+  (use linty-org/readline.nvim (after-loaded mod.editor.readline))
+  (use kylechui/nvim-surround (after-loaded nvim-surround))
+  (use NvChad/nvim-colorizer.lua :cmd :ColorizerToggle (after-loaded colorizer))
+  (use "~/workspace/son-of-harpoon.git/main" :as :harpoon (after-loaded mod.editor.harpoon))
+  (use nvim-telescope/telescope-fzf-native.nvim :run "make")
+  (use nvim-telescope/telescope.nvim (after-loaded mod.editor.telescope)))
 
-{: plugins
- : setup}
+{: setup}

@@ -143,11 +143,8 @@
 
 (fn concat+ [...]
   "Concatenates the sequential table arguments together."
-  (let [result []]
-    (run! (fn [xs]
-            (run! (fn [x]
-                    (table.insert result x)) xs)) [...])
-    result))
+  (accumulate [acc [] _ xs (ipairs [...])]
+    (icollect [_ v (ipairs xs) :into acc] v)))
 
 (fn mapcat+ [f xs]
   (concat+ (unpack (map f xs))))

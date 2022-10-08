@@ -1,18 +1,10 @@
-(import-macros {: lazyreq : after! : setup!} :core.macros)
-
-(local plugins
-  [["~/workspace/rose-pine.nvim.git/main" :as :themer]
-   [:kyazdani42/nvim-web-devicons :module :nvim-web-devicons]
-   [:akinsho/bufferline.nvim :after :themer]
-   [:nvim-lualine/lualine.nvim :after :themer]
-   [:kyazdani42/nvim-tree.lua :after :themer]])
+(import-macros {: use : after-loaded : setup!} :core.macros)
 
 (fn setup []
-  (after! :themer (setup! :mod.ui.rose-pine))
-  (after! :nvim-web-devicons (setup! :mod.ui.devicons))
-  (after! :bufferline.nvim (setup! :mod.ui.bufferline))
-  (after! :lualine.nvim (setup! :mod.ui.lualine))
-  (after! :nvim-tree.lua (setup! :mod.ui.nvim-tree)))
+  (use "~/workspace/rose-pine.nvim.git/main" :as :themer (after-loaded mod.ui.rose-pine))
+  (use kyazdani42/nvim-web-devicons :module :nvim-web-devicons (after-loaded mod.ui.devicons))
+  (use akinsho/bufferline.nvim :after :themer (after-loaded mod.ui.bufferline))
+  (use nvim-lualine/lualine.nvim :after :themer (after-loaded mod.ui.lualine))
+  (use kyazdani42/nvim-tree.lua :after :themer (after-loaded mod.ui.nvim-tree)))
 
-{: plugins
- : setup}
+{: setup}

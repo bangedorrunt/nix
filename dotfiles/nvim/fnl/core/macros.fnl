@@ -209,25 +209,23 @@
 ;;;; Plugin Manager
 ;;;; --------------
 
-;; fnlfmt: skip
-(fn before! [plug ...]
-  "Run code before a plugin loads"
-  `((. (lazyreq :core.packer) :before) ,plug (fn [] ,...)))
+(fn use [plug ...]
+  "Add plugin to packer"
+  `(table.insert bangedorrunt.plugins [,(tostring plug) ,...]))
 
-;; fnlfmt: skip
-(fn after! [plug ...]
-  "Run code after a plugin loads"
-  `((. (lazyreq :core.packer) :after) ,plug (fn [] ,...)))
+(fn setup! [mod ...]
+  `((. (require ,(tostring mod)) :setup) ,...))
 
-(fn setup! [module ...]
-  `((. (lazyreq ,module) :setup) ,...))
+(fn after-loaded [module]
+  "Load plugin setting"
+  `(values :config (fn [] (setup! ,module))))
 
 {: lazyreq
  : lazymod
  : lazyfunc
- : before!
- : after!
+ : use
  : setup!
+ : after-loaded
  : set!
  : setl!
  : g

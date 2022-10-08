@@ -1,11 +1,7 @@
-(import-macros {: lazyreq : after! : setup!} :core.macros)
-(local plugins
-  [[:lewis6991/gitsigns.nvim]
-   [:tpope/vim-fugitive]])
+(import-macros {: use : after-loaded : setup!} :core.macros)
 
 (fn setup []
-  (after! :gitsigns.nvim (setup! :mod.git.gitsigns))
-  (after! :vim-fugitive (setup! :mod.git.vim-fugitive)))
+  (use lewis6991/gitsigns.nvim (after-loaded mod.git.gitsigns))
+  (use tpope/vim-fugitive (after-loaded mod.git.vim-fugitive)))
 
-{: plugins
- : setup}
+{: setup}
