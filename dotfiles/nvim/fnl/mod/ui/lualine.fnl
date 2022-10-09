@@ -14,7 +14,7 @@
 (local config {:options {:component_separators ""
                          :section_separators ""
                          :globalstatus true
-                         :theme :rose-pine-transparent}
+                         :theme :catppuccin}
                :sections {:lualine_a {}
                           :lualine_b {}
                           :lualine_y {}
