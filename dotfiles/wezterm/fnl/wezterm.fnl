@@ -1,7 +1,5 @@
-(local {: font_with_fallback : font : home_dir : target_triple}
+(local {: font_with_fallback : font : home_dir : target_triple : gui}
        (require :wezterm))
-
-(local {: colors : window_frame} (require :themer.rose-pine-moon))
 
 (fn is_macos? []
   (= target_triple :x86_64-apple-darwin))
@@ -13,16 +11,20 @@
                        "Symbols Nerd Font 1000-em"
                        ]))
 
+(fn scheme-for-appearance [appearance]
+  (if (appearance:find :Dark)
+    "Catppuccin Mocha"
+    "Catppuccin Latte"))
+
 {:term :wezterm
  :default_prog (if (is_macos?)
                    [:/usr/local/bin/fish :-l :-c "tmux attach -d || tmux"]
                    [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
- :colors (colors)
- :window_frame (window_frame)
- :window_background_opacity 0.85
- :font_dirs [:/Users/bangedorrunt/Library/Fonts]
- :font (fallback "Victor Mono")
+ :color_scheme (scheme-for-appearance (gui.get_appearance))
+ :window_background_opacity 0.95
+ :font_dirs [:/Users/brunetdragon/Library/Fonts]
+ :font (fallback {:family "Victor Mono" :weight :Medium})
  :font_size 21
  :freetype_load_target :Light
  ;; :line_height 1.4
