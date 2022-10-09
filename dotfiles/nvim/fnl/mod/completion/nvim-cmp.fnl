@@ -8,7 +8,7 @@
         : mapping
         : config
         &as cmp} (lazyreq :cmp))
-
+(local cmp-autopairs (lazyreq :nvim-autopairs.completion.cmp))
 (local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand}
        (lazyfunc :luasnip))
 
@@ -79,5 +79,6 @@
 
   (cmp.setup.cmdline ":"
                      {:mapping (mapping.preset.cmdline)
-                      :sources (config.sources [{:name :path}] [{:name :cmdline}])}))
+                      :sources (config.sources [{:name :path}] [{:name :cmdline}])})
+  (cmp.event:on :confirm_done (cmp-autopairs.on_confirm_done)))
 {: setup}

@@ -1,5 +1,4 @@
-(import-macros {: lazyreq
-                : augroup
+(import-macros {: augroup
                 : autocmd
                 : autocmd!
                 : set!
@@ -27,15 +26,6 @@
   (autocmd!)
   (autocmd [BufLeave FocusLost WinLeave InsertEnter] * `(set! norelativenumber))
   (autocmd [BufEnter FocusGained WinEnter InsertLeave] * `(set! relativenumber)))
-
-;; Toggle OpenKey
-;; NOTE: macOS only
-(augroup toggle-evkey
-  (autocmd!)
-  (autocmd InsertEnter [*.md *.markdown *.norg]
-           `(os.execute "osascript -e 'tell application \"System Events\" to keystroke \"z\" using option down'"))
-  (autocmd InsertLeave [*.md *.markdown *.norg]
-           `(os.execute "osascript -e 'tell application \"System Events\" to keystroke \"z\" using option down'")))
 
 ;; Restore cursor on exit
 (augroup restore-cursor-on-exit

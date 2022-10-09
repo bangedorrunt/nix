@@ -181,19 +181,22 @@
 
 ;;;; Lazy Loading Lib
 ;;;; ----------------
-;; See: https://github.com/tjdevries/lazy.nvim/blob/master/lua/lazy.lua
+;; SEE: https://github.com/tjdevries/lazy.nvim/blob/master/lua/lazy.lua
 ;; Will only require the module after the first index of a module.
 ;; Only works for modules that export a table.
 (fn lazyreq [module]
-  `(setmetatable {}
-                 {:__index (fn [_# key#]
-                             (. (require ,module) key#))
-                  :__newindex (fn [_# key# value#]
-                                (tset (require ,module) key# value#))}))
+  `(setmetatable
+     {}
+     {:__index (fn [_# key#]
+                 (. (require ,module) key#))
+      :__newindex (fn [_# key# value#]
+                    (tset (require ,module) key# value#))}))
 
 ;; Requires only when you call the _module_ itself.
 (fn lazymod [module]
-  `(setmetatable {} {:__call (fn [_# ...]
+  `(setmetatable
+     {}
+     {:__call (fn [_# ...]
                                ((require ,module) ...))}))
 
 ;; Require when an exported method is called.
@@ -201,14 +204,14 @@
 ;; set new values, etc. Only useful for waiting to do the require until you
 ;; actually call the code.
 (fn lazyfunc [module]
-  `(setmetatable {}
-                 {:__index (fn [_# k#]
-                             (fn [...]
-                               ((. (require ,module) k#) ...)))}))
+  `(setmetatable
+     {}
+     {:__index (fn [_# k#]
+                 (fn [...]
+                   ((. (require ,module) k#) ...)))}))
 
 ;;;; Plugin Manager
 ;;;; --------------
-
 (fn use [plug ...]
   "Add plugin to packer"
   `(table.insert bangedorrunt.plugins [,(tostring plug) ,...]))
@@ -216,16 +219,16 @@
 (fn setup! [mod ...]
   `((. (require ,(tostring mod)) :setup) ,...))
 
-(fn after-loaded [module]
+(fn after-load [mod]
   "Load plugin setting"
-  `(values :config (fn [] (setup! ,module))))
+  `(values :config (fn [] (setup! ,mod))))
 
 {: lazyreq
  : lazymod
  : lazyfunc
  : use
  : setup!
- : after-loaded
+ : after-load
  : set!
  : setl!
  : g
