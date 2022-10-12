@@ -1,6 +1,6 @@
 (import-macros {: lazyfunc : lazyreq} :core.macros)
 (local packer (lazyreq :packer))
-(local {: kvize : run! : concat+} (lazyfunc :core.funs))
+(local {: kvize : run : concat+} (lazyfunc :core.funs))
 
 (fn use [[plug & args]]
   "feed a plugin to the plugin manager"
@@ -16,7 +16,7 @@
 (fn load-packer-plugins []
     ;; Load packer
     (vim.cmd.packadd :packer.nvim)
-    (packer.init {:compile_path bangedorrunt.paths.PACKER-COMPILED-PATH
+    (packer.init {:compile_path store.paths.PACKER-COMPILED-PATH
                   :display {:compact true
                             :working_sym ""
                             :error_sym ""
@@ -30,11 +30,11 @@
                   :max_jobs 60
                   :profile {:enable true :threshold 0}})
     (packer.reset)
-    (run! use bangedorrunt.plugins))
+    (run use store.plugins))
 
 (fn setup []
 
-  (if (file-exist? bangedorrunt.paths.PACKER-COMPILED-PATH)
+  (if (file-exist? store.paths.PACKER-COMPILED-PATH)
     (do
       (require :packer_compiled)
       (vim.defer_fn load-packer-plugins 0))

@@ -99,7 +99,7 @@
     (f acc v)))
 
 ;; fnlfmt: skip
-(fn run! [f xs]
+(fn run [f xs]
   "Calls `f` on each item in iterable."
   (reduce (fn [_ ...] (f ...) nil) nil xs))
 
@@ -284,7 +284,7 @@
  : map
  : reduce
  : filter
- : run!
+ : run
  : merge
  : merge!
  : into

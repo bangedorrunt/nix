@@ -214,7 +214,7 @@
 ;;;; --------------
 (fn use [plug ...]
   "Add plugin to packer"
-  `(table.insert bangedorrunt.plugins [,(tostring plug) ,...]))
+  `(table.insert store.plugins [,(tostring plug) ,...]))
 
 (fn setup! [mod ...]
   `((. (require ,(tostring mod)) :setup) ,...))

@@ -1,6 +1,6 @@
 (import-macros {: noremap : lazyreq : lazyfunc} :core.macros)
 
-(local {: run! : merge} (lazyfunc :core.funs))
+(local {: run : merge} (lazyfunc :core.funs))
 (local {: load_extension &as telescope} (lazyfunc :telescope))
 (local {: close : select_horizontal} (lazyfunc :telescope.actions))
 (local telescope-builtin (lazyfunc :telescope.builtin))
@@ -30,9 +30,9 @@
 (fn setup []
   (telescope.setup
     {:defaults {:cache_picker {:num_pickers 20}
-                :prompt_prefix bangedorrunt.signs.prompt
-                :selection_caret bangedorrunt.signs.prompt
-                :borderchars bangedorrunt.border_alt
+                :prompt_prefix store.signs.prompt
+                :selection_caret store.signs.prompt
+                :borderchars store.border_alt
                 :path_display [:truncate :smart]
                 :winblend 0
                 :sorting_strategy :descending
@@ -46,7 +46,7 @@
                         :case_mode :smart_case}}})
 
   ;; Load extensions
-  (run! load_extension [:fzf])
+  (run load_extension [:fzf])
 
   ;; Telescope keymaps
   (noremap n nowait :<Leader>ht :<Cmd>Telescope<CR>)

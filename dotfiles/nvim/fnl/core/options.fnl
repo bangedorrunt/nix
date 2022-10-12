@@ -156,11 +156,11 @@
 (set! backup false)
 (set! history 5000)
 (set! writebackup false)
-(set! directory (.. bangedorrunt.paths.STATE-PATH :/swag/))
-(set! undodir (.. bangedorrunt.paths.STATE-PATH :/undo/))
-(set! backupdir (.. bangedorrunt.paths.STATE-PATH :/backup/))
-(set! viewdir (.. bangedorrunt.paths.STATE-PATH :/view/))
-(set! spellfile (.. bangedorrunt.paths.STATE-PATH :/spell/en.uft-8.add))
+(set! directory (.. store.paths.STATE-PATH :/swag/))
+(set! undodir (.. store.paths.STATE-PATH :/undo/))
+(set! backupdir (.. store.paths.STATE-PATH :/backup/))
+(set! viewdir (.. store.paths.STATE-PATH :/view/))
+(set! spellfile (.. store.paths.STATE-PATH :/spell/en.uft-8.add))
 (set! backupskip [:/tmp/*
                   :$TMPDIR/*
                   :$TMP/*

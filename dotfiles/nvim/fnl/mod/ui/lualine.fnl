@@ -1,7 +1,7 @@
 (import-macros {: lazyreq} :core.macros)
 
 (local lualine (lazyreq :lualine))
-(local colors bangedorrunt.pallete.moon)
+(local colors store.pallete.moon)
 (local conditions
        {:buffer_not_empty #(not= (vim.fn.empty (vim.fn.expand "%:t")) 1)
         :hide_in_width #(> (vim.fn.winwidth 0) 80)

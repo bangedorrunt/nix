@@ -29,12 +29,12 @@
                  {:name :calc}])
 
 (local cmp-window
-       {:border bangedorrunt.border
+       {:border store.border
         :winhighlight "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"})
 
 (fn cmp-fmt [entry item]
   (let [codicons (into item :kind
-                       (.. (get bangedorrunt.lsp item.kind "") item.kind))
+                       (.. (get store.lsp.icons item.kind "") item.kind))
         codicons-item (vim.split codicons.kind "%s" {:trimempty true})
         codicons-kind (first codicons-item)
         codicons-menu (second codicons-item)

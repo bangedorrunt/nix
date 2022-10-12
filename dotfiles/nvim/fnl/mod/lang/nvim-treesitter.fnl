@@ -31,7 +31,7 @@
                   :markdown_inline])
 (fn setup []
   (treesitter.setup
-    {:parser_install_dir bangedorrunt.paths.TREESITTER-PATH
+    {:parser_install_dir store.paths.TREESITTER-PATH
      :ensure_installed languages
      ;; :sync_install true
      :highlight {:enable true}
