@@ -6,7 +6,8 @@
 (fn setup []
   (neorg.setup
     {:load {:core.defaults {}
-            :core.norg.concealer {:config {:icons {:heading {:level_1 {:icon ""}
+            :core.norg.concealer {:config {:dim_code_blocks {:conceal false}
+                                           :icons {:heading {:level_1 {:icon ""}
                                                              :level_2 {:icon " "}
                                                              :level_3 {:icon "  "}
                                                              :level_4 {:icon "   "}
