@@ -1,7 +1,7 @@
 (import-macros {: set!} :core.macros)
 
 ;;;; RENDERING
-(set! background :light)
+;; (set! background :light)
 
 ;;;; UI
 (set! lz)

@@ -22,12 +22,10 @@
                                                         {:filename :dotfiles/nvim/fnl/mod/lsp/lsp.fnl}
                                                         {:filename :dotfiles/nvim/fnl/mod/completion/nvim-cmp.fnl}
                                                         {:filename :dotfiles/karabiner/karabiner.edn}
-                                                        {:filename :dotfiles/.zshrc}]}
+                                                        {:filename :dotfiles/fish/config.fish}]}
                                          :term {:cmds ["cd $HOME/nix/dotfiles/wezterm && just compile && cd $HOME/nix"
-                                                       "cd $HOME/nix/dotfiles/wezterm && just themer && cd $HOME/nix"
                                                        "$HOME/nix/dotfiles/nvim/setup.sh"
-                                                       "brew reinstall neovim"
-                                                       "brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest"
+                                                       :wezup
                                                        :goku
                                                        "echo 'Hello Harpoon!'"
                                                        "echo 'Hello Harpoon!'"

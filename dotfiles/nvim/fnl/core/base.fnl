@@ -34,6 +34,20 @@
                            :gruvbox "#fbf1c7"
                            :rose-pine "#faf4ed"}}
          :plugins []
+         :cmp {:menu-items {:nvim_lsp :LSP
+                            :luasnip :LuaSnip
+                            :conjure :Conjure
+                            :buffer :Buffer
+                            :calc :Calc
+                            :path :Path}
+               :sources [{:name :nvim_lsp}
+                         {:name :conjure}
+                         {:name :luasnip}
+                         {:name :buffer :keyword_length 5}
+                         {:name :path}
+                         {:name :neorg}
+                         {:name :nvim_lua}
+                         {:name :calc}]}
          :lsp {:servers [:bashls
                          :clojure_lsp
                          :cssls

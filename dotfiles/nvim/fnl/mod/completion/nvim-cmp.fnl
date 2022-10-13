@@ -1,36 +1,13 @@
 (import-macros {: lazyreq : lazyfunc} :core.macros)
 
 (local {: first : second : dec : get : into} (lazyfunc :core.funs))
-(local {: visible
-        : complete
-        : select_next_item
-        : select_prev_item
-        : mapping
-        : config
+(local {: visible : complete : select_next_item : select_prev_item : mapping : config
         &as cmp} (lazyreq :cmp))
 (local cmp-autopairs (lazyreq :nvim-autopairs.completion.cmp))
-(local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand}
-       (lazyfunc :luasnip))
+(local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (lazyfunc :luasnip))
 
-(local cmp-menu-items {:nvim_lsp :LSP
-                       :luasnip :LuaSnip
-                       :conjure :Conjure
-                       :buffer :Buffer
-                       :calc :Calc
-                       :path :Path})
-
-(local cmp-srcs [{:name :nvim_lsp}
-                 {:name :conjure}
-                 {:name :luasnip}
-                 {:name :buffer :keyword_length 5}
-                 {:name :path}
-                 {:name :neorg}
-                 {:name :nvim_lua}
-                 {:name :calc}])
-
-(local cmp-window
-       {:border store.border
-        :winhighlight "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"})
+(local cmp-window {:border store.border
+                   :winhighlight "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"})
 
 (fn cmp-fmt [entry item]
   (let [codicons (into item :kind
@@ -38,7 +15,7 @@
         codicons-item (vim.split codicons.kind "%s" {:trimempty true})
         codicons-kind (first codicons-item)
         codicons-menu (second codicons-item)
-        cmp-menu (get cmp-menu-items entry.source.name "")]
+        cmp-menu (get store.cmp.menu-items entry.source.name "")]
     (into item :kind codicons-kind :menu cmp-menu)))
 
 ;; Check backspace
@@ -71,7 +48,7 @@
                                                :<C-n> (mapping super-cn [:i :s])
                                                :<C-p> (mapping super-cp [:i :s])})
               :snippet {:expand #(lsp_expand $.body)}
-              :sources (config.sources cmp-srcs)})
+              :sources (config.sources store.cmp.sources)})
 
   ;; Cmdline completions
   (cmp.setup.cmdline ["/" "?"] {:mapping (mapping.preset.cmdline)
