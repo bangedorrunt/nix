@@ -1,6 +1,6 @@
 (import-macros {: noremap : lazyreq : lazyfunc} :core.macros)
 
-(local {: run : merge} (lazyfunc :core.funs))
+(local {: merge} (lazyfunc :core.funs))
 (local {: load_extension &as telescope} (lazyfunc :telescope))
 (local {: close : select_horizontal} (lazyfunc :telescope.actions))
 (local telescope-builtin (lazyfunc :telescope.builtin))
@@ -46,7 +46,7 @@
                         :case_mode :smart_case}}})
 
   ;; Load extensions
-  (run load_extension [:fzf])
+  (load_extension :fzf)
 
   ;; Telescope keymaps
   (noremap n nowait :<Leader>ht :<Cmd>Telescope<CR>)
@@ -61,7 +61,6 @@
   (noremap n nowait :<Leader>sk builtin.keymaps)
   (noremap n nowait :<Leader>sr builtin.resume)
   ;; Open cached files
-  (noremap n nowait :<Leader>hc
-           `(builtin.find_files {:cwd (hotpot-cache-prefix) :hidden true})))
+  (noremap n nowait :<Leader>hc `(builtin.find_files {:cwd (hotpot-cache-prefix) :hidden true})))
 
 {: setup}

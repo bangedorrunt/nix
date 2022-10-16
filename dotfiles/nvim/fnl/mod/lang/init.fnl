@@ -2,7 +2,7 @@
 
 (fn setup []
   (use jaawerth/fennel.vim)
-  (use folke/lua-dev.nvim :module :lua-dev)
+  (use folke/neodev.nvim :module :neodev)
   (use simrat39/rust-tools.nvim :module :rust-tools)
   (use nvim-treesitter/nvim-treesitter :as :treesitter :run :TSUpdate (after-load mod.lang.nvim-treesitter))
   (use nvim-treesitter/nvim-treesitter-textobjects :after :treesitter)

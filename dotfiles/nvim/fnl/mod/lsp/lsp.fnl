@@ -8,36 +8,20 @@
 
 (local {: has?} (lazyfunc :core.funs))
 
+(local cmp-lsp (lazyreq :cmp_nvim_lsp))
 (local rust-tools (lazyreq :rust-tools))
+(local neodev (lazyreq :neodev))
 (local lspconfig (lazyreq :lspconfig))
 (local get-server #(. lspconfig $))
 
 (local mason (lazyreq :mason))
 (local mason-lspconfig (lazyreq :mason-lspconfig))
 
-(local sumneko-lua (get-server :sumneko_lua))
-(local {:setup lua-dev} (lazyreq :lua-dev))
-
-
 ;;;; LSP server config
 (fn capable? [client capability]
   (. client.server_capabilities capability))
 
-(local capabilities
-       (let [c (vim.lsp.protocol.make_client_capabilities)]
-         ;; NOTE: use `cmp_nvim_lsp.update_capabilities` is unneccessary
-         (set c.textDocument.completion.completionItem
-              {:documentationFormat [:markdown :plaintext]
-               :snippetSupport true
-               :preselectSupport true
-               :insertReplaceSupport true
-               :labelDetailsSupport true
-               :deprecatedSupport true
-               :commitCharactersSupport true
-               :tagSupport {:valueSet {1 1}}
-               :resolveSupport {:properties [:documentation
-                                             :detail
-                                             :additionalTextEdits]}})))
+(local capabilities (cmp-lsp.default_capabilities))
 
 (fn on_attach [client bufnr]
   (let [{: hover
@@ -81,6 +65,7 @@
 (fn setup []
   (setup! mod.lsp.ui)
   (setup! mod.lsp.diagnostics)
+  (neodev.setup)
   (mason.setup)
   (mason-lspconfig.setup {:ensure_installed store.lsp.servers})
   (mason-lspconfig.setup_handlers {1 (fn [name]
@@ -88,7 +73,6 @@
                                          (-> {: on_attach
                                               : capabilities}
                                              (server.setup))))
-                                   :sumneko_lua #(sumneko-lua.setup (lua-dev))
                                    :rust_analyzer #(rust-tools.setup)}))
 
 {: setup}
