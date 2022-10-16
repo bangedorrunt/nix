@@ -10,10 +10,10 @@ set -Ux XDG_STATE_HOME $HOME/.local/state
 set -Ux XDG_CACHE_HOME $HOME/.cache
 
 # Path
-set -Ux PATH $HOME/.local/bin $PATH
-set -Ux PATH $HOME/.cargo/bin $PATH
-set -Ux PATH /opt/homebrew/bin $PATH
-set -Ux PATH /opt/homebrew/sbin $PATH
+fish_add_path -m $HOME/.local/bin
+fish_add_path $HOME/.cargo/bin
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/sbin
 
 set -Ux EDITOR nvim
 set -Ux MANPAGER 'nvim +Man!'
@@ -31,7 +31,10 @@ set -x LC_ALL en_US.UTF-8
 set -x LC_CTYPE en_US.UTF-8
 
 if command -qs fzf
-  set -Ux FZF_DEFAULT_OPTS $FZF_DEFAULT_OPTS " --color=fg:#e0def4,bg:-1,hl:#6e6a86 --color=fg+:#908caa,bg+:-1,hl+:#908caa --color=info:#9ccfd8,prompt:#f6c177,pointer:#c4a7e7 --color=marker:#ebbcba,spinner:#eb6f92,header:#ebbcba"
+  set -Ux FZF_DEFAULT_OPTS "\
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
   set -Ux FZF_DEFAULT_COMMAND "rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
   set -Ux FZF_CTRL_T_COMMAND "rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
   set -Ux FZF_ALT_C_COMMAND "fd --type d --no-ignore-vcs --exclude node_modules --exclude .git"
