@@ -4,17 +4,11 @@
 (fn is_macos? []
   (= target_triple :x86_64-apple-darwin))
 
-;; fnlfmt: skip
 (fn fallback [name]
-  (font_with_fallback [name
-                       :neorg
-                       "Symbols Nerd Font 1000-em"
-                       ]))
+  (font_with_fallback [name :neorg "Symbols Nerd Font 1000-em"]))
 
 (fn scheme-for-appearance [appearance]
-  (if (appearance:find :Dark)
-    "Catppuccin Mocha"
-    "Catppuccin Latte"))
+  (if (appearance:find :Dark) "Catppuccin Mocha" "Catppuccin Latte"))
 
 {:term :wezterm
  :default_prog (if (is_macos?)
@@ -22,13 +16,13 @@
                    [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
  :color_scheme (scheme-for-appearance (gui.get_appearance))
- :window_background_opacity 0.95
+ :colors {:background :#14141f}
  :font_dirs [:/Users/brunetdragon/Library/Fonts]
- :font (fallback {:family "Victor Mono" :weight :Medium})
- :font_size 21
+ :font (fallback :MonoLisa)
+ :font_size 22
  :freetype_load_target :Light
- ;; :line_height 1.4
- ;; :cell_width 0.85
+ :line_height 1.2
+ :cell_width 0.85
  :underline_position :-0.15cell
  :window_decorations :RESIZE
  :enable_tab_bar true
