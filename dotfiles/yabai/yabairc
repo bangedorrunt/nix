@@ -41,6 +41,11 @@ yabai -m config left_padding 12
 yabai -m config right_padding 12
 yabai -m config window_gap 06
 
+yabai -m space 1 --label code
+yabai -m space 2 --label web
+yabai -m space 3 --label social
+yabai -m space 4 --label mix
+
 # List of rules
 
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
@@ -56,15 +61,15 @@ yabai -m rule --add label="Transmission" app="^Transmission$" manage=off
 yabai -m rule --add label="CleanMyMac X" app="^CleanMyMac X$" manage=off
 yabai -m rule --add label="Karabiner Elements" app="^Karabiner" manage=off
 yabai -m rule --add label="PDF Expert" app="^PDF Expert$" grid=1:2:1:0:1:1 manage=off
-yabai -m rule --add label="Books" app="^Books" space=^1
-yabai -m rule --add label="Calibre" app="^calibre" space=^4
-yabai -m rule --add label="Edge" app="^Microsoft Edge" space=^2 opacity=0.9
-yabai -m rule --add label="Wezterm" app="Wezterm" space=^1
-yabai -m rule --add label="Alacritty" app="Alacritty" space=^1
-yabai -m rule --add label="iTerm2" app="iTerm2" space=^1
-yabai -m rule --add label="Discord" app="^Discord" space=^3 opacity=0.85
-yabai -m rule --add label="Element" app="^Element" space=^3 opacity=0.85
-yabai -m rule --add label="Messenger" app="^Messenger" space=^4 opacity=0.75
+yabai -m rule --add label="Books" app="^Books" space=mix
+yabai -m rule --add label="Calibre" app="^calibre" space=mix
+yabai -m rule --add label="Edge" app="^Microsoft Edge" space=web
+yabai -m rule --add label="Wezterm" app="^WezTerm" space=code
+yabai -m rule --add label="Alacritty" app="^Alacritty" space=code
+yabai -m rule --add label="iTerm2" app="^iTerm2" space=code
+yabai -m rule --add label="Discord" app="^Discord" space=social opacity=0.85
+yabai -m rule --add label="Element" app="^Element" space=social opacity=0.85
+yabai -m rule --add label="Messenger" app="^Messenger" space=social opacity=0.75
 
 # Signals
 
