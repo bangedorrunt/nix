@@ -30,7 +30,7 @@ set -x LC_CTYPE en_US.UTF-8
 
 if command -qs fzf
   set -Ux FZF_DEFAULT_OPTS "\
-  --color=bg+:#313244,bg:#14141f,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=bg+:#1e1e2e,bg:#14141f,spinner:#f5e0dc,hl:#f38ba8 \
   --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
   --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
   set -Ux FZF_DEFAULT_COMMAND "rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
