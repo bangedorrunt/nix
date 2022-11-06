@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# NOTE: you can use vars with $<var> and ${<var>} as long as the str is double quoted: ""
+# WARNING: hex colors can't contain capital letters
+
+# --> Catppuccin (Mocha)
+thm_bg="#181825"
+thm_fg="#cdd6f4"
+thm_cyan="#89dceb"
+thm_black="#181825"
+thm_gray="#313244"
+thm_magenta="#cba6f7"
+thm_pink="#f5c2e7"
+thm_red="#f38ba8"
+thm_green="#a6e3a1"
+thm_yellow="#f9e2af"
+thm_blue="#89b4fa"
+thm_orange="#fab387"
+thm_black4="#585b70"
+
+# Utils
+set() {
+  local option=$1
+  local value=$2
+  tmux set-option -gq "$option" "$value"
+}
+
+setw() {
+  local option=$1
+  local value=$2
+  tmux set-window-option -gq "$option" "$value"
+}
+
+# Status
+set status "on"
+set status-bg "${thm_bg}"
+set status-justify "left"
+set status-left-length "100"
+set status-right-length "100"
+
+# Messages
+set message-style "fg=${thm_cyan},bg=${thm_gray},align=centre"
+set message-command-style "fg=${thm_cyan},bg=${thm_gray},align=centre"
+
+# Panes
+set pane-border-style "fg=${thm_gray}"
+set pane-active-border-style "fg=${thm_blue}"
+
+# Windows
+setw window-status-activity-style "fg=${thm_fg},bg=${thm_bg},none"
+setw window-status-separator ""
+setw window-status-style "fg=${thm_fg},bg=${thm_bg},none"
+
+# Statusline
+
+set status-left ""
+set status-right "#[fg=$thm_pink,bg=$thm_bg,nobold,nounderscore,noitalics] #W #S "
+
+# Current directory
+setw window-status-format "#[fg=$thm_gray,bg=$thm_bg] #I #[fg=$thm_gray,bg=$thm_bg] #{b:pane_current_path} "
+setw window-status-current-format "#[fg=$thm_orange,bg=$thm_bg] #I #[fg=$thm_red,bg=$thm_bg] #{b:pane_current_path} "
