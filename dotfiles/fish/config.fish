@@ -1,8 +1,6 @@
 # Disable greeting
 set fish_greeting
 
-set -g async_prompt_functions _pure_prompt_git
-
 # XDG directories
 set -Ux XDG_DATA_HOME $HOME/.local/share
 set -Ux XDG_CONFIG_HOME $HOME/.config
@@ -32,7 +30,7 @@ set -x LC_CTYPE en_US.UTF-8
 
 if command -qs fzf
   set -Ux FZF_DEFAULT_OPTS "\
-  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=bg+:#313244,bg:#14141f,spinner:#f5e0dc,hl:#f38ba8 \
   --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
   --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
   set -Ux FZF_DEFAULT_COMMAND "rg --files --follow --hidden --glob '!{.git,node_modules}/**'"
@@ -77,7 +75,6 @@ alias cp 'cp -i'
 alias mv 'mv -i'
 alias rm 'rm -rf'
 alias mkdir 'mkdir -pv'
-alias path 'echo $PATH | tr -s ":" "\n"'
 alias top 'vtop'
 alias oldtop '/usr/bin/top'
 
