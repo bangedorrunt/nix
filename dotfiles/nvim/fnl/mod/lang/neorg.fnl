@@ -1,29 +1,25 @@
-(import-macros {: lazyreq : lazyfunc : augroup : autocmd : autocmd!}
-               :core.macros)
+(import-macros {: augroup : autocmd : autocmd! : setup!} :core.macros)
 
-(local neorg (lazyreq :neorg))
-(local {: on_event} (lazyfunc :neorg.callbacks))
+(local {: on_event} (require :neorg.callbacks))
 (fn setup []
-  (neorg.setup
+  (setup! neorg
     {:load {:core.defaults {}
-            :core.norg.concealer {:config {:dim_code_blocks {:conceal false}
-                                           :icons {:heading {:level_1 {:icon ""}
-                                                             :level_2 {:icon " "}
-                                                             :level_3 {:icon "  "}
-                                                             :level_4 {:icon "   "}
-                                                             :level_5 {:icon "    "}
-                                                             :level_6 {:icon "     "}}
-                                                   :list {:level_1 {:icon ""}
-                                                          :level_2 {:icon " "}
-                                                          :level_3 {:icon "  "}
-                                                          :level_4 {:icon "   "}
-                                                          :level_5 {:icon "    "}
-                                                          :level_6 {:icon "     "}}
-                                                   :marker {:icon ""}
-                                                   :todo {:done {:icon ""}
-                                                          :pending {:icon ""}
-                                                          :undone {:icon ""}
-                                                          :uncertain {:icon ""}
+            :core.norg.concealer {:config {:icons {:heading {:level_1 {:icon ""}
+                                                             :level_2 {:icon " ◉"}
+                                                             :level_3 {:icon "  ✺"}
+                                                             :level_4 {:icon "   "}
+                                                             :level_5 {:icon "    "}
+                                                             :level_6 {:icon "     "}}
+                                                   :list {:level_1 {:icon "•"}
+                                                          :level_2 {:icon " ▸"}
+                                                          :level_3 {:icon "  •"}
+                                                          :level_4 {:icon "   ▸"}
+                                                          :level_5 {:icon "    ▸"}
+                                                          :level_6 {:icon "     ▸"}}
+                                                   :todo {:done {:icon ""}
+                                                          :pending {:icon "-"}
+                                                          :undone {:icon "×"}
+                                                          :uncertain {:icon "?"}
                                                           :on_hold {:icon ""}
                                                           :cancelled {:icon ""}
                                                           :recurring {:icon ""}

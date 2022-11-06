@@ -1,12 +1,11 @@
-(import-macros {: lazyreq} :core.macros)
+(import-macros {: setup!} :core.macros)
 
-(local {:set_default_icon set-default-icon
-        &as devicons} (lazyreq :nvim-web-devicons))
+(local {:set_default_icon set-default-icon} (require :nvim-web-devicons))
 
 (fn setup []
   (set-default-icon "" "#ff79c6")
   ;; Insert codicons using `C-v u {code}`
-  (devicons.setup
+  (setup! nvim-web-devicons
     {:override
       {:.zshrc {:icon "" :color "#ff79c6" :name :Zsh}
        :.zshenv {:icon "" :color "#ff79c6" :name :Zshenv}

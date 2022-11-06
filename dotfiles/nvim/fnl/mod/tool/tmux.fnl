@@ -1,8 +1,6 @@
-(import-macros {: lazyreq} :core.macros)
-
-(local tmux (lazyreq :tmux))
+(import-macros {: setup!} :core.macros)
 
 (fn setup []
-  (tmux.setup {:copy_sync {:enable true}
-               :navigation {:enable_default_keybindings true}}))
+  (setup! tmux {:copy_sync {:enable true}
+                :navigation {:enable_default_keybindings true}}))
 {: setup}

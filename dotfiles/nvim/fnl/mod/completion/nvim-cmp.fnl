@@ -1,13 +1,7 @@
-(import-macros {: lazyreq : lazyfunc} :core.macros)
-
-(local {: first : second : dec : get : into} (lazyfunc :core.funs))
+(local {: first : second : dec : get : into} (require :core.funs))
 (local {: visible : complete : select_next_item : select_prev_item : mapping : config
-        &as cmp} (lazyreq :cmp))
-(local cmp-autopairs (lazyreq :nvim-autopairs.completion.cmp))
-(local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (lazyfunc :luasnip))
-
-(local cmp-window {:border store.border
-                   :winhighlight "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"})
+        &as cmp} (require :cmp))
+(local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
 
 (fn cmp-fmt [entry item]
   (let [codicons (into item :kind
@@ -39,14 +33,19 @@
       (fallback)))
 
 (fn setup []
-  (cmp.setup {:window {:completion (config.window.bordered cmp-window)
-                       :documentation (config.window.bordered cmp-window)}
-              :formatting {:fields [:kind :abbr :menu] :format cmp-fmt}
+  (cmp.setup {:formatting {:fields [:kind :abbr :menu] :format cmp-fmt}
               :mapping (mapping.preset.insert {:<CR> (mapping.confirm {:select true})
                                                :<C-Space> (mapping.complete)
                                                :<C-e> (mapping.abort)
                                                :<C-n> (mapping super-cn [:i :s])
                                                :<C-p> (mapping super-cp [:i :s])})
+              :sorting {:comparators [config.compare.offset
+                                      config.compare.exact
+                                      config.compare.recently_used
+                                      config.compare.kind
+                                      config.compare.sort_text
+                                      config.compare.length
+                                      config.compare.order]}
               :snippet {:expand #(lsp_expand $.body)}
               :sources (config.sources store.cmp.sources)})
 
@@ -54,8 +53,6 @@
   (cmp.setup.cmdline ["/" "?"] {:mapping (mapping.preset.cmdline)
                                 :sources [{:name :buffer}]})
 
-  (cmp.setup.cmdline ":"
-                     {:mapping (mapping.preset.cmdline)
-                      :sources (config.sources [{:name :path}] [{:name :cmdline}])})
-  (cmp.event:on :confirm_done (cmp-autopairs.on_confirm_done)))
+  (cmp.setup.cmdline ":" {:mapping (mapping.preset.cmdline)
+                          :sources (config.sources [{:name :path}] [{:name :cmdline}])}))
 {: setup}

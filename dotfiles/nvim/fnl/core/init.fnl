@@ -1,10 +1,10 @@
-(import-macros {: lazyreq : setup! : set!} :core.macros)
+(import-macros {: setup!} :core.macros)
 
 (fn main []
-  (require :core.base)
-  (require :core.options)
-  (require :core.mappings)
-  (require :core.autocmds)
+  (setup! core.base)
+  (setup! core.options)
+  (setup! core.keymaps)
+  (setup! core.autocmds)
   (setup! mod)
   (setup! core.packer))
 

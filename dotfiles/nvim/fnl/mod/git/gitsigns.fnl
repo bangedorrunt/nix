@@ -1,6 +1,4 @@
-(import-macros {: noremap : lazyreq} :core.macros)
-
-(local gitsigns (lazyreq :gitsigns))
+(import-macros {: noremap : setup!} :core.macros)
 
 (fn on_attach [bufnr]
   (let [{: stage_buffer
@@ -29,8 +27,8 @@
     (noremap ox :ih ":<C-u>Gitsigns select_hunk<CR>")))
 
 (fn setup []
-  (gitsigns.setup {: on_attach
-                   :preview_config {:border :solid :style :minimal :relative :cursor}
-                   :numhl true}))
+  (setup! gitsigns {: on_attach
+                    :preview_config {:border :solid :style :minimal :relative :cursor}
+                    :numhl true}))
 
 {: setup}

@@ -1,17 +1,17 @@
-(import-macros {: nmap : noremap : lazyreq : lazyfunc} :core.macros)
+(import-macros {: nmap : noremap} :core.macros)
 
-(local harpoon (lazyreq :harpoon))
-(local {: add_file : rm_file : clear_all} (lazyfunc :harpoon.mark))
+(local harpoon (require :harpoon))
+(local {: add_file : rm_file : clear_all} (require :harpoon.mark))
 (local {:toggle_quick_menu ui_menu : nav_file : nav_next : nav_prev}
-       (lazyfunc :harpoon.ui))
+       (require :harpoon.ui))
 
-(local {:toggle_quick_menu term_menu} (lazyfunc :harpoon.cmd-ui))
-(local {: sendCommand} (lazyfunc :harpoon.tmux))
+(local {:toggle_quick_menu term_menu} (require :harpoon.cmd-ui))
+(local {: sendCommand} (require :harpoon.tmux))
 (local fmt string.format)
 
 (fn setup []
   (harpoon.setup {:global_settings {:enter_on_sendcmd true}
-                  :menu {:borderchars store.border_alt}
+                  :menu {:borderchars store.border-alt}
                   ;; NOTE: `Harpoon` will throw error if no command at menu index
                   ;; use `echo 'Hello Harpoon'` as a placeholder to keep me from
                   ;; send empty command by accident
@@ -30,16 +30,6 @@
                                                        "echo 'Hello Harpoon!'"
                                                        "echo 'Hello Harpoon!'"
                                                        "echo 'Hello Harpoon!'"]}}
-                             :$HOME/workspace/son-of-harpoon.git/main {:mark {:marks [{:filename :days-of-harpoon.norg}]}
-                                                                       :term {:cmds ["echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"
-                                                                                     "echo 'Hello Harpoon!'"]}}
                              :$HOME/workspace/rustlings {:mark {:marks []}
                                                          :term {:cmds ["cd $HOME/workspace/rustlings && rustlings watch"
                                                                        "rustup docs --book"
@@ -50,28 +40,28 @@
                                                                        "echo 'Hello Harpoon!'"
                                                                        "echo 'Hello Harpoon!'"
                                                                        "echo 'Hello Harpoon!'"]}}
-                             :$HOME/workspace/gtd {:mark {:marks [{:filename :index.norg}
-                                                                  {:filename :inbox.norg}]}
-                                                   :term {:cmds ["echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"
-                                                                 "echo 'Hello Harpoon!'"]}}
-                             :$HOME/workspace/notetoself {:mark {:marks [{:filename :inbox.norg}
-                                                                         {:filename :learn-you-some/neovim/neovim.norg}
-                                                                         {:filename :learn-you-some/git/git.norg}]}
-                                                          :term {:cmds ["echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"
-                                                                        "echo 'Hello Harpoon!'"]}}}})
+                              :$HOME/workspace/gtd {:mark {:marks [{:filename :index.norg}
+                                                                   {:filename :inbox.norg}]}
+                                                    :term {:cmds ["echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"
+                                                                  "echo 'Hello Harpoon!'"]}}
+                              :$HOME/workspace/notetoself {:mark {:marks [{:filename :inbox.norg}
+                                                                          {:filename :learn-you-some/neovim/neovim.norg}
+                                                                          {:filename :learn-you-some/git/git.norg}]}
+                                                           :term {:cmds ["echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"
+                                                                         "echo 'Hello Harpoon!'"]}}}})
 
   (noremap n silent :<Leader>mf add_file)
   (noremap n silent :<Leader>md rm_file)

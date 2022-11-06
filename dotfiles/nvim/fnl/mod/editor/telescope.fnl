@@ -1,44 +1,31 @@
-(import-macros {: noremap : lazyreq : lazyfunc} :core.macros)
+(import-macros {: noremap : setup!} :core.macros)
 
-(local {: merge} (lazyfunc :core.funs))
-(local {: load_extension &as telescope} (lazyfunc :telescope))
-(local {: close : select_horizontal} (lazyfunc :telescope.actions))
-(local telescope-builtin (lazyfunc :telescope.builtin))
+(local {: merge} (require :core.funs))
+(local {: load_extension} (require :telescope))
+(local {: close : select_horizontal} (require :telescope.actions))
+(local builtin (require :telescope.builtin))
 
-(local {:cache-prefix hotpot-cache-prefix} (lazyfunc :hotpot.api.cache))
+(local {:cache-prefix hotpot-cache-prefix} (require :hotpot.api.cache))
 
-;; https://github.com/nvim-telescope/telescope.nvim/issues/938#issuecomment-916688222
-(fn override-opts [opts]
-  (->> {:layout_strategy :bottom_pane
-        :layout_config {:prompt_position :bottom}}
-       (merge (or opts {}))))
-
-(fn builtin? [_ key]
-  (match (. telescope-builtin key)
-    nil (error "Invalid key, please check :h telescope.builtin")
-    picker (fn [opts]
-             (-> opts override-opts picker))))
-
-(local builtin (setmetatable {} {:__index builtin?}))
-
-;; SEE: https://www.reddit.com/r/neovim/comments/p1xj92/make_telescope_git_files_revert_back_to_find
 (fn project []
   (let [[ret _] (vim.fn.systemlist "git rev-parse --is-inside-work-tree")
         git? (= ret :true)]
-    (if git? (builtin.git_files) (builtin.find_files {:cwd "%:h"}))))
+    (if git?
+      (builtin.git_files)
+      (builtin.find_files {:cwd "%:h"}))))
 
 (fn setup []
-  (telescope.setup
+  (setup! telescope
     {:defaults {:cache_picker {:num_pickers 20}
                 :prompt_prefix store.signs.prompt
                 :selection_caret store.signs.prompt
-                :borderchars store.border_alt
+                :border false
                 :path_display [:truncate :smart]
-                :winblend 0
-                :sorting_strategy :descending
-                :layout_strategy :cursor
+                :sorting_strategy :ascending
+                :layout_strategy :bottom_pane
                 :layout_config {:height 0.35}
-                :mappings {:i {:<ESC> close :<C-s> select_horizontal}}
+                :mappings {:i {:<ESC> close
+                               :<C-s> select_horizontal}}
                 :file_ignore_patterns [:.git/ :node_modules/.* :alfred2/.*]}
      :extensions {:fzf {:fuzzy true
                         :override_generic_sorter false

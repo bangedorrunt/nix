@@ -93,6 +93,11 @@
   (let [name (tostring name)]
     `(tset vim.g ,name ,value)))
 
+(fn b [name value]
+  "Set value for buffer Vim variable"
+  (let [name (tostring name)]
+    `(tset vim.b ,name ,value)))
+
 (fn autocmd [event pattern command ?options]
   "Create an autocommand using the nvim_create_autocmd API. "
   (let [event (if (sequence? event)
@@ -179,37 +184,6 @@
      0 false
      _# nil))
 
-;;;; Lazy Loading Lib
-;;;; ----------------
-;; SEE: https://github.com/tjdevries/lazy.nvim/blob/master/lua/lazy.lua
-;; Will only require the module after the first index of a module.
-;; Only works for modules that export a table.
-(fn lazyreq [module]
-  `(setmetatable
-     {}
-     {:__index (fn [_# key#]
-                 (. (require ,module) key#))
-      :__newindex (fn [_# key# value#]
-                    (tset (require ,module) key# value#))}))
-
-;; Requires only when you call the _module_ itself.
-(fn lazymod [module]
-  `(setmetatable
-     {}
-     {:__call (fn [_# ...]
-                               ((require ,module) ...))}))
-
-;; Require when an exported method is called.
-;; Creates a new function. Cannot be used to compare functions,
-;; set new values, etc. Only useful for waiting to do the require until you
-;; actually call the code.
-(fn lazyfunc [module]
-  `(setmetatable
-     {}
-     {:__index (fn [_# k#]
-                 (fn [...]
-                   ((. (require ,module) k#) ...)))}))
-
 ;;;; Plugin Manager
 ;;;; --------------
 (fn use [plug ...]
@@ -219,19 +193,21 @@
 (fn setup! [mod ...]
   `((. (require ,(tostring mod)) :setup) ,...))
 
+(fn setup* [mod ...]
+  `((. ,mod :setup) ,...))
+
 (fn after-load [mod]
   "Load plugin setting"
   `(values :config (fn [] (setup! ,mod))))
 
-{: lazyreq
- : lazymod
- : lazyfunc
- : use
+{: use
  : setup!
+ : setup*
  : after-load
  : set!
  : setl!
  : g
+ : b
  : command
  : autocmd
  : autocmd!

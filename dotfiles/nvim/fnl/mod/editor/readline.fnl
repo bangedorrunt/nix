@@ -1,4 +1,4 @@
-(import-macros {: nmap : lazyfunc} :core.macros)
+(import-macros {: nmap} :core.macros)
 
 (local {: forward_word
         : backward_word
@@ -8,7 +8,7 @@
         : backward_kill_word
         : unix_word_rubout
         : kill_line
-        : backward_kill_line} (lazyfunc :readline))
+        : backward_kill_line} (require :readline))
 
 (fn setup []
   (nmap "!" :<M-f> forward_word)

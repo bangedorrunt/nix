@@ -1,22 +1,24 @@
-(import-macros {: lazyreq : autocmd : g} :core.macros)
-
-(g catppuccin_flavour :mocha)
-
-(local catppuccin (lazyreq :catppuccin))
-(local colors ((. (lazyreq :catppuccin.palettes) :get_palette)))
-
-(set colors.none :NONE)
+(import-macros {: setup!} :core.macros)
 
 (fn setup []
-  (catppuccin.setup {:transparent_background true
-                     :custom_highlights {:Comment {:fg colors.overlay1}
-                                         :LineNr {:fg colors.overlay1}
-                                         :CursorLine {:bg colors.none}
-                                         :CursorLineNr {:fg colors.lavender}
-                                         :DiagnosticVirtualTextError {:bg colors.none}
-                                         :DiagnosticVirtualTextWarn {:bg colors.none}
-                                         :DiagnosticVirtualTextInfo {:bg colors.none}
-                                         :DiagnosticVirtualTextHint {:bg colors.none}}})
+  (setup! catppuccin
+    {:flavour :mocha
+     :term_colors true
+     :custom_highlights {:NormalFloat {:link :Pmenu}
+                         :MiniTablineVisible {:bg :None}
+                         :MiniTablineCurrent {:style [:bold :underline] :sp :#f38ba8}
+                         :MiniTablineModifiedCurrent {:bg :None :fg :#f38ba8 :style [:bold :underline]}
+                         :MiniTablineModifiedVisible {:bg :None :fg :#f38ba8}
+                         :MiniTablineModifiedHidden {:bg :None :fg :#f38ba8}
+                         :VertSplit {:bg :#1e1e2e :fg :#1e1e2e}
+                         :TelescopeNormal {:link :Pmenu}}
+     :color_overrides {:mocha {:base :#14141f
+                               :surface0 :#181825}}
+     :integrations {:noice true
+                    :mini true
+                    :harpoon true
+                    :treesitter_context true
+                    :ts_rainbow true}})
   (vim.cmd.colorscheme :catppuccin))
 
 {: setup}

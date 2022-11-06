@@ -1,6 +1,5 @@
-(import-macros {: lazyreq} :core.macros)
+(import-macros {: setup!} :core.macros)
 
-(local lualine (lazyreq :lualine))
 (local colors store.pallete.moon)
 (local conditions
        {:buffer_not_empty #(not= (vim.fn.empty (vim.fn.expand "%:t")) 1)
@@ -94,6 +93,6 @@
 (ins_right {1 #"" :color {:fg colors.pine} :padding {:left 1}})
 
 (fn setup []
-  (lualine.setup config))
+  (setup! lualine config))
 
 {: setup}

@@ -1,27 +1,17 @@
-(import-macros {: setup!
-                : lazyfunc
-                : lazyreq} :core.macros)
+(import-macros {: setup!} :core.macros)
 
-(local {: merge} (lazyfunc :core.funs))
-(local cmp-lsp (lazyreq :cmp_nvim_lsp))
-(local rust-tools (lazyreq :rust-tools))
-(local neodev (lazyreq :neodev))
-(local {:util {:default_config lsp-defaults} &as lspconfig} (lazyreq :lspconfig))
+(local {: run : merge} (require :core.funs))
+(local cmp-lsp (require :cmp_nvim_lsp))
+(local {:util {:default_config lsp-defaults} &as lspconfig} (require :lspconfig))
 (local setup-server #(: (. lspconfig $) :setup {}))
 
-(local mason (lazyreq :mason))
-(local mason-lspconfig (lazyreq :mason-lspconfig))
-
 (fn setup []
-  (setup! mod.lsp.ui)
+  (doto lsp-defaults (merge {:capabilities (cmp-lsp.default_capabilities)}))
   (setup! mod.lsp.diagnostics)
-  (setup! mod.lsp.keymaps)
+  (setup! mod.lsp.on-attach)
   (setup! mason)
   (setup! neodev)
-  (doto lsp-defaults (merge {:flags {:debounce_text_changes 150}
-                             :capabilities (cmp-lsp.default_capabilities)}))
-  (mason-lspconfig.setup {:ensure_installed store.lsp.servers})
-  (mason-lspconfig.setup_handlers [setup-server])
-  (setup! rust-tools))
+  (setup! rust-tools)
+  (run setup-server store.lsp.servers))
 
 {: setup}

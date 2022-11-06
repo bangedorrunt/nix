@@ -1,7 +1,6 @@
-(import-macros {: lazyreq} :core.macros)
+(import-macros {: setup!} :core.macros)
 
-(local null-ls (lazyreq :null-ls))
-(local {: formatting : diagnostics} (lazyreq :null-ls.builtins))
+(local {: formatting : diagnostics} (require :null-ls.builtins))
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
 ;; make sure respective sources are installed
 (local null-sources [formatting.prettier
@@ -9,6 +8,6 @@
                      formatting.trim_whitespace
                      formatting.shfmt])
 (fn setup []
-  (null-ls.setup {:sources null-sources}))
+  (setup! null-ls {:sources null-sources}))
 
 {: setup}
