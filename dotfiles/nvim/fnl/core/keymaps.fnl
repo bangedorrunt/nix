@@ -11,12 +11,12 @@
   (nmap n :q :<Nop>)
 
   ;; Default to blackhole registers
-  (noremap nx :d "\"_d")
-  (noremap n :dd "\"_dd")
-  (noremap n :D "\"_D")
-  (noremap nx :c "\"_c")
-  (noremap n :cc "\"_cc")
-  (noremap n :C "\"_C")
+  ;; (noremap nx :d "\"_d")
+  ;; (noremap n :dd "\"_dd")
+  ;; (noremap n :D "\"_D")
+  ;; (noremap nx :c "\"_c")
+  ;; (noremap n :cc "\"_cc")
+  ;; (noremap n :C "\"_C")
   (noremap nx :x "\"_x")
   (noremap n :X "\"_X")
 

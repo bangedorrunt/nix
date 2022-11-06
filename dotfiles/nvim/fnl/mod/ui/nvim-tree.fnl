@@ -9,7 +9,8 @@
      :sync_root_with_cwd true
      :update_focused_file {:enable true :update_root true}
      :respect_buf_cwd true
-     :renderer {:icons {:show {:git false
+     :renderer {:icons {:webdev_colors false
+                        :show {:git false
                                :folder true
                                :folder_arrow false
                                :file true}

@@ -60,8 +60,9 @@
                    :precedes "‹"})
 
   (set! fillchars {:vert "│"
-                   :fold "·"
                    :eob " "
+                   :diff " "
+                   :fold " "
                    :foldopen ""
                    :foldsep ""
                    :foldclose ""})
@@ -86,14 +87,14 @@
   (set! fileformats [:unix :mac :dos])
   (set! clipboard :unnamedplus)
   (set! completeopt [:menu :menuone :noselect])
-  (set! diffopt+ ["linematch:60"
-                  :vertical
+  (set! diffopt+ [:vertical
                   :iwhite
                   :hiddenoff
                   "foldcolumn:0"
                   "context:4"
                   "algorithm:histogram"
-                  :indent-heuristic])
+                  :indent-heuristic
+                  "linematch:60"])
 
   (set! foldenable)
   (set! foldcolumn :1)
@@ -148,7 +149,7 @@
   (set! inccommand :nosplit)
   (set! complete ".,w,b,k")
   (set! grepformat "%f:%l:%c:%m")
-  (set! grepprg "rg --hidden --vimgrep --smart-case --")
+  (set! grepprg "rg --hidden --vimgrep --smart-case --no-heading --follow $*")
 
   ;;;; VIM DIRECTORIES
   (set! undofile)

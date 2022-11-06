@@ -4,14 +4,14 @@
   (setup! catppuccin
     {:flavour :mocha
      :term_colors true
+     :dim_inactive {:enabled true}
      :custom_highlights {:NormalFloat {:link :Pmenu}
+                         :VertSplit {:bg :#14141f :fg :#14141f}
                          :MiniTablineVisible {:bg :None}
-                         :MiniTablineCurrent {:style [:bold :underline] :sp :#f38ba8}
-                         :MiniTablineModifiedCurrent {:bg :None :fg :#f38ba8 :style [:bold :underline]}
+                         :MiniTablineCurrent {:underline true :sp :#ff79c6}
+                         :MiniTablineModifiedCurrent {:bg :None :fg :#ff79c6 :bold true :underline true}
                          :MiniTablineModifiedVisible {:bg :None :fg :#f38ba8}
-                         :MiniTablineModifiedHidden {:bg :None :fg :#f38ba8}
-                         :VertSplit {:bg :#1e1e2e :fg :#1e1e2e}
-                         :TelescopeNormal {:link :Pmenu}}
+                         :MiniTablineModifiedHidden {:bg :None :fg :#f38ba8}}
      :color_overrides {:mocha {:base :#14141f
                                :surface0 :#181825}}
      :integrations {:noice true

@@ -2,7 +2,7 @@
 
 (local {: merge} (require :core.funs))
 (local {: load_extension} (require :telescope))
-(local {: close : select_horizontal} (require :telescope.actions))
+(local {: close : select_horizontal : to_fuzzy_refine} (require :telescope.actions))
 (local builtin (require :telescope.builtin))
 
 (local {:cache-prefix hotpot-cache-prefix} (require :hotpot.api.cache))
@@ -27,6 +27,7 @@
                 :mappings {:i {:<ESC> close
                                :<C-s> select_horizontal}}
                 :file_ignore_patterns [:.git/ :node_modules/.* :alfred2/.*]}
+     :pickers {:live_grep {:mappings {:i {:<C-f> to_fuzzy_refine}}}}
      :extensions {:fzf {:fuzzy true
                         :override_generic_sorter false
                         :override_file_sorter true

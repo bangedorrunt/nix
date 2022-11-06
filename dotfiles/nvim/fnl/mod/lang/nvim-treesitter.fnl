@@ -14,6 +14,7 @@
                                        :node_decremental :<C-CR>}}
      :context_commentstring {:enable true
                              :enable_autocmd false
-                             :config {:fennel ";; %s"
+                             :config {:fish "# %s"
+                                      :fennel ";; %s"
                                       :clojure ";; %s"}}}))
 {: setup}
