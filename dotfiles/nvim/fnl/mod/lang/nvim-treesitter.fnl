@@ -5,14 +5,12 @@
                   :clojure
                   :commonlisp
                   :fennel
-                  :help
                   :html :css
                   :javascript :typescript :tsx :svelte
                   :rust
-                  :c :cpp
+                  :cpp
                   :toml :yaml :json :json5
                   :jsonc
-                  :lua :vim
                   :nix
                   :python
                   :norg
