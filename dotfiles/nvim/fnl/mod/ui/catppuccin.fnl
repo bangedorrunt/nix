@@ -2,8 +2,7 @@
 
 (fn setup []
   (setup! catppuccin
-    {:flavour :mocha
-     :term_colors true
+    {:term_colors true
      :dim_inactive {:enabled true}
      :custom_highlights {:NormalFloat {:link :Pmenu}
                          :VertSplit {:bg :#14141f :fg :#14141f}

@@ -1,9 +1,27 @@
-(import-macros {: setup!} :core.macros)
-
+(import-macros {: setup! : set!} :core.macros)
+(local treesitter-path (.. (vim.fn.stdpath :data) :/treesitter))
+(local languages [:bash :fish
+                  :comment
+                  :clojure
+                  :commonlisp
+                  :fennel
+                  :help
+                  :html :css
+                  :javascript :typescript :tsx :svelte
+                  :rust
+                  :c :cpp
+                  :toml :yaml :json :json5
+                  :jsonc
+                  :lua :vim
+                  :nix
+                  :python
+                  :norg
+                  :markdown :markdown_inline])
 (fn setup []
+  (set! runtimepath+ treesitter-path)
   (setup! nvim-treesitter.configs
-    {:parser_install_dir store.paths.treesitter
-     :ensure_installed store.treesitter.languages
+    {:parser_install_dir treesitter-path
+     :ensure_installed languages
      :highlight {:enable true}
      :indent {:enable true}
      :matchup {:enable true}

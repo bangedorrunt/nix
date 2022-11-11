@@ -2,14 +2,61 @@
 (local {: visible : complete : select_next_item : select_prev_item : mapping : config
         &as cmp} (require :cmp))
 (local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
+(local cmp-menu-items {:nvim_lsp :LSP
+                       :luasnip :LuaSnip
+                       :conjure :Conjure
+                       :buffer :Buffer
+                       :calc :Calc
+                       :path :Path})
+(local cmp-sources [{:name :nvim_lsp}
+                    {:name :conjure}
+                    {:name :luasnip}
+                    {:name :buffer :keyword_length 5}
+                    {:name :path}
+                    {:name :neorg}
+                    {:name :nvim_lua}
+                    {:name :calc}])
+(local lsp-icons {:Array " "
+                  :Boolean " "
+                  :Class " "
+                  :Color " "
+                  :Constant " "
+                  :Constructor " "
+                  :Enum " "
+                  :EnumMember " "
+                  :Event " "
+                  :Field " "
+                  :File " "
+                  :Folder " "
+                  :Function " "
+                  :Interface " "
+                  :Keyword " "
+                  :Method " "
+                  :Module " "
+                  :Namespace " "
+                  :Null "ﳠ "
+                  :Number " "
+                  :Object " "
+                  :Operator " "
+                  :Package " "
+                  :Property " "
+                  :Reference " "
+                  :Snippet " "
+                  :Struct " "
+                  :String " "
+                  :Text " "
+                  :TypeParameter " "
+                  :Unit " "
+                  :Value " "
+                  :Variable " "})
 
 (fn cmp-fmt [entry item]
   (let [codicons (into item :kind
-                       (.. (get store.lsp.icons item.kind "") item.kind))
+                       (.. (get lsp-icons item.kind "") item.kind))
         codicons-item (vim.split codicons.kind "%s" {:trimempty true})
         codicons-kind (first codicons-item)
         codicons-menu (second codicons-item)
-        cmp-menu (get store.cmp.menu-items entry.source.name "")]
+        cmp-menu (get cmp-menu-items entry.source.name "")]
     (into item :kind codicons-kind :menu cmp-menu)))
 
 ;; Check backspace
@@ -47,7 +94,7 @@
                                       config.compare.length
                                       config.compare.order]}
               :snippet {:expand #(lsp_expand $.body)}
-              :sources (config.sources store.cmp.sources)})
+              :sources (config.sources cmp-sources)})
 
   ;; Cmdline completions
   (cmp.setup.cmdline ["/" "?"] {:mapping (mapping.preset.cmdline)

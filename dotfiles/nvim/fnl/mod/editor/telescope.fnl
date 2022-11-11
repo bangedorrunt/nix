@@ -17,21 +17,18 @@
 (fn setup []
   (setup! telescope
     {:defaults {:cache_picker {:num_pickers 20}
-                :prompt_prefix store.signs.prompt
-                :selection_caret store.signs.prompt
+                :prompt_prefix "❯ "
+                :selection_caret "❯ "
+                :color_devicons false
                 :border false
                 :path_display [:truncate :smart]
-                :sorting_strategy :ascending
                 :layout_strategy :bottom_pane
-                :layout_config {:height 0.35}
+                :layout_config {:height 0.35
+                                :prompt_position :bottom}
                 :mappings {:i {:<ESC> close
                                :<C-s> select_horizontal}}
                 :file_ignore_patterns [:.git/ :node_modules/.* :alfred2/.*]}
-     :pickers {:live_grep {:mappings {:i {:<C-f> to_fuzzy_refine}}}}
-     :extensions {:fzf {:fuzzy true
-                        :override_generic_sorter false
-                        :override_file_sorter true
-                        :case_mode :smart_case}}})
+     :pickers {:live_grep {:mappings {:i {:<C-f> to_fuzzy_refine}}}}})
 
   ;; Load extensions
   (load_extension :fzf)

@@ -12,7 +12,7 @@
 (fn setup []
   (let [{: with : handlers} vim.lsp
         open-floating-preview vim.lsp.util.open_floating_preview
-        border store.border]
+        border ["┌" "─" "┐" "│" "┘" "─" "└" "│"]]
 
     (command LspLog open-lsp-log)
     (command LspRestart reload-lsp)

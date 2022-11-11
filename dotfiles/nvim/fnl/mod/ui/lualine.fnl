@@ -1,6 +1,16 @@
 (import-macros {: setup!} :core.macros)
 
-(local colors store.pallete.moon)
+(local colors {:base "#191724"
+               :surface "#1f1d2e"
+               :overlay "#26233a"
+               :subtle "#c0caf5"
+               :text "#ffffff"
+               :love "#ff5555"
+               :gold "#f1fa8c"
+               :rose "#ff79c6"
+               :pine "#50fa7b"
+               :foam "#8be9fd"
+               :iris "#bd93f9"})
 (local conditions
        {:buffer_not_empty #(not= (vim.fn.empty (vim.fn.expand "%:t")) 1)
         :hide_in_width #(> (vim.fn.winwidth 0) 80)

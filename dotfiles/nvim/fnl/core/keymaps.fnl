@@ -79,8 +79,6 @@
   (nmap n :<C-k> :<C-w>k)
   (nmap n :<C-t> :<Nop>)
 
-  ;; Reserved for Tmux zoom
-
   ;; Emacs map
   ;; (noremap i :<C-w> "<C-[>diwa")
   ;; (noremap i :<C-h> :<BS>)

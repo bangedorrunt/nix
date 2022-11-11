@@ -1,5 +1,6 @@
 (local packer (require :packer))
 (local {: kvize : run} (require :core.funs))
+(local packer-compiled-path (.. (vim.fn.stdpath :data) :/site/lua/packer_compiled.lua))
 
 (fn use [[plug & args]]
   "feed a plugin to the plugin manager"
@@ -15,7 +16,7 @@
 (fn load-packer-plugins []
     ;; Load packer
     (vim.cmd.packadd :packer.nvim)
-    (packer.init {:compile_path store.paths.packer-compiled
+    (packer.init {:compile_path packer-compiled-path
                   :display {:compact true
                             :working_sym ""
                             :error_sym ""
@@ -32,7 +33,7 @@
     (run use store.plugins))
 
 (fn setup []
-  (if (file-exist? store.paths.packer-compiled)
+  (if (file-exist? packer-compiled-path)
     (do
       (require :packer_compiled)
       (vim.defer_fn load-packer-plugins 0))

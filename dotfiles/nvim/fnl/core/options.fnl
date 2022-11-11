@@ -1,4 +1,5 @@
 (import-macros {: set!} :core.macros)
+(local state-path (vim.fn.stdpath :state))
 
 (fn setup []
   ;;;; RENDERING
@@ -158,11 +159,11 @@
   (set! nobackup)
   (set! history 5000)
   (set! nowritebackup)
-  (set! directory (.. store.paths.state :/swag/))
-  (set! undodir (.. store.paths.state :/undo/))
-  (set! backupdir (.. store.paths.state :/backup/))
-  (set! viewdir (.. store.paths.state :/view/))
-  (set! spellfile (.. store.paths.state :/spell/en.uft-8.add))
+  (set! directory (.. state-path :/swag/))
+  (set! undodir (.. state-path :/undo/))
+  (set! backupdir (.. state-path :/backup/))
+  (set! viewdir (.. state-path :/view/))
+  (set! spellfile (.. state-path :/spell/en.uft-8.add))
   (set! backupskip [:/tmp/*
                     :$TMPDIR/*
                     :$TMP/*
