@@ -9,7 +9,6 @@
                                :surface0 :#181825}}
      :integrations {:noice true
                     :mini true
-                    :treesitter_context true
                     :ts_rainbow true}})
   (colorscheme catppuccin))
 

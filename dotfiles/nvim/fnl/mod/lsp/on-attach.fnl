@@ -37,7 +37,7 @@
         (autocmd! {:buffer bufnr})
         (autocmd BufWritePre <buffer>
                  `(format {:filter (fn [client]
-                                     (not (has? [:fennel-ls :jsonls :tsserver] client.name)))
+                                     (not (has? [:jsonls :tsserver] client.name)))
                            : bufnr}
                           {:buffer bufnr})))
       (noremap n buffer nowait :<LocalLeader>lf `(format {: bufnr})))

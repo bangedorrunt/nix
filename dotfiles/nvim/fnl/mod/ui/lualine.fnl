@@ -20,28 +20,28 @@
                                 (and (and gitdir (> (length gitdir) 0))
                                      (< (length gitdir) (length filepath))))})
 
-(local config {:options {:component_separators ""
-                         :section_separators ""
-                         :globalstatus true
-                         :theme :catppuccin}
-               :sections {:lualine_a {}
-                          :lualine_b {}
-                          :lualine_y {}
-                          :lualine_z {}
-                          :lualine_c {}
-                          :lualine_x {}}
-               :inactive_sections {:lualine_a {}
-                                   :lualine_v {}
-                                   :lualine_y {}
-                                   :lualine_z {}
-                                   :lualine_c {}
-                                   :lualine_x {}}})
+(local opts {:options {:component_separators ""
+                       :section_separators ""
+                       :globalstatus true
+                       :theme :catppuccin}
+             :sections {:lualine_a {}
+                        :lualine_b {}
+                        :lualine_y {}
+                        :lualine_z {}
+                        :lualine_c {}
+                        :lualine_x {}}
+             :inactive_sections {:lualine_a {}
+                                 :lualine_v {}
+                                 :lualine_y {}
+                                 :lualine_z {}
+                                 :lualine_c {}
+                                 :lualine_x {}}})
 
 (fn ins_left [component]
-  (table.insert config.sections.lualine_c component))
+  (table.insert opts.sections.lualine_c component))
 
 (fn ins_right [component]
-  (table.insert config.sections.lualine_x component))
+  (table.insert opts.sections.lualine_x component))
 
 (ins_left {1 #"" :color {:fg colors.pine} :padding {:left 0 :right 1}})
 
@@ -103,6 +103,6 @@
 (ins_right {1 #"" :color {:fg colors.pine} :padding {:left 1}})
 
 (fn setup []
-  (setup! lualine config))
+  (setup! lualine opts))
 
 {: setup}

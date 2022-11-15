@@ -9,12 +9,10 @@
                   :javascript :typescript :tsx :svelte
                   :rust
                   :cpp
-                  :toml :yaml :json :json5
-                  :jsonc
+                  :toml :yaml :json :json5 :jsonc
                   :nix
                   :python
-                  :norg
-                  :markdown :markdown_inline])
+                  :norg :markdown :markdown_inline])
 (fn setup []
   (set! runtimepath+ treesitter-path)
   (setup! nvim-treesitter.configs
