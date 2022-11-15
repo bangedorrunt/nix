@@ -127,8 +127,7 @@
   "Create an augroup using the nvim_create_augroup API.
   Accepts either a name or a name and a list of autocmd statements. "
   (expand-exprs (let [name (tostring name)]
-                  (icollect [_ expr (ipairs [...]) :into [`(vim.api.nvim_create_augroup ,name
-                                                                                        {:clear false})]]
+                  (icollect [_ expr (ipairs [...]) &into [`(vim.api.nvim_create_augroup ,name {:clear false})]]
                     (if (= `autocmd (first expr))
                         (let [[_ event pattern command ?options] expr
                               options (into (or ?options {}) :group name)]
@@ -196,14 +195,9 @@
 (fn setup* [mod ...]
   `((. ,mod :setup) ,...))
 
-(fn after-load [mod]
-  "Load plugin setting"
-  `(values :config (fn [] (setup! ,mod))))
-
 {: use
  : setup!
  : setup*
- : after-load
  : set!
  : setl!
  : g

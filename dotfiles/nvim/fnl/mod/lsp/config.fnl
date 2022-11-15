@@ -1,5 +1,4 @@
 (import-macros {: setup!} :core.macros)
-
 (local {: run : merge} (require :core.funs))
 (local cmp-lsp (require :cmp_nvim_lsp))
 (local {:util {:default_config lsp-defaults} &as lspconfig} (require :lspconfig))
@@ -7,10 +6,10 @@
 (local lsp-servers [:bashls
                     :clojure_lsp
                     :cssls
-                    :diagnosticls
                     :dockerls
                     :emmet_ls
                     :eslint
+                    ;; :fennel_language_server
                     :html
                     :jsonls
                     :marksman
@@ -18,7 +17,7 @@
                     :sumneko_lua
                     :tailwindcss
                     :tsserver
-                    :vimls
+                    ;; :vimls
                     :yamlls])
 (fn setup []
   (doto lsp-defaults (merge {:capabilities (cmp-lsp.default_capabilities)}))

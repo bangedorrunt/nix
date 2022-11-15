@@ -1,4 +1,4 @@
-(local {: first : second : dec : get : into} (require :core.funs))
+(local {: first : get : into} (require :core.funs))
 (local {: visible : complete : select_next_item : select_prev_item : mapping : config
         &as cmp} (require :cmp))
 (local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
@@ -55,7 +55,7 @@
                        (.. (get lsp-icons item.kind "") item.kind))
         codicons-item (vim.split codicons.kind "%s" {:trimempty true})
         codicons-kind (first codicons-item)
-        codicons-menu (second codicons-item)
+        ;; codicons-menu (second codicons-item)
         cmp-menu (get cmp-menu-items entry.source.name "")]
     (into item :kind codicons-kind :menu cmp-menu)))
 

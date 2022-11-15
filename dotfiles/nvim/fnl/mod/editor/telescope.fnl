@@ -1,51 +1,51 @@
-(import-macros {: noremap : setup!} :core.macros)
+(import-macros {: noremap : setup*} :core.macros)
 
-(local {: merge} (require :core.funs))
-(local {: load_extension} (require :telescope))
+(local {: run} (require :core.funs))
+(local {: load_extension
+        :extensions {:live_grep_args {: live_grep_args}}
+        &as telescope} (require :telescope))
 (local {: close : select_horizontal : to_fuzzy_refine} (require :telescope.actions))
-(local builtin (require :telescope.builtin))
-
-(local {:cache-prefix hotpot-cache-prefix} (require :hotpot.api.cache))
+(local {: grep_string : git_files : find_files : buffers : oldfiles
+        : commands : command_history : keymaps : resume} (require :telescope.builtin))
+(local {: cache-prefix} (require :hotpot.api.cache))
 
 (fn project []
   (let [[ret _] (vim.fn.systemlist "git rev-parse --is-inside-work-tree")
         git? (= ret :true)]
     (if git?
-      (builtin.git_files)
-      (builtin.find_files {:cwd "%:h"}))))
+      (git_files)
+      (find_files {:cwd "%:h"}))))
 
 (fn setup []
-  (setup! telescope
-    {:defaults {:cache_picker {:num_pickers 20}
-                :prompt_prefix "❯ "
+  (setup* telescope
+    {:defaults {:prompt_prefix "❯ "
                 :selection_caret "❯ "
                 :color_devicons false
                 :border false
                 :path_display [:truncate :smart]
                 :layout_strategy :bottom_pane
-                :layout_config {:height 0.35
-                                :prompt_position :bottom}
+                :layout_config {:height 0.35 :prompt_position :bottom}
                 :mappings {:i {:<ESC> close
-                               :<C-s> select_horizontal}}
-                :file_ignore_patterns [:.git/ :node_modules/.* :alfred2/.*]}
-     :pickers {:live_grep {:mappings {:i {:<C-f> to_fuzzy_refine}}}}})
+                               :<C-s> select_horizontal
+                               :<C-f> to_fuzzy_refine}}
+                :file_ignore_patterns [:.git/ :node_modules/.* :alfred2/.*]}})
 
   ;; Load extensions
-  (load_extension :fzf)
+  (run load_extension [:fzf :live_grep_args])
 
   ;; Telescope keymaps
   (noremap n nowait :<Leader>ht :<Cmd>Telescope<CR>)
   (noremap n nowait :<Leader><Leader> project)
-  (noremap n nowait "<Leader>;" builtin.live_grep)
-  (noremap n nowait :<Leader>* builtin.grep_string)
-  (noremap n nowait :<Leader>sg builtin.git_files)
-  (noremap n nowait :<Leader>sb builtin.buffers)
-  (noremap n nowait :<Leader>so builtin.oldfiles)
-  (noremap n nowait :<Leader>sc builtin.commands)
-  (noremap n nowait :<Leader>sC builtin.command_history)
-  (noremap n nowait :<Leader>sk builtin.keymaps)
-  (noremap n nowait :<Leader>sr builtin.resume)
+  (noremap n nowait "<Leader>;" live_grep_args)
+  (noremap n nowait :<Leader>* grep_string)
+  (noremap n nowait :<Leader>sg git_files)
+  (noremap n nowait :<Leader>sb buffers)
+  (noremap n nowait :<Leader>so oldfiles)
+  (noremap n nowait :<Leader>sc commands)
+  (noremap n nowait :<Leader>sC command_history)
+  (noremap n nowait :<Leader>sk keymaps)
+  (noremap n nowait :<Leader>sr resume)
   ;; Open cached files
-  (noremap n nowait :<Leader>hc `(builtin.find_files {:cwd (hotpot-cache-prefix) :hidden true})))
+  (noremap n nowait :<Leader>hc `(find_files {:cwd (cache-prefix) :hidden true})))
 
 {: setup}

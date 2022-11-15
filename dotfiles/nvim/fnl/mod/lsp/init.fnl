@@ -1,8 +1,8 @@
-(import-macros {: use : after-load : setup!} :core.macros)
+(import-macros {: use} :core.macros)
 
 (fn setup []
   (use williamboman/mason.nvim)
-  (use neovim/nvim-lspconfig (after-load mod.lsp.lsp))
-  (use jose-elias-alvarez/null-ls.nvim (after-load mod.lsp.null-ls)))
+  (use neovim/nvim-lspconfig :mod :lsp.config)
+  (use jose-elias-alvarez/null-ls.nvim :mod :lsp.null-ls))
 
 {: setup}

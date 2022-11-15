@@ -1,8 +1,8 @@
-(import-macros {: use : after-load : setup!} :core.macros)
+(import-macros {: use} :core.macros)
 
 (fn setup []
   (use L3MON4D3/LuaSnip)
-  (use hrsh7th/nvim-cmp (after-load mod.completion.nvim-cmp))
+  (use hrsh7th/nvim-cmp :mod :completion.nvim-cmp)
   (use hrsh7th/cmp-cmdline)
   (use hrsh7th/cmp-path)
   (use hrsh7th/cmp-buffer)

@@ -1,14 +1,23 @@
 (local packer (require :packer))
-(local {: kvize : run} (require :core.funs))
+(local {: run} (require :core.funs))
 (local packer-compiled-path (.. (vim.fn.stdpath :data) :/site/lua/packer_compiled.lua))
+
+(fn kvize [xs t]
+  (match xs
+    [k v] (kvize (doto xs (table.remove 1) (table.remove 1))
+                 (match k
+                   :init (doto t (tset :config (.. "require('" v "').setup()")))
+                   :mod (doto t (tset :config (.. "require('mod." v "').setup()")))
+                   _ (doto t (tset k v))))
+    _ t))
 
 (fn use [[plug & args]]
   "feed a plugin to the plugin manager"
-  (if (= 0 #args)
-    (packer.use plug)
-    (->> {1 plug}
-         (kvize args)
-         packer.use)))
+  (match #args
+    0 (packer.use plug)
+    _ (->> {1 plug}
+           (kvize args)
+           packer.use)))
 
 (fn file-exist? [path]
   (= (vim.fn.filereadable path) 1))
@@ -22,8 +31,7 @@
                             :error_sym ""
                             :done_sym ""
                             :removed_sym ""
-                            :moved_sym ""
-                            :header_sym "="}
+                            :moved_sym ""}
                   :auto_reload_compiled false
                   :preview_updates true
                   :git {:clone_timeout 180 :depth 1}
@@ -36,7 +44,7 @@
   (if (file-exist? packer-compiled-path)
     (do
       (require :packer_compiled)
-      (vim.defer_fn load-packer-plugins 0))
+      (vim.schedule load-packer-plugins))
     (load-packer-plugins)))
 
 {: setup}

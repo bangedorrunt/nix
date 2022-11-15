@@ -18,7 +18,7 @@
   (set! mouse :a)
   (set! showmatch)
   (set! matchtime 2)
-  (set! shortmess :FOotnficTWlx)
+  ;; (set! shortmess :FOotnficTWlx)
   (set! pumheight 0)
   (set! winwidth 30)
   (set! winminwidth 10)
@@ -86,8 +86,8 @@
 
   (set! virtualedit :block)
   (set! fileformats [:unix :mac :dos])
-  (set! clipboard :unnamedplus)
-  (set! completeopt [:menu :menuone :noselect])
+  (set! clipboard+ :unnamedplus)
+  (set! completeopt [:menu :menuone :preview :noselect])
   (set! diffopt+ [:vertical
                   :iwhite
                   :hiddenoff

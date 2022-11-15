@@ -25,7 +25,7 @@
   (= 0 (length xs)))
 
 (fn any? [pred xs]
-  (accumulate [any? false _ v (ipairs xs) :until any?]
+  (accumulate [any? false _ v (ipairs xs) &until any?]
     (pred v)))
 
 (fn every? [pred xs]
@@ -144,7 +144,7 @@
 (fn concat+ [...]
   "Concatenates the sequential table arguments together."
   (accumulate [acc [] _ xs (ipairs [...])]
-    (icollect [_ v (ipairs xs) :into acc] v)))
+    (icollect [_ v (ipairs xs) &into acc] v)))
 
 (fn mapcat+ [f xs]
   (concat+ (unpack (map f xs))))
