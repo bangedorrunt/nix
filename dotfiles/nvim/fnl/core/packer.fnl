@@ -1,3 +1,4 @@
+(import-macros {: setup!} :core.macros)
 (local packer (require :packer))
 (local {: run} (require :core.funs))
 (local packer-compiled-path (.. (vim.fn.stdpath :data) :/site/lua/packer_compiled.lua))
@@ -41,10 +42,11 @@
     (run use store.plugins))
 
 (fn setup []
-  (if (file-exist? packer-compiled-path)
-    (do
-      (require :packer_compiled)
-      (vim.schedule load-packer-plugins))
-    (load-packer-plugins)))
+  (when (file-exist? packer-compiled-path)
+    (require :packer_compiled))
+  (vim.schedule
+    (fn []
+      (setup! mod)
+      (load-packer-plugins))))
 
 {: setup}

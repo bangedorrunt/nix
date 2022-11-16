@@ -62,7 +62,7 @@ fi
 
 echo 'Installing Packer plugins ...'
 # A workaround for Packer commands are not available on first run
-nvim --headless -c 'qa'
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+nvim --headless +'qa'
+nvim --headless +'sleep 1' +'autocmd User PackerComplete quitall' +PackerSync
 
 echo 'Sucessfully install Neovim config'

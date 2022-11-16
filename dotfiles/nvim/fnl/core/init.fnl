@@ -5,7 +5,6 @@
   (setup! core.options)
   (setup! core.keymaps)
   (setup! core.autocmds)
-  (setup! mod)
   (setup! core.packer))
 
 (main)
