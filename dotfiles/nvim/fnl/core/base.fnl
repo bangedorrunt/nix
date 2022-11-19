@@ -1,7 +1,10 @@
 (import-macros {: g} :core.macros)
 
 (fn setup []
-  (tset _G :store {:plugins []})
+  (tset _G :store {:plugins []
+                   :paths {:state (vim.fn.stdpath :state)
+                           :treesitter (.. (vim.fn.stdpath :data) :/treesitter)
+                           :packer-compiled (.. (vim.fn.stdpath :data) :/site/lua/packer_compiled.lua)}})
   ;; Disable built-in plugins and host providers
   (g loaded_netrw 1)
   (g loaded_netrwPlugin 1)

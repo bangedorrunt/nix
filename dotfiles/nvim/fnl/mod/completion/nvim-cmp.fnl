@@ -102,4 +102,5 @@
 
   (cmp.setup.cmdline ":" {:mapping (mapping.preset.cmdline)
                           :sources (config.sources [{:name :path}] [{:name :cmdline}])}))
+
 {: setup}

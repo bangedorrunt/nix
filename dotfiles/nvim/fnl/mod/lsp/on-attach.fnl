@@ -45,8 +45,8 @@
     (when client.server_capabilities.documentHighlightProvider
       (augroup lsp-document-highlight
         (autocmd! {:buffer bufnr})
-        (autocmd CursorHold <buffer> `(document_highlight))
-        (autocmd CursorMoved <buffer> `(clear_references))))))
+        (autocmd CursorHold <buffer> document_highlight)
+        (autocmd CursorMoved <buffer> clear_references)))))
 
 (fn setup []
   (augroup lsp-on-attach

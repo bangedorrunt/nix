@@ -1,8 +1,8 @@
 (import-macros {: use} :core.macros)
 
 (fn setup []
-  (use ericpruitt/tmux.vim)
-  (use aserowy/tmux.nvim :init :tmux)
-  (use gpanders/editorconfig.nvim))
+  (use ericpruitt/tmux.vim :event :BufReadPost)
+  (use aserowy/tmux.nvim :event "User PackerDefered" :init :tmux)
+  (use gpanders/editorconfig.nvim :event "User PackerDefered"))
 
 {: setup}

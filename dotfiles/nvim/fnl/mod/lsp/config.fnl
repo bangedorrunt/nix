@@ -23,6 +23,7 @@
   (doto lsp-defaults (merge {:capabilities (cmp-lsp.default_capabilities)}))
   (setup! mod.lsp.diagnostics)
   (setup! mod.lsp.on-attach)
+  (setup! mod.lsp.null-ls)
   (setup! mason)
   (setup! neodev)
   (setup! rust-tools)

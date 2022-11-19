@@ -9,66 +9,79 @@ version: 0.0.13
 
 * TODO
 ** Nvim
-   - [ ] Write test for configuration
+   - (x) `nvim-cmp` show duplicated autocompletion
+   -- `CmpStatus` shown duplicated sources
+   -- `cmp` sources shouldn't be lazyloaded using `:after :nvim-cmp`
+   - (x) Neovim aborted unexpectedly when openning `norg` file
+   -- Stage that file
+   - (x) Couldn't compile `neorg-treesitter`
+   @code bash
+   brew install gcc
+   CC=gcc-12 nvim -c "TSInstall norg"
+   @end
+   - (_) Reduxify my config
+   - (x) Rewrite `packer.fnl`
+   -- Build plugin list from each module setup
+   - ( ) Write test for configuration
    -- `fennel-test`
-   - [x] Remove `luafun`
-   - [ ] `foldoptions`
+   - (x) Remove `luafun`
+   - ( ) `foldoptions`
    -- [PR]{https://github.com/neovim/neovim/pull/17446}
-   - [ ] `luasnip` snippet for autopair
+   - (_) `luasnip` snippet for autopair
    -- [Manual autopair]{https://github.com/josephsdavid/neovim2/blob/f8c267a81bae13df6a8fbc7f5e05a6085ad5c50b/lua/config/snippets/init.lua#L212}
-   - [-] Completely remap key using <Leader> and <LocalLeader>
+   - (-) Completely remap key using <Leader> and <LocalLeader>
    -- Use 2 sequences at most
-   - [ ] `venn.vim` keybinds
-   - [-] `fidget.Nvim`
+   - ( ) `venn.vim` keybinds
+   - (-) `fidget.Nvim`
    -- Got performance hit
-   - [-] Open file in current Nvim instance
+   - (-) Open file in current Nvim instance
    -- Flag [remote]{https://github.com/neovim/neovim/pull/18414} is broken for now
    -- [Use absolute path]{https://github.com/neovim/neovim/issues/18519}
-   - [_] Move to `vim-jetpack`
-   - [_]  Use `hydra.Nvim`
+   - (_) Move to `vim-jetpack`
+   - (_) Use `hydra.Nvim`
    -- How to make art code block compatible with my font?
    -- I don't need it
 ** Tmux
-   - [_]  Use `Tmux-tilish`
+   - (_) Use `Tmux-tilish`
 ** Karabiner
-   - [ ] Back to Yabai for transparent windows
+   - ( ) Back to Yabai for transparent windows
    -- Can I do better with mod-tap sensitivity?
-   - [x] Rebind Discord keymaps
-   - [x] Rebind Element keymaps
+   - (x) Rebind Discord keymaps
+   - (x) Rebind Element keymaps
 
 * FIX
 ** Nvim
-   - [x] Could not remap `q` to `gq` for `vim-fugitive` using `nmap` macro
+   - (x) Could not remap `q` to `gq` for `vim-fugitive` using `nmap` macro
    -- `nmap` macro need to set `:remap true`
-   - [x] `Neorg` dirman automatically change `cwd`
+   - (x) `Neorg` dirman automatically change `cwd`
    -- It's upstream but, @vhyrro is aware of the issue
    -- Solution:
    --- `notetoself` has nested `gtd` workspace
    --- Move `gtd` out of `notetoself`
 ** Wezterm
-   - [x] Live loading error occured when switching themes
+   - (x) Live loading error occured when switching themes
    -- Solution:
    --- change `justfile` to make fennel compile properly
    --- change `harpoon` cmd accordingly
-   - [x] Open terminal using Alfred
+   - (x) Open terminal using Alfred
    -- Spotlight got no issue
    -- Solution: `/usr/local/bin/zsh -l -c "Tmux attach -d || tmux"`
 
 * DONE
 ** Nvim
-   - [x] `Nvim-ufo`
-   - [x] `ladyreq` macro
+   - (x) `Nvim-ufo`
+   - (x) `ladyreq` macro
    -- [lazy-require!]{https://github.com/NTBBloodbath/Nvim.fnl/blob/d3dcf0a29b722d92ebd92f3951cff43b1458d317/fnl/core/macros.fnl#L63-L67}
-   - [x] Fork `rose-pine` and edit in my own flavour
-   -- [x] Forked repo
-   -- [x] Edit color based from `Dracula` or `Monokai Pro`
+   - (x) Fork `rose-pine` and edit in my own flavour
+   -- (x) Forked repo
+   -- (x) Edit color based from `Dracula` or `Monokai Pro`
    --- Current color is quite muted, wanna make it more vibrant
    --- I don't like `pine` color
    --- Turn out `Dracula` pallete is best fit
-   - [x] Change `neorg` todo icons
+   - (x) Change `neorg` todo icons
 ** Tmux
-   - [x] Edit `rose-pine` theme
-   - [x] bind `<C-t>` to `<C-a> z` to toggle zoom pane.
+   - (x) Edit `rose-pine` theme
+   - (x) bind `<C-t>` to `<C-a> z` to toggle zoom pane.
    -- `bind-key -n 'C-t' resize-pane -Z`
 ** Wezterm
-   - [x] Add light theme
+   - (x) Add light theme
