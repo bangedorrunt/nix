@@ -15,6 +15,6 @@
   (use NvChad/nvim-colorizer.lua :event :BufReadPre :init :colorizer)
   (use nvim-telescope/telescope-fzf-native.nvim :module :telescope._extensions.fzf :run "make")
   (use nvim-telescope/telescope-live-grep-args.nvim :module :telescope._extensions.live_grep_args)
-  (use nvim-telescope/telescope.nvim :event "User PackerDefered" :init+ :editor.telescope))
+  (use nvim-telescope/telescope.nvim :as :telescope :module_pattern "telescope.*" :event "User PackerDefered" :init+ :editor.telescope))
 
 {: setup}
