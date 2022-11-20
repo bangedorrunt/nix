@@ -5,7 +5,7 @@
   ;; (set! background :light)
 
   ;;;; UI
-  ;; (set! lz)
+  (set! lz)
   (set! number)
   (set! relativenumber)
   (set! termguicolors)
@@ -87,15 +87,14 @@
   (set! fileformats [:unix :mac :dos])
   (set! clipboard :unnamedplus)
   (set! completeopt [:menu :menuone :noselect])
-  (set! diffopt+ [:vertical
-                  :iwhite
-                  :hiddenoff
-                  "foldcolumn:0"
-                  "context:4"
-                  "algorithm:histogram"
-                  :indent-heuristic
-                  "linematch:60"])
-
+  (set! diffopt ["linematch:60"
+                 :filler
+                 :closeoff
+                 :vertical
+                 :iwhite
+                 :hiddenoff
+                 "foldcolumn:0"
+                 "context:4"])
   (set! foldenable)
   (set! foldcolumn :1)
   (set! foldlevel 99)
