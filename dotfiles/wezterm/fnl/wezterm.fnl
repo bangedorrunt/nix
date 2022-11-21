@@ -15,11 +15,12 @@
                    [:/usr/local/bin/fish :-l :-c "tmux attach -d || tmux"]
                    [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
+ :front_end :WebGpu
  :color_scheme (scheme-for-appearance (gui.get_appearance))
  :colors {:background :#14141f}
  :font_dirs [:/Users/brunetdragon/Library/Fonts]
  :font (fallback :MonoLisa)
- :font_size 22
+ :font_size 30
  :freetype_load_target :Light
  :line_height 1.2
  :cell_width 0.85
