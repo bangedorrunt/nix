@@ -28,7 +28,7 @@
                 :mappings {:i {:<ESC> close
                                :<C-s> select_horizontal
                                :<C-f> to_fuzzy_refine}}
-                :file_ignore_patterns [:.git/ :node_modules/.* :alfred2/.*]}})
+                :file_ignore_patterns [:**/.git/ :node_modules/ :alfred2/]}})
 
   ;; Load extensions
   (run load_extension [:fzf :live_grep_args])
