@@ -1,20 +1,10 @@
 (import-macros {: setup! : set!} :core.macros)
-(local languages [:bash :fish
-                  :comment
-                  :clojure
-                  :commonlisp
-                  :diff
-                  :fennel
-                  :html :css
-                  :javascript :typescript :tsx :svelte
-                  :rust
-                  :cpp
-                  :toml :yaml :json :json5 :jsonc
-                  :nix
-                  :python
-                  :norg :markdown :markdown_inline])
+(local languages [:bash :clojure :commonlisp :cpp :diff :fennel :fish
+                  :help :html :css :javascript :json :json5 :jsonc :lua
+                  :markdown :markdown_inline :nix :norg :python :rust
+                  :toml :tsx :typescript :vim :yaml])
 (fn setup []
-  (set! runtimepath+ store.paths.treesitter)
+  (set! rtp+ store.paths.treesitter)
   (setup! nvim-treesitter.configs
     {:parser_install_dir store.paths.treesitter
      :ensure_installed languages
