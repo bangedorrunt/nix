@@ -1,6 +1,7 @@
 (import-macros {: nmap} :core.macros)
 
-(local {: forward_word
+(local {
+        : forward_word
         : backward_word
         : beginning_of_line
         : end_of_line
@@ -8,7 +9,8 @@
         : backward_kill_word
         : unix_word_rubout
         : kill_line
-        : backward_kill_line} (require :readline))
+        : backward_kill_line
+        } (require :readline))
 
 (fn setup []
   (nmap "!" :<M-f> forward_word)

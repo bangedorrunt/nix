@@ -1,11 +1,11 @@
-(import-macros {: use} :core.macros)
+(import-macros {: use : setup!} :core.macros)
 
 (fn setup []
   (use jaawerth/fennel.vim :ft :fennel)
-  (use folke/neodev.nvim :module :neodev)
-  (use simrat39/rust-tools.nvim :module :rust-tools)
-  (use Olical/conjure :event "User PackerDefered" :module :conjure :init+ :lang.conjure)
-  (use nvim-neorg/neorg-telescope :module :neorg.modules.core.integrations.telescope.module)
-  (use nvim-neorg/neorg :after [:treesitter :telescope] :ft :norg :init+ :lang.neorg))
+  (use folke/neodev.nvim :event "User LspLoaded")
+  (use simrat39/rust-tools.nvim :event "User LspLoaded")
+  (use Olical/conjure :start true :init+ :lang.conjure)
+  (use nvim-neorg/neorg-telescope :event "User NeorgLoaded")
+  (use nvim-neorg/neorg :ft :norg :init+ :lang.neorg))
 
 {: setup}

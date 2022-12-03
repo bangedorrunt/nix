@@ -8,10 +8,10 @@
 
 (fn setup []
   ;; Packer autocommands
-  (augroup packer-compile
-    (autocmd!)
-    (autocmd BufWritePost */fnl/mod/init.fnl `(vim.cmd "PackerCompile profile=true"))
-    (autocmd VimLeavePre */fnl/mod/init.fnl `(vim.cmd "PackerCompile profile=true")))
+  ;; (augroup packer-compile
+  ;;   (autocmd!)
+  ;;   (autocmd BufWritePost */fnl/mod/init.fnl `(vim.cmd "PackerCompile profile=true"))
+  ;;   (autocmd VimLeavePre */fnl/mod/init.fnl `(vim.cmd "PackerCompile profile=true")))
 
   ;; Smart `q` close windows
   (augroup smart-quit
@@ -82,6 +82,12 @@
                        fennel clojure lisp
                        markdown]
              `(setl! colorcolumn [])))
+
+  ;; Use built-in commentstring
+  (augroup set-commentstring-on-filetypes
+     (autocmd!)
+     (autocmd FileType [fennel clojure] `(setl! commentstring ";; %s"))
+     (autocmd FileType [fish] `(setl! commentstring "# %s")))
 
   ;; Remove highlight
   (augroup clear-hl-search

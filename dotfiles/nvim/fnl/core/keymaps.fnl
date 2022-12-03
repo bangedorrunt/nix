@@ -46,11 +46,7 @@
   (noremap n :<C-u> :<C-u>zz)
 
   (noremap n :J "mzJ`z")
-
-  ;; a better J
   (noremap n :Y :yg$)
-
-  ;; a better Y
 
   ;; Move line up and down
   (noremap v :J ":<C-u>m '>+1<CR>gv=gv")
@@ -156,9 +152,9 @@
 
   (noremap n :<Leader>hpu :<Cmd>PackerUpdate<CR>)
   (noremap n :<Leader>hpi :<Cmd>PackerInstall<CR>)
-  (noremap n :<Leader>hpc :<Cmd>PackerCompile<CR>)
+  ;; (noremap n :<Leader>hpc :<Cmd>PackerCompile<CR>)
   (noremap n :<Leader>hps :<Cmd>PackerSync<CR>)
-  (noremap n :<Leader>hpp :<Cmd>PackerProfile<CR>)
+  ;; (noremap n :<Leader>hpp "<Cmd>PackerProfile<CR>")
 
   ;; ------------------------
   ;; WINDOWS NAVIGATION

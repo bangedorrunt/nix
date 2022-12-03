@@ -1,5 +1,5 @@
 (import-macros {: augroup : autocmd : autocmd! : setup!} :core.macros)
-
+(vim.cmd.do "User NeorgLoaded")
 (local {: on_event} (require :neorg.callbacks))
 (fn setup []
   (setup! neorg

@@ -9,6 +9,18 @@ version: 0.0.13
 
 * TODO
 ** Nvim
+   - ( ) `help` queries resulted in an error
+   --  `nvim-treesitter` will use default paths
+   --- the package folder where `nvim-treesitter` installed
+   --- the `site` directory under `vim.fn.stdpath 'data'`
+   --- `parser_install_dir` set by `vim.opt.rtp:append`
+   -- Neovim got built-in `help` installed at `/usr/local/lib/nvim/parser`
+   --- this path is list *before* `parser_install_dir`, so outdated `help` is
+       used instead of the updated one
+   -- Fixed by use `vim.opt.rtp:prepend`
+   - (x) Neovim aborted unexpectedly when joining new line or opening conflicted
+     file
+   -- There's conflict between `internal` and `linematch:{n}` of `diffopt`
    - (x) `nvim-cmp` show duplicated autocompletion
    -- `CmpStatus` shown duplicated sources
    -- `cmp` sources shouldn't be lazyloaded using `:after :nvim-cmp`

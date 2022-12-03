@@ -1,4 +1,4 @@
-(import-macros {: use} :core.macros)
+(import-macros {: use : setup!} :core.macros)
 
 (fn setup []
   (use lewis6991/gitsigns.nvim :event :BufReadPre :init+ :git.gitsigns)

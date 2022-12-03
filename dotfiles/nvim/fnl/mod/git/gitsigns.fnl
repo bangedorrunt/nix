@@ -1,14 +1,16 @@
 (import-macros {: noremap : setup!} :core.macros)
 
 (fn on_attach [bufnr]
-  (let [{: stage_buffer
+  (let [{
+         : stage_buffer
          : undo_stage_hunk
          : reset_buffer
          : preview_hunk
          : blame_line
          : toggle_current_line_blame
          : diffthis
-         : toggle_deleted} package.loaded.gitsigns]
+         : toggle_deleted
+         } package.loaded.gitsigns]
     (noremap n expr "]c"
              `(if (vim.opt.diff:get) "]c" "<Cmd>Gitsigns next_hunk<CR>"))
     (noremap n expr "[c"
@@ -27,8 +29,9 @@
     (noremap ox :ih ":<C-u>Gitsigns select_hunk<CR>")))
 
 (fn setup []
-  (setup! gitsigns {: on_attach
-                    :preview_config {:border :solid :style :minimal :relative :cursor}
-                    :numhl true}))
+  (setup! gitsigns
+    {: on_attach
+     :preview_config {:border :solid :style :minimal :relative :cursor}
+     :numhl true}))
 
 {: setup}

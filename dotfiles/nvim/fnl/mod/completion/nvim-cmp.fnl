@@ -1,22 +1,28 @@
-(local {: first : get : into} (require :core.funs))
+(vim.cmd.do "User CmpLoaded")
+(local {: get : into} (require :core.funs))
 (local {: visible : complete : select_next_item : select_prev_item : mapping : config
         &as cmp} (require :cmp))
 (local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
-(local cmp-menu-items {:nvim_lsp :LSP
+(local cmp-menu-items {
+                       :nvim_lsp :LSP
                        :luasnip :LuaSnip
                        :conjure :Conjure
                        :buffer :Buffer
                        :calc :Calc
-                       :path :Path})
-(local cmp-sources [{:name :nvim_lsp}
+                       :path :Path
+                       })
+(local cmp-sources [
+                    {:name :nvim_lsp}
                     {:name :conjure}
                     {:name :luasnip}
-                    {:name :buffer :keyword_length 5}
+                    {:name :buffer :keyword_length 3}
                     {:name :path}
                     {:name :neorg}
                     {:name :nvim_lua}
-                    {:name :calc}])
-(local lsp-icons {:Array " "
+                    {:name :calc}
+                    ])
+(local lsp-icons {
+                  :Array " "
                   :Boolean " "
                   :Class " "
                   :Color " "
@@ -48,14 +54,14 @@
                   :TypeParameter " "
                   :Unit " "
                   :Value " "
-                  :Variable " "})
+                  :Variable " "
+                  })
 
 (fn cmp-fmt [entry item]
   (let [codicons (into item :kind
                        (.. (get lsp-icons item.kind "") item.kind))
         codicons-item (vim.split codicons.kind "%s" {:trimempty true})
-        codicons-kind (first codicons-item)
-        ;; codicons-menu (second codicons-item)
+        [codicons-kind codicons-menu] codicons-item
         cmp-menu (get cmp-menu-items entry.source.name "")]
     (into item :kind codicons-kind :menu cmp-menu)))
 
@@ -81,26 +87,34 @@
 
 (fn setup []
   (cmp.setup {:formatting {:fields [:kind :abbr :menu] :format cmp-fmt}
-              :mapping (mapping.preset.insert {:<CR> (mapping.confirm {:select true})
-                                               :<C-Space> (mapping.complete)
-                                               :<C-e> (mapping.abort)
-                                               :<C-n> (mapping super-cn [:i :s])
-                                               :<C-p> (mapping super-cp [:i :s])})
-              :sorting {:comparators [config.compare.offset
+              :mapping (mapping.preset.insert
+                         {:<CR> (mapping.confirm {:behavior cmp.ConfirmBehavior.Replace
+                                                  :select true})
+                          :<C-Space> (mapping.complete)
+                          :<C-e> (mapping.abort)
+                          :<C-n> (mapping super-cn [:i :s])
+                          :<C-p> (mapping super-cp [:i :s])})
+              :sorting {:comparators [
+                                      config.compare.offset
                                       config.compare.exact
                                       config.compare.recently_used
                                       config.compare.kind
                                       config.compare.sort_text
                                       config.compare.length
-                                      config.compare.order]}
+                                      config.compare.order
+                                      ]}
               :snippet {:expand #(lsp_expand $.body)}
               :sources (config.sources cmp-sources)})
 
   ;; Cmdline completions
-  (cmp.setup.cmdline ["/" "?"] {:mapping (mapping.preset.cmdline)
-                                :sources [{:name :buffer}]})
+  (cmp.setup.cmdline
+    ["/" "?"]
+    {:mapping (mapping.preset.cmdline)
+     :sources [{:name :buffer}]})
 
-  (cmp.setup.cmdline ":" {:mapping (mapping.preset.cmdline)
-                          :sources (config.sources [{:name :path}] [{:name :cmdline}])}))
+  (cmp.setup.cmdline
+    ":"
+    {:mapping (mapping.preset.cmdline)
+     :sources (config.sources [{:name :path}] [{:name :cmdline}])}))
 
 {: setup}

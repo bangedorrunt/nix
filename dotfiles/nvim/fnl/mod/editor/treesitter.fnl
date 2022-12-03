@@ -1,12 +1,16 @@
-(import-macros {: setup! : set!} :core.macros)
-(local languages [:bash :clojure :commonlisp :cpp :diff :fennel :fish
-                  :help :html :css :javascript :json :json5 :jsonc :lua
-                  :markdown :markdown_inline :nix :norg :python :rust
-                  :toml :tsx :typescript :vim :yaml])
+(import-macros {: setup!} :core.macros)
+(vim.cmd.do "User TreeSitterLoaded")
+(local languages
+  [
+   :bash :clojure :commonlisp :cpp :diff :fennel :fish
+   :help :html :css :javascript :json :json5 :jsonc :lua
+   :markdown :markdown_inline :nix :norg :python :rust
+   :toml :tsx :typescript :vim :yaml
+   ])
 (fn setup []
-  (set! rtp+ store.paths.treesitter)
   (setup! nvim-treesitter.configs
-    {:parser_install_dir store.paths.treesitter
+    {
+     :parser_install_dir store.paths.treesitter
      :ensure_installed languages
      :highlight {:enable true}
      :indent {:enable true}
@@ -17,8 +21,6 @@
                                        :node_incremental :<CR>
                                        :node_decremental :<C-CR>}}
      :context_commentstring {:enable true
-                             :enable_autocmd false
-                             :config {:fish "# %s"
-                                      :fennel ";; %s"
-                                      :clojure ";; %s"}}}))
+                             :enable_autocmd false}
+     }))
 {: setup}

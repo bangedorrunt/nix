@@ -1,15 +1,17 @@
-(import-macros {: use} :core.macros)
+(import-macros {: use : setup!} :core.macros)
 
 (fn setup []
-  (use L3MON4D3/LuaSnip :module :luasnip)
-  (use hrsh7th/nvim-cmp :module :cmp :event :InsertEnter :init+ :completion.nvim-cmp)
-  (use hrsh7th/cmp-cmdline :event "User PackerDefered")
-  (use hrsh7th/cmp-path :event "User PackerDefered")
-  (use hrsh7th/cmp-buffer :event "User PackerDefered")
-  (use hrsh7th/cmp-calc :event "User PackerDefered")
-  (use hrsh7th/cmp-nvim-lsp :module :cmp_nvim_lsp)
-  (use hrsh7th/cmp-nvim-lua :event "User PackerDefered")
-  (use PaterJason/cmp-conjure :event "User PackerDefered")
-  (use saadparwaiz1/cmp_luasnip :event "User PackerDefered"))
+  (use L3MON4D3/LuaSnip :event "User CmpLoaded")
+  (use saadparwaiz1/cmp_luasnip :event "User CmpLoaded"))
+  (use hrsh7th/cmp-cmdline :event "User CmpLoaded")
+  (use hrsh7th/cmp-path :event "User CmpLoaded")
+  (use hrsh7th/cmp-buffer :event "User CmpLoaded")
+  (use hrsh7th/cmp-calc :event "User CmpLoaded")
+  (use hrsh7th/cmp-nvim-lsp :event "User LspLoaded")
+  (use hrsh7th/cmp-nvim-lua :event "User CmpLoaded")
+  (use PaterJason/cmp-conjure :event "User CmpLoaded")
+  (use hrsh7th/nvim-cmp
+       :event [:InsertEnter "User NeorgLoaded"]
+       :init+ :completion.nvim-cmp)
 
 {: setup}

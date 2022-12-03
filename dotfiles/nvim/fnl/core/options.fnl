@@ -94,7 +94,8 @@
                  :iwhite
                  :hiddenoff
                  "foldcolumn:0"
-                 "context:4"])
+                 "context:4"
+                 "indent-heuristic"])
   (set! foldenable)
   (set! foldcolumn :1)
   (set! foldlevel 99)
