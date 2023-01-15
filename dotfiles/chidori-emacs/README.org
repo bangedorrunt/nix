@@ -1,0 +1,5 @@
+#+title: Chidori Emacs
+
+* Description
+
+A slim version of Doom Emacs where I remove codes that I don't use

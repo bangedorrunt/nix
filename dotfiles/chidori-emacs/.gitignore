@@ -1,0 +1,12 @@
+*.elc
+eln-cache/
+straight/
+transient/
+cache/
+var/
+etc/
+eshell/
+projects
+elpa/
+bookmarks
+network-security.data
