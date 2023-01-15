@@ -101,7 +101,6 @@
         magit-display-buffer-function #'+magit-display-buffer-fn
         magit-bury-buffer-function #'magit-mode-quit-window)
 
-  (add-hook 'magit-popup-mode-hook #'hide-mode-line-mode)
   ;; Position windows
 
   ;; Add additional switches that seem common enough

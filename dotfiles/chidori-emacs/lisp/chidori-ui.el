@@ -195,13 +195,6 @@
   (add-hook 'after-setting-font-hook #'+modeline-resize-for-font-h)
   (add-hook 'modus-themes-after-load-theme-hook #'doom-modeline-refresh-bars)
 
-  (add-hook! 'magit-mode-hook
-    (defun +modeline-hide-in-non-status-buffer-h ()
-      "Show minimal modeline in magit-status buffer, no modeline elsewhere."
-      (if (eq major-mode 'magit-status-mode)
-          (doom-modeline-set-modeline 'magit)
-        (hide-mode-line-mode))))
-
   ;; Some functions modify the buffer, causing the modeline to show a false
   ;; modified state, so force them to behave.
   (defadvice! +modeline--inhibit-modification-hooks-a (fn &rest args)
@@ -212,8 +205,6 @@
 (package! chidori-sfsymbols :builtin
   :after doom-modeline
   :hook (doom-modeline-mode . sfsymbols-modeline-mode))
-
-(package! hide-mode-line :auto)
 
 (package! hl-todo :auto
   :hook (doom-first-buffer . global-hl-todo-mode))
