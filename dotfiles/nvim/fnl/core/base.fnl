@@ -1,12 +1,12 @@
 (import-macros {: g} :core.macros)
 
 (fn setup []
-  ;; NOTE: packer-compiled will be deprecated
-  (tset _G :store {:packadd []
+  (tset _G :store {:lazyadd []
                    :plugins []
                    :paths {:state (vim.fn.stdpath :state)
                            :data (vim.fn.stdpath :data)
                            :treesitter (.. (vim.fn.stdpath :data) :/site)}})
+
   ;; Disable built-in plugins and host providers
   (g loaded_netrw 1)
   (g loaded_netrwPlugin 1)

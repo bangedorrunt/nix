@@ -5,7 +5,7 @@
   ;; (set! background :light)
 
   ;;;; UI
-  (set! lz)
+  ;; (set! lz)
   (set! number)
   (set! relativenumber)
   (set! termguicolors)

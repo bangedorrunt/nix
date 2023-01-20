@@ -17,6 +17,7 @@
    :html
    :jsonls
    :marksman
+   :grammarly
    ;; :rust_analyzer
    :sumneko_lua
    :tailwindcss

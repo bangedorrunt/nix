@@ -1,11 +1,11 @@
 (import-macros {: use : setup!} :core.macros)
 
 (fn setup []
-  (use catppuccin/nvim :start true :init+ :ui.catppuccin)
-  (use nvim-tree/nvim-web-devicons :start true :init+ :ui.devicons)
-  (use nvim-lualine/lualine.nvim :event :UIEnter :init+ :ui.lualine)
-  (use nvim-tree/nvim-tree.lua :event "User PackerDefered" :init+ :ui.nvim-tree)
-  (use echasnovski/mini.tabline :event :UIEnter :init :mini.tabline)
-  (use echasnovski/mini.indentscope :event :BufReadPost :init+ :ui.indentscope))
+  (use catppuccin/nvim :lazy false :mod :ui.catppuccin)
+  (use nvim-tree/nvim-web-devicons :lazy false :mod :ui.devicons)
+  (use nvim-lualine/lualine.nvim :event "User LazyVimStarted" :mod :ui.lualine)
+  (use nvim-tree/nvim-tree.lua :event "VeryLazy" :mod :ui.nvim-tree)
+  (use echasnovski/mini.tabline :event "User LazyVimStarted" :mod+ :mini.tabline)
+  (use echasnovski/mini.indentscope :event :VeryLazy :mod :ui.indentscope))
 
 {: setup}

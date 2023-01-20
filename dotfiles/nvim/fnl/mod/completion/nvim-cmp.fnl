@@ -6,14 +6,14 @@
 (local cmp-menu-items {
                        :nvim_lsp :LSP
                        :luasnip :LuaSnip
-                       :conjure :Conjure
+                       ;; :conjure :Conjure
                        :buffer :Buffer
                        :calc :Calc
                        :path :Path
                        })
 (local cmp-sources [
                     {:name :nvim_lsp}
-                    {:name :conjure}
+                    ;; {:name :conjure}
                     {:name :luasnip}
                     {:name :buffer :keyword_length 3}
                     {:name :path}

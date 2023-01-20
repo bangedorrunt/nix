@@ -1,5 +1,4 @@
 (import-macros {: noremap : setup*} :core.macros)
-(vim.cmd.do "User TelescopeLoaded")
 (local {: run} (require :core.funs))
 (local {
         : load_extension

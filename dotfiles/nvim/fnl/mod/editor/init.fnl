@@ -1,25 +1,39 @@
 (import-macros {: use : setup!} :core.macros)
 
 (fn setup []
-  (use ii14/autosplit.nvim :event "User PackerDefered")
-  (use tpope/vim-eunuch :event "User PackerDefered")
-  (use tpope/vim-repeat :event "User PackerDefered")
-  (use linty-org/readline.nvim :event "User PackerDefered" :init+ :editor.readline)
-  (use nvim-treesitter/nvim-treesitter :start true :init+ :editor.treesitter)
-  (use p00f/nvim-ts-rainbow :event "User PackerDefered")
-  (use andymass/vim-matchup :event "User PackerDefered")
-  (use JoosepAlviste/nvim-ts-context-commentstring :config #(vim.cmd "do User CommentStringLoaded") :event "User PackerDefered")
-  (use echasnovski/mini.ai :event "User PackerDefered" :init :mini.ai)
-  (use echasnovski/mini.surround :event "User PackerDefered" :init :mini.surround)
-  (use echasnovski/mini.pairs :event "User PackerDefered" :init :mini.pairs)
-  (use echasnovski/mini.bufremove :event "User PackerDefered" :init :mini.bufremove)
-  (use echasnovski/mini.align :event "User PackerDefered" :init :mini.align)
-  (use echasnovski/mini.comment :event "User CommentStringLoaded" :init+ :editor.comment)
-  (use NvChad/nvim-colorizer.lua :event :BufReadPre :init :colorizer)
-  (use nvim-telescope/telescope-fzf-native.nvim :event "User TelescopeLoaded" :run "make")
-  (use nvim-telescope/telescope-live-grep-args.nvim :event "User TelescopeLoaded")
+  (use ii14/autosplit.nvim :event "VeryLazy")
+  (use tpope/vim-eunuch :event "VeryLazy")
+  (use tpope/vim-repeat :event "VeryLazy")
+  (use linty-org/readline.nvim :event "VeryLazy" :mod :editor.readline)
+  (use nvim-treesitter/nvim-treesitter
+       :lazy false
+       :mod :editor.treesitter
+       :build ":TSUpdate"
+       :dependencies
+       [:mrjones2014/nvim-ts-rainbow
+        :andymass/vim-matchup
+        :JoosepAlviste/nvim-ts-context-commentstring])
+  (use echasnovski/mini.ai :event "VeryLazy" :mod+ :mini.ai)
+  (use echasnovski/mini.surround :event "VeryLazy" :mod+ :mini.surround)
+  (use echasnovski/mini.pairs :event "VeryLazy" :mod+ :mini.pairs)
+  (use echasnovski/mini.bufremove :event "VeryLazy" :mod+ :mini.bufremove)
+  (use echasnovski/mini.align :event "VeryLazy" :mod+ :mini.align)
+  (use echasnovski/mini.comment
+       :event "VeryLazy"
+       :mod :editor.comment
+       :dependencies :JoosepAlviste/nvim-ts-context-commentstring)
+  (use NvChad/nvim-colorizer.lua
+       :cmd ["ColorizerToggle"
+             "ColorizerAttachToBuffer"
+             "ColorizerDeattachFromBuffer"
+             "ColorizerReloadAllBuffers"]
+       :mod+ :colorizer)
   (use nvim-telescope/telescope.nvim
-       :event ["User PackerDefered" "User NeorgLoaded"]
-       :init+ :editor.telescope))
+       :event "VeryLazy"
+       :mod :editor.telescope
+       :dependencies
+       [{1 :nvim-telescope/telescope-fzf-native.nvim :build "make"}
+        :nvim-telescope/telescope-live-grep-args.nvim
+        :nvim-neorg/neorg-telescope]))
 
 {: setup}

@@ -27,7 +27,7 @@
             :core.norg.completion {:config {:engine :nvim-cmp}}
             :core.norg.dirman {:config {:workspaces {:notetoself :$HOME/workspace/notetoself
                                                      :gtd :$HOME/workspace/gtd}}}
-            :core.gtd.base {:config {:workspace :gtd}}
+            ;; :core.gtd.base {:config {:workspace :gtd}}
             :core.integrations.telescope {}}})
 
   (on_event :core.keybinds.events.enable_keybinds

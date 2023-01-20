@@ -2,5 +2,5 @@
 
 (fn setup []
   (setup! tmux {:copy_sync {:enable true}
-                :hnavigation {:enable_default_keybindings true}}))
+                :navigation {:enable_default_keybindings true}}))
 {: setup}

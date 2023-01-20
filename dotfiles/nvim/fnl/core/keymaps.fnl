@@ -150,11 +150,9 @@
   ;; ------------------------
   ;; Packer
 
-  (noremap n :<Leader>hpu :<Cmd>PackerUpdate<CR>)
-  (noremap n :<Leader>hpi :<Cmd>PackerInstall<CR>)
-  ;; (noremap n :<Leader>hpc :<Cmd>PackerCompile<CR>)
-  (noremap n :<Leader>hps :<Cmd>PackerSync<CR>)
-  ;; (noremap n :<Leader>hpp "<Cmd>PackerProfile<CR>")
+  (noremap n :<Leader>hlu "<Cmd>Lazy update<CR>")
+  (noremap n :<Leader>hli "<Cmd>Lazy install<CR>")
+  (noremap n :<Leader>hls "<Cmd>Lazy sync<CR>")
 
   ;; ------------------------
   ;; WINDOWS NAVIGATION
