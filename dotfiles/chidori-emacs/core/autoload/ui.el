@@ -14,6 +14,8 @@
      ("NOTE" . "#ff00ff")))
   (modus-themes-with-colors
     (custom-set-faces
+     `(modus-themes-completion-selected ((,c :foreground ,red-intense)))
+     `(popup-menu-selection-face ((,c :foreground ,red-intense)))
      `(diff-hl-margin-insert ((,c :foreground ,green-intense)))
      `(diff-hl-margin-change ((,c :foreground ,red-faint)))
      `(diff-hl-margin-delete ((,c :foreground ,red-intense)))

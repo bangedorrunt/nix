@@ -41,7 +41,7 @@ mutating hooks on exported output, like formatters."
                (if init-file
                    (load init-file nil t)
                  (load ,early-init-file nil t)
-                 (require 'doom-start)))
+                 (require 'chidori-hook)))
            (delete-file load-file-name))))
       (apply fn args))))
 

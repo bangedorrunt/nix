@@ -191,8 +191,6 @@ If this is a daemon session, load them all immediately instead."
   ;; packages.
   ;; REVIEW seem this fix `vterm-module' compilation
   (doom-run-hooks 'doom-before-init-hook)
-
-  (and (doom-has-modules-p) (require 'treesit nil t))
   )
 
 (chidori-bootstrap)

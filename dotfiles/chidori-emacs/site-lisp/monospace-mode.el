@@ -1,4 +1,4 @@
-;;; lisp/chidori-monospace.el --  -*- lexical-binding: t -*-
+;;; monospace-mode.el --  -*- lexical-binding: t -*-
 
 ;; https://git.sr.ht/~woolsweater/.emacs.d/tree/main/item/modules/monospace-mode.el
 ;;
@@ -59,4 +59,5 @@ be monospace."
       (buffer-face-set 'fixed-pitch)
     (buffer-face-set)))
 
-(provide 'chidori-monospace)
+(provide 'monospace-mode)
+;;; monospace-mode ends here

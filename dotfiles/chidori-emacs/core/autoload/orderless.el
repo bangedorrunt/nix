@@ -147,6 +147,7 @@ parses its input."
 ;; orderless.el.  I was using it, so I want to keep it, at least until
 ;; some new version is provided upstream.
 
+;;;###autoload
 (defun orderless--strict-*-initialism (component &optional anchored)
   "Match a COMPONENT as a strict initialism, optionally ANCHORED.
 The characters in COMPONENT must occur in the candidate in that
@@ -165,6 +166,7 @@ words of the candidate, respectively."
    (when (eq anchored 'both)
      '(seq (zero-or-more alpha) word-end (zero-or-more (not alpha)) eol))))
 
+;;;###autoload
 (defun orderless-strict-initialism (component)
   "Match a COMPONENT as a strict initialism.
 This means the characters in COMPONENT must occur in the
@@ -173,12 +175,14 @@ comprised of letters.  Only non-letters can be in between the
 words that start with the initials."
   (orderless--strict-*-initialism component))
 
+;;;###autoload
 (defun orderless-strict-leading-initialism (component)
   "Match a COMPONENT as a strict initialism, anchored at start.
 See `orderless-strict-initialism'.  Additionally require that the
 first initial appear in the first word of the candidate."
   (orderless--strict-*-initialism component 'start))
 
+;;;###autoload
 (defun orderless-strict-full-initialism (component)
   "Match a COMPONENT as a strict initialism, anchored at both ends.
 See `orderless-strict-initialism'.  Additionally require that the

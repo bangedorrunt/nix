@@ -9,8 +9,8 @@
   (set-fontset-font t nil "SF Compact Text" nil 'append))
 
 ;;;; Configuration for `monospace'
-(defvar monos-default-spec '(:family "SF Pro Display" :height 240))
-(defvar monos-fixed-pitch-spec '(:family "SF Mono" :height 240))
+(defvar monos-default-spec '(:family "SF Pro Display" :height 220))
+(defvar monos-fixed-pitch-spec '(:family "SF Mono" :height 220))
 
 (dolist (face '(mode-line mode-line-inactive))
   (set-face-attribute face nil :height 151))
@@ -44,8 +44,7 @@
           (range (cdr font-pua-points)))
       (set-fontset-font t range family nil 'prepend))))
 
-(package! chidori-monospace :builtin
-  :demand t
+(package! monospace-mode :builtin
   :hook (((prog-mode . monospace-mode)
           (nxml-mode . monospace-mode)
           (conf-mode . monospace-mode)
@@ -56,6 +55,26 @@
 ;;;;
 ;;;; Configuration for general UI
 ;;;;
+
+(package! dashboard :auto
+  ;; :disabled t
+  :hook (doom-load-theme . dashboard-setup-startup-hook)
+  :config
+  ;; Set the title
+  (setq dashboard-banner-logo-title "Welcome to Chidori Emacs")
+  ;; Set the banner
+  (setq dashboard-startup-banner (thread-last user-emacs-directory (expand-file-name "misc/emacs-e-dashboard-300.png")))
+  (setq dashboard-projects-backend 'project-el)
+
+  ;; Content is not centered by default. To center, set
+  (setq dashboard-center-content t)
+
+  ;; To disable shortcut "jump" indicators for each section, set
+  (setq dashboard-show-shortcuts t)
+  (setq dashboard-set-init-info t)
+  (dashboard-refresh-buffer)
+  ;; (dashboard-setup-startup-hook)
+  )
 
 (package! modus-themes :builtin
   :init
@@ -163,7 +182,7 @@
         doom-modeline-mu4e nil
         doom-modeline-persp-name nil
         doom-modeline-minor-modes nil
-        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-icon nil
         doom-modeline-buffer-file-name-style 'relative-from-project
         ;; Only show file encoding if it's non-UTF-8 and different line endings
         ;; than the current OSes preference
@@ -193,7 +212,7 @@
   (defvar mouse-wheel-up-event nil)
 
   (add-hook 'after-setting-font-hook #'+modeline-resize-for-font-h)
-  (add-hook 'modus-themes-after-load-theme-hook #'doom-modeline-refresh-bars)
+  ;; (add-hook 'modus-themes-after-load-theme-hook #'doom-modeline-refresh-bars)
 
   ;; Some functions modify the buffer, causing the modeline to show a false
   ;; modified state, so force them to behave.
@@ -202,15 +221,15 @@
     (with-silent-modifications (apply fn args)))
   (doom-modeline-mode))
 
-(package! chidori-sfsymbols :builtin
-  :after doom-modeline
-  :hook (doom-modeline-mode . sfsymbols-modeline-mode))
+(package! sfsymbols-modeline :builtin
+  :defer-incrementally doom-modeline
+  :config (sfsymbols-modeline-mode))
 
 (package! hl-todo :auto
   :hook (doom-first-buffer . global-hl-todo-mode))
 
 (package! treemacs :auto
-  :defer-incrementally evil
+  :defer 3
   :init
   (setq
    treemacs-no-png-images t
@@ -371,7 +390,7 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
              t)))))
 
 (package! fringe :builtin
-  :hook (doom-after-init . fringe-mode)
+  :hook (doom-first-buffer . fringe-mode)
   :config
   ;; Show final newline location with angle bracket in the fringe
   (setq
@@ -395,29 +414,32 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (package! display-line-numbers :builtin
-  :hook (doom-after-init . global-display-line-numbers-mode)
+  :hook (doom-first-buffer . global-display-line-numbers-mode)
   :custom
   (display-line-numbers-type 'relative)
   ;; Preserve line numbering from buffer start when "narrowed" (only for
   ;; display-line-numbers-mode)
   (display-line-numbers-widen t)
   :config
-  (with-eval-after-load 'evil
-    ;; Toggle line number between evil modes
-    (setq-hook! 'evil-insert-state-entry-hook display-line-numbers t)
-    (setq-hook! 'evil-insert-state-exit-hook display-line-numbers 'relative)))
+  (defun +evil--display-line-numbers ()
+    (setq display-line-numbers t))
+  (defun +evil--display-relative-line-numbers ()
+    (setq display-line-numbers 'relative))
+  ;; Toggle line number between evil modes
+  (add-hook 'evil-insert-state-entry-hook #'+evil--display-line-numbers)
+  (add-hook 'evil-insert-state-exit-hook #'+evil--display-relative-line-numbers))
 
 ;; Allow visual lines
 (package! simple :builtin
   :blackout visual-line-mode
-  :hook (doom-after-init . global-visual-line-mode)
+  :hook (doom-first-buffer . global-visual-line-mode)
   :custom
   ;; move via visual lines
   (line-move-visual t))
 
 ;; Use native smooth scrolling
 (package! pixel-scroll :builtin
-  :hook (doom-after-init . pixel-scroll-precision-mode)
+  :hook (doom-first-buffer . pixel-scroll-precision-mode)
   :custom (pixel-scroll-precision-interpolation-factor 10))
 
 ;; Nicer glyphs
@@ -478,10 +500,7 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
 (setq resize-mini-windows 'grow-only)
 
 ;; Typing yes/no is obnoxious when y/n will do
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  ;; DEPRECATED: Remove when we drop 27.x support
-  (advice-add #'yes-or-no-p :override #'y-or-n-p))
+(setq use-short-answers t)
 
 ;; Try to keep the cursor out of the read-only portions of the minibuffer.
 (setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
@@ -539,18 +558,9 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
           "*/_region_.log"
           "*/_region_.tex")))
 
-;; Before loading new theme
-(defadvice! +load-theme--disable-old-theme (theme &rest args)
-  "Disable current theme before loading new one."
-  :before #'load-theme
-  (mapcar #'disable-theme custom-enabled-themes))
-
-;; Force reloading custom faces
-(add-hook! 'after-init-hook
-  ;; Already loaded at early-init
-  (load-theme 'modus-vivendi :no-confirm)
-  (+modus-themes-custom-faces)
-  :depth -90)
+;; Already loaded at early-init
+(load-theme 'modus-vivendi)
+(+modus-themes-custom-faces)
 
 (provide 'chidori-ui)
 ;;; chidori-ui.el ends here

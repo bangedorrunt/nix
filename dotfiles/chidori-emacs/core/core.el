@@ -9,27 +9,6 @@ temporarily trading space for cycles, but not so high that we require OS paging.
 execution, the normal value (cadr) is used, a bit above the default of 800 KiB, to reverse the trade
 so we use more cycles but less space, but not too little space.")
 
-;; Define load-file directories
-(defvar chidori-core-dir (expand-file-name "core/" user-emacs-directory))
-(defvar chidori-autoload-dir (expand-file-name "core/autoload/" user-emacs-directory))
-(defvar chidori-doom-dir (expand-file-name "core/autoload/doom/" user-emacs-directory))
-(defvar chidori-org-dir (expand-file-name "core/autoload/org/" user-emacs-directory))
-(defvar chidori-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
-(defvar chidori-themes-dir (expand-file-name "themes/" user-emacs-directory))
-(defvar chidori-etc-dir (expand-file-name "etc/" user-emacs-directory))
-(defvar chidori-var-dir (expand-file-name "var/" user-emacs-directory))
-(defvar chidori-cache-dir (expand-file-name "cache/" user-emacs-directory))
-
-;; Make sure dirs are created
-(defsubst make-dir-if-not-exists (dir)
-  (unless (file-exists-p dir)
-    (make-directory dir)))
-(mapc 'make-dir-if-not-exists `(,chidori-etc-dir ,chidori-var-dir ,chidori-cache-dir))
-;; Actually add them all to the load-path.
-(defsubst add-to-load-path-if-exists (dir)
-  (when (file-exists-p dir) (add-to-list 'load-path dir)))
-(mapc 'add-to-load-path-if-exists
-      `(,chidori-lisp-dir))
 
 (defun chidori-init ()
   "Perform startup initialization, including all comilation and loading"
@@ -83,7 +62,8 @@ so we use more cycles but less space, but not too little space.")
       chidori-denote
       chidori-lisp
       chidori-tty
-      chidori-binding))
+      chidori-binding
+      ))
 
   (apply 'doom-requires chidori-modules-packages)
 

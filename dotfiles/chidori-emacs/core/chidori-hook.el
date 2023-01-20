@@ -2,6 +2,31 @@
 
 ;; SEE: https://github.com/ajgrf/on.el
 
+(defvar doom-theme nil
+  "A symbol representing the Emacs theme to load at startup.
+Set to `nil' to load no theme at all. This variable is changed by
+`load-theme'.")
+
+(defvar doom-load-theme-hook nil
+  "Hook run after the theme is loaded with `load-theme' or reloaded with
+`doom/reload-theme'.")
+
+(defvar doom-init-ui-hook nil
+  "List of hooks to run when the UI has been initialized.")
+(put 'doom-init-ui-hook 'permanent-local t)
+
+(defvar doom-after-init-hook nil
+  "A hook run after UI initialized")
+(put 'doom-after-init-hook 'permanent-local t)
+
+(defvar doom-after-module-config-hook nil
+  "A hook run after config chidori modules")
+(put 'doom-after-module-config-hook 'permanent-local t)
+
+(defvar doom-before-init-hook nil
+  "A hook run before UI initialized")
+(put 'doom-before-init-hook 'permanent-local t)
+
 (defvar doom-first-input-hook nil
   "Transient hooks run before the first user input.")
 (put 'doom-first-input-hook 'permanent-local t)
@@ -22,22 +47,6 @@
 
 (defvar doom-switch-frame-hook nil
   "A hook run after changing the focused frame.")
-
-(defvar doom-after-init-hook nil
-  "A hook run after UI initialized")
-(put 'doom-after-init-hook 'permanent-local t)
-
-(defvar doom-after-module-config-hook nil
-  "A hook run after config chidori modules")
-(put 'doom-after-module-config-hook 'permanent-local t)
-
-(defvar doom-before-init-hook nil
-  "A hook run before UI initialized")
-(put 'doom-before-init-hook 'permanent-local t)
-
-(defvar doom-init-ui-hook nil
-  "List of hooks to run when the UI has been initialized.")
-(put 'doom-init-ui-hook 'permanent-local t)
 
 (defvar doom-escape-hook nil
   "A hook run when C-g is pressed (or ESC in normal mode, for evil users).
@@ -92,6 +101,23 @@ or if the current buffer is read-only or not file-visiting."
   (dolist (var '(exec-path load-path process-environment))
     (put var 'initial-value (default-toplevel-value var))))
 
+(defadvice! doom--load-theme-a (fn theme &optional no-confirm no-enable)
+  " Disable old themes, and trigger `doom-load-theme-hook'."
+  :around #'load-theme
+  ;; Run `load-theme' from an estranged buffer, where we can ensure that
+  ;; buffer-local face remaps (by `mixed-pitch-mode', for instance) won't
+  ;; interfere with recalculating faces in new themes.
+  (with-temp-buffer
+    (let ((last-themes (copy-sequence custom-enabled-themes)))
+      ;; Disable previous themes so there are no conflicts. If you truly want
+      ;; multiple themes enabled, then use `enable-theme' instead.
+      (mapc #'disable-theme custom-enabled-themes)
+      (prog1 (funcall fn theme no-confirm no-enable)
+        (when (and (not no-enable) (custom-theme-enabled-p theme))
+          ;; DEPRECATED Hook into `enable-theme-functions' when we target 29
+          (doom-run-hooks 'doom-load-theme-hook)
+          )))))
+
 (defun doom-init-ui-h (&optional _)
   "Initialize user interface by applying its hooks.
 These should be done as late as possible, as to avoid/minimize prematurely
@@ -110,9 +136,6 @@ triggering hooks during startup."
   (add-hook 'window-buffer-change-functions #'doom-run-switch-buffer-hooks-h)
   ;; `window-buffer-change-functions' doesn't trigger for files visited via the server.
   (add-hook 'server-visit-hook #'doom-run-switch-buffer-hooks-h)
-
-  ;; FIXME this could be troublesome
-  ;; Does it make magit slow as hell???
 
   ;; Only execute this function once.
   (remove-hook 'window-buffer-change-functions #'doom-init-ui-h)

@@ -117,7 +117,11 @@
    "n." #'consult-notes
    "n;" #'consult-notes-search-in-all-notes))
 
-
+(package! olivetti :auto
+  :config
+  (setq olivetti-body-width 0.7)
+  (setq olivetti-minimum-body-width 80)
+  (setq olivetti-recall-visual-line-mode-entry-state t))
 
 (provide 'chidori-denote)
 ;;; chidori-denote.el ends here

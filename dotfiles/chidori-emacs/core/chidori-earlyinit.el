@@ -76,7 +76,8 @@
       ";; Go placidly amid the noise and haste,\n"
       ";; and remember what peace there may be in silence.\n"
       ";;\n"
-      "\n\n"))
+      "\n\n")
+     )
 
     (unless init-file-debug
       ;; PERF,UX: Site files tend to use `load-file', which emits "Loading X..."

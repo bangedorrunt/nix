@@ -73,6 +73,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
              #'doom-disable-show-paren-mode-h
              ;; disable `show-trailing-whitespace'; shows a lot of false positives
              #'doom-disable-show-trailing-whitespace-h
+             #'doom-disable-line-numbers-h
              #'+org-enable-auto-reformat-tables-h
              #'+org-enable-auto-update-cookies-h
              #'+org-make-last-point-visible-h)
@@ -712,8 +713,8 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-modern-table-vertical 1)
   (setq org-modern-table-horizontal 0)
   (setq org-modern-list ; I swap the defaults for + and *
-        '((?+ . "•")
-          (?- . "▸")
+        '((?- . "•")
+          (?+ . "▸")
           (?* . "◦")))
   ;; I don't use those in documents anyway, and if I ever do I need to
   ;; remember what their standard looks are.

@@ -8,7 +8,6 @@
   :prefix 'chidori)
 
 (setq debug-on-error t) ; verifier les erreurs dans ce fichier
-(setq load-prefer-newer t) ; Load newest code during init
 (setq ad-redefinition-action 'accept) ; Accept advice redefinition without complaining
 
 (require 'chidori-earlyinit (expand-file-name "core/chidori-earlyinit.el" user-emacs-directory))

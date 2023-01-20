@@ -1,5 +1,7 @@
 ;;; core/autoload/org/org.el -*- lexical-binding: t; -*-
 ;;;###autoload
+
+;;;###autoload
 (defun +org-init-hacks-h ()
   "Getting org to behave."
   ;; Open file links in current window, rather than new ones

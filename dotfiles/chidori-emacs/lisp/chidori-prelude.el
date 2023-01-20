@@ -1,5 +1,7 @@
 ;;; lisp/chidori-prelude.el -*- lexical-binding: t; -*-
 ;;; Code:
+;;;
+
 ;; Set up core packages. The ELPA keyring sometimes gets screwed up, but this package lets us fix
 ;; it easily.
 (package! gnu-elpa-keyring-update :auto)
@@ -248,9 +250,6 @@
        (recentf-add-file buffer-file-name))
      ;; Return nil for `write-file-functions'
      nil))
-
-
-  (advice-add 'recentf-load-list :around #'noct-silence-advice)
 
   ;; save recent after 10 seconds of idle time
   ;; if not idle, save every 5 minutes

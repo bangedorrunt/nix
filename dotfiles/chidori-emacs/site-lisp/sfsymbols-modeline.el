@@ -1,4 +1,4 @@
-;;; chidori-sfsymbols.el --- Use SF Symbols icons in Doom modeline ;; -*- lexical-binding: t; -*-
+;;; sfsymbols-modeline.el --- Use SF Symbols icons in Doom modeline ;; -*- lexical-binding: t; -*-
 
 
 ;;; Commentary:
@@ -172,5 +172,5 @@ This covers state like read-only, dirty buffer, and narrowing."
           (setf (cdar doom-modeline--font-width-cache) (+ 0.5 width)))
       (doom-modeline-refresh-font-width-cache))))
 
-(provide 'chidori-sfsymbols)
-;;; chidori-sfsymbols.el ends here
+(provide 'sfsymbols-modeline)
+;;; sfsymbols-modeline.el ends here

@@ -230,5 +230,5 @@ contents are irrelevant."
                 (file-missing nil))))
     (cons 'explicit explicit-root)))
 
-(provide 'chidori-conjecture)
+(provide 'conjecture)
 ;; chidori-conjecture ends here

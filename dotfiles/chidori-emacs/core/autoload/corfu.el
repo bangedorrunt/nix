@@ -4,6 +4,7 @@
 (defvar +corfu-super-capfs
   '(tempel-complete
     :completion
+    cape-file
     cape-dabbrev
     cape-dict)
   "A list of global capes to be available at all times.

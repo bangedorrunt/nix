@@ -63,7 +63,9 @@
         (goto-char (cadr +magit--pos))
         (set-window-start nil (caddr +magit--pos) t)
         (kill-local-variable '+magit--pos))))
+
   ;; Optimization from officical magit
+  ;; (setq magit-refresh-status-buffer nil)
   ;; Committing performance
   (remove-hook 'server-switch-hook 'magit-commit-diff)
   (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff)
@@ -75,18 +77,18 @@
   ;; executable in your PATH, which is great because it is called so frequently.
   ;; However, absolute paths will break magit in TRAMP/remote projects if the
   ;; git executable isn't in the exact same location.
-  ;; (add-hook! 'magit-status-mode-hook
-  ;;   (defun +magit-optimize-process-calls-h ()
-  ;;     (when-let (path (executable-find magit-git-executable t))
-  ;;       (setq-local magit-git-executable path))))
+  (add-hook! 'magit-status-mode-hook
+    (defun +magit-optimize-process-calls-h ()
+      (when-let (path (executable-find magit-git-executable t))
+        (setq-local magit-git-executable path))))
 
-  ;; (add-hook! 'magit-diff-visit-file-hook
-  ;;   (defun +magit-reveal-point-if-invisible-h ()
-  ;;     "Reveal the point if in an invisible region."
-  ;;     (if (derived-mode-p 'org-mode)
-  ;;         (org-reveal '(4))
-  ;;       (require 'reveal)
-  ;;       (reveal-post-command))))
+  (add-hook! 'magit-diff-visit-file-hook
+    (defun +magit-reveal-point-if-invisible-h ()
+      "Reveal the point if in an invisible region."
+      (if (derived-mode-p 'org-mode)
+          (org-reveal '(4))
+        (require 'reveal)
+        (reveal-post-command))))
 
   ;; Magit uses `magit-display-buffer-traditional' to display windows, by
   ;; default, which is a little primitive. `+magit-display-buffer' marries
@@ -173,8 +175,11 @@
   (custom-set-variables
    '(magit-todos-keywords (list "TODO" "FIXME" "TEMP"))))
 
-;; use delta pager in magit diffs
+;; NOTE this is culprit that makes `magit-status' slow to a crawl
+;;
+;; Use delta pager in magit diffs
 (package! magit-delta :auto
+  :disabled t
   :hook (magit-mode . magit-delta-mode))
 
 ;; extremely difficult to style for some reason

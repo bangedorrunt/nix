@@ -14,7 +14,7 @@
                                   (project-eshell "Eshell" "e")
                                   (consult-ripgrep "Ripgrep" "r"))))
 
-(package! chidori-conjecture :builtin
+(package! conjecture :builtin
   :after project
   :config
   (add-hook 'project-find-functions #'project-explicit-recognizer -90 ))

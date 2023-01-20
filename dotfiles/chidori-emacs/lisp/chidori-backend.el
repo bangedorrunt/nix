@@ -1,7 +1,8 @@
 ;; lisp/chidori-backend.el -*- lexical-binding: t; -*-
+;; TODO refactor packages
 
 (package! treesit :builtin
-  :commands (treesit-install-language-grammar nf/treesit-install-all-languages)
+  :commands (treesit-install-language-grammar +treesit/install-all-languages)
   :init
   (setq treesit-language-source-alist
    '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
@@ -24,7 +25,7 @@
      (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
      (zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
   :config
-  (defun nf/treesit-install-all-languages ()
+  (defun +treesit/install-all-languages ()
     "Install all languages specified by `treesit-language-source-alist'."
     (interactive)
     (let ((languages (mapcar 'car treesit-language-source-alist)))
@@ -33,6 +34,39 @@
 	      (message "`%s' parser was installed." lang)
 	      (sit-for 0.75)))))
 
+;;;;
+;;;;; flymake/flycheck
+;;;;
+(package! flymake :auto
+  :hook (doom-first-file . flymake-mode)
+  :config
+  ;; left-fringe is the default, but we're being explicit because git-gutter also uses left-fringe.
+  ;; Usually this works itself out.
+  ;; (setq flymake-fringe-indicator-position 'left-fringe)
+  ;; (setq flymake-wrap-around t)
+
+  ;; Disable fringe
+  (put :note 'flymake-bitmap nil)
+  (put :error 'flymake-bitmap nil)
+  (put :warn 'flymake-bitmap nil)
+
+  (map!
+   :leader
+   "en" #'flymake-goto-next-error
+   "ep" #'flymake-goto-prev-error
+   "eb" #'flymake-show-buffer-diagnostics))
+
+;; makes flymake appear in popup
+(package! flymake-diagnostic-at-point (:host github :repo "meqif/flymake-diagnostic-at-point")
+  :after flymake
+  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
+
+(package! flymake-eslint :auto
+  :init
+  ;; Need to add after eglot so eglot doesn't clobber
+  (add-hook! 'eglot-managed-mode-hook
+    (when (or (derived-mode-p 'typescript-mode) (derived-mode-p 'js-mode))
+      (flymake-eslint-enable))))
 ;; puts eldoc in a child frame. not enabled via eldoc because I'm not certain of it yet
 (package! eldoc-box :auto :commands (eldoc-box-hover-mode))
 
@@ -72,34 +106,11 @@
 
 (package! rust-mode :auto :mode "\\.rs\\'")
 
-;; flymake/flycheck
 
-(package! flymake :builtin
-  :hook (doom-first-file . flymake-mode)
-  :config
-  ;; left-fringe is the default, but we're being explicit because git-gutter also uses left-fringe.
-  ;; Usually this works itself out.
-  (setq flymake-fringe-indicator-position 'left-fringe
-        flymake-wrap-around t)
-  (map!
-   :leader
-   "en" #'flymake-goto-next-error
-   "ep" #'flymake-goto-prev-error
-   "eb" #'flymake-show-buffer-diagnostics))
-
-;; makes flymake appear in popup
-(package! flymake-diagnostic-at-point (:host github :repo "meqif/flymake-diagnostic-at-point")
-  :after flymake
-  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
-
-(package! flymake-eslint :auto
-  :init
-  ;; Need to add after eglot so eglot doesn't clobber
-  (add-hook! 'eglot-managed-mode-hook
-    (when (or (derived-mode-p 'typescript-mode) (derived-mode-p 'js-mode))
-      (flymake-eslint-enable))))
-
-;; parens
+;;;;
+;;;;; parens
+;;;;; TODO replace with electric.el and|or puni.el
+;;;;
 
 (package! smartparens :auto
   ;; Auto-close delimiters and blocks as you type. It's more powerful than that,
@@ -184,7 +195,6 @@ on."
 
 (package! apheleia :auto
   :blackout t
-  :after evil
   :after-call doom-first-buffer-hook
   :config
   ;; For some reason, prettier won't read the config file from package.json. I'm just hard-coding
