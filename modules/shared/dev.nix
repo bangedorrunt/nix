@@ -23,19 +23,40 @@ in
         # git 
         gh
         # clangd
+        tree-sitter
         clang-tools
-        # python with default packages
-        (python39.withPackages (ps: with ps; [ pip pipx black ]))
         lua
         nodejs
         nodePackages.pnpm
         nodePackages.yarn
-        # lazygit
-        nixfmt
-        nixpkgs-fmt
         (callPackage ../pkgs/fnlfmt.nix { })
         shfmt
+        clojure-lsp
+        sumneko-lua-language-server
+        nodePackages.bash-language-server
+        nodePackages.dockerfile-language-server-nodejs
+        nodePackages.yaml-language-server
+        nodePackages.eslint_d
+        nodePackages.markdownlint-cli
+        nodePackages.pyright
+        nodePackages.prettier
+        nodePackages.stylelint
+        nodePackages.typescript-language-server
+        nodePackages.vim-language-server
+        nodePackages.vscode-langservers-extracted # HTML, CSS, JSON LSPs
+        (callPackage ../pkgs/tailwind.nix { })
+        (
+          writeScriptBin "tailwind-lsp" ''
+            #!/usr/bin/env sh
+            node ${(callPackage ../pkgs/tailwind.nix {})}/share/vscode/extensions/bradlc.vscode-tailwindcss/dist/server/index.js --stdio
+          ''
+        )
+        shellcheck
+        rnix-lsp
+        nixfmt
+        nixpkgs-fmt
         treefmt
+        stylua
       ];
     };
 }

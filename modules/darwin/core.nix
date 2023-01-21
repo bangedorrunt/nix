@@ -1,20 +1,24 @@
 { inputs, config, pkgs, ... }:
 let
   prefix = "/run/current-system/sw/bin";
+  inherit (pkgs.stdenvNoCC) isAarch64 isAarch32;
 in
 {
   # Environment setup
   environment = {
-    loginShell = pkgs.zsh;
-    pathsToLink = [ "/Applications" ];
+    loginShell = pkgs.fish;
     # backupFileExtension = "backup";
     etc = { darwin.source = "${inputs.darwin}"; };
   };
 
-  nix.nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
-
   # Auto manage nixbld users with nix darwin
-  users.nix.configureBuildUsers = true;
+  nix = {
+    configureBuildUsers = true;
+    nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
+    extraOptions = ''
+      extra-platforms = x86_64-darwin aarch64-darwin
+    '';
+  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;

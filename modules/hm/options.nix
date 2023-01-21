@@ -13,11 +13,11 @@ in
     my = {
       name = mkOptStr "Thanh Dung TRUONG";
       timezone = mkOptStr "AEST";
-      username = mkOptStr "babygau";
-      website = mkOptStr "https://babygau.github.io";
-      github_username = mkOptStr "babygau";
+      username = mkOptStr "brunetdragon";
+      website = mkOptStr "https://bangedorrunt.github.io";
+      github_username = mkOptStr "bangedorrunt";
       email = mkOptStr "braden.truong@gmail.com";
-      terminal = mkOptStr "iTerm2";
+      terminal = mkOptStr "WezTerm";
       # home-manager doesn't suppport this options
       # user = mkOption { type = options.users.users.type.functor.wrapped; };
       user = mkOpt' attrs { } "Primary user";
@@ -39,7 +39,7 @@ in
         else
           "/home/${config.my.username}";
 
-      shell = pkgs.zsh;
+      shell = pkgs.fish;
     };
 
     # NOTE: home-manager is a module which is used in
@@ -66,7 +66,7 @@ in
     home = {
       # Necessary for home-manager to work with flakes, otherwise it will
       # look for a nixpkgs channel.
-      # stateVersion = "21.05";
+      stateVersion = "22.05";
       username = config.my.username;
       homeDirectory = config.my.user.home;
       file = mkAliasDefinitions options.my.hm.file;

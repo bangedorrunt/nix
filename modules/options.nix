@@ -11,11 +11,11 @@ in
     my = {
       name = mkOptStr "Thanh Dung TRUONG";
       timezone = mkOptStr "AEST";
-      username = mkOptStr "babygau";
-      website = mkOptStr "https://babygau.github.io";
-      github_username = mkOptStr "babygau";
+      username = mkOptStr "brunetdragon";
+      website = mkOptStr "https://bangedorrunt.github.io";
+      github_username = mkOptStr "bangedorrunt";
       email = mkOptStr "braden.truong@gmail.com";
-      terminal = mkOptStr "iTerm2";
+      terminal = mkOptStr "WezTerm";
       user = mkOption { type = options.users.users.type.functor.wrapped; };
       hm = {
         file = mkOpt' attrs { } "Files to place directly in $HOME";
@@ -39,16 +39,16 @@ in
         else
           "/home/${config.my.username}";
 
-      shell = pkgs.zsh;
+      shell = pkgs.fish;
     };
 
     # Let Nix manage Home-Manager profiles and use global nixpkgs
     home-manager = {
       # Don't set `useGlobalPkgs`! it's not neccessary in newer HM
       # and doens't work with configs using `nixpkgs.config`.
-      useGlobalPkgs = true;
+      # useGlobalPkgs = true;
       useUserPackages = true;
-      # This caused undefined variable `hm` if I don't smash 
+      # This caused undefined variable `hm` if I don't smash
       # home-manager.lib together with `nixpkgs.lib` as @kclejeune did
       extraSpecialArgs = { inherit inputs lib; };
       backupFileExtension = "backup";
@@ -76,7 +76,9 @@ in
       home = {
         # Necessary for home-manager to work with flakes, otherwise it will
         # look for a nixpkgs channel.
-        stateVersion = if pkgs.stdenv.isDarwin then "20.09" else config.system.stateVersion;
+        # stateVersion = if pkgs.stdenv.isDarwin then "20.09" else
+        # config.system.stateVersion;
+        stateVersion = "22.05";
         username = config.my.username;
         homeDirectory = config.my.user.home;
         file = mkAliasDefinitions options.my.hm.file;

@@ -6,7 +6,7 @@
         stable = import stable { system = prev.system; };
       }
     )
-    inputs.neovim-nightly-overlay.overlay
+    # inputs.neovim-nightly-overlay.overlay
     (import ../modules/pkgs/sumneko-overlay.nix)
   ];
 }

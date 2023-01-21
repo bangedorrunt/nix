@@ -1,53 +1,49 @@
-{ inputs, config, lib, pkgs, nixpkgs, stable, ... }: {
+{ self, inputs, config, lib, pkgs, ... }: {
   nixpkgs = {
     config = import ./config.nix;
-    overlays = [ ];
+    overlays = builtins.attrValues self.overlays;
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nix;
     extraOptions = ''
       keep-outputs = true
       keep-derivations = true
-      ${lib.optionalString (config.nix.package == pkgs.nixFlakes)
-      "experimental-features = nix-command flakes"}
+      experimental-features = nix-command flakes
     '';
-    trustedUsers = [ config.my.username "root" "@admin" "@wheel" ];
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
     };
-    buildCores = 8;
-    maxJobs = 8;
+    settings = {
+      max-jobs = 8;
+      trusted-users = [ "${config.my.username}" "root" "@admin" "@wheel" ];
+      trusted-substituters = [
+        "https://cachix.cachix.org"
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
     readOnlyStore = true;
-    nixPath = [
-      "nixpkgs=${inputs.nixpkgs}"
-      "darwin=${inputs.darwin}"
-      "home-manager=${inputs.home-manager}"
-    ];
-
-    binaryCaches = [
-      "https://cachix.cachix.org"
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-      "https://nixpkgs.cachix.org"
-      "https://babygau.cachix.org"
-    ];
-    binaryCachePublicKeys = [
-      "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="
-      "babygau.cachix.org-1:zkCsTYBSsJawIKOFe3pSYg1ZpOpwdln5DRLna7Ovx0A="
-    ];
-
+    nixPath =
+      builtins.map
+        (source: "${source}=/etc/${config.environment.etc.${source}.target}") [
+          "home-manager"
+          "nixpkgs"
+          "stable"
+        ];
     registry = {
       nixpkgs = {
         from = {
           id = "nixpkgs";
           type = "indirect";
         };
-        flake = nixpkgs;
+        flake = inputs.nixpkgs;
       };
 
       stable = {
@@ -55,7 +51,7 @@
           id = "stable";
           type = "indirect";
         };
-        flake = stable;
+        flake = inputs.stable;
       };
     };
   };

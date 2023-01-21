@@ -1,38 +1,37 @@
 { config, pkgs, ... }: {
   system.defaults = {
-
-    # Login window settings
+    # login window settings
     loginwindow = {
-      # Disable guest account
+      # disable guest account
       GuestEnabled = false;
-      # Show name instead of username
+      # show name instead of username
       SHOWFULLNAME = false;
     };
 
-    # File viewer settings
+    # file viewer settings
     finder = {
       AppleShowAllExtensions = true;
       FXEnableExtensionChangeWarning = true;
       _FXShowPosixPathInTitle = true;
     };
 
-    # Trackpad settings
+    # trackpad settings
     trackpad = {
-      # Silent clicking = 0, default = 1
+      # silent clicking = 0, default = 1
       ActuationStrength = 0;
-      # Enable tap to click
+      # enable tap to click
       Clicking = true;
-      # Firmness level, 0 = lightest, 2 = heaviest
+      # firmness level, 0 = lightest, 2 = heaviest
       FirstClickThreshold = 1;
-      # Firmness level for force touch
+      # firmness level for force touch
       SecondClickThreshold = 1;
-      # Don't allow positional right click
+      # don't allow positional right click
       TrackpadRightClick = false;
-      # Three finger drag for space switching
+      # three finger drag for space switching
       # TrackpadThreeFingerDrag = true;
     };
 
-    # Firewall settings
+    # firewall settings
     alf = {
       # 0 = disabled 1 = enabled 2 = blocks all connections except for essential services
       globalstate = 1;
@@ -40,14 +39,14 @@
       stealthenabled = 1;
     };
 
-    # Dock settings
+    # dock settings
     dock = {
-      # Auto show and hide dock
+      # auto show and hide dock
       autohide = true;
-      # Remove delay for showing dock
-      autohide-delay = "0.0";
-      # How fast is the dock showing animation
-      autohide-time-modifier = "1.0";
+      # remove delay for showing dock
+      autohide-delay = 0.0;
+      # how fast is the dock showing animation
+      autohide-time-modifier = 1.0;
       tilesize = 50;
       static-only = false;
       showhidden = false;
@@ -56,14 +55,15 @@
       orientation = "bottom";
       mru-spaces = false;
     };
+
     NSGlobalDomain = {
       "com.apple.sound.beep.feedback" = 0;
-      "com.apple.sound.beep.volume" = "0.000";
-      # Allow key repeat
+      "com.apple.sound.beep.volume" = 0.0;
+      # allow key repeat
       ApplePressAndHoldEnabled = false;
-      # Delay before repeating keystrokes
+      # delay before repeating keystrokes
       InitialKeyRepeat = 10;
-      # Delay between repeated keystrokes upon holding a key
+      # delay between repeated keystrokes upon holding a key
       KeyRepeat = 1;
       AppleShowAllExtensions = true;
       AppleShowScrollBars = "Automatic";

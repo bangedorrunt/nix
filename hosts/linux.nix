@@ -19,7 +19,7 @@ in
     # Until mkOutOfStoreSymLink is fixed, used activation script instead
     dotfiles.enable = false;
     dev.enable = true;
-    neovim.enable = true;
+    # neovim.enable = true;
   };
 
   hm.programs.zsh.enable = true;

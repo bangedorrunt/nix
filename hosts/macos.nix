@@ -8,15 +8,14 @@ in
 {
 
   my = {
-    username = "babygau";
+    username = "brunetdragon";
     email = "braden.truong@gmail.com";
-    website = "https://babygau.github.io";
-    github_username = "babygau";
+    website = "https://bangedorrunt.github.io";
+    github_username = "bangedorrunt";
   };
 
   imports = [
     ../modules/darwin
-    ../modules/darwin/apps.nix
   ];
 
 
@@ -24,10 +23,10 @@ in
     # Until mkOutOfStoreSymLink is fixed, used activation script instead
     dotfiles.enable = false;
     dev.enable = true;
-    neovim.enable = true;
+    # neovim.enable = false;
   };
 
-  # hm.programs.zsh.enable = true;
+  # hm.programs.fish.enable = true;
 
   # Use script at system context
   # system.activationScripts.postUserActivation.text = ''
@@ -52,9 +51,9 @@ in
       ln -sf ${NIX_DIR}/dotfiles/bat ${HOME_DIR}/.config/bat
     fi
 
-    if [ ! -e "${HOME_DIR}/.config/emacs" ]; then
+    if [ ! -e "${HOME_DIR}/.emacs.d" ]; then
       echo ":: -> Linking emacs dir..."
-      ln -sf ${NIX_DIR}/dotfiles/pure-emacs ${HOME_DIR}/.config/emacs
+      ln -sf ${NIX_DIR}/dotfiles/chidori-emacs ${HOME_DIR}/.emacs.d
     fi
 
     if [ ! -e "${HOME_DIR}/.config/yabai" ]; then

@@ -2,6 +2,7 @@
   imports = [
     ./core.nix
     ./brew.nix
-    ./sensible_default_macos.nix
+    ./apps.nix
+    ./sensible-defaults-macos.nix
   ];
 }

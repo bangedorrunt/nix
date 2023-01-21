@@ -3,7 +3,6 @@
   imports = [
     ./dotfiles.nix
     ./dev.nix
-    ./neovim.nix
   ];
 
   my.hm.packages = with pkgs; [
@@ -28,7 +27,7 @@
     jq
     kepubify
     neofetch
-    nixUnstable
+    # nixUnstable
     # openssh
     pandoc
     ripgrep
