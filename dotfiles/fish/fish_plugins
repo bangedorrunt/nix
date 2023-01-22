@@ -4,3 +4,6 @@ patrickf1/fzf.fish
 jethrokuan/z
 ilancosman/tide@v5
 catppuccin/fish
+oh-my-fish/plugin-foreign-env
+lilyball/nix-env.fish
+jorgebucaran/fisher

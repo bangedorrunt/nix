@@ -11,12 +11,17 @@ set -qx XDG_CACHE_HOME; or set -Ux XDG_CACHE_HOME $HOME/.cache
 
 # Path
 fish_add_path -m $HOME/.local/bin
-fish_add_path -g $HOME/.cargo/bin
-fish_add_path -g /opt/homebrew/bin
-fish_add_path -g /opt/homebrew/sbin
-fish_add_path -g /usr/local/sbin
-fish_add_path -g $HOME/.local/share/nvim/mason/bin
-# fish_add_path -g $XDG_STATE_HOME/fnm_multishells/84307_1673052073590/bin
+fish_add_path $HOME/.cargo/bin
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/sbin
+fish_add_path /usr/local/sbin
+
+# I don't use home-manager to take over shell configuration
+fenv source /etc/profiles/per-user/brunetdragon/etc/profile.d/hm-session-vars.sh
+# NOTE `.nix-profile` symlink somehow point to invalid path
+# redirect `.nix-profile` to `/etc/static/profiles/per-user/brunetdragon`
+# so I don't have to manually add path
+# fish_add_path /etc/profiles/per-user/brunetdragon/bin
 
 set -Ux EDITOR nvim
 set -Ux SUDO_EDITOR $EDITOR
@@ -30,6 +35,8 @@ set -Ux PAGER less
 set -Ux GOKU_EDN_CONFIG_FILE $HOME/nix/dotfiles/karabiner/karabiner.edn
 
 set -Ux SSH_KEY_PATH $HOME/.ssh/id_rsa
+set -gx SSH_AUTH_SOCK $SSH_AUTH_SOCK
+set -gx SSH_AGENT_PID $SSH_AGENT_PID
 
 set -x LC_ALL en_US.UTF-8
 set -x LC_CTYPE en_US.UTF-8
@@ -69,7 +76,7 @@ end
 if command -qs emacs
     abbr e 'emacs -nw'
     abbr emacs 'emacs -nw'
-    alias f 'emacs -nw $(fzf)'
+    # alias f 'emacs -nw $(fzf)'
 end
 
 if command -qs nvim
@@ -79,7 +86,7 @@ if command -qs nvim
     abbr nv nvim
     abbr sv sudoedit
     abbr vudo sudoedit
-    # alias f 'nvim $(fzf)'
+    alias f 'nvim $(fzf)'
 end
 
 abbr .... 'cd ../../../'
