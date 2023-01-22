@@ -3,26 +3,26 @@
 let
   HOME_DIR = config.my.user.home;
   NIX_DIR = "${HOME_DIR}/nix";
-in
 
+in
 {
 
   my = {
-    username = "babygau";
+    username = "brunetdragon";
     email = "braden.truong@gmail.com";
-    website = "https://babygau.github.io";
-    github_username = "babygau";
+    website = "https://bangedorrunt.github.io";
+    github_username = "bangedorrunt";
   };
 
+  imports = [ ../modules/nixos ];
 
   my.modules = {
     # Until mkOutOfStoreSymLink is fixed, used activation script instead
-    dotfiles.enable = false;
+    # dotfiles.enable = true;
     dev.enable = true;
-    # neovim.enable = true;
   };
 
-  hm.programs.zsh.enable = true;
+  # hm.programs.zsh.enable = true;
 
   # Use script at system context
   #system.activationScripts.postUserActivation.text = ''

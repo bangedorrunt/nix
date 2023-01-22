@@ -3,8 +3,8 @@
 let
   HOME_DIR = config.my.user.home;
   NIX_DIR = "${HOME_DIR}/nix";
-in
 
+in
 {
 
   my = {
@@ -14,16 +14,12 @@ in
     github_username = "bangedorrunt";
   };
 
-  imports = [
-    ../modules/darwin
-  ];
-
+  imports = [ ../modules/darwin ];
 
   my.modules = {
     # Until mkOutOfStoreSymLink is fixed, used activation script instead
-    dotfiles.enable = false;
+    # dotfiles.enable = true;
     dev.enable = true;
-    # neovim.enable = false;
   };
 
   # hm.programs.fish.enable = true;
