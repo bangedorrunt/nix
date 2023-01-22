@@ -23,17 +23,19 @@ in
         ## use system git for keychain integration
         # git
         # go
-        (callPackage ../pkgs/fnlfmt.nix { })
         clang-tools
         clojure-lsp
         emacs
+        fnlfmt
         fnm
         gh
         lua
+        marksman
         neovim
-        nixfmt
+        nil
         nixpkgs-fmt
         nodePackages.bash-language-server
+        nodePackages.diagnostic-languageserver
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.eslint_d
         nodePackages.markdownlint-cli
@@ -45,7 +47,6 @@ in
         nodePackages.vscode-langservers-extracted # HTML, CSS, JSON LSPs
         nodePackages.yaml-language-server
         nodePackages.yarn
-        rnix-lsp
         shellcheck
         shfmt
         stylua
@@ -53,7 +54,6 @@ in
         tmux
         tree-sitter
         treefmt
-        /* (callPackage ../pkgs/tailwind.nix { }) */
         vscode-extensions.bradlc.vscode-tailwindcss
         (
           writeScriptBin "tailwind-lsp" ''

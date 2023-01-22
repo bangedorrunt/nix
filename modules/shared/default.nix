@@ -2,10 +2,11 @@
   imports = [ ./dotfiles.nix ./dev.nix ];
 
   my.hm.packages = with pkgs; [
+    # cmake
+    # libgccjit
     # openssh
     bat
     cachix
-    # cmake
     curl
     curlie
     delta
@@ -25,7 +26,6 @@
     hyperfine
     jq
     kepubify
-    # libgccjit
     neofetch
     pandoc
     ripgrep

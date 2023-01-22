@@ -12,14 +12,8 @@ also learn me some _Nix_ on the way
 - Install `Nix`:
 
 ```bash
-# Single-User worked for me
-sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
-```
-
-- Install Nix Unstable:
-
-```bash
-nix-env -f '<nixpkgs>' -iA nixUnstable
+# multi-user
+sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
 - Clone this repo
@@ -41,7 +35,7 @@ nix flake update --experimantal-features 'nix-command flakes'
 - Build
 
 ```bash
-nix build .\#me_at_home_with_macos
+nix build .\#brunetdragon@x86_64-darwin
 ```
 
 ## Uninstall Nix

@@ -1,14 +1,13 @@
-# NOTE: please compare `modules/hm/options.nix` and `modules/options.nix` to see
-# the difference between home-manager as [nixos/darwin] module and home-manager
+# `home-manager` package option
+# NOTE please compare `modules/hm/options.nix` and `modules/options.nix` to see
+# the difference between home-manager as [nixos/darwin] *module* and home-manager
 # itself
 { config, system, pkgs, inputs, lib, options, ... }:
 
 with lib;
 
-let
-  inherit (lib.mine.options) mkOpt mkOpt' mkOptStr mkBoolOpt;
-in
-{
+let inherit (lib.mine.options) mkOpt mkOpt' mkOptStr mkBoolOpt;
+in {
   options = with types; {
     my = {
       name = mkOptStr "Thanh Dung TRUONG";
@@ -66,7 +65,7 @@ in
     home = {
       # Necessary for home-manager to work with flakes, otherwise it will
       # look for a nixpkgs channel.
-      stateVersion = "22.05";
+      stateVersion = "23.05";
       username = config.my.username;
       homeDirectory = config.my.user.home;
       file = mkAliasDefinitions options.my.hm.file;

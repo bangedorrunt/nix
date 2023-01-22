@@ -16,14 +16,9 @@ build_template: &BUILD_TEMPLATE
   install_cachix_script: nix-env -iA cachix -f https://cachix.org/api/v1/install && cachix use bangedorrunt
   flake_check_script: cachix watch-exec $CACHIX_USER -- nix flake check -j auto --system ${ARCH//arm/aarch}-${CIRRUS_OS} -v --show-trace --accept-flake-config
 
-build_darwin_task:
+build_darwin_profiles_task:
   macos_instance:
     image: $DARWIN_BUILD_IMAGE
-  # env:
-  #   matrix:
-  #     ARCH: arm64
-  #     ARCH: x86_64
-  # TODO: this is a stupid way to set up the build matrix, but yaml lint yells at me if I do it the other way
   matrix:
     - env:
         ARCH: arm64
@@ -35,21 +30,4 @@ build_darwin_task:
   enable_trusted_users_script: echo "trusted-users = root admin" | sudo tee -a /etc/nix/nix.conf
   kickstart_nix_daemon_script: sudo launchctl kickstart -k system/org.nixos.nix-daemon
   <<: *BUILD_TEMPLATE
-
-build_linux_task:
-  matrix:
-    - arm_container:
-        image: $LINUX_BUILD_IMAGE
-        cpu: 4
-        memory: 12G
-      env:
-        ARCH: arm64
-    - container:
-        image: $LINUX_BUILD_IMAGE
-        cpu: 4
-        memory: 12G
-      env:
-        ARCH: x86_64
-  env:
-    SUDO: ""
-  <<: *BUILD_TEMPLATE
+# TODO generate nixOS build
