@@ -20,8 +20,8 @@ This covers state like read-only, dirty buffer, and narrowing."
   (let ((parent-face (or (plist-get face :inherit) face)))
     (propertize
      (pcase icon
-       ("lock" "􀈍")  ;; pencil.slash
-       ("save" "􀈌")  ;; pencil.circle.fill
+       ("lock" "􀢍")  ;; lock.doc
+       ("save" "􀡢")  ;; doc.viewfinder.fill
        ("do_not_disturb_alt" "􀬔")  ;; questionmark.folder
        ("vertical_align_center" "􀐷")  ;; rectangle.compress.vertical
        (_ (progn
@@ -98,6 +98,7 @@ This covers state like read-only, dirty buffer, and narrowing."
                           "􀇾"))  ;; exclamationmark.triangle
       ("pause" "􀊗")  ;; pause.circle
       ("priority_high" "􀢒")  ;; exclamationmark.2
+      ("error_outline" "􀓨") ;; scribble
       (_ (progn
            (user-error "Unknown checker icon name '%s'" icon)
            " ")))
