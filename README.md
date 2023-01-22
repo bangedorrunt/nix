@@ -48,7 +48,7 @@ nix build .\#me_at_home_with_macos
 
 For single-user mode:
 
-- Remove Nix from `sudo vidfs`
+- Remove Nix from `sudo vifs`
 - Remove Nix from `/etc/synthetic.conf`
 - Open `Disk Utility` app, delete `Nix Store` volume
 - Restart your device
@@ -60,7 +60,7 @@ For multi-user mode
 - Remove Nix from `/etc/synthetic.conf`
 
 ```bash
-sudo rm -rf /etc/profile/nix.sh /etc/nix ~root/.nix-profile ~root/.nix-defexpr ~root/.nix-channels ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+sudo rm -rf /etc/nix ~root/.nix-profile ~root/.nix-defexpr ~root/.nix-channels ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
 sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist
 sudo rm /Library/LaunchDaemons/org.nixos.nix-daemon.plist
 ```
