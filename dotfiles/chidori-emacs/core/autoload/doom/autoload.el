@@ -1,4 +1,4 @@
-;;; core/chidori-autoload.el -*- lexical-binding: t; -*-
+;;; core/autoload/doom/autoload.el -*- lexical-binding: t; -*-
 
 (defvar generated-autoload-file nil
   "This is neccessary, otherwise raise error.
@@ -6,10 +6,19 @@
 
 ;; NOTE: don't store autoload file in nested dir and `user-emacs-directory'
 ;; this might cause file-missing issue
-(defvar chidori-autoload:-file (expand-file-name "autoload.el" chidori-cache-dir)
+(defvar chidori-autoload--file (expand-file-name "autoload.el" chidori-cache-dir)
   "Autoload file.")
 
-(defun chidori-autoload:generate-define (loaddef &rest DIRS)
+(defvar chidori-autoload--dirs
+  `(,chidori-autoload-dir
+    ,chidori-doom-dir
+    ,chidori-org-dir
+    ,chidori-site-lisp-dir
+    ,chidori-lisp-dir
+    )
+  "Autoload file.")
+
+(defun chidori-autoload--generate-define (loaddef &rest DIRS)
   "LOADDEF DIRS."
   (let ((generated-autoload-file loaddef))
     (unless (file-exists-p generated-autoload-file)
@@ -38,21 +47,22 @@
       (when-let ((buf (find-buffer-visiting generated-autoload-file)))
         (kill-buffer buf)))))
 
-(defun chidori-autoload:reload ()
+;;;###autoload
+(defun chidori-autoload/reload ()
   "Generate autoload file from `core/autoload'."
   (interactive)
-  (when (file-exists-p chidori-autoload:-file)
-    (delete-file chidori-autoload:-file t)
-    (message "delete old autoload file: %s" chidori-autoload:-file))
+  (when (file-exists-p chidori-autoload--file)
+    (delete-file chidori-autoload--file t)
+    (message "delete old autoload file: %s" chidori-autoload--file))
 
-  (chidori-autoload:generate-define chidori-autoload:-file chidori-autoload-dir  chidori-doom-dir chidori-org-dir chidori-lisp-dir)
-  (load chidori-autoload:-file nil 'nomessage)
-  (message "generate autoload file: %s done." chidori-autoload:-file))
+  (apply 'chidori-autoload--generate-define chidori-autoload--file chidori-autoload--dirs)
+  (load chidori-autoload--file nil 'nomessage)
+  (message "generate autoload file: %s done." chidori-autoload--file))
 
-(unless (file-exists-p chidori-autoload:-file)
-  (chidori-autoload:reload))
+(unless (file-exists-p chidori-autoload--file)
+  (chidori-autoload/reload))
 
-(load chidori-autoload:-file nil 'nomessage)
+(load chidori-autoload--file nil 'nomessage)
 
-(provide 'chidori-autoload)
-;; chidori-autoload.el ends here
+(provide 'doom '(autoload))
+;; autoload.el ends here

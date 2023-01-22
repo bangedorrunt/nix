@@ -30,9 +30,9 @@
     (interactive)
     (let ((languages (mapcar 'car treesit-language-source-alist)))
       (dolist (lang languages)
-	      (treesit-install-language-grammar lang)
-	      (message "`%s' parser was installed." lang)
-	      (sit-for 0.75)))))
+        (treesit-install-language-grammar lang)
+        (message "`%s' parser was installed." lang)
+        (sit-for 0.75)))))
 
 ;;;;
 ;;;;; flymake/flycheck
@@ -58,6 +58,7 @@
 
 ;; makes flymake appear in popup
 (package! flymake-diagnostic-at-point (:host github :repo "meqif/flymake-diagnostic-at-point")
+  :disabled t
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
@@ -67,6 +68,7 @@
   (add-hook! 'eglot-managed-mode-hook
     (when (or (derived-mode-p 'typescript-mode) (derived-mode-p 'js-mode))
       (flymake-eslint-enable))))
+
 ;; puts eldoc in a child frame. not enabled via eldoc because I'm not certain of it yet
 (package! eldoc-box :auto :commands (eldoc-box-hover-mode))
 

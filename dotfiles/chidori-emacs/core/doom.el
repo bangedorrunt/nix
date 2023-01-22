@@ -232,10 +232,7 @@ This is a variadic `cl-pushnew'."
 (defmacro file! ()
   "Return the file of the file this macro was called."
   (or
-   ;; REVIEW: Use `macroexp-file-name' once 27 support is dropped.
-   (let ((file (car (last current-load-list))))
-     (if (stringp file) file))
-   (bound-and-true-p byte-compile-current-file)
+   (macroexp-file-name)
    load-file-name
    buffer-file-name   ; for `eval'
    (error "file!: cannot deduce the current file path")))

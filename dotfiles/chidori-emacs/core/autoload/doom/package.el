@@ -1,6 +1,7 @@
-;;;; core/chidori-package.el --- Configuration to use `package.el'.  -*- lexical-binding: t; -*-
+;;;; core/autoload/doom/package.el --- Configuration to use `package.el'.  -*- lexical-binding: t; -*-
 
 ;;; Code:
+;; TODO drop `use-package'
 ;; https://github.com/hlissner/doom-emacs/blob/42a21dffddeee57d84e82a9f0b65d1b0cba2b2af/core/core.el#L353
 (defvar doom--deferred-packages-alist '(t))
 (defvar doom-incremental-packages '(t)
@@ -196,5 +197,5 @@ If this is a daemon session, load them all immediately instead."
 (chidori-bootstrap)
 
 
-(provide 'chidori-package)
-;;; chidori-package.el ends here
+(provide 'doom '(package))
+;;; package.el ends here

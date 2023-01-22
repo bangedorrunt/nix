@@ -39,9 +39,9 @@ so we use more cycles but less space, but not too little space.")
 
   ;; (require 'cl-lib)
   (require 'doom)
-  (require 'chidori-autoload)
-  (require 'chidori-hook)
-  (require 'chidori-package)
+  (doom-require 'doom 'autoload)
+  (doom-require 'doom 'hooks)
+  (doom-require 'doom 'package)
 
   (defvar chidori-modules-packages
     '(chidori-startup
@@ -86,8 +86,6 @@ so we use more cycles but less space, but not too little space.")
    gc-cons-threshold (car (cadr chidori-gc-cons))
    gc-cons-percentage (cadr (cadr chidori-gc-cons)))
   (setq read-process-output-max #x1000000))
-
-(add-to-list 'load-path (file-name-directory load-file-name))
 
 (provide 'core)
 ;; core.el ends here

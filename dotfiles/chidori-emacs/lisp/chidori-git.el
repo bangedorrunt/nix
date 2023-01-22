@@ -20,7 +20,6 @@
 (package! magit :auto
   :defer-incrementally dash f s with-editor git-commit package eieio transient
   :init
-  (setq magit-git-executable "/usr/local/bin/git")
   (setq magit-auto-revert-mode nil)  ; we do this ourselves further down
   :config
   (noct-handle-popup-same-window magit-status-mode)

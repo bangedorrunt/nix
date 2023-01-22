@@ -11,7 +11,7 @@
 ;; Mostly only required for MacOS, we need to grab environment variables from the default shell.
 ;; This lets us use TRAMP more easily and connects us with some tools.
 (package! exec-path-from-shell :auto
-  :disabled t
+  ;; :disabled t
   :defer-incrementally t
   :config
   (when (or IS-MAC (daemonp))

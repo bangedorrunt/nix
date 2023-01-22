@@ -125,7 +125,8 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
              (not byte-compile-current-file))
     (run-hooks 'org-load-hook))
   :config
-;;;; General settings
+  ;;;; General settings
+  ;;
   (setq org-directory (convert-standard-filename "~/workspace/notetoself"))
   (setq org-imenu-depth 7)
   (setq org-adapt-indentation nil)      ; No, non, nein, όχι!
@@ -152,7 +153,8 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-use-sub-superscripts '{})
   (setq org-insert-heading-respect-content t)
 
-;;;; refile, todo
+  ;;;; refile, todo
+  ;;
   (setq org-refile-targets
         '((org-agenda-files . (:maxlevel . 2))
           (nil . (:maxlevel . 2))))
@@ -184,7 +186,8 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-lowest-priority ?C)
   (setq org-default-priority ?A)
 
-;;;; tags
+  ;;;; tags
+  ;;
   (setq org-tag-alist ; I don't really use those, but whatever
         '(("meeting")
           ("admin")
@@ -206,7 +209,8 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-auto-align-tags nil)
   (setq org-tags-column 0)
 
-;;;; log
+  ;;;; log
+  ;;
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-log-note-clock-out nil)
@@ -214,13 +218,14 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-log-reschedule 'time)
   (setq org-read-date-prefer-future 'time)
 
-;;;; links
+  ;;;; links
+  ;;
   (setq org-link-keep-stored-after-insertion nil)
   ;; TODO 2021-10-15 org-link-make-description-function
 
 
-;;;; agenda
-;;;;; Basic agenda setup
+  ;;;; agenda
+  ;;;;; Basic agenda setup
   (setq org-default-notes-file (thread-last org-directory (expand-file-name "gtd.org")))
   (setq org-agenda-files `(,org-directory "~/Documents"))
   (setq org-agenda-span 'week)
@@ -245,7 +250,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   ;; Create reminders for tasks with a due date when this file is read.
   ;; (run-at-time (* 60 5) nil #'org-agenda-to-appt)
 
-;;;;; General agenda view options
+  ;;;;; General agenda view options
   ;; NOTE 2021-12-07: Check further below my `org-agenda-custom-commands'
   (setq org-agenda-prefix-format
         '((agenda . " %i %-12:c%?-12t% s")
@@ -265,7 +270,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-remove-timeranges-from-blocks nil)
   (setq org-agenda-compact-blocks nil)
   (setq org-agenda-block-separator ?—)
-;;;;; Advanced agenda view options
+  ;;;;; Advanced agenda view options
   (setq org-agenda-format-date #'prot-org-agenda-format-date-aligned)
 
   (setq org-agenda-custom-commands
@@ -282,28 +287,28 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
             (org-agenda-remove-tags t))
            ("agenda.txt"))))
 
-;;;;; Agenda marks
+  ;;;;; Agenda marks
   (setq org-agenda-bulk-mark-char "#")
   (setq org-agenda-persistent-marks nil)
 
-;;;;; Agenda diary entries
+  ;;;;; Agenda diary entries
   (setq org-agenda-insert-diary-strategy 'date-tree)
   (setq org-agenda-insert-diary-extract-time nil)
   (setq org-agenda-include-diary nil)
 
-;;;;; Agenda follow mode
+  ;;;;; Agenda follow mode
   (setq org-agenda-start-with-follow-mode nil)
   (setq org-agenda-follow-indirect t)
 
-;;;;; Agenda multi-item tasks
+  ;;;;; Agenda multi-item tasks
   (setq org-agenda-dim-blocked-tasks t)
   (setq org-agenda-todo-list-sublevels t)
 
-;;;;; Agenda filters and restricted views
+  ;;;;; Agenda filters and restricted views
   (setq org-agenda-persistent-filter nil)
   (setq org-agenda-restriction-lock-highlight-subtree t)
 
-;;;;; Agenda items with deadline and scheduled timestamps
+  ;;;;; Agenda items with deadline and scheduled timestamps
   (setq org-agenda-include-deadlines t)
   (setq org-deadline-warning-days 5)
   (setq org-agenda-skip-scheduled-if-done nil)
@@ -342,7 +347,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
           " ....." "-----------------"))
   (setq org-agenda-default-appointment-duration nil)
 
-;;;;; Agenda global to-do list
+  ;;;;; Agenda global to-do list
   (setq org-agenda-todo-ignore-with-date t)
   (setq org-agenda-todo-ignore-timestamp t)
   (setq org-agenda-todo-ignore-scheduled t)
@@ -350,7 +355,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-todo-ignore-time-comparison-use-seconds t)
   (setq org-agenda-tags-todo-honor-ignore-options nil)
 
-;;;;; Agenda tagged items
+  ;;;;; Agenda tagged items
   (setq org-agenda-show-inherited-tags t)
   (setq org-agenda-use-tag-inheritance
         '(todo search agenda))
@@ -358,7 +363,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-remove-tags nil)
   (setq org-agenda-tags-column -100)
 
-;;;;; Agenda entry
+  ;;;;; Agenda entry
   ;; NOTE: I do not use this right now.  Leaving everything to its
   ;; default value.
   (setq org-agenda-start-with-entry-text-mode nil)
@@ -366,7 +371,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-entry-text-exclude-regexps nil)
   (setq org-agenda-entry-text-leaders "    > ")
 
-;;;;; Agenda logging and clocking
+  ;;;;; Agenda logging and clocking
   ;; NOTE: I do not use these yet, though I plan to.  Leaving everything
   ;; to its default value for the time being.
   (setq org-agenda-log-mode-items '(closed clock))
@@ -391,7 +396,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-sort-notime-is-late t) ; Org 9.4
   (setq org-agenda-sort-noeffort-is-high t) ; Org 9.4
 
-;;;;; Agenda column view
+  ;;;;; Agenda column view
   ;; NOTE I do not use these, but may need them in the future.
   (setq org-agenda-view-columns-initially nil)
   (setq org-agenda-columns-show-summaries t)
@@ -400,12 +405,13 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-auto-exclude-function nil)
   (setq org-agenda-bulk-custom-functions nil)
 
-;;;;; Agenda habits
+  ;;;;; Agenda habits
   (require 'org-habit)
   (setq org-habit-graph-column 50)
   (setq org-habit-preceding-days 9)
 
-;;;; code blocks
+  ;;;; code blocks
+  ;;
   (setq org-confirm-babel-evaluate nil)
   (setq org-src-window-setup 'current-window)
   (setq org-edit-src-persistent-message nil)
@@ -414,7 +420,8 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-src-tab-acts-natively t)
   (setq org-edit-src-content-indentation 0)
 
-;;;; export
+  ;;;; export
+  ;;
   (setq org-export-with-toc t)
   (setq org-export-headline-levels 8)
   (setq org-export-dispatch-use-expert-ui nil)
@@ -426,11 +433,13 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   ;; FIXME: how to remove everything else?
   (setq org-export-backends '(html texinfo md))
 
-;;;; IDs
+  ;;;; IDs
+  ;;
   (setq org-id-link-to-org-use-id
         'create-if-interactive-and-no-custom-id)
 
-;;;; Hooks and key bindings
+  ;;;; Hooks and key bindings
+  ;;
   ;; Sets up org-mode and evil keybindings. Tries to fix the idiosyncrasies
   ;; between the two.
   (add-hook 'doom-escape-hook #'+org-remove-occur-highlights-h)

@@ -9,8 +9,8 @@
   (set-fontset-font t nil "SF Compact Text" nil 'append))
 
 ;;;; Configuration for `monospace'
-(defvar monos-default-spec '(:family "SF Pro Display" :height 220))
-(defvar monos-fixed-pitch-spec '(:family "SF Mono" :height 220))
+(defvar monos-default-spec '(:family "SF Pro Display" :height 240))
+(defvar monos-fixed-pitch-spec '(:family "SF Mono" :height 240 :width ultra-condensed))
 
 (dolist (face '(mode-line mode-line-inactive))
   (set-face-attribute face nil :height 151))
@@ -135,46 +135,13 @@
              all-the-icons-wicon
              all-the-icons-material
              all-the-icons-alltheicon)
-  :preface
-  (add-hook! 'after-setting-font-hook
-    (defun doom-init-all-the-icons-fonts-h ()
-      (when (fboundp 'set-fontset-font)
-        (dolist (font (list "Weather Icons"
-                            "github-octicons"
-                            "FontAwesome"
-                            "all-the-icons"
-                            "file-icons"
-                            "Material Icons"))
-          (set-fontset-font t 'unicode font nil 'append)))))
-  :config
-  (cond ((daemonp)
-         (defadvice! doom--disable-all-the-icons-in-tty-a (fn &rest args)
-           "Return a blank string in tty Emacs, which doesn't support multiple fonts."
-           :around '(all-the-icons-octicon
-                     all-the-icons-material
-                     all-the-icons-faicon
-                     all-the-icons-fileicon
-                     all-the-icons-wicon
-                     all-the-icons-alltheicon)
-           (if (or (not after-init-time) (display-multi-font-p))
-               (apply fn args)
-             "")))
-        ((not (display-graphic-p))
-         (defadvice! doom--disable-all-the-icons-in-tty-a (&rest _)
-           "Return a blank string for tty users."
-           :override '(all-the-icons-octicon
-                       all-the-icons-material
-                       all-the-icons-faicon
-                       all-the-icons-fileicon
-                       all-the-icons-wicon
-                       all-the-icons-alltheicon)
-           ""))))
+  )
 
 (package! doom-modeline :auto
   ;; NOTE vterm-module compilation is triggered during first fresh installation
   ;;; and this will interupt `doom-first-buffer-hook' initializtion, use
   ;;; `doom-after-init-hook' will fix this issue
-  :hook (doom-after-init . doom-modeline-mode)
+  :hook (doom-load-theme . doom-modeline-mode)
   :init
   ;; Set these early so they don't trigger variable watchers
   (setq doom-modeline-bar-width 3
@@ -192,34 +159,15 @@
               (IS-WINDOWS 1)
               (0)))
 
-  ;; Fix modeline icons in daemon-spawned graphical frames. We have our own
-  ;; mechanism for disabling all-the-icons, so we don't need doom-modeline to do
-  ;; it for us. However, this may cause unwanted padding in the modeline in
-  ;; daemon-spawned terminal frames. If it bothers you, you may prefer
-  ;; `doom-modeline-icon' set to `nil'.
-  (when (daemonp)
-    (setq doom-modeline-icon t))
-  :config
-  ;; HACK Fix #4102 due to empty all-the-icons return value (caused by
-  ;;      `doom--disable-all-the-icons-in-tty-a' advice) in tty daemon frames.
-  (defadvice! +modeline-disable-icon-in-daemon-a (fn &rest args)
-    :around #'doom-modeline-propertize-icon
-    (when (display-graphic-p)
-      (apply fn args)))
-
-  ;; Fix an issue where these two variables aren't defined in TTY Emacs on MacOS
-  (defvar mouse-wheel-down-event nil)
-  (defvar mouse-wheel-up-event nil)
-
   (add-hook 'after-setting-font-hook #'+modeline-resize-for-font-h)
-  ;; (add-hook 'modus-themes-after-load-theme-hook #'doom-modeline-refresh-bars)
+  (add-hook 'modus-themes-after-load-theme-hook #'doom-modeline-refresh-bars)
 
   ;; Some functions modify the buffer, causing the modeline to show a false
   ;; modified state, so force them to behave.
   (defadvice! +modeline--inhibit-modification-hooks-a (fn &rest args)
     :around #'ws-butler-after-save
     (with-silent-modifications (apply fn args)))
-  (doom-modeline-mode))
+  )
 
 (package! sfsymbols-modeline :builtin
   :defer-incrementally doom-modeline
@@ -561,6 +509,88 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
 ;; Already loaded at early-init
 (load-theme 'modus-vivendi)
 (+modus-themes-custom-faces)
+
+;;;; monospace-mode custom face
+(after! which-key
+  (monos-use-fixed-pitch 'which-key-key-face
+                         'which-key-note-face
+                         'which-key-special-key-face
+                         'which-key-command-description-face
+                         'which-key-docstring-face
+                         'which-key-separator-face
+                         'which-key-group-description-face
+                         'which-key-highlighted-command-face
+                         'which-key-local-map-description-face))
+(after! diff-mode
+  (monos-use-fixed-pitch 'diff-added
+                         'diff-changed
+                         'diff-context
+                         'diff-function
+                         'diff-indicator-added
+                         'diff-indicator-changed
+                         'diff-indicator-removed
+                         'diff-nonexistent
+                         'diff-refine-added
+                         'diff-refine-changed
+                         'diff-refine-removed
+                         'diff-removed))
+
+(after! magit
+  (monos-use-fixed-pitch 'magit-diff-added
+                         'magit-diff-added-highlight
+                         'magit-diff-base
+                         'magit-diff-base-highlight
+                         'magit-diff-conflict-heading
+                         'magit-diff-context
+                         'magit-diff-context-highlight
+                         'magit-diff-hunk-heading
+                         'magit-diff-hunk-heading-highlight
+                         'magit-diff-hunk-heading-selection
+                         'magit-diff-hunk-region
+                         'magit-diff-lines-boundary
+                         'magit-diff-lines-heading
+                         'magit-diff-our
+                         'magit-diff-our-highlight
+                         'magit-diff-removed
+                         'magit-diff-removed-highlight
+                         'magit-diff-revision-summary
+                         'magit-diff-revision-summary-highlight
+                         'magit-diff-their
+                         'magit-diff-their-highlight
+                         'magit-diff-whitespace-warning
+                         'magit-diffstat-added
+                         'magit-diffstat-removed
+                         'magit-hash))
+
+(after! markdown-mode
+  (monos-use-fixed-pitch 'markdown-inline-code-face
+                         'markdown-code-face))
+
+(after! rainbow-delimiters
+  ;;TODO: Ideally just setting the base face would be sufficient here.
+  (monos-use-fixed-pitch 'rainbow-delimiters-base-face
+                         'rainbow-delimiters-depth-1-face
+                         'rainbow-delimiters-depth-2-face
+                         'rainbow-delimiters-depth-3-face
+                         'rainbow-delimiters-depth-4-face
+                         'rainbow-delimiters-depth-5-face
+                         'rainbow-delimiters-depth-6-face
+                         'rainbow-delimiters-depth-7-face
+                         'rainbow-delimiters-depth-8-face
+                         'rainbow-delimiters-depth-9-face
+                         'rainbow-delimiters-mismatched-face
+                         'rainbow-delimiters-unmatched-face))
+
+(after! vertico-quick
+  (monos-use-fixed-pitch 'vertico-quick1
+                         'vertico-quick2))
+
+(after! which-func
+  (monos-use-fixed-pitch 'which-func)
+  (set-face-attribute
+   'which-func nil
+   :height (face-attribute 'mode-line :height)))
+
 
 (provide 'chidori-ui)
 ;;; chidori-ui.el ends here

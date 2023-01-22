@@ -1,6 +1,5 @@
 ;;; core/lisp/popup.el -*- lexical-binding: t; -*-
-
-;;;; REVIEW should I use `popper.el'
+;; TODO drop this in favour of `popper.el' or builtin `display-buffer-alist'
 
 (noct-handle-popup (rx "*Warnings*"))
 (noct-handle-popup "^\\*info\\*$")

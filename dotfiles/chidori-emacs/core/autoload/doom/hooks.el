@@ -1,53 +1,66 @@
-;;; core/chidori-hook.el --- Hooks for faster startup -*- lexical-binding: t; -*-
+;;; core/autoload/doom/hooks.el --- Hooks for faster startup -*- lexical-binding: t; -*-
 
 ;; SEE: https://github.com/ajgrf/on.el
 
+;;;###autoload
 (defvar doom-theme nil
   "A symbol representing the Emacs theme to load at startup.
 Set to `nil' to load no theme at all. This variable is changed by
 `load-theme'.")
 
+;;;###autoload
 (defvar doom-load-theme-hook nil
   "Hook run after the theme is loaded with `load-theme' or reloaded with
 `doom/reload-theme'.")
 
+;;;###autoload
 (defvar doom-init-ui-hook nil
   "List of hooks to run when the UI has been initialized.")
 (put 'doom-init-ui-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-after-init-hook nil
   "A hook run after UI initialized")
 (put 'doom-after-init-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-after-module-config-hook nil
   "A hook run after config chidori modules")
 (put 'doom-after-module-config-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-before-init-hook nil
   "A hook run before UI initialized")
 (put 'doom-before-init-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-first-input-hook nil
   "Transient hooks run before the first user input.")
 (put 'doom-first-input-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-first-file-hook nil
   "Transient hooks run before the first interactively opened file.")
 (put 'doom-first-file-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-first-buffer-hook nil
   "Transient hooks run before the first interactively opened buffer.")
 (put 'doom-first-buffer-hook 'permanent-local t)
 
+;;;###autoload
 (defvar doom-switch-buffer-hook nil
   "A hook run after changing the current buffer.")
 
+;;;###autoload
 (defvar doom-switch-window-hook nil
   "A hook run after changing the focused windows.")
 
+;;;###autoload
 (defvar doom-switch-frame-hook nil
   "A hook run after changing the focused frame.")
 
+;;;###autoload
 (defvar doom-escape-hook nil
   "A hook run when C-g is pressed (or ESC in normal mode, for evil users).
 
@@ -68,10 +81,12 @@ all hooks after it are ignored.")
                 (equal (old-selected-window) (minibuffer-window)))
       (doom-run-hooks 'doom-switch-window-hook))))
 
+;;;###autoload
 (defun doom-protect-fallback-buffer-h ()
   "Don't kill the scratch buffer. Meant for `kill-buffer-query-functions'."
   (not (eq (current-buffer) (doom-fallback-buffer))))
 
+;;;###autoload
 (defun doom-highlight-non-default-indentation-h ()
   "Highlight whitespace at odds with `indent-tabs-mode'.
 That is, highlight tabs if `indent-tabs-mode' is `nil', and highlight spaces at
@@ -155,5 +170,5 @@ triggering hooks during startup."
     (doom-run-hooks 'doom-after-init-hook))
   )
 
-(provide 'chidori-hook)
-;;; chidori-hook.el ends here
+(provide 'doom '(hooks))
+;;; hooks.el ends here
