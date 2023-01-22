@@ -4,6 +4,7 @@
   my.hm.packages = with pkgs; [
     # openssh
     bat
+    cachix
     # cmake
     curl
     curlie

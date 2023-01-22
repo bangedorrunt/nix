@@ -1,0 +1,28 @@
+name: Auto Update Flake Inputs
+
+on:
+  schedule:
+    # run this daily at 8am UTC, or roughly 4am eastern
+    - cron: "0 8 * * *"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v18
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.CACHIX_TOKEN }}
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v15
+        with:
+          token: ${{ secrets.NIX_ACCESS_TOKEN }}
+          pr-title: "Update flake.lock"
+          pr-labels: |
+            dependencies
+            automated
