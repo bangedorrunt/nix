@@ -12,8 +12,8 @@ options = []
 includes = ["*.lua"]
 excludes = ["dotfiles/nvim/lua/*"]
 
-[formatter.fennel]
-command = "fnlfmt"
-options = ["--fix"]
-includes = ["*.fnl"]
-excludes = []
+# [formatter.fennel]
+# command = "fnlfmt"
+# options = ["--fix"]
+# includes = ["*.fnl"]
+# excludes = []

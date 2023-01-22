@@ -17,9 +17,7 @@
   environment = {
     # install system-wide packages
     systemPackages = with pkgs; [
-      # Editors
-      # neovim-nightly
-      # Standard toolset
+      # standard toolset
       coreutils
       curl
       jq
@@ -31,8 +29,6 @@
       ripgrep
       zsh
       fish
-      # languages
-      # python3
     ];
     etc = {
       home-manager.source = "${inputs.home-manager}";

@@ -11,6 +11,7 @@
     trusted-public-keys = [
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
 
@@ -40,29 +41,21 @@
     };
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
-    # overlays
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    # emacs-overlay = {
-    #   type = "github";
-    #   owner = "mjlbach";
-    #   repo = "emacs-overlay";
-    #   ref = "feature/flakes";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    rnix-lsp.url = "github:nix-community/rnix-lsp";
-    clojure-lsp.url = "github:zachcoyle/clojure-lsp-flake";
+    # editor
+    emacs.url = "github:cmacrae/emacs";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
+    };
   };
 
-  outputs = inputs @ {
-    self,
-    darwin,
-    home-manager,
-    flake-utils,
-    treefmt-nix,
-    ...
+  outputs =
+    inputs @ { self
+    , darwin
+    , home-manager
+    , flake-utils
+    , treefmt-nix
+    , ...
     }:
     let
       # Extend nixpkgs.lib with custom lib and HM lib
@@ -93,7 +86,7 @@
         { system ? "x86_64-darwin"
         , nixpkgs ? inputs.nixpkgs
         , stable ? inputs.stable
-        , lib ? (mkLib inputs.nixpkgs)
+          # , lib ? (mkLib inputs.nixpkgs)
         , baseModules ? [
             # Use home-manager module
             home-manager.darwinModules.home-manager
@@ -115,7 +108,7 @@
         { system ? "x86_64-linux"
         , nixpkgs ? inputs.nixos-unstable
         , stable ? inputs.stable
-        , lib ? (mkLib inputs.nixpkgs)
+          # , lib ? (mkLib inputs.nixpkgs)
         , hardwareModules
         , baseModules ? [
             home-manager.nixosModules.home-manager
@@ -138,7 +131,7 @@
         , system ? "x86_64-linux"
         , nixpkgs ? inputs.nixpkgs
         , stable ? inputs.stable
-        , lib ? (mkLib inputs.nixpkgs)
+          # , lib ? (mkLib inputs.nixpkgs)
         , baseModules ? [
             ./modules/hm
             {
@@ -251,8 +244,12 @@
           extraModules = [ ./hosts/macos.nix ];
         };
       };
+      # build steps:
+      # nix --extra-experimental-features 'nix-command flakes' build .\#brunetdragon@x86_64-darwin
+      # ./result/sw/bin/darwin-rebuild switch --flake .\#brunetdragon@x86_64-darwin
       "brunetdragon@x86_64-darwin" = self.darwinConfigurations."brunetdragon@x86_64-darwin".config.system.build.toplevel;
       "brunetdragon@x86_64-linux" = self.homeConfigurations."brunetdragon@x86_64-linux".activationPackage;
+
       overlays = {
         channels = final: prev: {
           # expose other channels via overlays
@@ -260,7 +257,8 @@
           small = import inputs.small { system = prev.system; };
         };
         devshell = inputs.devshell.overlay;
-        # inputs.neovim-nightly-overlay.overlay
+        emacs = inputs.emacs.overlay;
+        neovim = inputs.neovim-nightly-overlay.overlay;
       };
     };
 }

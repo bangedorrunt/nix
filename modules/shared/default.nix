@@ -1,13 +1,10 @@
-{ config, inputs, lib, pkgs, options, ... }:
-{
-  imports = [
-    ./dotfiles.nix
-    ./dev.nix
-  ];
+{ config, inputs, lib, pkgs, options, ... }: {
+  imports = [ ./dotfiles.nix ./dev.nix ];
 
   my.hm.packages = with pkgs; [
+    # openssh
     bat
-    cachix
+    # cmake
     curl
     curlie
     delta
@@ -17,6 +14,7 @@
     fzf
     fzy
     gawk
+    gcc
     ghc
     gnugrep
     gnupg
@@ -26,9 +24,8 @@
     hyperfine
     jq
     kepubify
+    # libgccjit
     neofetch
-    # nixUnstable
-    # openssh
     pandoc
     ripgrep
     rsync

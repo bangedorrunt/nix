@@ -19,44 +19,48 @@ in
   config = with lib;
     mkIf cfg.enable {
       my.hm.packages = with pkgs; [
-        # Used system git for keychain integration
-        # git 
-        gh
         # clangd
-        tree-sitter
-        clang-tools
-        lua
-        nodejs
-        nodePackages.pnpm
-        nodePackages.yarn
+        ## use system git for keychain integration
+        # git
+        # go
         (callPackage ../pkgs/fnlfmt.nix { })
-        shfmt
+        clang-tools
         clojure-lsp
-        sumneko-lua-language-server
+        emacs
+        fnm
+        gh
+        lua
+        neovim
+        nixfmt
+        nixpkgs-fmt
         nodePackages.bash-language-server
         nodePackages.dockerfile-language-server-nodejs
-        nodePackages.yaml-language-server
         nodePackages.eslint_d
         nodePackages.markdownlint-cli
-        nodePackages.pyright
+        nodePackages.pnpm
         nodePackages.prettier
         nodePackages.stylelint
         nodePackages.typescript-language-server
         nodePackages.vim-language-server
         nodePackages.vscode-langservers-extracted # HTML, CSS, JSON LSPs
-        (callPackage ../pkgs/tailwind.nix { })
+        nodePackages.yaml-language-server
+        nodePackages.yarn
+        rnix-lsp
+        shellcheck
+        shfmt
+        stylua
+        sumneko-lua-language-server
+        tmux
+        tree-sitter
+        treefmt
+        /* (callPackage ../pkgs/tailwind.nix { }) */
+        vscode-extensions.bradlc.vscode-tailwindcss
         (
           writeScriptBin "tailwind-lsp" ''
             #!/usr/bin/env sh
-            node ${(callPackage ../pkgs/tailwind.nix {})}/share/vscode/extensions/bradlc.vscode-tailwindcss/dist/server/index.js --stdio
+            node ${vscode-extensions.bradlc.vscode-tailwindcss}/share/vscode/extensions/bradlc.vscode-tailwindcss/dist/server/index.js --stdio
           ''
         )
-        shellcheck
-        rnix-lsp
-        nixfmt
-        nixpkgs-fmt
-        treefmt
-        stylua
       ];
     };
 }
