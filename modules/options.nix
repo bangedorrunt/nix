@@ -3,7 +3,7 @@
 with lib;
 
 let
-  inherit (lib.mine.options) mkOpt mkOpt' mkOptStr mkBoolOpt;
+  inherit (lib.mine.options) mkOpt mkOpt' mkOptStr;
 
 in
 {
@@ -24,8 +24,8 @@ in
         packages = mkOpt (listOf package) [ ];
       };
     };
-
-    hm = mkOpt' attrs { } "Primary user's home-manager configuration";
+    hm = mkOption { type = options.home-manager.users.type.functor.wrapped; };
+    # hm = mkOpt' attrs { } "Primary user's home-manager configuration";
   };
 
   config = {

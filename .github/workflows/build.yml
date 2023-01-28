@@ -9,13 +9,15 @@ on:
     types: [opened, synchronize]
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        os:
+          # - ubuntu-latest
+          - macos-latest
         output:
-          # TODO wrong output
           - devShells.x86_64-linux.default
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
         with:

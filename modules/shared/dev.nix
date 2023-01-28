@@ -21,14 +21,15 @@ in
       my.hm.packages = with pkgs; [
         # clangd
         ## use system git for keychain integration
-        # git
         # go
+        asdf-vm
         clang-tools
         clojure-lsp
         emacs
         fnlfmt
         fnm
         gh
+        git
         lua
         marksman
         neovim
@@ -38,6 +39,7 @@ in
         nodePackages.diagnostic-languageserver
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.eslint_d
+        nodePackages.grammarly-languageserver
         nodePackages.markdownlint-cli
         nodePackages.pnpm
         nodePackages.prettier

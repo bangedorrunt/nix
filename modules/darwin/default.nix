@@ -3,6 +3,6 @@
     ./core.nix
     ./brew.nix
     ./apps.nix
-    ./sensible-defaults-macos.nix
+    ./sensible.nix
   ];
 }

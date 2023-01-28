@@ -6,23 +6,13 @@ let
 
 in
 {
-
-  my = {
-    username = "brunetdragon";
-    email = "braden.truong@gmail.com";
-    website = "https://bangedorrunt.github.io";
-    github_username = "bangedorrunt";
-  };
-
-  imports = [ ../modules/darwin ];
+  imports = [ ../../modules/darwin ];
 
   my.modules = {
     # Until mkOutOfStoreSymLink is fixed, used activation script instead
     # dotfiles.enable = true;
     dev.enable = true;
   };
-
-  # hm.programs.fish.enable = true;
 
   # Use script at system context
   # system.activationScripts.postUserActivation.text = ''

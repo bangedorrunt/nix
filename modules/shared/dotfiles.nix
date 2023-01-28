@@ -1,7 +1,7 @@
 { config, lib, pkgs, home-manager, ... }:
 with lib;
 let
-  # FIXME: mkOutOfStoreSymLink attribute is missing
+  # FIXME mkOutOfStoreSymLink attribute is missing
   # Manage files with symlink
   # Stole from: https://github.com/nix-community/home-manager/blob/master/modules/files.nix#L64
   # inherit (config.lib.file) mkOutOfStoreSymLink;

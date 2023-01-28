@@ -25,6 +25,7 @@
     httpie
     hyperfine
     jq
+    just
     kepubify
     neofetch
     pandoc

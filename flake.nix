@@ -15,13 +15,30 @@
   };
 
   inputs = {
-    # package repo
+    # Package repo
     stable.url = "github:nixos/nixpkgs/nixos-22.11";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     small.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
-    # system management
+    # System management
+    # TODO using `flake.parts`
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    nixos-generators = {
+      #url = "github:nix-community/nixos-generators";
+      url = "github:Mic92/nixos-generators/fedf7136f27490402fe8ab93e67fafae80513e9b";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -31,17 +48,19 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # shell stuff
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+    };
+    # Shell stuff
     flake-utils.url = "github:numtide/flake-utils";
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     treefmt-nix.url = "github:numtide/treefmt-nix";
-
-    # editor
+    # Editors
     emacs.url = "github:cmacrae/emacs";
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -49,14 +68,22 @@
         "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     };
   };
-
   outputs =
-    inputs@{ self, darwin, home-manager, flake-utils, treefmt-nix, ... }:
+    { self
+    , nixpkgs
+    , darwin
+    , home-manager
+    , flake-parts
+    , flake-utils
+    , treefmt-nix
+    , disko
+    , ...
+    } @ inputs:
     let
       # Extend nixpkgs.lib with custom lib and HM lib
       # Custom `./lib` will exposed as `lib.mine`
       #
-      # NOTE: if you pass this lib in [darwin/home/nixos]Configurations which
+      # NOTE if you pass this lib in [darwin/home/nixos]Configurations which
       # using home-manager module, make sure you merge `home-manager.lib`
       # otherwise build will fail.
       # My guess is `lib` will override system lib, so some/all attributes of
@@ -67,13 +94,15 @@
       lib = (mkLib inputs.nixpkgs);
 
       inherit (flake-utils.lib) eachSystemMap;
+      inherit (lib.mine) rakeLeaves;
 
-      isDarwin = system:
-        (builtins.elem system inputs.nixpkgs.lib.platforms.darwin);
-      homePrefix = system: if isDarwin system then "/Users" else "/home";
+      hosts = rakeLeaves ./hosts;
+      modules = rakeLeaves ./modules;
+
       defaultSystems =
         [ "aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ];
 
+      # REFACTOR move to ./lib/host.nix
       # Generate a base darwin configuration with the
       # specified hostname, overlays, and any extraModules applied
       mkDarwinConfig =
@@ -85,8 +114,8 @@
             # Use home-manager module
             home-manager.darwinModules.home-manager
             # NOTE modules imported from here will inherit system context
-            ./modules/common.nix
-            ./modules/shared
+            modules.common
+            modules.shared
           ]
         , extraModules ? [ ]
         }:
@@ -106,8 +135,9 @@
         , hardwareModules
         , baseModules ? [
             home-manager.nixosModules.home-manager
-            ./modules/common.nix
-            ./modules/shared
+            disko.nixosModules.disko
+            modules.common
+            modules.shared
           ]
         , extraModules ? [ ]
         ,
@@ -118,122 +148,69 @@
           specialArgs = { inherit self inputs lib nixpkgs; };
         };
 
-      # Generate a home-manager configuration usable on any unix system
-      # with overlays and any extraModules applied
-      mkHomeConfig =
-        { username
-        , system ? "x86_64-linux"
-        , nixpkgs ? inputs.nixpkgs
-        , stable ? inputs.stable
-          # , lib ? (mkLib inputs.nixpkgs)
-        , baseModules ? [
-            ./modules/hm
-            {
-              home = {
-                inherit username;
-                homeDirectory = "${homePrefix system}/${username}";
-                sessionVariables = {
-                  NIX_PATH =
-                    "nixpkgs=${nixpkgs}:stable=${stable}\${NIX_PATH:+:}$NIX_PATH";
-                };
-              };
-            }
-          ]
-        , extraModules ? [ ]
-        ,
-        }:
-        inputs.home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues self.overlays;
-          };
-          extraSpecialArgs = { inherit self inputs lib nixpkgs; };
-          modules = baseModules ++ extraModules;
-        };
-      mkChecks =
-        { arch
-        , os
-        , username ? "brunetdragon"
-        ,
-        }: {
-          "${arch}-${os}" = {
-            "${username}_${os}" = (if os == "darwin" then
-              self.darwinConfigurations
-            else
-              self.nixosConfigurations)."${username}@${arch}-${os}".config.system.build.toplevel;
-            "${username}_home" =
-              self.homeConfigurations."${username}@${arch}-${os}".activationPackage;
-            devShell = self.devShells."${arch}-${os}".default;
-          };
-        };
+      # mkChecks =
+      #   { arch
+      #   , os
+      #   , username ? "brunetdragon"
+      #   ,
+      #   }: {
+      #     "${arch}-${os}" = {
+      #       "${username}_${os}" = (if os == "darwin" then
+      #         self.darwinConfigurations
+      #       else
+      #         self.nixosConfigurations)."${username}@${arch}-${os}".config.system.build.toplevel;
+      #       devShell = self.devShells."${arch}-${os}".default;
+      #     };
+      #   };
     in
     {
-      # lib = lib.mine;
-      checks = { } // (mkChecks {
-        arch = "aarch64";
-        os = "darwin";
-      }) // (mkChecks {
-        arch = "x86_64";
-        os = "darwin";
-      }) // (mkChecks {
-        arch = "aarch64";
-        os = "linux";
-      }) // (mkChecks {
-        arch = "x86_64";
-        os = "linux";
-      });
+      # checks = { } // (mkChecks {
+      #   arch = "aarch64";
+      #   os = "darwin";
+      # }) // (mkChecks {
+      #   arch = "x86_64";
+      #   os = "darwin";
+      # }) // (mkChecks {
+      #   arch = "aarch64";
+      #   os = "linux";
+      # }) // (mkChecks {
+      #   arch = "x86_64";
+      #   os = "linux";
+      # });
 
       darwinConfigurations = {
-        "brunetdragon@aarch64-darwin" = mkDarwinConfig {
-          system = "aarch64-darwin";
-          extraModules = [ ./hosts/macos.nix ];
-        };
+        # NOTE reserve for future device
+        # "brunetdragon@aarch64-darwin" = mkDarwinConfig {
+        #   system = "aarch64-darwin";
+        #   extraModules = [ ];
+        # };
         "brunetdragon@x86_64-darwin" = mkDarwinConfig {
           system = "x86_64-darwin";
-          extraModules = [ ./hosts/macos.nix ];
+          extraModules = [ hosts."brunetdragon@x86_64-darwin" ];
         };
       };
 
-      # TODO generate nixOS configuration
       # otherwise `cirrus-ci` will raise error
-      # nixosConfigurations = {
-      #   "brunetdragon@x86_64-linux" = mkNixosConfig {
-      #     system = "x86_64-linux";
-      #     hardwareModules =
-      #       [ inputs.nixos-hardware.nixosModules.raspberry-pi-4 ];
-      #     extraModules = [ ./hosts/linux.nix ];
-      #   };
-      # };
-
-      homeConfigurations = {
-        "brunetdragon@x86_64-linux-hm" = mkHomeConfig {
-          username = "brunetdragon";
+      nixosConfigurations = {
+        # NOTE reserve for future device
+        # "brunetdragon@aarch64-linux" = mkNixosConfig {
+        #   system = "x86_64-linux";
+        #   hardwareModules = [ modules.nixos ];
+        #   extraModules = [ ];
+        # };
+        "brunetdragon@x86_64-linux" = mkNixosConfig {
           system = "x86_64-linux";
-          extraModules = [ ];
-        };
-        "brunetdragon@aarch64-linux-hm" = mkHomeConfig {
-          username = "brunetdragon";
-          system = "aarch64-linux";
-          extraModules = [ ];
-        };
-        "brunetdragon@x86_64-darwin-hm" = mkHomeConfig {
-          username = "brunetdragon";
-          system = "x86_64-darwin";
-          extraModules = [ ];
-        };
-        "brunetdragon@aarch64-darwin-hm" = mkHomeConfig {
-          username = "brunetdragon";
-          system = "aarch64-darwin";
-          extraModules = [ ];
+          hardwareModules = [ modules.nixos ];
+          extraModules = [ hosts."brunetdragon@x86_64-linux" ];
         };
       };
+
+      # WARNING unknown flake output but for convenience
       # build steps:
       # nix --extra-experimental-features 'nix-command flakes' build .\#brunetdragon@x86_64-darwin
       # ./result/sw/bin/darwin-rebuild switch --flake .\#brunetdragon@x86_64-darwin
       "brunetdragon@x86_64-darwin" =
         self.darwinConfigurations."brunetdragon@x86_64-darwin".config.system.build.toplevel;
-      "brunetdragon@x86_64-darwin-hm" =
-        self.homeConfigurations."brunetdragon@x86_64-darwin-hm".activationPackage;
 
       # TODO learn more about devshell
       devShells = eachSystemMap defaultSystems (system:
@@ -248,7 +225,7 @@
             packages = [
               pkgs.nixfmt
               pkgs.pre-commit
-              pkgs.rnix-lsp
+              pkgs.nil
               self.packages.${system}.pyEnv
               (treefmt-nix.lib.mkWrapper pkgs (import ./treefmt.nix))
             ];

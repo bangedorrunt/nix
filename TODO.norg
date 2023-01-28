@@ -8,8 +8,15 @@ version: 0.0.13
 @end
 
 * TODO
+** Nix
+   - ( ) Use `flake.parts` to separate system configuration
+   - ( ) Make NixOS installer with `nix-generator` and `disko`
+   -- File system: `btrfs` or `zfs`
+   -- `disko` layout
+   - ( ) Use secrets with ssh and passwords
 ** Nvim
-   - ( ) `help` queries resulted in an error
+   - (x) Migrage to `lazy.nvim`
+   - (x) `help` queries resulted in an error
    --  `nvim-treesitter` will use default paths
    --- the package folder where `nvim-treesitter` installed
    --- the `site` directory under `vim.fn.stdpath 'data'`
