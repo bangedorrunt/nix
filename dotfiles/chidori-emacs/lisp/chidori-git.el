@@ -254,7 +254,7 @@
     (add-hook 'magit-pre-refresh-hook  #'diff-hl-magit-pre-refresh)
     (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
 
-  ;; FIX: The revert popup consumes 50% of the frame, whether or not you're
+  ;; FIX The revert popup consumes 50% of the frame, whether or not you're
   ;;   reverting 2 lines or 20. This resizes the popup to match its contents.
   (defadvice! +vc-gutter--shrink-popup-a (fn &rest args)
     :around #'diff-hl-revert-hunk-1
@@ -274,7 +274,7 @@
             (remove-hook 'evil-insert-state-exit-hook #'diff-hl-flydiff-update)
           (add-hook 'evil-insert-state-exit-hook #'diff-hl-flydiff-update)))))
 
-  ;; FIX: Reverting a hunk causes the cursor to be moved to an unexpected place,
+  ;; FIX Reverting a hunk causes the cursor to be moved to an unexpected place,
   ;;   often far from the target hunk.
   (defadvice! +vc-gutter--save-excursion-a (fn &rest args)
     "Suppresses unexpected cursor movement by `diff-hl-revert-hunk'."
@@ -381,7 +381,7 @@ changes, which means that `git-gutter' needs to be re-run.")
               (unless (file-remote-p buffer-file-name)
                 (git-gutter)))))))))
 
-  ;; FIX: stop git-gutter:{next,previous}-hunk from jumping to random hunks.
+  ;; FIX stop git-gutter:{next,previous}-hunk from jumping to random hunks.
   (defadvice! +git-gutter:fix-jumping-to-random-hunks (diffinfos is-reverse)
     :override #'git-gutter:search-near-diff-index
     (cl-position-if (let ((lineno (line-number-at-pos))

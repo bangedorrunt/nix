@@ -36,7 +36,7 @@
     :intersect     "∩"
     :diff          "∖"
     :tuple         "⨂"
-    :pipe          "" ;; FIXME: find a non-private char
+    :pipe          "" ;; FIXME find a non-private char
     :dot           "•")
   "Maps identifiers to symbols, recognized by `set-ligatures'.
 This should not contain any symbols from the Unicode Private Area! There is no

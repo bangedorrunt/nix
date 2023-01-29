@@ -150,4 +150,51 @@ kill all magit buffers for this repo."
             (kill-process process)
             (kill-buffer buf)))))))
 
+;; https://github.com/yqrashawn/yqdotfiles/blob/1580bccc122ef5ba78e5efe2e71ba78fc9f33993/.doom.d/autoload.el#L892
+;;;###autoload
+(defun +magit/toggle-performance ()
+  (interactive)
+  (require 'magit)
+  (require 'magit-autorevert)
+  (if magit-refresh-verbose
+      (progn (setq!
+              magit-refresh-status-buffer t
+              magit-refresh-verbose nil
+              auto-revert-buffer-list-filter nil
+              magit-diff-highlight-indentation nil
+              magit-diff-highlight-trailing t
+              magit-diff-highlight-keywords t
+              magit-diff-highlight-hunk-body t
+              magit-diff-paint-whitespace t
+              magit-diff-paint-whitespace-lines t
+              magit-diff-refine-hunk t
+              magit-revision-insert-related-refs 'mixed
+              magit-section-visibility-indicator '(magit-fringe-bitmap> . magit-fringe-bitmapv)
+              magit-revision-use-hash-sections 'quicker
+              magit-diff-expansion-threshold 20)
+             (pushnew! vc-handled-backends 'Git)
+             (add-hook! 'magit-refs-sections-hook 'magit-insert-tags)
+             (add-hook! 'server-switch-hook 'magit-commit-diff)
+             (message "exit magit highperf"))
+    (progn (setq!
+            magit-refresh-status-buffer nil
+            magit-refresh-verbose t
+            auto-revert-buffer-list-filter 'magit-auto-revert-repository-buffer-p
+            magit-diff-highlight-indentation nil
+            magit-diff-highlight-trailing nil
+            magit-diff-highlight-keywords nil
+            magit-diff-highlight-hunk-body nil
+            magit-diff-paint-whitespace-lines nil
+            magit-diff-paint-whitespace nil
+            magit-diff-refine-hunk nil
+            magit-revision-insert-related-refs nil
+            vc-handled-backends nil
+            magit-section-visibility-indicator nil
+            magit-revision-use-hash-sections nil
+            magit-diff-expansion-threshold 0.01)
+           (delq! 'Git vc-handled-backends)
+           (remove-hook! 'magit-refs-sections-hook 'magit-insert-tags)
+           (remove-hook! 'server-switch-hook 'magit-commit-diff)
+           (setq! magit-git-debug nil)
+      (message "enter magit highperf"))))
 ;; git.el ends here

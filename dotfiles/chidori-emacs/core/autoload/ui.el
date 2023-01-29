@@ -4,18 +4,18 @@
 (defun +modus-themes-custom-faces ()
   (setq
    hl-todo-keyword-faces
-   '(("TODO" . "#ff0000")
-     ("WARNING" . "#ff0000")
-     ("HACK" . "#ffff00")
-     ("FIXME" . "#ffff00")
-     ("DEPRECATED" . "#ffff00")
-     ("REVIEW" . "#ffff00")
-     ("XXX"  . "#00ffff")
-     ("NOTE" . "#ff00ff")))
+   '(("TODO" . "#ff9580") ; red-faint
+     ("WARNING" . "#ff9580")
+     ("DEPRECATED" . "#ff9580")
+     ("HACK" . "#00c06f")
+     ("FIXME" . "#7030af")
+     ("REVIEW" . "#00c06f") ; green-cooler
+     ("XXX"  . "#338fff")
+     ("NOTE" . "#338fff"))) ; blue-intense
   (modus-themes-with-colors
     (custom-set-faces
-     `(modus-themes-completion-selected ((,c :foreground ,red-intense)))
-     `(popup-menu-selection-face ((,c :foreground ,red-intense)))
+     `(modus-themes-completion-selected ((,c :foreground ,blue-intense)))
+     `(popup-menu-selection-face ((,c :foreground ,blue-intense)))
      `(diff-hl-margin-insert ((,c :foreground ,green-intense)))
      `(diff-hl-margin-change ((,c :foreground ,red-faint)))
      `(diff-hl-margin-delete ((,c :foreground ,red-intense)))

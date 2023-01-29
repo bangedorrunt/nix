@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-;; TODO: reorganise this core lib
+;; TODO reorganise this core lib
 ;; [ ] in favour of radian lib, then doom-, then maple
 ;; [ ] work out doom naming convention
 ;;; Custom error types

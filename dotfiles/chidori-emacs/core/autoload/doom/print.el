@@ -176,7 +176,7 @@ Returns OUTPUT."
   "Indents any `print!' or `format!' output within BODY."
   (declare (indent defun))
   (cl-destructuring-bind (&key if indent level verbose title
-                               ;; TODO: Implement these
+                               ;; TODO Implement these
                                _benchmark)
       (cl-loop for (key val) on body by #'cddr
                while (keywordp key)

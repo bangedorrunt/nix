@@ -364,7 +364,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-tags-column -100)
 
   ;;;;; Agenda entry
-  ;; NOTE: I do not use this right now.  Leaving everything to its
+  ;; NOTE I do not use this right now.  Leaving everything to its
   ;; default value.
   (setq org-agenda-start-with-entry-text-mode nil)
   (setq org-agenda-entry-text-maxlines 5)
@@ -372,7 +372,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-agenda-entry-text-leaders "    > ")
 
   ;;;;; Agenda logging and clocking
-  ;; NOTE: I do not use these yet, though I plan to.  Leaving everything
+  ;; NOTE I do not use these yet, though I plan to.  Leaving everything
   ;; to its default value for the time being.
   (setq org-agenda-log-mode-items '(closed clock))
   (setq org-agenda-clock-consistency-checks
@@ -430,7 +430,7 @@ Is relative to `org-directory', unless it is absolute. Is used in Doom's default
   (setq org-html-head-include-scripts nil)
   (require 'ox-texinfo)
   (require 'ox-md)
-  ;; FIXME: how to remove everything else?
+  ;; FIXME how to remove everything else?
   (setq org-export-backends '(html texinfo md))
 
   ;;;; IDs
@@ -1054,7 +1054,7 @@ is selected, only the bare key is returned."
   :hook (org-agenda-mode . evil-org-agenda-mode)
   :config
   (evil-org-agenda-set-keys)
-  ;; FIXME: `evil-org-agenda-mode-map' void function
+  ;; FIXME `evil-org-agenda-mode-map' void function
   ;; `doom-after-module-config-hook' seems not right, change `doom-after-init-hook' fixed
   (evil-define-key* 'motion evil-org-agenda-mode-map
     (kbd doom-leader-key) nil)

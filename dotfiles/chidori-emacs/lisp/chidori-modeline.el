@@ -42,7 +42,7 @@
   :after-call doom-first-buffer-hook
   :config
   (setq minions-mode-line-lighter ";")
-  ;; NOTE: This will be expanded whenever I find a mode that should not
+  ;; NOTE this will be expanded whenever I find a mode that should not
   ;; be hidden
   (setq minions-prominent-modes
         (list 'defining-kbd-macro

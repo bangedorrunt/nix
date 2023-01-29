@@ -10,7 +10,8 @@
 ;;
 ;;; Code:
 
-;;; Code:
+;; TODO drop `general.el'
+
 (declare-function evil-make-overriding-map 'evil)
 
 ;;
@@ -108,7 +109,7 @@ and Emacs states, and for non-evil users.")
     evil-ex-completion-map)
   "A list of all the keymaps used for the minibuffer.")
 
-;;;; HACK: `map!' uses this instead of `define-leader-key!' because it consumes
+;;;; HACK `map!' uses this instead of `define-leader-key!' because it consumes
 ;; 20-30% more startup time, so we reimplement it ourselves.
 ;;;###autoload
 (defmacro doom--define-leader-key (&rest keys)

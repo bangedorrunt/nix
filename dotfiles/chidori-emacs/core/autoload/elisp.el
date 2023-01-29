@@ -371,7 +371,7 @@ Adapted from 'https://www.reddit.com/r/emacs/comments/d7x7x8/finally_fixing_inde
               (desired-indent)
               (normal-indent))))))
 
-;; HACK: Quite a few functions here are called often, and so are especially
+;; HACK quite a few functions here are called often, and so are especially
 ;;   performance sensitive, so we compile this file on-demand, at least, until
 ;;   Doom adds a formal compile step to 'doom sync'.
 (doom-compile-functions #'+emacs-lisp-highlight-vars-and-faces

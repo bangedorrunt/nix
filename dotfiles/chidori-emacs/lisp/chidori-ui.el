@@ -567,7 +567,7 @@ windows, switch to `doom-fallback-buffer'. Otherwise, delegate to original
                          'markdown-code-face))
 
 (after! rainbow-delimiters
-  ;;TODO: Ideally just setting the base face would be sufficient here.
+  ;;TODO Ideally just setting the base face would be sufficient here.
   (monos-use-fixed-pitch 'rainbow-delimiters-base-face
                          'rainbow-delimiters-depth-1-face
                          'rainbow-delimiters-depth-2-face

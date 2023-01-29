@@ -159,7 +159,7 @@
 (setq read-extended-command-predicate
       #'command-completion-default-include-p)
 
-;; HACK: fix snippet stealin TAB
+;; HACK fix snippet stealin TAB
 ;; Override :config default mapping by waiting for after corfu is loaded
 (add-hook! 'doom-after-init-hook
   (map!

@@ -4,7 +4,7 @@
   "This is neccessary, otherwise raise error.
 `Defining as dynamic an already lexical var`.")
 
-;; NOTE: don't store autoload file in nested dir and `user-emacs-directory'
+;; NOTE don't store autoload file in nested dir and `user-emacs-directory'
 ;; this might cause file-missing issue
 (defvar chidori-autoload--file (expand-file-name "autoload.el" chidori-cache-dir)
   "Autoload file.")

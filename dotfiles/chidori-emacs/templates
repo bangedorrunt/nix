@@ -16,7 +16,7 @@ Copyright "(p "<YEAR>") " "(p "<OWNER>")"
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
 THE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.")
-
+
 prog-mode
 
 (fixme (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "FIXME ")
@@ -25,7 +25,7 @@ prog-mode
 (hack (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "HACK ")
 (com (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start))
 
-
+
 c-mode c++-mode
 
 (if "if ("  (p "true") ") {" n> r> q n "}")
@@ -36,7 +36,6 @@ c-mode c++-mode
      n> (p "/* your code here*/")
      n "}")
 (main "int main(int argc, char* argv[])"n"{" n> q "/*Your Code Here*/" n"}")
-
 (struct "struct "(p "Name")" {" n> (p "/* fields */") n "};")
 
 c++-mode
@@ -47,26 +46,22 @@ c++-mode
  "TEST_CASE(" (p  "\"Check \"" test-name)", ["(p "suite")"]) {"n>
  (p "// TODO")n>
  "}")
-
 (test-generator
  "GENERATE(" (p "range()" test-name) ")")
-
 (test-range
  "range ("(p  "FROM") "," (p "TO")")")
 
-
+
 python-mode
 
-(for "for " (p "needle") " in " (p "heystack") ":"n>
-     q)
+(for "for " (p "needle") " in " (p "heystack") ":"n> q)
 (if "if " (p "condition" var) ":"n>
     q)
-
 (main "def main():" n> q n
       "if __name__ == '__main__':" n>
       "main()")
 
-
+
 latex-mode org-mode
 
 (begin "\\begin{" (s env) "}" > n> r> "\\end{" (s env) "}")
@@ -74,7 +69,7 @@ latex-mode org-mode
 (enumerate "\\begin{enumerate}\n\\item " r> n> "\\end{enumerate}")
 (itemize "\\begin{itemize}\n\\item " r> n> "\\end{itemize}")
 
-
+
 lisp-mode sly-mrepl emacs-lisp-mode
 
 (lambda "(lambda (" p ")" n> r> q")")
@@ -88,7 +83,7 @@ lisp-mode sly-mrepl emacs-lisp-mode
       "(t"                   (p "default")"))" q ")")
 (dolist "(dolist (" (p "needle") " " (p "hay-stack") " " (p "optional-returned-variable")")"n>
         (r "(message needle)")")")
-
+
 emacs-lisp-mode
 
 (header ";;; " (or (buffer-file-name) (buffer-name)) " -- " p
@@ -96,18 +91,30 @@ emacs-lisp-mode
 (provide "(provide '" (file-name-base (or (buffer-file-name) (buffer-name))) ")" n
          ";;; " (file-name-nondirectory (or (buffer-file-name) (buffer-name))) " ends here" n)
 (package (i header) r n n (i provide))
-
 ;; Definitions
-(autoload ";;;###autoload"p)
-(custom "(defcustom " p "\n  \"" p "\"" n> ":type '" p ")")
-(face "(defface " p " '((t :inherit " p "))\n  \"" p "\")")
-(group "(defgroup " p " nil\n  \"" p "\"" n> ":group '" p n> ":prefix \"" p "-\")")
-(command "(defun " p " (" p ")\n  \"" p "\"" n> "(interactive)" n> r> ")")
+(autoload ";;;###autoload")
+(lambda "(lambda (" p ")" n> r> ")")
+(defvar "(defvar " p "\n  \"" p "\")")
+(defvar-local "(defvar-local " p "\n  \"" p "\")")
 (const "(defconst " p "\n  \"" p "\")")
+(custom "(defcustom " p "\n  \"" p "\"" n> ":type '" p ")")
+(defface "(defface " p " '((t :inherit " p "))\n  \"" p "\")")
+(defgroup "(defgroup " p " nil\n  \"" p "\"" n> ":group '" p n> ":prefix \"" p "-\")")
+(defmacro "(defmacro " p " (" p ")\n  \"" p "\"" n> r> ")")
+(defalias "(defalias '" p " '" p ")")
+(defun "(defun " p " (" p ")\n  \"" p "\"" n> r> ")")
+(defcustom "(defun " p " (" p ")\n  \"" p "\"" n> "(interactive" p ")" n> r> ")")
+(if-let "(if-let (" p ")" n> r> ")")
+(when-let "(when-let (" p ")" n> r> ")")
+(if-let* "(if-let* (" p ")" n> r> ")")
+(when-let* "(when-let* (" p ")" n> r> ")")
+(cond "(cond" n "(" q "))" >)
+(pcase "(pcase " p n "(" q "))" >)
+(let "(let (" p ")" n> r> ")")
+(let* "(let* (" p ")" n> r> ")")
+(dotimes "(dotimes (" p ")" n> r> ")")
+(dolist "(dolist (" p ")" n> r> ")")
 
-(rec "(letrec (" p ")" n> r> ")")
-
-
 lisp-mode sly-mrepl-mode
 
 (defvar "(defvar *" p "*\n  \"" p "\")")
@@ -120,38 +127,29 @@ lisp-mode sly-mrepl-mode
 
 (defun (i ftype) n>
   "(defun " (s func-name) " (" p ")\n  \"" p "\"" n> r> ")")
-
 (the "(the "(p "type") " " (r "variable") ")")
-
 (deftype "(deftype " (p "Name Of Type") " ()"n>
          "`(satisfies " (p "Predicate To Check Type") "))")
-
 (typecase "(typecase " (r "variable")n>
           "(" (p "type")" "(p "(do this)")")"n>
           "(t "           (p "default")"))")
-
 (slot "(" (p "slotname" slot) n>
       ":reader " (s slot) n>
       ":type " (p "String") n>
       ":initarg "  (format ":%s" slot) n>
       ":initform " "(error \"" (format "%s" (upcase slot)) " required\"" ")" n>
       ":documentation \"A " (p "Slot Description.")"\")")
-
 (class "(defclass " (p "classname " classname) " ()" n>
        "(" (i slot) p ")" n>
        "(:documentation \"" (p "A general HTTP request.") "\"))")
-
 (defstruct "(defstruct "(p "Name") n>
            "("(p "slot")" " (p "default-value") " :type" (p "type") "))")
-
 (defpackage "(defpackage " (p "my-package" package)n>
             "(:use :cl)"n>
             "(:import-from :" (p "alexandria")n>
             (p ":with-gensyms :curry")")" p ")")
-
 (in-package (i defpackage) n>
             "(in-package :" (s package) ")")
-
 (doc
  "Syntax:"n n
  (p "function-name") "(" (p "args" arg)")"" => " (p "return-value" ret)n n
@@ -165,7 +163,7 @@ Description:
 "
  (p "description of function")
  )
-
+
 java-mode
 
 (class "public class "
@@ -175,7 +173,7 @@ java-mode
 (debug "System.out.println(""\"The value of "
        (p "var") " is \" + "
        (r "var" print) ");")
-
+
 org-mode
 
 (doublespace "#+LATEX_HEADER: \\usepackage{setspace}"n
@@ -215,7 +213,7 @@ org-mode
  "# Local Variables:" n
  "# eval: (add-hook 'after-save-hook #'org-md-export-to-markdown nil t)" p n
  "# End:")
-
+
 sh-mode
 
 (is-installed "command -v " (r "program") " > /dev/null")
@@ -232,13 +230,13 @@ sh-mode
 (while "while [ "(p "\"$start\"") " -le " (p "\"$end\"")" ]; do"n>
        (p "#code")n
        "done")
-
+
 haskell-mode
 
 (main "main :: IO ()"n
       "main = do print " (p "hello world") q)
 
-
+
 haskell-mode purescript-mode
 (case "case " (r "var") " of" n>
       (p "cond") " -> " q)
@@ -246,18 +244,18 @@ haskell-mode purescript-mode
 (instance "instance " (p "(Show a) => ") (p "Ord") " " (p "DataType") "where")
 (error "(error \"TODO\")" q)
 
-
+
 html-mode web-mode
 
 (html (html-html5-template))
-
+
 javascript-mode typescript-mode
 
 (print "console.log(" (r "What to print")")")
 (log   "console.log(" (r "What to print")")")
 (json  "JSON.stringify(" (r "Your JSON HERE" )")")
 (test  "test(" (r "'Name Of Test'" ) ", async () => {" n> r> n "}"")")
-
+
 typescript-mode
 
 (interface "interface " (p "intrefaceName") " {"n>
@@ -274,22 +272,16 @@ c++-mode
  "std::array<" (p "Type") ", "(p "Length")"> "(p "Name")";")
 (vector
  "std::vector<"(p "Type")"> "(p "Name")";")
-
 (deque
  "std::deque<" (p "Type") "> " (p "Name") ";")
-
 (flist
  "std::forward_list<"(p "Type")"> "(p "Name"));
-
 (list
  "std::list<"(p "Type")"> "(p "Name")";")
-
 (set
  "std::set<"(p "Type")"> "(p "Name")";")
-
 (map
  "std::map<"(p "KeyType")", "(p "ValueType")"> "(p "Name")";")
-
 (class
  "/*! \\class " (p "ClassName" name)n>
  "*  \\brief " (p "Short Description Of Class")n>
@@ -325,10 +317,8 @@ endif()"
  "project("(p "ProjectName" projname)"  LANGUAGES CXX )"n n
 
  "add_executable("(s projname) " " (p "path/to/main")")")
-
 (src
  "add_subdirectory("(p "src")")"n)
-
 (lib
  "add_library(" (p "libname") " " (p "path/to/sources")")")
 
@@ -337,72 +327,47 @@ rust-mode
 (main "pub fn main() {"n>
       q "// your code here"n
       "}")
-
 (test "#[test]"n
       "fn " (p "function_name") "_test() {"n>
       "assert!( 1==1 )"n
       "}")
-
 (match "match " (p "var") " {"n>
        (p "pattern x") " => " (p "1 + x")n
        "}")
-
 (derive "#[derive(" (p "Debug") ")]")
-
 (enum "pub enum " (p "NameOfSumType") " {" n>
       (p "Constructor1") "(" (p "")")," n
       "}")
-
 (struct "struct " (p "Foo") " {" n>
         (p "bar") ": " (p "i32")"," n
         "};")
-
 (print "println!(\"Results: {}\", " r ");")
 
 go-mode
 
 (imp "import " q)
 (impn "import (" n> q n ")")
-
 (pr "fmt.Printf(\"\\n" p "\\n%#v\\n\", " q ")")
 (pl "fmt.Println(" q ")")
-
 (db "Debug.Printf(\"\\n" p "\\n\\n%#v\\n\", " q ")")
 (dl "Debug.Println(" q ")")
-
 (lf "log.Printf(\"\\n%#v\\n\", " q ")")
 (ln "log.Println(" q ")")
-
 (str "type " p " struct {" n> q n> "}")
-
 (inf "type " p " interface {" n> q n> "}")
-
 (cnt "const" p " = " q )
-
 (const "const(" n> p " = " q n> ")")
-
 (var "var " p " " q)
-
 (map "map[" p "]" q)
-
 (if "if " p " {" n> q n>"}")
-
 (iferr "if err != nil {" n> q n> "}")
-
 (sel "select {" n> "case " p ":" n> q "}")
-
 (swch "switch " p " {" n> "case " p ":" q "}")
-
 (for "for " p "{" n> q n> "}")
-
 (range "for " (p "needle" ) " := range " (p "haystack") " {" n> q n> "}")
-
 (fnc "func " p "(" p ") {" n> q n> "}")
-
 (main "func main() {" n> q n> "}")
-
 (init "func init() {" n> q n> "}")
-
 (test "func Test" p " (t *testing.T) { " n> q n> "}")
 
 ;; Local Variables:

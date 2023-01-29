@@ -3,3 +3,12 @@
 * Description
 
 A slim version of Doom Emacs where I remove codes that I don't use
+
+Codes are shamelessly copied from:
+
+- [[https://github.com/doomemacs/doomemacs][Doom Emacs]]
+- [[https://git.sr.ht/~woolsweater/.emacs.d/]]
+- [[https://github.com/thornjad/aero]]
+- [[https://github.com/noctuid/dotfiles/blob/master/emacs/.emacs.d/awaken.org]]
+- [[https://git.sr.ht/~protesilaos/dotfiles/]]
+- [[https://github.com/honmaple/maple-emacs/]]

@@ -38,7 +38,7 @@
   ;;   or simplifying its value.
   (let ((old-value (default-toplevel-value 'file-name-handler-alist)))
     (setq file-name-handler-alist
-          ;; HACK: If the bundled elisp for this Emacs install isn't
+          ;; HACK if the bundled elisp for this Emacs install isn't
           ;;   byte-compiled (but is compressed), then leave the gzip file
           ;;   handler there so Emacs won't forget how to read read them.
           ;;

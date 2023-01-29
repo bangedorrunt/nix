@@ -158,7 +158,7 @@ triggering hooks during startup."
 
 ;; Initialize UI as late as possible. `window-buffer-change-functions' runs
 ;; once, when the scratch/dashboard buffer is first displayed.
-;; NOTE: `window-setup-hook' seem more reliable
+;; NOTE `window-setup-hook' seem more reliable
 (add-hook 'window-buffer-change-functions #'doom-init-ui-h -100)
 
 (unless noninteractive
