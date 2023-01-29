@@ -1,5 +1,4 @@
 (import-macros {: setup!} :core.macros)
-(vim.cmd.do "User LspLoaded")
 (local {: run : merge} (require :core.funs))
 (local cmp-lsp (require :cmp_nvim_lsp))
 (local {:util {:default_config lsp-defaults}
@@ -11,7 +10,7 @@
    :clojure_lsp
    :cssls
    :dockerls
-   :emmet_ls
+   ;; :emmet_ls
    :eslint
    ;; :fennel_language_server
    :html
@@ -19,6 +18,7 @@
    :marksman
    :grammarly
    ;; :rust_analyzer
+   :nil_ls
    :sumneko_lua
    :tailwindcss
    :tsserver
@@ -31,7 +31,7 @@
   (setup! mod.lsp.diagnostics)
   (setup! mod.lsp.on-attach)
   (setup! mod.lsp.null-ls)
-  (setup! mason)
+  ;; (setup! mason)
   (setup! neodev)
   (setup! rust-tools)
   (run config lsp-servers))

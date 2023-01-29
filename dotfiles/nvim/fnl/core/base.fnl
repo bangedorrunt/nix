@@ -5,7 +5,8 @@
                    :plugins []
                    :paths {:state (vim.fn.stdpath :state)
                            :data (vim.fn.stdpath :data)
-                           :treesitter (.. (vim.fn.stdpath :data) :/site)}})
+                           :treesitter (.. (vim.fn.stdpath :data) "/site")}
+                   :snippets (.. (vim.fn.stdpath :config) "/snippets")})
 
   ;; Disable built-in plugins and host providers
   (g loaded_netrw 1)

@@ -1,5 +1,8 @@
 (import-macros {: set!} :core.macros)
 
+(when (vim.fn.exists "g:neovide")
+  (vim.cmd "set guifont=SF\\ Mono:h24"))
+
 (fn setup []
   ;;;; RENDERING
   ;; (set! background :light)
@@ -7,6 +10,9 @@
   ;;;; UI
   ;; (set! lz)
   (set! number)
+  ;; https://www.reddit.com/r/neovim/comments/10j0vyf/finally_figured_out_a_statuscolumn_i_am_happy
+  ;; (set! numberwidth 3)
+  ;; (set! statuscolumn "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s")
   (set! relativenumber)
   (set! termguicolors)
   ;; (set! spell)

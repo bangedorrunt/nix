@@ -185,6 +185,9 @@
 
 ;;;; Plugin Manager
 ;;;; --------------
+
+;; TODO create `doom!` macro
+
 (fn use [plug ...]
   "Add plugin to packer"
   `(table.insert store.lazyadd [,(tostring plug) ,...]))

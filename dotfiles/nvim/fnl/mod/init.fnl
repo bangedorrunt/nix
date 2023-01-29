@@ -8,6 +8,6 @@
   (setup! mod.lang)
   (setup! mod.completion)
   (setup! mod.git)
-  (setup! mod.tool))
+  (setup! mod.util))
 
 {: setup}

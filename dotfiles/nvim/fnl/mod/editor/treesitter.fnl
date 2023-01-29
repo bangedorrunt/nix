@@ -1,7 +1,7 @@
 (import-macros {: setup!} :core.macros)
 (local languages
   [
-   :bash :clojure :commonlisp :cpp :diff :fennel :fish
+   :bash :clojure :commonlisp :cpp :diff :fennel :fish :gitcommit
    :help :html :css :javascript :json :json5 :jsonc :lua
    :markdown :markdown_inline :nix :org :python :rust
    :toml :tsx :typescript :vim :yaml :norg
@@ -21,6 +21,7 @@
                                        :node_decremental :<C-CR>}}
      :context_commentstring {:enable true
                              :enable_autocmd false
-                             :config {:fennel ";; %s"}}
+                             :config {:fennel ";; %s"
+                                      :nix    "# %s"}}
      }))
 {: setup}

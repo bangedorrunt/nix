@@ -13,8 +13,9 @@
     (autocmd FileType [help startuptime qf lspinfo]
              `(noremap n buffer :q :<Cmd>close<CR>))
     (autocmd FileType man `(noremap n buffer :q :<Cmd>quit<CR>))
-    (autocmd FileType [fugitive fugitiveblame]
-             `(nmap n buffer :q :gq)))
+    (autocmd FileType [fugitive fugitiveblame] `(nmap n buffer :q :gq))
+    (autocmd FileType [DiffViewFiles DiffviewFileHistory] `(noremap n buffer :q :<Cmd>DiffviewClose<CR>))
+    )
 
   ;; Toggle relative number
   (augroup toggle-relative-number

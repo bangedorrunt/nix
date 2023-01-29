@@ -13,7 +13,7 @@
   (harpoon.setup
     {:global_settings {:enter_on_sendcmd true}
      :menu {:borderchars ["─" "│" "─" "│" "┌" "┐" "┘" "└"]}
-     ;; NOTE: `Harpoon` will throw error if no command at menu index
+     ;; NOTE `Harpoon` will throw error if no command at menu index
      ;; use `echo 'Hello Harpoon'` as a placeholder to keep me from
      ;; send empty command by accident
      :projects {:$HOME/nix {:mark {:marks [{:filename :dotfiles/nvim/TODO.norg}
