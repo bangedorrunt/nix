@@ -20,12 +20,12 @@ in
     mkIf cfg.enable {
       my.hm.packages = with pkgs; [
         # clangd
-        ## use system git for keychain integration
+        # emacs
         # go
+        ## use system git for keychain integration
         asdf-vm
         clang-tools
         clojure-lsp
-        emacs
         fnlfmt
         fnm
         gh
