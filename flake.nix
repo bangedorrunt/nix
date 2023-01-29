@@ -147,37 +147,8 @@
           modules = baseModules ++ hardwareModules ++ extraModules;
           specialArgs = { inherit self inputs lib nixpkgs; };
         };
-
-      # mkChecks =
-      #   { arch
-      #   , os
-      #   , username ? "brunetdragon"
-      #   ,
-      #   }: {
-      #     "${arch}-${os}" = {
-      #       "${username}_${os}" = (if os == "darwin" then
-      #         self.darwinConfigurations
-      #       else
-      #         self.nixosConfigurations)."${username}@${arch}-${os}".config.system.build.toplevel;
-      #       devShell = self.devShells."${arch}-${os}".default;
-      #     };
-      #   };
     in
     {
-      # checks = { } // (mkChecks {
-      #   arch = "aarch64";
-      #   os = "darwin";
-      # }) // (mkChecks {
-      #   arch = "x86_64";
-      #   os = "darwin";
-      # }) // (mkChecks {
-      #   arch = "aarch64";
-      #   os = "linux";
-      # }) // (mkChecks {
-      #   arch = "x86_64";
-      #   os = "linux";
-      # });
-
       darwinConfigurations = {
         # NOTE reserve for future device
         # "brunetdragon@aarch64-darwin" = mkDarwinConfig {
