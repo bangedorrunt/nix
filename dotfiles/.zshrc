@@ -56,11 +56,10 @@ export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --e
 
 alias f='nvim $(fzf)'
 
-# Nvm
+# fnm
 # ---
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export PATH="/Users/brunetdragon/Library/Application Support/fnm:$PATH"
+eval "`fnm env`"
 
 # Zoxide
 # ------

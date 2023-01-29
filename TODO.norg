@@ -69,6 +69,9 @@ version: 0.0.13
    - (x) Rebind Element keymaps
 
 * FIX
+** Nix
+   - (x) The option `system.build.installBootLoader' is defined multiple times.
+   -- `nixos-hardware` module already define a bootloader
 ** Nvim
    - (x) Could not remap `q` to `gq` for `vim-fugitive` using `nmap` macro
    -- `nmap` macro need to set `:remap true`
