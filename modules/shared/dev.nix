@@ -1,13 +1,14 @@
-{ config, lib, pkgs, home-manager, ... }:
-
-
-let
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  home-manager,
+  ...
+}: let
   # REF: https://github.com/nix-community/home-manager/wiki/FAQ
   cfg = config.my.modules.dev;
-
-in
-
-{
+in {
   options = with lib; {
     my.modules.dev = {
       enable = mkEnableOption ''
@@ -22,7 +23,8 @@ in
         # clangd
         # emacs
         # go
-        ## use system git for keychain integration
+        # nixpkgs-fmt
+        alejandra
         asdf-vm
         clang-tools
         clojure-lsp
@@ -31,10 +33,10 @@ in
         gh
         git
         lua
+        luajitPackages.fennel
         marksman
         neovim
         nil
-        nixpkgs-fmt
         nodePackages.bash-language-server
         nodePackages.diagnostic-languageserver
         nodePackages.dockerfile-language-server-nodejs

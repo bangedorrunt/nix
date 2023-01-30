@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   disko.devices = {
     disk.nvme = {
       type = "disk";
@@ -30,15 +30,15 @@
               type = "btrfs";
               extraArgs = "-f";
               mountpoint = "/";
-              mountOptions = [ "discard" "noatime" ];
+              mountOptions = ["discard" "noatime"];
               subvolumes = {
                 "/home" = {
                   mountpoint = "/home";
-                  mountOptions = [ "compress=zstd" ];
+                  mountOptions = ["compress=zstd"];
                 };
                 "/nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" ];
+                  mountOptions = ["compress=zstd" "noatime"];
                 };
               };
             };
@@ -62,11 +62,11 @@
               type = "btrfs";
               extraArgs = "-f";
               mountpoint = "/data";
-              mountOptions = [ "discard" "noatime" ];
+              mountOptions = ["discard" "noatime"];
               subvolumes = {
                 "/ethereum" = {
                   mountpoint = "/ethereum";
-                  mountOptions = [ "discard" "noatime" "nodatacow" ];
+                  mountOptions = ["discard" "noatime" "nodatacow"];
                 };
               };
             };

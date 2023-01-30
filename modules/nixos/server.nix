@@ -1,6 +1,7 @@
-{ pkgs
-, lib
-, ...
+{
+  pkgs,
+  lib,
+  ...
 }: {
   # Common server packages
   environment.systemPackages = with pkgs; [
@@ -65,5 +66,5 @@
   users.defaultUserShell = pkgs.zsh;
 
   # Define default system version
-  system.stateVersion = "23.05";
+  system.stateVersion = "22.11";
 }

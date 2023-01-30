@@ -1,3 +1,3 @@
-{ ... }: {
+{...}: {
   networking.hostName = "raspberry-pi";
 }

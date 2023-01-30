@@ -1,11 +1,10 @@
-{ config
-, lib
-, ...
-}:
-let
-  inherit (lib) mkDefault;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) mkDefault;
+in {
   boot = {
     # tmpfs = /tmp is mounted in ram. Doing so makes temp file management speedy
     # on ssd systems, and volatile! Because it's wiped on reboot.

@@ -1,9 +1,10 @@
-{ inputs
-, nixpkgs
-, pkgs
-, config
-, lib
-, ...
+{
+  inputs,
+  nixpkgs,
+  pkgs,
+  config,
+  lib,
+  ...
 }: {
   # TODO generate minimal nixOS configuration
   imports = [

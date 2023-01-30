@@ -1,10 +1,12 @@
-{ config, lib, pkgs, home-manager, ... }:
-
-let
-  cfg = config.my.modules.goku;
-in
-
 {
+  config,
+  lib,
+  pkgs,
+  home-manager,
+  ...
+}: let
+  cfg = config.my.modules.goku;
+in {
   options = with lib; {
     my.modules.goku = {
       enable = mkEnableOption ''
@@ -15,6 +17,6 @@ in
 
   config = with lib;
     mkIf cfg.enable {
-      my.hm.packages = with pkgs; [ goku ];
+      my.hm.packages = with pkgs; [goku];
     };
 }

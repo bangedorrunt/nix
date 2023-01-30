@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   imports = [
     ./i18n.nix
     ./minimal-docs.nix

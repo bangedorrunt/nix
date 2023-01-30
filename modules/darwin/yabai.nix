@@ -1,10 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-let
-  cfg = config.my.modules.yabai;
-in
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  cfg = config.my.modules.yabai;
+in {
   options = with lib; {
     my.modules.yabai = {
       enable = mkEnableOption ''

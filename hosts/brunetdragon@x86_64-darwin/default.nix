@@ -1,12 +1,14 @@
-{ config, lib, pkgs, inputs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   HOME_DIR = config.my.user.home;
   NIX_DIR = "${HOME_DIR}/nix";
-
-in
-{
-  imports = [ ../../modules/darwin ];
+in {
+  imports = [../../modules/darwin];
 
   my.modules = {
     # Until mkOutOfStoreSymLink is fixed, used activation script instead
@@ -18,7 +20,7 @@ in
   # system.activationScripts.postUserActivation.text = ''
 
   # Use script at hm context
-  hm.home.activation.symDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  hm.home.activation.symDotfiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     echo ":: -> Running dotfiles activationScript..."
 
     # Handle mutable configs

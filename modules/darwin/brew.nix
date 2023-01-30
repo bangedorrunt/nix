@@ -1,10 +1,13 @@
-{ inputs, config, pkgs, ... }:
-let
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}: let
   checkBrew = "command -v brew > /dev/null";
   installBrew = ''
     ${pkgs.bash}/bin/bash -c "$(${pkgs.curl}/bin/curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'';
-in
-{
+in {
   environment = {
     # Install homebrew
     extraInit = ''
@@ -51,7 +54,10 @@ in
       "candid82/brew/joker"
       # { name = "d12frosted/emacs-plus/emacs-plus@30"; args = [ "with-imagemagick" "with-modern-doom3-icon" "with-native-comp" "with-no-frame-refocus" "with-poll" "with-xwidgets" ]; }
       "fwartner/tap/mac-cleanup"
-      { name = "koekeishiya/formulae/yabai"; args = [ "HEAD" ]; }
+      {
+        name = "koekeishiya/formulae/yabai";
+        args = ["HEAD"];
+      }
       "yqrashawn/goku/goku"
     ];
   };

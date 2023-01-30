@@ -1,19 +1,20 @@
-{ config
-, inputs
-, lib
-, modulesPath
-, pkgs
-, ...
+{
+  config,
+  inputs,
+  lib,
+  modulesPath,
+  pkgs,
+  ...
 }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
   ];
 
   boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-    initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-intel"];
+    extraModulePackages = [];
   };
 
   networking.useDHCP = lib.mkDefault true;

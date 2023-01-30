@@ -1,4 +1,4 @@
-{ config, ... }: {
+{config, ...}: {
   services.tailscale = {
     enable = true;
     interfaceName = "tls0";
@@ -6,8 +6,8 @@
   };
 
   networking.firewall = {
-    trustedInterfaces = [ "tls0" ];
+    trustedInterfaces = ["tls0"];
     checkReversePath = "loose";
-    allowedUDPPorts = [ config.services.tailscale.port ];
+    allowedUDPPorts = [config.services.tailscale.port];
   };
 }

@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   system.defaults = {
     # login window settings
     loginwindow = {
@@ -74,6 +78,4 @@
   system.activationScripts.userDefaults.text = "defaults write com.apple.CrashReporter DialogType none";
   # Enable crash reporter
   # system.activationScripts.userDefaults.text = "defaults write com.apple.CrashReporter DialogType crashreport";
-
-
 }

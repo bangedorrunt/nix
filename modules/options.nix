@@ -1,12 +1,15 @@
-{ config, pkgs, inputs, lib, options, ... }:
-
-with lib;
-
-let
-  inherit (lib.mine.options) mkOpt mkOpt' mkOptStr;
-
-in
 {
+  config,
+  pkgs,
+  inputs,
+  _inputs,
+  lib,
+  options,
+  ...
+}:
+with lib; let
+  inherit (lib.mine.options) mkOpt mkOpt' mkOptStr;
+in {
   options = with types; {
     my = {
       name = mkOptStr "Thanh Dung TRUONG";
@@ -16,15 +19,15 @@ in
       github_username = mkOptStr "bangedorrunt";
       email = mkOptStr "braden.truong@gmail.com";
       terminal = mkOptStr "WezTerm";
-      user = mkOption { type = options.users.users.type.functor.wrapped; };
+      user = mkOption {type = options.users.users.type.functor.wrapped;};
       hm = {
-        file = mkOpt' attrs { } "Files to place directly in $HOME";
-        configFile = mkOpt' attrs { } "Files to place in $XDG_CONFIG_HOME";
-        dataFile = mkOpt' attrs { } "Files to place in $XDG_DATA_HOME";
-        packages = mkOpt (listOf package) [ ];
+        file = mkOpt' attrs {} "Files to place directly in $HOME";
+        configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
+        dataFile = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
+        packages = mkOpt (listOf package) [];
       };
     };
-    hm = mkOption { type = options.home-manager.users.type.functor.wrapped; };
+    hm = mkOption {type = options.home-manager.users.type.functor.wrapped;};
     # hm = mkOpt' attrs { } "Primary user's home-manager configuration";
   };
 
@@ -34,10 +37,9 @@ in
     my.user = {
       description = config.my.name;
       home =
-        if pkgs.stdenv.isDarwin then
-          "/Users/${config.my.username}"
-        else
-          "/home/${config.my.username}";
+        if pkgs.stdenv.isDarwin
+        then "/Users/${config.my.username}"
+        else "/home/${config.my.username}";
 
       shell = pkgs.fish;
     };
@@ -50,7 +52,7 @@ in
       useUserPackages = true;
       # This caused undefined variable `hm` if I don't smash
       # home-manager.lib together with `nixpkgs.lib` as @kclejeune did
-      extraSpecialArgs = { inherit inputs lib; };
+      extraSpecialArgs = {inherit inputs lib;};
       backupFileExtension = "backup";
     };
     # hm -> home-manager.users.<primary user>
@@ -76,7 +78,10 @@ in
       home = {
         # Necessary for home-manager to work with flakes, otherwise it will
         # look for a nixpkgs channel.
-        stateVersion = if pkgs.stdenv.isDarwin then "23.05" else config.system.stateVersion;
+        stateVersion =
+          if pkgs.stdenv.isDarwin
+          then "23.05"
+          else config.system.stateVersion;
         username = config.my.username;
         homeDirectory = config.my.user.home;
         file = mkAliasDefinitions options.my.hm.file;

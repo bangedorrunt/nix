@@ -1,20 +1,23 @@
-{ inputs, config, pkgs, ... }:
-let
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}: let
   prefix = "/run/current-system/sw/bin";
   inherit (pkgs.stdenvNoCC) isAarch64 isAarch32;
-in
-{
+in {
   # Environment setup
   environment = {
     loginShell = pkgs.fish;
     # backupFileExtension = "backup";
-    etc = { darwin.source = "${inputs.darwin}"; };
+    etc = {darwin.source = "${inputs.darwin}";};
   };
 
   # Auto manage nixbld users with nix darwin
   nix = {
     configureBuildUsers = true;
-    nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
+    nixPath = ["darwin=/etc/${config.environment.etc.darwin.target}"];
     extraOptions = ''
       extra-platforms = x86_64-darwin aarch64-darwin
     '';

@@ -1,4 +1,11 @@
-{ self, inputs, config, lib, pkgs, ... }: {
+{
+  self,
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   nixpkgs = {
     config = import ./config.nix;
     overlays = builtins.attrValues self.overlays;
@@ -17,29 +24,30 @@
     };
     settings = {
       max-jobs = 8;
-      trusted-users = [ "${config.my.username}" "root" "@admin" "@wheel" ];
+      trusted-users = ["${config.my.username}" "root" "@admin" "@wheel"];
       trusted-substituters = [
         "https://bangedorrunt.cachix.org"
         "https://cachix.cachix.org"
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
-        "https://cachix.org/api/v1/cache/emacs"
+        # "https://cachix.org/api/v1/cache/emacs"
       ];
       trusted-public-keys = [
         "bangedorrunt.cachix.org-1:5SFYJPXVbo9clgdN+2C8T6bJUYh1WOLKsPzzIsOOWyA="
         "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "emacs.cachix.org-1:b1SMJNLY/mZF6GxQE+eDBeps7WnkT0Po55TAyzwOxTY="
+        # "emacs.cachix.org-1:b1SMJNLY/mZF6GxQE+eDBeps7WnkT0Po55TAyzwOxTY="
       ];
     };
     readOnlyStore = true;
-    nixPath = builtins.map
+    nixPath =
+      builtins.map
       (source: "${source}=/etc/${config.environment.etc.${source}.target}") [
-      "home-manager"
-      "nixpkgs"
-      "stable"
-    ];
+        "home-manager"
+        "nixpkgs"
+        "stable"
+      ];
     registry = {
       nixpkgs = {
         from = {

@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   # Enable the OpenSSH daemon with sane defaults
   services.openssh = {
     enable = true;
