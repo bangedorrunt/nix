@@ -5,6 +5,15 @@
   (use tpope/vim-eunuch :event "VeryLazy")
   (use tpope/vim-repeat :event "VeryLazy")
   (use linty-org/readline.nvim :event "VeryLazy" :mod :editor.readline)
+  (use ggandor/flit.nvim :opts {:labeled_modes :nv})
+  (use ggandor/leap.nvim
+       :event "VeryLazy"
+       :mod :editor.leap
+       :dependencies :ggandor/flit.nvim)
+  (use gbprod/yanky.nvim
+       :event "VeryLazy"
+       :mod :editor.yanky
+       :dependencies :kkharji/sqlite.lua)
   (use nvim-treesitter/nvim-treesitter
        :lazy false
        :mod :editor.treesitter
@@ -28,11 +37,12 @@
              "ColorizerDeattachFromBuffer"
              "ColorizerReloadAllBuffers"]
        :mod+ :colorizer)
+  (use :nvim-telescope/telescope-fzf-native.nvim :build "make")
   (use nvim-telescope/telescope.nvim
        :event "VeryLazy"
        :mod :editor.telescope
        :dependencies
-       [{1 :nvim-telescope/telescope-fzf-native.nvim :build "make"}
+       [:nvim-telescope/telescope-fzf-native.nvim
         :nvim-telescope/telescope-live-grep-args.nvim
         :nvim-neorg/neorg-telescope]))
 
