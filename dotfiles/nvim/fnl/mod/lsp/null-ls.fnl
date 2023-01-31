@@ -4,7 +4,7 @@
 ;; WARNING: when you experience any lag or unresponsive with Lsp,
 ;; make sure respective sources are installed
 (local null-sources [formatting.prettier
-                     formatting.nixpkgs_fmt
+                     formatting.alejandra
                      formatting.stylua
                      formatting.trim_whitespace
                      formatting.shfmt])
