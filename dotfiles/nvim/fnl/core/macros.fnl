@@ -75,6 +75,7 @@
       "+" `(: (. vim.opt ,(name:sub 1 -2)) :append ,value)
       "-" `(: (. vim.opt ,(name:sub 1 -2)) :remove ,value)
       "^" `(: (. vim.opt ,(name:sub 1 -2)) :prepend ,value)
+      "?" `(: (. vim.opt ,(name:sub 1 -2)) :get)
       _ `(tset vim.opt ,name ,value))))
 
 (fn setl! [name ?value]
@@ -86,6 +87,7 @@
       "+" `(: (. vim.opt_local ,(name:sub 1 -2)) :append ,value)
       "-" `(: (. vim.opt_local ,(name:sub 1 -2)) :remove ,value)
       "^" `(: (. vim.opt_local ,(name:sub 1 -2)) :prepend ,value)
+      "?" `(: (. vim.opt ,(name:sub 1 -2)) :get)
       _ `(tset vim.opt_local ,name ,value))))
 
 (fn g [name value]
