@@ -45,8 +45,6 @@
     {: on_attach
      :preview_config {:border :solid :style :minimal :relative :cursor}
      :numhl true})
-  ;; HACK statusline
-  (require :mod.ui.status)
   )
 
 {: setup}

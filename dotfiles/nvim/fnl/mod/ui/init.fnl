@@ -14,6 +14,8 @@
   ;;      :dependencies [:MunifTanjim/nui.nvim])
   (use echasnovski/mini.tabline :event "User LazyVimStarted" :mod+ :mini.tabline)
   (use echasnovski/mini.indentscope :event :VeryLazy :mod :ui.indentscope)
+  ;; HACK statusline
+  (require :mod.ui.status)
   )
 
 {: setup}
