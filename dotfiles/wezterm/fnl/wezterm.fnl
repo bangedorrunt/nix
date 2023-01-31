@@ -5,7 +5,7 @@
   (= target_triple :x86_64-apple-darwin))
 
 (fn fallback [name]
-  (font_with_fallback [name :neorg "Symbols Nerd Font 1000-em"]))
+  (font_with_fallback [name :neorg "SF Compact Text" "Symbols Nerd Font 1000-em"]))
 
 (fn scheme-for-appearance [appearance]
   (if (appearance:find :Dark) "Catppuccin Mocha" "Catppuccin Latte"))
@@ -19,8 +19,8 @@
  :color_scheme (scheme-for-appearance (gui.get_appearance))
  :colors {:background :#14141f}
  :font_dirs [:/Users/brunetdragon/Library/Fonts]
- :font (fallback :MonoLisa)
- :font_size 30
+ :font (fallback "SF Mono")
+ :font_size 24
  :freetype_load_target :Light
  :line_height 1.2
  :cell_width 0.85
