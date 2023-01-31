@@ -1,5 +1,5 @@
 {:profiles
- {:babygau {;; NOTE: `:delay` and `:held` should be equal for `Mod-Tap`
+ {:babygau {;; NOTE `:delay` and `:held` should be equal for `Mod-Tap`
             :default true
             :sim 50
             :delay 135
@@ -34,7 +34,7 @@
                  [:!Tp :up_arrow]
                  [:!Tn :down_arrow]]}
         {:des "Mod-Tap Layout"
-         ;; NOTE: When adding a new layer, if you want it to be able to cross with an old one,
+         ;; NOTE when adding a new layer, if you want it to be able to cross with an old one,
          ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
          :rules [;; s-mode init
                  [:s nil [:!d-mode :!f-mode :!g-mode]
@@ -104,6 +104,29 @@
                  [:s ["yabai -m space --layout stack" [:notify-layout "Fullscreen Stack Layout"]]]
                  [:f ["yabai -m space --layout float" [:notify-layout "Float Layout"]]]
 
+                 ;; ;;;; Amethyst keybindings
+                 ;; :d-mode
+                 ;; ;; Cycle layouts
+                 ;; [:spacebar :!SOspacebar]
+                 ;; ;; Shrink and expand main pain
+                 ;; [:h :!SOh]
+                 ;; [:l :!SOl]
+                 ;; ;; Cycle focus window
+                 ;; [:j :!SOj]
+                 ;; [:k :!SOk]
+                 ;; ;; Focus to main window
+                 ;; [:m :!SOm]
+                 ;; ;; Swap focused window with main window
+                 ;; [:return_or_enter :!SOreturn_or_enter]
+                 ;; ;; Move to space left or right
+                 ;; [:p :!Tleft_arrow]
+                 ;; [:n :!Tright_arrow]
+                 ;; ;; Force window to be reevaluated
+                 ;; [:z :!SOz]
+                 ;; ;; Throw focused window to space left or right
+                 ;; [:quote :!SOTright_arrow]
+                 ;; [:semicolon :!SOTleft_arrow]
+
                  ;;;; App navigation
                  :g-mode
                  ;; Discord
@@ -144,11 +167,11 @@
         {:des "Windows-like Shortcuts"
          ;; Copy/Paste/Undo/Redo
          :rules [:!Terminals
-                 [:!Ta :!Ca]
-                 [:!Tc :!Cc]
-                 [:!Tv :!Cv]
-                 [:!Tu :!Cz]
-                 [:!Tr :!CSz]]}
+                 [:!Ta :!Ca :!Emacs]
+                 [:!Tc :!Cc :!Emacs]
+                 [:!Tv :!Cv :!Emacs]
+                 [:!Tu :!Cz :!Emacs]
+                 [:!Tr :!CSz :!Emacs]]}
 
         {:des "Remap <C-t> to <C-`> for iTerm"
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
@@ -182,10 +205,11 @@
                             "^com\\.googlecode\\.iterm2$"
                             "^io\\.alacritty"]
                 :Discord   ["^com\\.hnc\\.Discord"]
-                :Element   ["^im\\.riot\\.app$"]
+                :Element   ["^im\\.riot\\.nightly$"]
                 :Messenger ["^com\\.facebook\\.archon\\.developerID$"]
                 :Finder    ["^com\\.apple\\.finder$"]
                 :VSCODE    ["^com\\.microsoft\\.VSCode"]
+                :Emacs     ["^org\\.gnu\\.Emacs"]
                 :Browsers  ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"
                             "^com\\.microsoft\\.edgemac\\.Beta$"
@@ -200,7 +224,8 @@
                             "^com\\.microsoft\\.edgemac$"]
                 :Firefoxes ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"]}
- :devices {:keychron [{:vendor_id 1452 :product_id 591}]}
+ :devices {:keychron [{:vendor_id 1452 :product_id 591}
+                      {:vendor_id 13364 :product_id 560}]}
  :input-sources {:us {:input_mode_id ""
                       :input_source_id "com.apple.keylayout.ABC"
                       :language "en"}}}
