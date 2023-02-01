@@ -7,7 +7,7 @@
        :dependencies ["MunifTanjim/nui.nvim"
                       "nvim-lua/plenary.nvim"
                       "nvim-telescope/telescope.nvim"])
-  ;; featured in 0.9 nightly
+  ;; DEPRECATED featured in 0.9 nightly
   ;; (use gpanders/editorconfig.nvim)
   )
 

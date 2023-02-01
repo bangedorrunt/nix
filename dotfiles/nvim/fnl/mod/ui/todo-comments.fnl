@@ -3,7 +3,8 @@
 (fn setup []
   (setup! todo-comments
           {:keywords {:REVIEW {:icon "" :color :info}
-                      :REFACTOR {:icon "" :color :hint}}
+                      :REFACTOR {:icon "" :color :hint}
+                      :DEPRECATED {:icon "" :color :hint} }
            :highlight {:keyword :wide_fg
                        :after ""
                        :pattern ".*<(KEYWORDS)\\s*"}

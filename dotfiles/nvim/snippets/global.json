@@ -29,6 +29,11 @@
     "body": "TEST ",
     "description": "TEST"
   },
+  "DEPRECATED": {
+    "prefix": "deprecated",
+    "body": "DEPRECATED ",
+    "description": "DEPRECATED"
+  },
   "NOTE": {
     "prefix": "note",
     "body": "NOTE ",
