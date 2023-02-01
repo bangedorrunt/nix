@@ -2,7 +2,6 @@
 (local {: visible : complete : select_next_item : select_prev_item : mapping : config
         &as cmp} (require :cmp))
 (local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
-(local luasnip-vscode-snippets (require :luasnip.loaders.from_vscode))
 (local cmp-menu-items {
                        :nvim_lsp :LSP
                        :luasnip :LuaSnip
@@ -116,10 +115,6 @@
     ":"
     {:mapping (mapping.preset.cmdline)
      :sources (config.sources [{:name :path}] [{:name :cmdline}])})
-
-  ;; VS-Code snippets
-  (luasnip-vscode-snippets.lazy_load)
-  (luasnip-vscode-snippets.lazy_load {:paths [store.snippets]})
   )
 
 {: setup}

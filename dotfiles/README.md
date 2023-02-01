@@ -29,4 +29,3 @@ ln -s dotfiles/.zshrc .
 ln -s dotfiles/tmux/.tmux.conf .
 ln -s dotfiles/skhd/skhdrc .skhdrc
 ```
-

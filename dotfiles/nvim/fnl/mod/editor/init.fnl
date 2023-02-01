@@ -22,12 +22,18 @@
        [:mrjones2014/nvim-ts-rainbow
         :andymass/vim-matchup
         :JoosepAlviste/nvim-ts-context-commentstring])
-  (use echasnovski/mini.ai :event "VeryLazy" :mod+ :mini.ai)
-  (use echasnovski/mini.surround :event "VeryLazy" :mod+ :mini.surround)
-  (use echasnovski/mini.pairs :event "VeryLazy" :mod+ :mini.pairs)
-  (use echasnovski/mini.bufremove :event "VeryLazy" :mod+ :mini.bufremove)
-  (use echasnovski/mini.align :event "VeryLazy" :mod+ :mini.align)
+  (use echasnovski/mini.ai :version false :event "VeryLazy" :mod+ :mini.ai)
+  (use echasnovski/mini.surround :version false :event "VeryLazy" :mod+ :mini.surround)
+  (use echasnovski/mini.pairs :version false :event "VeryLazy" :mod+ :mini.pairs)
+  (use echasnovski/mini.bufremove :version false :event "VeryLazy" :mod+ :mini.bufremove)
+  (use echasnovski/mini.align :version false :event "VeryLazy" :mod+ :mini.align)
   (use echasnovski/mini.comment
+       :enabled false
+       :version false
+       :event "VeryLazy"
+       :mod :editor.comment
+       :dependencies :JoosepAlviste/nvim-ts-context-commentstring)
+  (use numToStr/Comment.nvim
        :event "VeryLazy"
        :mod :editor.comment
        :dependencies :JoosepAlviste/nvim-ts-context-commentstring)
