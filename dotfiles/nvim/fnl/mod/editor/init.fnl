@@ -28,12 +28,7 @@
   (use echasnovski/mini.bufremove :version false :event "VeryLazy" :mod+ :mini.bufremove)
   (use echasnovski/mini.align :version false :event "VeryLazy" :mod+ :mini.align)
   (use echasnovski/mini.comment
-       :enabled false
        :version false
-       :event "VeryLazy"
-       :mod :editor.comment
-       :dependencies :JoosepAlviste/nvim-ts-context-commentstring)
-  (use numToStr/Comment.nvim
        :event "VeryLazy"
        :mod :editor.comment
        :dependencies :JoosepAlviste/nvim-ts-context-commentstring)

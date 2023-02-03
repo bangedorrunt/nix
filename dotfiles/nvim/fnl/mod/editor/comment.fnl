@@ -1,7 +1,8 @@
 (import-macros {: setup!} :core.macros)
-(local {: create_pre_hook} (require :ts_context_commentstring.integrations.comment_nvim))
+(local ts-context (require :ts_context_commentstring.internal))
 
 (fn setup []
-  (setup! Comment {:pre_hooks (create_pre_hook)}))
+  (setup! mini.comment
+    {:hooks {:pre #(ts-context.update_commentstring)}}))
 
 {: setup}

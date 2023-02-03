@@ -144,8 +144,11 @@
         rhs (-> args last quoted->fn?)
         lhs (llast args)
         options (->> [(unpack args 1 (- (length args) 2))]
-                     (map tostring)
-                     (reduce #(into $1 $2 true) {}))
+                     (reduce
+                       #(if (string? $2)
+                          (into $1 :desc $2)
+                          (into $1 (tostring $2) true))
+                       {}))
         options (into options :remap true :silent true)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 
@@ -157,8 +160,11 @@
         rhs (-> args last quoted->fn?)
         lhs (llast args)
         options (->> [(unpack args 1 (- (length args) 2))]
-                     (map tostring)
-                     (reduce #(into $1 $2 true) {}))
+                     (reduce
+                       #(if (string? $2)
+                          (into $1 :desc $2)
+                          (into $1 (tostring $2) true))
+                       {}))
         options (into options :noremap true :silent true)]
     `(vim.keymap.set ,modes ,lhs ,rhs ,options)))
 

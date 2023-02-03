@@ -39,11 +39,12 @@
   (noremap n :0 :g0)
   (noremap n "$" :g$)
 
+  ;; WARN conflict with mini.animate <01-02-23, bangedorrunt>
   ;; Keep screen at the center when jump
-  (noremap n :n :nzzzv)
-  (noremap n :N :Nzzzv)
-  (noremap n :<C-d> :<C-d>zz)
-  (noremap n :<C-u> :<C-u>zz)
+  ;; (noremap n :n :nzzzv)
+  ;; (noremap n :N :Nzzzv)
+  ;; (noremap n :<C-d> :<C-d>zz)
+  ;; (noremap n :<C-u> :<C-u>zz)
 
   (noremap n :J "mzJ`z")
   (noremap n :Y :yg$)
@@ -106,69 +107,69 @@
   ;; ------------------------
   ;; Quit
   ;; ------------------------
-  (noremap n :<Leader>qq ":<C-u>confirm qa<CR>")
-  (noremap n :<Leader>qQ ":<C-u>qa!<CR>")
-  (noremap n :<Leader>qs ":<C-u>wq<CR>")
+  (noremap n "quit-with-confirm" :<Leader>qq ":<C-u>confirm qa<CR>")
+  (noremap n "quit-all-without-confirm" :<Leader>qQ ":<C-u>qa!<CR>")
+  (noremap n "save-and-quit" :<Leader>qs ":<C-u>wq<CR>")
 
   ;; ------------------------
   ;; FILE & BUFFER NAVIGATION
   ;; ------------------------
 
   ;; Save
-  (noremap n :<Leader>fs ":<C-u>w<CR>")
-  (noremap n :<Leader>bs ":<C-u>w<CR>")
+  (noremap n "save-file" :<Leader>fs ":<C-u>w<CR>")
+  (noremap n "save-file" :<Leader>bs ":<C-u>w<CR>")
   ;; Save all
-  (noremap n :<Leader>fS ":<C-u>wa<CR>")
-  (noremap n :<Leader>bS ":<C-u>wa<CR>")
+  (noremap n "save-all" :<Leader>fS ":<C-u>wa<CR>")
+  (noremap n "save-all" :<Leader>bS ":<C-u>wa<CR>")
   ;; Close
   ;; Smart way to close buffers without losing split windows
   ;; SEE: http://bit.ly/2heyMZ8
-  (noremap n :<Leader>fd "<Cmd>bp|bd #<CR>")
-  (noremap n :<Leader>fc "<Cmd>bp|bd #<CR>")
-  (noremap n :<Leader>bd "<Cmd>bp|bd #<CR>")
-  (noremap n :<Leader>bc "<Cmd>bp|bd #<CR>")
+  (noremap n "delete-buffer" :<Leader>fd "<Cmd>bp|bd #<CR>")
+  (noremap n "delete-buffer" :<Leader>fc "<Cmd>bp|bd #<CR>")
+  (noremap n "delete-buffer" :<Leader>bd "<Cmd>bp|bd #<CR>")
+  (noremap n "delete-buffer" :<Leader>bc "<Cmd>bp|bd #<CR>")
   ;; Create new file under current dir
-  (noremap n :<Leader>fo ":<C-u>e <C-r>=expand('%:p:h') . '/'<CR>")
-  (noremap n :<Leader>bo ":<C-u>e <C-r>=expand('%:p:h') . '/'<CR>")
+  (noremap n "new-file-cwd" :<Leader>fo ":<C-u>e <C-r>=expand('%:p:h') . '/'<CR>")
+  (noremap n "new-file-cwd" :<Leader>bo ":<C-u>e <C-r>=expand('%:p:h') . '/'<CR>")
   ;; Rename
-  (noremap n :<Leader>fr ":<C-u>Rename ")
-  (noremap n :<Leader>br ":<C-u>Rename ")
+  (noremap n "rename-file" :<Leader>fr ":<C-u>Rename ")
+  (noremap n "rename-file" :<Leader>br ":<C-u>Rename ")
   ;; Move
-  (noremap n :<Leader>fm ":<C-u>Move ")
-  (noremap n :<Leader>bm ":<C-u>Move ")
+  (noremap n "move-file-to" :<Leader>fm ":<C-u>Move ")
+  (noremap n "move-file-to" :<Leader>bm ":<C-u>Move ")
   ;; Delete
-  (noremap n :<Leader>fD ":<C-u>Delete!<CR>")
-  (noremap n :<Leader>bD ":<C-u>Delete!<CR>")
+  (noremap n "delete-file" :<Leader>fD ":<C-u>Delete!<CR>")
+  (noremap n "delete-file" :<Leader>bD ":<C-u>Delete!<CR>")
 
-  (noremap n :<Leader>bn :<Cmd>bn<CR>)
-  (noremap n :<Leader>bp :<Cmd>bp<CR>)
-  (noremap n :<Leader>fn :<Cmd>bn<CR>)
-  (noremap n :<Leader>fp :<Cmd>bp<CR>)
+  (noremap n "buffer-next" :<Leader>bn :<Cmd>bn<CR>)
+  (noremap n "buffer-prev" :<Leader>bp :<Cmd>bp<CR>)
+  (noremap n "buffer-next" :<Leader>fn :<Cmd>bn<CR>)
+  (noremap n "buffer-prev" :<Leader>fp :<Cmd>bp<CR>)
 
   ;; ------------------------
   ;; HELP
   ;; ------------------------
-  ;; Packer
+  ;; Lazy.nvim
 
-  (noremap n :<Leader>hlu "<Cmd>Lazy update<CR>")
-  (noremap n :<Leader>hli "<Cmd>Lazy install<CR>")
-  (noremap n :<Leader>hls "<Cmd>Lazy sync<CR>")
+  (noremap n "lazy-update" :<Leader>hlu "<Cmd>Lazy update<CR>")
+  (noremap n "lazy-install" :<Leader>hli "<Cmd>Lazy install<CR>")
+  (noremap n "lazy-sync" :<Leader>hls "<Cmd>Lazy sync<CR>")
 
   ;; ------------------------
   ;; WINDOWS NAVIGATION
   ;; ------------------------
-  (noremap n :<Leader>wj :<C-w>j)
-  (noremap n :<Leader>wk :<C-w>k)
-  (noremap n :<Leader>wh :<C-w>h)
-  (noremap n :<Leader>wl :<C-w>l)
-  (noremap n :<Leader>wJ :<C-w>J)
-  (noremap n :<Leader>wK :<C-w>K)
-  (noremap n :<Leader>wH :<C-w>H)
-  (noremap n :<Leader>wL :<C-w>L)
-  (noremap n :<Leader>wc :<C-w>c)
-  (noremap n :<Leader>ww :<C-w>w)
-  (noremap n :<Leader>w= :<C-w>=)
-  (noremap n :<Leader>ws :<Cmd>sp<CR>)
-  (noremap n :<Leader>wv :<Cmd>vsplit<CR>))
+  (noremap n "jump-to-bottom" :<Leader>wj :<C-w>j)
+  (noremap n "jump-to-top" :<Leader>wk :<C-w>k)
+  (noremap n "jump-to-left" :<Leader>wh :<C-w>h)
+  (noremap n "jump-to-right" :<Leader>wl :<C-w>l)
+  (noremap n "move-to-bottom" :<Leader>wJ :<C-w>J)
+  (noremap n "move-to-top" :<Leader>wK :<C-w>K)
+  (noremap n "move-to-left" :<Leader>wH :<C-w>H)
+  (noremap n "move-to-right" :<Leader>wL :<C-w>L)
+  (noremap n "close-window" :<Leader>wc :<C-w>c)
+  (noremap n "next-window" :<Leader>ww :<C-w>w)
+  (noremap n "balance-window" :<Leader>w= :<C-w>=)
+  (noremap n "split" :<Leader>ws :<Cmd>sp<CR>)
+  (noremap n "split-vertical" :<Leader>wv :<Cmd>vsplit<CR>))
 
 {: setup}

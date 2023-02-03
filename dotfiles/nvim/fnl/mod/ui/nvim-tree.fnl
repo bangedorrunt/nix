@@ -24,6 +24,6 @@
 
     (on-ready #(vim.cmd :NvimTreeRefresh))
 
-    (noremap n :<Leader>tt :<Cmd>NvimTreeToggle<CR>)))
+    (noremap n "nvim-tree" :<Leader>tt :<Cmd>NvimTreeToggle<CR>)))
 
 {: setup}

@@ -3,10 +3,16 @@
 (fn setup []
   (tset _G :store {:lazyadd []
                    :plugins []
-                   :paths {:state (vim.fn.stdpath :state)
-                           :data (vim.fn.stdpath :data)
-                           :treesitter (.. (vim.fn.stdpath :data) "/site")}
-                   :snippets (.. (vim.fn.stdpath :config) "/snippets")})
+                   :paths
+                   {:state (vim.fn.stdpath :state)
+                    :data (vim.fn.stdpath :data)
+                    :treesitter (.. (vim.fn.stdpath :data) "/site")
+                    :luasnip (.. (vim.fn.stdpath :config) "/snippets")}
+                   :luasnip
+                   {:username :bangedorrunt
+                    :email  "braden.truong@gmail.com"
+                    :github :https://github.com/bangedorrunt
+                    :real_name :Braden }})
 
   ;; Disable built-in plugins and host providers
   (g loaded_netrw 1)

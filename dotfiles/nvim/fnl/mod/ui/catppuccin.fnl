@@ -7,8 +7,11 @@
      :custom_highlights {:TabLineSel {:bg :None}}
      :color_overrides {:mocha {:base :#14141f
                                :surface0 :#181825}}
-     :integrations {;; :noice true
+     :integrations {:noice true
                     :mini true
+                    :which_key true
+                    :leap true
+                    :treesitter_context true
                     :ts_rainbow true}})
   (colorscheme catppuccin))
 

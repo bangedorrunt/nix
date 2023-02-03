@@ -50,17 +50,17 @@
   (run load_extension [:fzf :live_grep_args])
 
   ;; Telescope keymaps
-  (noremap n nowait :<Leader>ht :<Cmd>Telescope<CR>)
-  (noremap n nowait :<Leader><Leader> project)
-  (noremap n nowait "<Leader>;" live_grep_args)
-  (noremap n nowait :<Leader>* grep_string)
-  (noremap n nowait :<Leader>sg git_files)
-  (noremap n nowait :<Leader>sb buffers)
-  (noremap n nowait :<Leader>so oldfiles)
-  (noremap n nowait :<Leader>sc commands)
-  (noremap n nowait :<Leader>sC command_history)
-  (noremap n nowait :<Leader>sk keymaps)
-  (noremap n nowait :<Leader>sr resume)
+  (noremap n nowait "telescope" :<Leader>ht :<Cmd>Telescope<CR>)
+  (noremap n nowait "project-files" :<Leader><Leader> project)
+  (noremap n nowait "project-rg" "<Leader>;" live_grep_args)
+  (noremap n nowait "project-rg-at-point" :<Leader>* grep_string)
+  (noremap n nowait "git-files" :<Leader>sg git_files)
+  (noremap n nowait "buffers" :<Leader>sb buffers)
+  (noremap n nowait "old-files" :<Leader>so oldfiles)
+  (noremap n nowait "commands" :<Leader>sc commands)
+  (noremap n nowait "command-history" :<Leader>sC command_history)
+  (noremap n nowait "keymaps" :<Leader>sk keymaps)
+  (noremap n nowait "resume" :<Leader>sr resume)
   ;; Open cached files
   (noremap n nowait :<Leader>hc `(find_files {:cwd (cache-prefix) :hidden true})))
 

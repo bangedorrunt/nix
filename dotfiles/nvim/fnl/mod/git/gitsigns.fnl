@@ -27,17 +27,19 @@
                 (do
                   (vim.schedule #(prev_hunk))
                   "<Ignore>")))
-    (noremap nv nowait :<LocalLeader>hs stage_hunk)
-    (noremap nv nowait :<LocalLeader>hr reset_hunk)
-    (noremap n nowait :<LocalLeader>hS stage_buffer)
-    (noremap n nowait :<LocalLeader>hu undo_stage_hunk)
-    (noremap n nowait :<LocalLeader>hR reset_buffer)
-    (noremap n nowait :<LocalLeader>hp preview_hunk)
-    (noremap n nowait :<LocalLeader>hb `(blame_line {:full true}))
-    (noremap n nowait :<LocalLeader>tb toggle_current_line_blame)
-    (noremap n nowait :<LocalLeader>hd diffthis)
-    (noremap n nowait :<LocalLeader>hD `(diffthis "~"))
-    (noremap n nowait :<LocalLeader>td toggle_deleted)
+
+    (noremap nv nowait "stage-hunk" :<Leader>ghs stage_hunk)
+    (noremap nv nowait "reset-hunk" :<Leader>ghr reset_hunk)
+    (noremap n nowait "stage-buffer" :<Leader>ghS stage_buffer)
+    (noremap n nowait "undo-stage" :<Leader>ghu undo_stage_hunk)
+    (noremap n nowait "reset-buffer" :<Leader>ghR reset_buffer)
+    (noremap n nowait "preview-hunk" :<Leader>ghp preview_hunk)
+    (noremap n nowait "blame-line" :<Leader>ghb `(blame_line {:full true}))
+    (noremap n nowait "toggle-blame-line" :<Leader>gtb toggle_current_line_blame)
+    (noremap n nowait "diff-this" :<Leader>ghd diffthis)
+    (noremap n nowait "diff-this~" :<Leader>ghD `(diffthis "~"))
+    (noremap n nowait "toggle-deleted" :<Leader>gtd toggle_deleted)
+
     (noremap ox :ih ":<C-u>Gitsigns select_hunk<CR>")))
 
 (fn setup []

@@ -28,9 +28,9 @@
     (noremap n buffer :gd definition)
     (noremap n buffer :gt type_definition)
     (noremap n buffer :gi implementation)
-    (noremap nv buffer nowait :<LocalLeader>la code_action)
-    (noremap n buffer nowait :<LocalLeader>ll open_float)
-    (noremap n buffer nowait :<LocalLeader>lr references)
+    (noremap nv buffer nowait "code-action" :<Leader>ca code_action)
+    (noremap n buffer nowait "diagnostics" :<Leader>cl open_float)
+    (noremap n buffer nowait "references" :<Leader>cr references)
     ;; LSP format
     (when client.server_capabilities.documentFormattingProvider
       (augroup lsp-format-on-save
@@ -40,7 +40,7 @@
                                      (not (has? [:jsonls :tsserver] client.name)))
                            : bufnr}
                           {:buffer bufnr})))
-      (noremap n buffer nowait :<LocalLeader>lf `(format {: bufnr})))
+      (noremap n buffer nowait "lsp-format" :<Leader>cf `(format {: bufnr})))
     ;; LSP Document Highlight
     (when client.server_capabilities.documentHighlightProvider
       (augroup lsp-document-highlight
