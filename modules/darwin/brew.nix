@@ -27,7 +27,7 @@ in {
     };
 
     taps = [
-      "FelixKratz/formulae"
+      # "FelixKratz/formulae"
       "beeftornado/rmtree"
       "candid82/brew"
       "daipeihust/tap"
@@ -51,7 +51,7 @@ in {
       "candid82/brew/joker"
       "fwartner/tap/mac-cleanup"
       "reattach-to-user-namespace"
-      "sketchybar"
+      # "sketchybar"
       "yqrashawn/goku/goku"
       # "fish"
       # "zsh"

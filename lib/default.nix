@@ -1,11 +1,12 @@
+# SEE: https://github.com/NixOS/nixpkgs/blob/master/lib/default.nix
 {lib, ...} @ args:
 with lib; let
   _lib = self: let
-    _import = file: import file ({inherit self;} // args);
+    callLibs = file: import file ({lib = self;} // args);
   in {
-    attrs = _import ./attrs.nix;
-    importers = _import ./importers.nix;
-    options = _import ./options.nix;
+    attrs = callLibs ./attrs.nix;
+    importers = callLibs ./importers.nix;
+    options = callLibs ./options.nix;
     # BUG infinite recursion
     # inherit (self.attrs) mergeAny;
     # inherit (self.importers) rakeLeaves flattenTree;

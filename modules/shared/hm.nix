@@ -26,10 +26,10 @@ with lib; {
   # files easily to my $HOME, but 'home-manager.users.${config.tdt.username}.home.file.*'
   # is much too long and harder to maintain, so I've made aliases in:
   #
-  #   tdt.hm.file        ->  home-manager.users.babygau.home.file
-  #   tdt.hm.configFile  ->  home-manager.users.babygau.home.xdg.configFile
-  #   tdt.hm.dataFile    ->  home-manager.users.babygau.home.xdg.dataFile
-  #   tdt.hm.packages    ->  home-manager.users.babygau.home.packages
+  #   tdt.hm.file        ->  home-manager.users.brunetdragon.home.file
+  #   tdt.hm.configFile  ->  home-manager.users.brunetdragon.home.xdg.configFile
+  #   tdt.hm.dataFile    ->  home-manager.users.brunetdragon.home.xdg.dataFile
+  #   tdt.hm.packages    ->  home-manager.users.brunetdragon.home.packages
   hm = {
     # imports = [ ./shared ];
     xdg = {
@@ -59,10 +59,10 @@ with lib; {
       };
     };
 
-    programs = {
-      # Let Home Manager install and manage itself.
-      home-manager.enable = true;
-      # home-manager.path = "${self}/modules/shared";
-    };
+    # NOTE there's never any reason to set programs.home-manager.enable when
+    # using as a nixOS|darwin module, except maybe to bootstrap switching to
+    # standalone
+    # programs.home-manager.enable = true;
+    # programs.home-manager.path = "${self}/modules/shared";
   };
 }

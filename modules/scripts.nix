@@ -26,20 +26,27 @@
       '';
   in {
     mission-control.scripts = {
-      nix-build-nuc = {
+      nix-build-darwin = {
         category = "Nix";
-        description = "Builds toplevel NixOS image for NUC-1 host";
-        exec = pkgs.writeShellScriptBin "nix-build-nuc" ''
+        description = "Builds Nix for macOS";
+        exec = pkgs.writeShellScriptBin "nix-build-darwin" ''
           set -euo pipefail
-          nix build .#nixosConfigurations.nuc-1.config.system.build.toplevel
+          nix build .#darwinConfigurations."brunetdragon@x86_64-darwin".config.system.build.toplevel
         '';
       };
-
+      nix-build-nixos = {
+        category = "Nix";
+        description = "Builds NixOS";
+        exec = pkgs.writeShellScriptBin "nix-build-nixos" ''
+          set -euo pipefail
+          nix build .#nixosConfigurations."brunetdragon@x86_64-linux".config.system.build.toplevel
+        '';
+      };
       # ISOs
-      flash-nuc-1-iso = {
+      flash-nixos-iso = {
         category = "Images";
-        description = "Flash installer-iso image for NUC-1";
-        exec = flash-iso-image "flash-nuc-iso" "nuc-1-iso-image";
+        description = "Flash installer-iso image for NixOS";
+        exec = flash-iso-image "flash-nixos-iso" "nixos-iso-image";
       };
 
       # Utils
