@@ -7,10 +7,10 @@
   ...
 }: let
   # REF: https://github.com/nix-community/home-manager/wiki/FAQ
-  cfg = config.my.modules.dev;
+  cfg = config.tdt.modules.shared.pkgs.dev;
 in {
   options = with lib; {
-    my.modules.dev = {
+    tdt.modules.shared.pkgs.dev = {
       enable = mkEnableOption ''
         Whether to enable dev module
       '';
@@ -19,7 +19,7 @@ in {
 
   config = with lib;
     mkIf cfg.enable {
-      my.hm.packages = with pkgs; [
+      tdt.hm.packages = with pkgs; [
         # clangd
         # emacs
         # go

@@ -1,6 +1,7 @@
 {
   self,
   inputs,
+  _inputs,
   lib,
   withSystem,
   ...
@@ -19,8 +20,6 @@
     baseModules ? [
       # Use home-manager module
       home-manager.darwinModules.home-manager
-      # NOTE modules imported from here will inherit system context
-      modules.common
       modules.shared
     ],
     extraModules ? [],
@@ -28,10 +27,10 @@
     inputs.darwin.lib.darwinSystem {
       inherit system;
       modules = baseModules ++ extraModules;
-      specialArgs = {inherit self inputs lib nixpkgs;};
+      specialArgs = {inherit self inputs lib;};
     };
 
-  # generate a base nixos configuration with the
+  # Generate a base nixos configuration with the
   # specified overlays, hardware modules, and any extraModules applied
   mkNixosConfig = {
     system ? "x86_64-linux",
@@ -41,7 +40,6 @@
     baseModules ? [
       home-manager.nixosModules.home-manager
       disko.nixosModules.disko
-      modules.common
       modules.shared
     ],
     extraModules ? [],
@@ -49,7 +47,7 @@
     nixpkgs.lib.nixosSystem {
       inherit system;
       modules = baseModules ++ hardwareModules ++ extraModules;
-      specialArgs = {inherit self inputs lib nixpkgs;};
+      specialArgs = {inherit self inputs lib;};
     };
 in {
   flake.darwinConfigurations = {

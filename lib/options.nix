@@ -1,5 +1,5 @@
 # lib/options.nix -- Helper functions for defining options
-lib: let
+{lib, ...}: let
   inherit (lib) mkEnableOption mkOption types;
 in {
   # Define another enable option that defaults to true

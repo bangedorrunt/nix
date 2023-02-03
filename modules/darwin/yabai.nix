@@ -4,10 +4,10 @@
   pkgs,
   ...
 }: let
-  cfg = config.my.modules.yabai;
+  cfg = config.tdt.modules.yabai;
 in {
   options = with lib; {
-    my.modules.yabai = {
+    tdt.modules.yabai = {
       enable = mkEnableOption ''
         Whether to enable Yabai module
       '';

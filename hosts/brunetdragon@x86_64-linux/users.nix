@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  my.user = {
+  tdt.user = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [

@@ -5,10 +5,10 @@
   home-manager,
   ...
 }: let
-  cfg = config.my.modules.goku;
+  cfg = config.tdt.modules.goku;
 in {
   options = with lib; {
-    my.modules.goku = {
+    tdt.modules.goku = {
       enable = mkEnableOption ''
         Whether to enable Goku module
       '';
@@ -17,6 +17,6 @@ in {
 
   config = with lib;
     mkIf cfg.enable {
-      my.hm.packages = with pkgs; [goku];
+      tdt.hm.packages = with pkgs; [goku];
     };
 }

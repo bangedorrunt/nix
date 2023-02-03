@@ -10,11 +10,11 @@ with lib; let
   # Manage files with symlink
   # Stole from: https://github.com/nix-community/home-manager/blob/master/modules/files.nix#L64
   # inherit (config.lib.file) mkOutOfStoreSymLink;
-  home = config.my.user.home;
-  cfg = config.my.modules.dotfiles;
+  home = config.tdt.user.home;
+  cfg = config.tdt.modules.dotfiles;
 in {
   options = with lib; {
-    my.modules.dotfiles = {
+    tdt.modules.shared.dotfiles = {
       enable = mkEnableOption ''
         Whether to enable dotfiles module
       '';
@@ -23,7 +23,7 @@ in {
 
   config = with lib;
     mkIf cfg.enable {
-      my.hm = {
+      tdt.hm = {
         file = {
           ".zshrc".source = config.lib.file.mkOutOfStoreSymLink ../../dotfiles/.zshrc;
           ".tmux.conf".source = ../../dotfiles/tmux/.tmux.conf;

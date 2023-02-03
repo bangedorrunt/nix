@@ -27,9 +27,9 @@ in {
     };
 
     taps = [
+      "FelixKratz/formulae"
       "beeftornado/rmtree"
       "candid82/brew"
-      # "d12frosted/emacs-plus"
       "daipeihust/tap"
       "fwartner/tap"
       "homebrew/bundle"
@@ -40,25 +40,26 @@ in {
       "homebrew/services"
       "koekeishiya/formulae"
       "microsoft/git"
+      "wez/wezterm"
       "yqrashawn/goku"
       "zdcthomas/tools"
-      "wez/wezterm"
+      # "d12frosted/emacs-plus"
     ];
 
     brews = [
-      "reattach-to-user-namespace"
-      "ripgrep"
-      "fish"
-      "zsh"
       "beeftornado/rmtree/brew-rmtree"
       "candid82/brew/joker"
-      # { name = "d12frosted/emacs-plus/emacs-plus@30"; args = [ "with-imagemagick" "with-modern-doom3-icon" "with-native-comp" "with-no-frame-refocus" "with-poll" "with-xwidgets" ]; }
       "fwartner/tap/mac-cleanup"
+      "reattach-to-user-namespace"
+      "sketchybar"
+      "yqrashawn/goku/goku"
+      # "fish"
+      # "zsh"
+      # { name = "d12frosted/emacs-plus/emacs-plus@30"; args = [ "with-imagemagick" "with-modern-doom3-icon" "with-native-comp" "with-no-frame-refocus" "with-poll" "with-xwidgets" ]; }
       {
         name = "koekeishiya/formulae/yabai";
         args = ["HEAD"];
       }
-      "yqrashawn/goku/goku"
     ];
   };
 }

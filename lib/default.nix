@@ -1,11 +1,17 @@
-# TODO add `{user|host|utils}.nix`
-# lib/default.nix -- This is used to extend nixpkgs' lib set to include
-# some functions defined in lib/ that I used throughout my config.
-# inputs.nixpkgs.lib is passed in here
-lib: rec {
-  attrs = import ./attrs.nix lib;
-  importers = import ./importers.nix lib;
-  options = import ./options.nix lib;
-  inherit (attrs) mergeAny;
-  inherit (importers) rakeLeaves flattenTree;
-}
+{lib, ...} @ args:
+with lib; let
+  _lib = self: let
+    _import = file: import file ({inherit self;} // args);
+  in {
+    attrs = _import ./attrs.nix;
+    importers = _import ./importers.nix;
+    options = _import ./options.nix;
+    # BUG infinite recursion
+    # inherit (self.attrs) mergeAny;
+    # inherit (self.importers) rakeLeaves flattenTree;
+    # inherit (self.options) mkEnableOpt' mkOpt mkOpt' mkOptStr mkBoolOpt;
+  };
+  mine = makeExtensible _lib;
+in
+  mine.extend (self: super:
+    foldr (a: b: a // b) {} (attrValues super))

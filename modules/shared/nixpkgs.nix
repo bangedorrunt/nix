@@ -5,10 +5,15 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+with builtins; {
   nixpkgs = {
-    config = import ./config.nix;
-    overlays = builtins.attrValues self.overlays;
+    config = {
+      allowUnsupportedSystem = true;
+      allowUnfree = true;
+      allowBroken = false;
+    };
+    overlays = attrValues self.overlays;
   };
 
   nix = {
@@ -24,7 +29,7 @@
     };
     settings = {
       max-jobs = 8;
-      trusted-users = ["${config.my.username}" "root" "@admin" "@wheel"];
+      trusted-users = ["${config.tdt.username}" "root" "@admin" "@wheel"];
       trusted-substituters = [
         "https://bangedorrunt.cachix.org"
         "https://cachix.cachix.org"
@@ -42,7 +47,7 @@
     };
     readOnlyStore = true;
     nixPath =
-      builtins.map
+      map
       (source: "${source}=/etc/${config.environment.etc.${source}.target}") [
         "home-manager"
         "nixpkgs"

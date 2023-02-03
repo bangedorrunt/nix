@@ -20,6 +20,14 @@
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # System management
     flake-parts = {
@@ -27,6 +35,10 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     flake-root.url = "github:srid/flake-root";
+    flake-registry = {
+      url = "github:NixOS/flake-registry";
+      flake = false;
+    };
     nixos-generators = {
       #url = "github:nix-community/nixos-generators";
       url = "github:Mic92/nixos-generators/fedf7136f27490402fe8ab93e67fafae80513e9b";
@@ -38,15 +50,6 @@
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    mission-control.url = "github:Platonic-Systems/mission-control";
-    darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     deploy-rs = {
@@ -61,6 +64,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    mission-control.url = "github:Platonic-Systems/mission-control";
     # Editors
     # emacs.url = "github:cmacrae/emacs";
     neovim-nightly-overlay = {
@@ -84,18 +88,13 @@
   } @ inputs: let
     # Extend nixpkgs.lib with custom lib and HM lib
     # Custom `./lib` will exposed as `lib.mine`
-    #
-    # NOTE if you pass this lib in [darwin/home/nixos]Configurations which
-    # using home-manager module, make sure you merge `home-manager.lib`
-    # otherwise build will fail.
+    # NOTE merge with `home-manager.lib` otherwise build will fail.
     # My guess is `lib` will override system lib, so some/all attributes of
     # system lib will be _undefined_, thus build error!
-    # TODO rewrite `lib` module
     mkLib = nixpkgs:
       nixpkgs.lib.extend
-      (final: prev: {mine = import ./lib final;} // home-manager.lib);
+      (self: super: {mine = import ./lib {lib = self;};} // home-manager.lib);
     lib = mkLib inputs.nixpkgs;
-
     inherit (lib.mine) rakeLeaves;
 
     hosts = rakeLeaves ./hosts;
@@ -125,8 +124,9 @@
         "x86_64-darwin"
         "x86_64-linux"
       ];
-      # Flake top-levelconfiguration
+      # flake top-level configuration
       flake = {
+        # NOTE overlays are overused, you might not need it
         overlays = {
           channels = final: prev: {
             # expose other channels via overlays

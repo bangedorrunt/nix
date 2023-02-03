@@ -5,16 +5,14 @@
   inputs,
   ...
 }: let
-  HOME_DIR = config.my.user.home;
+  HOME_DIR = config.tdt.user.home;
   NIX_DIR = "${HOME_DIR}/nix";
 in {
   imports = [../../modules/darwin];
 
-  my.modules = {
-    # Until mkOutOfStoreSymLink is fixed, used activation script instead
-    # dotfiles.enable = true;
-    dev.enable = true;
-  };
+  # NOTE until mkOutOfStoreSymLink is fixed, used activation script instead
+  # tdt.modules.shared.dotfiles = true;
+  tdt.modules.shared.pkgs.dev.enable = true;
 
   # Use script at system context
   # system.activationScripts.postUserActivation.text = ''
