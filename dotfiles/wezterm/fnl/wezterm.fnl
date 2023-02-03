@@ -12,7 +12,7 @@
 
 {:term :wezterm
  :default_prog (if (is_macos?)
-                   [:/usr/local/bin/fish :-l :-c "tmux attach -d || tmux"]
+                   [:/run/current-system/sw/bin/fish :-l :-c "tmux attach -d || tmux"]
                    [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
  :front_end :WebGpu
