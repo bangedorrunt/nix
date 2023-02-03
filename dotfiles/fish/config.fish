@@ -38,6 +38,8 @@ set -Ux SSH_KEY_PATH $HOME/.ssh/id_rsa
 set -gx SSH_AUTH_SOCK $SSH_AUTH_SOCK
 set -gx SSH_AGENT_PID $SSH_AGENT_PID
 
+set -gx OPENAI_API_KEY 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
+
 set -x LC_ALL en_US.UTF-8
 set -x LC_CTYPE en_US.UTF-8
 
