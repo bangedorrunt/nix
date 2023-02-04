@@ -296,6 +296,21 @@
                     "key_code": "left_control"
                   }
                 ],
+                "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  }
+                ],
                 "type": "basic"
               },
               {
@@ -1963,6 +1978,19 @@
                 },
                 "conditions": [
                   {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  },
+                  {
                     "name": "s-mode",
                     "value": 1,
                     "type": "variable_unless"
@@ -2008,6 +2036,19 @@
                   "key_code": "semicolon"
                 },
                 "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  },
                   {
                     "name": "s-mode",
                     "value": 1,
@@ -2055,6 +2096,19 @@
                   }
                 ],
                 "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  },
                   {
                     "name": "caps-lock-on",
                     "value": 1,
@@ -2104,6 +2158,19 @@
                 ],
                 "conditions": [
                   {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  },
+                  {
                     "name": "caps-lock-on",
                     "value": 0,
                     "type": "variable_if"
@@ -2133,6 +2200,19 @@
                   }
                 ],
                 "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  },
                   {
                     "name": "macos-input-source",
                     "value": 1,
@@ -2178,6 +2258,19 @@
                   }
                 ],
                 "conditions": [
+                  {
+                    "identifiers": [
+                      {
+                        "vendor_id": 1452,
+                        "product_id": 591
+                      },
+                      {
+                        "vendor_id": 13364,
+                        "product_id": 560
+                      }
+                    ],
+                    "type": "device_unless"
+                  },
                   {
                     "name": "macos-input-source",
                     "value": 0,
@@ -2426,7 +2519,7 @@
           ]
         }
       ],
-      "name": "babygau",
+      "name": "bangedorrunt",
       "parameters": {
         "delay_milliseconds_before_open_device": 1000
       },

@@ -1,10 +1,10 @@
 {:profiles
- {:babygau {;; NOTE `:delay` and `:held` should be equal for `Mod-Tap`
-            :default true
-            :sim 50
-            :delay 135
-            :held 135
-            :alone 130}}
+ {:bangedorrunt {;; NOTE `:delay` and `:held` should be equal for `Mod-Tap`
+                 :default true
+                 :sim 50
+                 :delay 135
+                 :held 135
+                 :alone 130}}
  ;; Create alias key for `:to`
  :tos {:hyper {:key :left_control :modi {:mandatory [:left_command :left_shift :left_option]}}
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
@@ -20,7 +20,7 @@
  ;; Main contains multiple manipulators
  :main [{:des "Hyper Layout"
          :rules [;; Remap `caps_lock` key to hyper key, escape when pressed alone
-                 [:##caps_lock :hyper nil {:alone :escape}]
+                 [:##caps_lock :hyper :!QMK {:alone :escape}]
                  ;; Move like Vim
                  [:!!j :down_arrow]
                  [:!!k :up_arrow]
@@ -177,7 +177,8 @@
          :rules [[:!Tgrave_accent_and_tilde :!Tt :Terminals]]}
 
         {:des "Remap `a` and `semicolon` to `ctrl` key"
-         :rules [[:a nil [:!s-mode :!d-mode :!f-mode :!g-mode]
+         :rules [:!QMK
+                 [:a nil [:!s-mode :!d-mode :!f-mode :!g-mode]
                   {:alone {:key :a :halt true}
                    :delayed {:canceled {:key :a}}
                    :held {:key :left_control :lazy :true}}]
@@ -187,14 +188,16 @@
                    :held {:key :left_control :lazy :true}}]]}
 
         {:des "Double tap `left_shift` key to enable capslock"
-         :rules [[:##left_shift [:caps_lock ["caps-lock-on" 0]] ["caps-lock-on" 1]]
+         :rules [:!QMK
+                 [:##left_shift [:caps_lock ["caps-lock-on" 0]] ["caps-lock-on" 1]]
                  [:##left_shift
                   [["caps-lock-on" 1] :left_shift]
                   ["caps-lock-on" 0]
                   {:delayed {:invoked ["caps-lock-on" 0] :canceled ["caps-lock-on" 0]} :params {:delay 300}}]]}
 
         {:des "Double tap `right_shift` key to switch input setting"
-         :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
+         :rules [:!QMK
+                 [:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
                   [["macos-input-source" 1] :right_shift]
                   ["macos-input-source" 0]
@@ -224,8 +227,8 @@
                             "^com\\.microsoft\\.edgemac$"]
                 :Firefoxes ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"]}
- :devices {:keychron [{:vendor_id 1452 :product_id 591}
-                      {:vendor_id 13364 :product_id 560}]}
+ :devices {:QMK [{:vendor_id 1452 :product_id 591}
+                 {:vendor_id 13364 :product_id 560}]}
  :input-sources {:us {:input_mode_id ""
                       :input_source_id "com.apple.keylayout.ABC"
                       :language "en"}}}
