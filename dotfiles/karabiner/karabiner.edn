@@ -12,9 +12,7 @@
  :templates {:launch "osascript -e 'tell application \"%s\" to activate'"
              :open   "open \"%s\""
              :show   "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'\n"
-             :toggle "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else if frontmost of process appName then\n    set visible of process appName to false\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'"
-             :notify "osascript -e 'display notification \"%s\" with title \"Debug!\"'"
-             :notify-layout "osascript -e 'display notification \"%s\" with title \"Yabai\"'"}
+             :toggle "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else if frontmost of process appName then\n    set visible of process appName to false\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'"}
  :layers {}
  :simlayers {}
  ;; Main contains multiple manipulators
@@ -36,33 +34,18 @@
         {:des "Mod-Tap Layout"
          ;; NOTE when adding a new layer, if you want it to be able to cross with an old one,
          ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
-         :rules [;; s-mode init
-                 [:s nil [:!d-mode :!f-mode :!g-mode]
-                  {:alone {:key :s :halt true}
-                   :delayed {:canceled {:key :s}}
-                   :held {:set ["s-mode" 1] :repeat false}
-                   :afterup {:set ["s-mode" 0]}}]
-                 ;; d-mode init
-                 [:d nil [:!s-mode :!f-mode :!g-mode]
+         :rules [;; d-mode init
+                 [:d nil [:!g-mode]
                   {:alone {:key :d :halt true}
                    :delayed {:canceled {:key :d}}
                    :held {:set ["d-mode" 1] :repeat false}
                    :afterup {:set ["d-mode" 0]}}]
-                 ;; f-mode init
-                 [:f nil [:!s-mode :!d-mode :!g-mode]
-                  {:alone {:key :f :halt true}
-                   :delayed {:canceled {:key :f}}
-                   :held {:set ["f-mode" 1] :repeat false}
-                   :afterup {:set ["f-mode" 0]}}]
                  ;; g-mode init
-                 [:g nil [:!s-mode :!d-mode :!f-mode]
+                 [:g nil [:!d-mode]
                   {:alone {:key :g :halt true}
                    :delayed {:canceled {:key :g}}
                    :held {:set ["g-mode" 1] :repeat false}
                    :afterup {:set ["g-mode" 0]}}]
-
-                 ;; Reserved
-                 ;; :s-mode
 
                  :d-mode
                  ;;;;Yabai babe
@@ -100,9 +83,9 @@
                  [:quote "yabai -m window --space next && yabai -m space --focus next"]
                  [:semicolon "yabai -m window --space prev && yabai -m space --focus prev"]
                  ;; Switch layouts
-                 [:b ["yabai -m space --layout bsp" [:notify-layout "BSP Layout"]]]
-                 [:s ["yabai -m space --layout stack" [:notify-layout "Fullscreen Stack Layout"]]]
-                 [:f ["yabai -m space --layout float" [:notify-layout "Float Layout"]]]
+                 [:b ["yabai -m space --layout bsp"]]
+                 [:s ["yabai -m space --layout stack"]]
+                 [:f ["yabai -m space --layout float"]]
 
                  ;; ;;;; Amethyst keybindings
                  ;; :d-mode
@@ -155,15 +138,7 @@
                  ;; Messenger
                  [:spacebar :!Ck :Messenger]
                  [:j :!Cclose_bracket :Messenger]
-                 [:k :!Copen_bracket :Messenger]
-
-                 ;;;; Vim-like keybindings
-                 :f-mode
-                 [:j :down_arrow]
-                 [:k :up_arrow]
-                 [:h :left_arrow]
-                 [:l :right_arrow]]}
-
+                 [:k :!Copen_bracket :Messenger]]}
         {:des "Windows-like Shortcuts"
          ;; Copy/Paste/Undo/Redo
          :rules [:!Terminals
@@ -188,16 +163,14 @@
                    :held {:key :left_control :lazy :true}}]]}
 
         {:des "Double tap `left_shift` key to enable capslock"
-         :rules [:!QMK
-                 [:##left_shift [:caps_lock ["caps-lock-on" 0]] ["caps-lock-on" 1]]
+         :rules [[:##left_shift [:caps_lock ["caps-lock-on" 0]] ["caps-lock-on" 1]]
                  [:##left_shift
                   [["caps-lock-on" 1] :left_shift]
                   ["caps-lock-on" 0]
                   {:delayed {:invoked ["caps-lock-on" 0] :canceled ["caps-lock-on" 0]} :params {:delay 300}}]]}
 
         {:des "Double tap `right_shift` key to switch input setting"
-         :rules [:!QMK
-                 [:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
+         :rules [[:right_shift [:!Oz ["macos-input-source" 0]] ["macos-input-source" 1]]
                  [:right_shift
                   [["macos-input-source" 1] :right_shift]
                   ["macos-input-source" 0]
