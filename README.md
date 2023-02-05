@@ -19,7 +19,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 - Clone this repo
 
 ```bash
-git clone https://github.com/babygau/nix.git ~/.nixpkgs
+git clone https://github.com/bangedorrunt/nix.git ~/.nixpkgs
 ```
 
 - Update

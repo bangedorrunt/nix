@@ -41,10 +41,10 @@
 
   ;; WARN conflict with mini.animate <01-02-23, bangedorrunt>
   ;; Keep screen at the center when jump
-  ;; (noremap n :n :nzzzv)
-  ;; (noremap n :N :Nzzzv)
-  ;; (noremap n :<C-d> :<C-d>zz)
-  ;; (noremap n :<C-u> :<C-u>zz)
+  (noremap n :n :nzzzv)
+  (noremap n :N :Nzzzv)
+  (noremap n :<C-d> :<C-d>zz)
+  (noremap n :<C-u> :<C-u>zz)
 
   (noremap n :J "mzJ`z")
   (noremap n :Y :yg$)

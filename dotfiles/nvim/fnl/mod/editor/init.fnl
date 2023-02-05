@@ -24,7 +24,7 @@
         :JoosepAlviste/nvim-ts-context-commentstring])
   (use echasnovski/mini.ai :version false :event "VeryLazy" :mod+ :mini.ai)
   (use echasnovski/mini.surround :version false :event "VeryLazy" :mod+ :mini.surround)
-  (use echasnovski/mini.pairs :version false :event "VeryLazy" :mod+ :mini.pairs)
+  ;; (use echasnovski/mini.pairs :version false :event "VeryLazy" :mod+ :mini.pairs)
   (use echasnovski/mini.bufremove :version false :event "VeryLazy" :mod+ :mini.bufremove)
   (use echasnovski/mini.align :version false :event "VeryLazy" :mod+ :mini.align)
   (use echasnovski/mini.comment

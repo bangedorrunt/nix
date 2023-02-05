@@ -9,7 +9,9 @@ version: 0.0.13
 
 * TODO
 ** Nix
-   - ( ) Use `flake.parts` to separate system configuration
+   - (x) Decoupled `modules/options` into `modules/{options|user|hm}`
+   - (x) Rewrotee custom `lib`
+   - (x) Use `flake.parts` to separate system configuration
    - ( ) Make NixOS installer with `nix-generator` and `disko`
    -- File system: `btrfs` or `zfs`
    -- `disko` layout

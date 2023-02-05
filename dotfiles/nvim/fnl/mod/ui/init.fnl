@@ -24,7 +24,7 @@
        :mod+ :mini.tabline
        :dependencies :nvim-tree/nvim-web-devicons)
   (use echasnovski/mini.indentscope :version false :event :VeryLazy :mod :ui.indentscope)
-  (use echasnovski/mini.animate :version false :event :VeryLazy :mod+ :mini.animate)
+  ;; (use echasnovski/mini.animate :version false :event :VeryLazy :mod+ :mini.animate)
   ;; HACK statusline
   (require :mod.ui.status)
   )

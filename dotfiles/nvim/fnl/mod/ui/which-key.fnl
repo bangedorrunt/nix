@@ -17,6 +17,7 @@
        :<leader>gh {:name :+hunks}
        :<leader>gt {:name :+toggle}
        :<leader>h {:name :+help}
+       :<leader>hl {:name :+lazy.nvim}
        :<leader>q {:name :+quit/session}
        :<leader>s {:name :+search}
        :<leader>w {:name :+windows}
