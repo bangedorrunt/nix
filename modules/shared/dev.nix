@@ -36,7 +36,7 @@ in {
         luajitPackages.fennel
         marksman
         neovim
-        nil
+        stable.nil
         nodePackages.bash-language-server
         nodePackages.diagnostic-languageserver
         nodePackages.dockerfile-language-server-nodejs

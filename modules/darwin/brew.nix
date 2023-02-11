@@ -28,6 +28,7 @@ in {
 
     taps = [
       # "FelixKratz/formulae"
+      # "d12frosted/emacs-plus"
       "beeftornado/rmtree"
       "candid82/brew"
       "daipeihust/tap"
@@ -43,7 +44,7 @@ in {
       "wez/wezterm"
       "yqrashawn/goku"
       "zdcthomas/tools"
-      # "d12frosted/emacs-plus"
+      # "qmk/qmk"
     ];
 
     brews = [
@@ -60,6 +61,7 @@ in {
         name = "koekeishiya/formulae/yabai";
         args = ["HEAD"];
       }
+      # "qmk/qmk/qmk"
     ];
   };
 }

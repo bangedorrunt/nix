@@ -6,15 +6,13 @@
 }: {
   homebrew = {
     casks = [
-      "basictex"
       "betterdiscord-installer"
       "bitwarden"
       "discord"
       "element-nightly"
       "firefox-developer-edition"
       "iina"
-      "keycastr"
-      "maccy"
+      "karabiner-elements"
       "microsoft-edge-beta"
       "neovide"
       "openkey"
