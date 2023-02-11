@@ -1,7 +1,7 @@
 (local {: get : into} (require :core.funs))
 (local {: visible : complete : select_next_item : select_prev_item : mapping : config
         &as cmp} (require :cmp))
-(local {: expand_or_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
+(local {: expand_or_locally_jumpable : expand_or_jump : jumpable : jump : lsp_expand} (require :luasnip))
 (local luasnip-vscode-snippets (require :luasnip.loaders.from_vscode))
 (local cmp-menu-items {
                        :nvim_lsp :LSP
@@ -76,7 +76,7 @@
 ;; Supertab
 (fn super-cn [fallback]
   (if (visible) (select_next_item)
-      (expand_or_jumpable) (expand_or_jump)
+      (expand_or_locally_jumpable) (expand_or_jump)
       (has-words-before?) (complete)
       (fallback)))
 

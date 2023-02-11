@@ -7,5 +7,6 @@
        :dependencies
        [;; :williamboman/mason.nvim
         :jose-elias-alvarez/null-ls.nvim
+        :hrsh7th/cmp-nvim-lsp
         ]))
 {: setup}

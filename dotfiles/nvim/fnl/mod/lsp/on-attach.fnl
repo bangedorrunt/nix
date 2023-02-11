@@ -33,13 +33,13 @@
     (noremap n buffer nowait "references" :<Leader>cr references)
     ;; LSP format
     (when client.server_capabilities.documentFormattingProvider
-      (augroup lsp-format-on-save
-        (autocmd! {:buffer bufnr})
-        (autocmd BufWritePre <buffer>
-                 `(format {:filter (fn [client]
-                                     (not (has? [:jsonls :tsserver] client.name)))
-                           : bufnr}
-                          {:buffer bufnr})))
+      ;; FIXME error on second formatting
+      ;; (augroup lsp-format-on-save
+      ;;   (autocmd! {:buffer bufnr})
+      ;;   (autocmd BufWritePre <buffer>
+      ;;            `(format {:filter #(not (has? [:jsonls :tsserver] $.name))
+      ;;                      : bufnr}
+      ;;                     {:buffer bufnr})))
       (noremap n buffer nowait "lsp-format" :<Leader>cf `(format {: bufnr})))
     ;; LSP Document Highlight
     (when client.server_capabilities.documentHighlightProvider
