@@ -35,17 +35,26 @@
          ;; NOTE when adding a new layer, if you want it to be able to cross with an old one,
          ;; you must add the name negated (:!new_name) to all other mod-tap layer conditions
          :rules [;; d-mode init
-                 [:d nil [:!g-mode]
+                 [:d nil [:!f-mode :!g-mode]
                   {:alone {:key :d :halt true}
                    :delayed {:canceled {:key :d}}
                    :held {:set ["d-mode" 1] :repeat false}
                    :afterup {:set ["d-mode" 0]}}]
+                 ;; f-mode init
+                 [:f nil [:!d-mode :!g-mode]
+                  {:alone {:key :f :halt true}
+                   :delayed {:canceled {:key :f}}
+                   :held {:set ["f-mode" 1] :repeat false}
+                   :afterup {:set ["f-mode" 0]}}]
                  ;; g-mode init
-                 [:g nil [:!d-mode]
+                 [:g nil [:!d-mode :!f-mode]
                   {:alone {:key :g :halt true}
                    :delayed {:canceled {:key :g}}
                    :held {:set ["g-mode" 1] :repeat false}
                    :afterup {:set ["g-mode" 0]}}]
+
+                 ;; Reserved
+                 ;; :s-mode
 
                  :d-mode
                  ;;;;Yabai babe
@@ -138,7 +147,15 @@
                  ;; Messenger
                  [:spacebar :!Ck :Messenger]
                  [:j :!Cclose_bracket :Messenger]
-                 [:k :!Copen_bracket :Messenger]]}
+                 [:k :!Copen_bracket :Messenger]
+
+                 ;;;; Vim-like keybindings
+                 :f-mode
+                 [:j :down_arrow]
+                 [:k :up_arrow]
+                 [:h :left_arrow]
+                 [:l :right_arrow]]}
+
         {:des "Windows-like Shortcuts"
          ;; Copy/Paste/Undo/Redo
          :rules [:!Terminals
@@ -200,8 +217,8 @@
                             "^com\\.microsoft\\.edgemac$"]
                 :Firefoxes ["^org\\.mozilla\\.firefox$"
                             "^org\\.mozilla\\.firefoxdeveloperedition$"]}
- :devices {:QMK [{:vendor_id 1452 :product_id 591}
-                 {:vendor_id 13364 :product_id 560}]}
+ :devices {:QMK [{:vendor_id 1452 :product_id 591} ;; Keychron K2
+                 {:vendor_id 13364 :product_id 560}]} ;; Keychron K3 Pro
  :input-sources {:us {:input_mode_id ""
                       :input_source_id "com.apple.keylayout.ABC"
                       :language "en"}}}
