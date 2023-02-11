@@ -6,7 +6,7 @@
   (use nvim-lualine/lualine.nvim :event "User LazyVimStarted" :mod :ui.lualine)
   (use glepnir/dashboard-nvim
        :event :VimEnter
-       :opts {:theme :hyper}
+       :mod :ui.dashboard
        :dependencies :nvim-tree/nvim-web-devicons)
   (use nvim-tree/nvim-tree.lua
        :event "VeryLazy"
@@ -15,6 +15,7 @@
   (use folke/which-key.nvim :event "VeryLazy" :mod :ui.which-key)
   (use folke/todo-comments.nvim :event "BufReadPost" :mod :ui.todo-comments)
   (use folke/noice.nvim
+       :enabled false
        :event "VeryLazy"
        :mod :ui.noice
        :dependencies [:MunifTanjim/nui.nvim])
