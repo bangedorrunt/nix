@@ -24,6 +24,7 @@ in {
         # emacs
         # go
         # nixpkgs-fmt
+        # nodePackages.grammarly-languageserver
         alejandra
         asdf-vm
         clang-tools
@@ -41,7 +42,6 @@ in {
         nodePackages.diagnostic-languageserver
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.eslint_d
-        nodePackages.grammarly-languageserver
         nodePackages.markdownlint-cli
         nodePackages.pnpm
         nodePackages.prettier

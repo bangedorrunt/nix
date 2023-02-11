@@ -24,8 +24,8 @@ jobs:
         with:
           # Shallow clones won't work
           fetch-depth: 0
-      - name: Cleanup disk
-        uses: curoky/cleanup-disk-action@v2.0
+      # - name: Cleanup disk
+      #   uses: curoky/cleanup-disk-action@v2.0
       - name: Install Nix
         uses: cachix/install-nix-action@v19
         with:

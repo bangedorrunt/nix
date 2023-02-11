@@ -1,5 +1,4 @@
 .DS_STORE
-.github/workflows/build.yml
 flake.lock
 .direnv
 .vscode

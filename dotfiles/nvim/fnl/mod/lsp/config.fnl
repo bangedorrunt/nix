@@ -16,7 +16,7 @@
    :html
    :jsonls
    :marksman
-   :grammarly
+   ;; :grammarly
    ;; :rust_analyzer
    :nil_ls
    :sumneko_lua

@@ -5,7 +5,8 @@
        :event :BufReadPost
        :mod :lsp.config
        :dependencies
-       [;; :williamboman/mason.nvim
+       [;; DEPRECATED in favour of Nix pkgs
+        ;; :williamboman/mason.nvim
         :jose-elias-alvarez/null-ls.nvim
         :hrsh7th/cmp-nvim-lsp
         ]))
