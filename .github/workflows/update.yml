@@ -15,40 +15,16 @@ jobs:
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-      - uses: cachix/install-nix-action@v18
+      - uses: cachix/install-nix-action@v19
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-      - name: Prepare flakebot branch
-        run: |
-          git config --local user.email "flakebot@users.noreply.github.com"
-          git config --local user.name "flakebot"
-          git checkout -B flakebot
-      - name: Update & commit lockfile
-        run: |
-          nix flake update --commit-lock-file --accept-flake-config
-          echo "commit_info<<EOF" >> $GITHUB_ENV
-          git log --format=%B -1 >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v16
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: flakebot
-          force: true
-      - name: pull-request-action
-        uses: vsoch/pull-request-action@1.0.24
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PULL_REQUEST_FROM_BRANCH: flakebot
-          PULL_REQUEST_BRANCH: tdt
-          PULL_REQUEST_UPDATE: true
-          MAINTAINER_CANT_MODIFY: true
-          PASS_ON_ERROR: true
-          PULL_REQUEST_TITLE: Update flake inputs
-          PULL_REQUEST_BODY: |
-            This is an automated pull request to update this flake's inputs.
-            ```
-            ${{ env.commit_info }}
-            ```
+          token: ${{ secrets.NIX_ACCESS_TOKEN }}
+          pr-title: "Update flake.lock"
+          pr-labels: |
+            dependencies
+            automated

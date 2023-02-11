@@ -72,6 +72,8 @@ version: 0.0.13
 
 * FIX
 ** Nix
+   - (x) `nil` language server error 
+   -- Use `stable.nil` temporarily
    - (x) The option `system.build.installBootLoader' is defined multiple times.
    -- `nixos-hardware` module already define a bootloader
 ** Nvim
