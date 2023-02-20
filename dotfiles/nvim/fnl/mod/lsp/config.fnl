@@ -19,7 +19,7 @@
    ;; :grammarly
    ;; :rust_analyzer
    :nil_ls
-   :sumneko_lua
+   :lua_ls
    :tailwindcss
    :tsserver
    ;; :vimls
