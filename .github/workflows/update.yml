@@ -8,7 +8,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  lockfile:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
         uses: DeterminateSystems/update-flake-lock@v16
         with:
           token: ${{ secrets.NIX_ACCESS_TOKEN }}
-          pr-title: "Update flake.lock"
+          pr-title: "Nix(feat): update flake.lock"
           pr-labels: |
             dependencies
             automated
