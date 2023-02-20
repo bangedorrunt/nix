@@ -7,3 +7,4 @@ catppuccin/fish
 oh-my-fish/plugin-foreign-env
 lilyball/nix-env.fish
 jorgebucaran/fisher
+rstacruz/fish-asdf

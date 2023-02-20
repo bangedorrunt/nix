@@ -17,7 +17,7 @@ fish_add_path /opt/homebrew/sbin
 fish_add_path /usr/local/sbin
 
 # I don't use home-manager to take over shell configuration
-fenv source /etc/profiles/per-user/brunetdragon/etc/profile.d/hm-session-vars.sh
+# fenv source /etc/profiles/per-user/brunetdragon/etc/profile.d/hm-session-vars.sh
 # NOTE `.nix-profile` symlink somehow point to invalid path
 # redirect `.nix-profile` to `/etc/static/profiles/per-user/brunetdragon`
 # so I don't have to manually add path
@@ -153,11 +153,12 @@ alias disableani 'defaults write com.apple.finder DisableAllAnimations -bool tru
 alias disablekeys 'defaults write -g ApplePressAndHoldEnabled -bool false'
 alias enableani 'defaults write com.apple.finder DisableAllAnimations -bool false'
 alias enablekeys 'defaults write -g ApplePressAndHoldEnabled -bool true'
-alias flushdns 'sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;echo "✌️ DNS flushed"'
 alias hide 'defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder'
 alias show 'defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias rmds 'fd -H -I \.DS\_Store -x rm -v'
 alias rmconflict 'fd --hidden conflicted ~/Dropbox'
-alias nvup 'brew reinstall neovim'
-alias wezup 'brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest'
+alias wezup 'brew upgrade --cask wez/wezterm/wezterm-nightly --no-quarantine --greedy-latest'
 alias wezfont 'wezterm ls-fonts --list-system'
+alias nixup '\
+      nix build .#brunetdragon@x86_64-darwin && \
+      ./result/sw/bin/darwin-rebuild switch --flake .#brunetdragon@x86_64-darwin'

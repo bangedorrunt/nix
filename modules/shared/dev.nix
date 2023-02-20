@@ -26,11 +26,11 @@ in {
         # nixpkgs-fmt
         # nodePackages.grammarly-languageserver
         alejandra
-        asdf-vm
+        # asdf-vm
         clang-tools
         clojure-lsp
         fnlfmt
-        fnm
+        # fnm
         gh
         git
         lua
