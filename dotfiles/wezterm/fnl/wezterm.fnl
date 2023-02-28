@@ -32,6 +32,5 @@
  :exit_behavior :Close
  :window_close_confirmation :NeverPrompt
  :window_padding {:left :1cell :right :1cell :top :0.5cell :bottom :0.5cell}
- :enable_csi_u_key_encoding true
  :adjust_window_size_when_changing_font_size false
  :check_for_updates false}
