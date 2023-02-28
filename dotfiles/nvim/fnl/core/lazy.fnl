@@ -6,8 +6,8 @@
     [k v] (kvize
             (doto xs (table.remove 1) (table.remove 1))
             (match k
-              :mod+ (doto t (tset :config #(: (require v) :setup)))
-              :mod (doto t (tset :config #(: (require (.. :mod. v)) :setup)))
+              :mod+ (doto t (tset :config #((. (require v) :setup) {})))
+              :mod (doto t (tset :config #((. (require (.. :mod. v)) :setup))))
               _ (doto t (tset k v))))
     _ t))
 (fn lazy-parser []
