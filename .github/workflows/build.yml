@@ -27,7 +27,7 @@ jobs:
       # - name: Cleanup disk
       #   uses: curoky/cleanup-disk-action@v2.0
       - name: Install Nix
-        uses: cachix/install-nix-action@v19
+        uses: cachix/install-nix-action@v20
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
@@ -35,7 +35,7 @@ jobs:
         uses: cachix/cachix-action@v12
         with:
           name: bangedorrunt
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: Build flake output
         run: nix build -v .#${{ matrix.output }}
 
