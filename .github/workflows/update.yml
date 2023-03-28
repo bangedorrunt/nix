@@ -18,7 +18,7 @@ jobs:
             experimental-features = nix-command flakes
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v16
+        uses: DeterminateSystems/update-flake-lock@v18
         with:
           token: ${{ secrets.NIX_ACCESS_TOKEN }}
           pr-title: "Nix(feat): update flake.lock"
