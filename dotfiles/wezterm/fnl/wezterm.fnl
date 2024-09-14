@@ -5,19 +5,24 @@
   (= target_triple :x86_64-apple-darwin))
 
 (fn fallback [name]
-  (font_with_fallback [name :neorg "SF Compact Text" "Symbols Nerd Font 1000-em"]))
+  (font_with_fallback [name
+                       "SF Compact Text"
+                       "Symbols Nerd Font 1000-em"]))
 
 (fn scheme-for-appearance [appearance]
-  (if (appearance:find :Dark) "Catppuccin Mocha" "Catppuccin Latte"))
+  (if (appearance:find :Dark) "Tokyo Night" "Catppuccin Latte"))
 
 {:term :wezterm
  :default_prog (if (is_macos?)
-                   [:/run/current-system/sw/bin/fish :-l :-c "tmux attach -d || tmux"]
+                   [:/run/current-system/sw/bin/fish
+                    :-l
+                    :-c
+                    "tmux attach -d || tmux"]
                    [:wsl.exe :zsh :-l :-c "tmux attach -d || tmux"])
  :default_cwd home_dir
  :front_end :WebGpu
  :color_scheme (scheme-for-appearance (gui.get_appearance))
- :colors {:background :#14141f}
+ :colors {:background "#14141f"}
  :font_dirs [:/Users/brunetdragon/Library/Fonts]
  :font (fallback "SF Mono")
  :font_size 24
@@ -34,3 +39,4 @@
  :window_padding {:left :1cell :right :1cell :top :0.5cell :bottom :0.5cell}
  :adjust_window_size_when_changing_font_size false
  :check_for_updates false}
+
