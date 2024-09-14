@@ -47,6 +47,11 @@ in {
       ln -sf ${NIX_DIR}/dotfiles/yabai ${HOME_DIR}/.config/yabai
     fi
 
+    if [ ! -e "${HOME_DIR}/.config/aerospace" ]; then
+      echo ":: -> Linking aerospace dir..."
+      ln -sf ${NIX_DIR}/dotfiles/aerospace ${HOME_DIR}/.config/aerospace
+    fi
+
     if [ ! -e "${HOME_DIR}/.config/karabiner/karabiner.edn" ]; then
       echo ":: -> Linking karabiner.edn file..."
       ln -sf ${NIX_DIR}/dotfiles/karabiner/karabiner.edn ${HOME_DIR}/.config/karabiner/karabiner.edn
@@ -62,10 +67,20 @@ in {
       ln -sf ${NIX_DIR}/dotfiles/tmux ${HOME_DIR}/.config/tmux
     fi
 
+    if [ ! -e "${HOME_DIR}/.config/zelliji" ]; then
+      echo ":: -> Linking zelliji dir..."
+      ln -sf ${NIX_DIR}/dotfiles/zelliji ${HOME_DIR}/.config/zelliji
+    fi
+
     if [ ! -e "${HOME_DIR}/.zshrc" ]; then
       echo ":: -> Linking .zshrc file..."
       ln -sf ${NIX_DIR}/dotfiles/.zshrc ${HOME_DIR}/.zshrc
     fi
+
+    if [ ! -e "${HOME_DIR}/.config/fish" ]; then
+          echo ":: -> Linking fish file..."
+          ln -sf ${NIX_DIR}/dotfiles/fish ${HOME_DIR}/.config/fish
+        fi
 
     if [ ! -e "${HOME_DIR}/.tmux.conf" ]; then
       echo ":: -> Linking .tmux.conf file..."

@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  home-manager,
   ...
 }: let
   # REF: https://github.com/nix-community/home-manager/wiki/FAQ
@@ -21,50 +20,41 @@ in {
     mkIf cfg.enable {
       tdt.hm.packages = with pkgs; [
         # clangd
+        # clojure-lsp
         # emacs
         # go
-        # nixpkgs-fmt
-        # nodePackages.grammarly-languageserver
+        # nodePackages_latest.prettier
         alejandra
-        # asdf-vm
+        bash-language-server
         clang-tools
-        clojure-lsp
+        diagnostic-languageserver
+        dockerfile-language-server-nodejs
+        eslint_d
         fnlfmt
-        # fnm
         gh
         git
         lua
+        lua-language-server
         luajitPackages.fennel
+        luajitPackages.luarocks
+        markdownlint-cli
         marksman
         neovim
-        stable.nil
-        nodePackages.bash-language-server
-        nodePackages.diagnostic-languageserver
-        nodePackages.dockerfile-language-server-nodejs
-        nodePackages.eslint_d
-        nodePackages.markdownlint-cli
-        nodePackages.pnpm
-        nodePackages.prettier
-        nodePackages.stylelint
-        nodePackages.typescript-language-server
-        nodePackages.vim-language-server
-        nodePackages.vscode-langservers-extracted # HTML, CSS, JSON LSPs
-        nodePackages.yaml-language-server
-        nodePackages.yarn
+        nixd
+        pnpm
         shellcheck
         shfmt
+        stylelint
         stylua
-        sumneko-lua-language-server
+        tailwindcss
         tmux
         tree-sitter
         treefmt
-        vscode-extensions.bradlc.vscode-tailwindcss
-        (
-          writeScriptBin "tailwind-lsp" ''
-            #!/usr/bin/env sh
-            node ${vscode-extensions.bradlc.vscode-tailwindcss}/share/vscode/extensions/bradlc.vscode-tailwindcss/dist/server/index.js --stdio
-          ''
-        )
+        typescript-language-server
+        vscode-langservers-extracted # HTML, CSS, JSON LSPs
+        yaml-language-server
+        yarn
+        zellij
       ];
     };
 }

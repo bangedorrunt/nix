@@ -36,13 +36,11 @@ in {
       "daipeihust/tap"
       "fwartner/tap"
       "homebrew/bundle"
-      "homebrew/cask"
-      "homebrew/cask-versions"
       "homebrew/command-not-found"
-      "homebrew/core"
       "homebrew/services"
-      "koekeishiya/formulae"
+      # "koekeishiya/formulae"
       "microsoft/git"
+      "nikitabobko/tap"
       "yqrashawn/goku"
       "zdcthomas/tools"
     ];
@@ -53,15 +51,15 @@ in {
       # "sketchybar"
       # "zsh"
       # { name = "d12frosted/emacs-plus/emacs-plus@30"; args = [ "with-imagemagick" "with-modern-doom3-icon" "with-native-comp" "with-no-frame-refocus" "with-poll" "with-xwidgets" ]; }
+      # {
+      #   name = "koekeishiya/formulae/yabai";
+      #   args = ["HEAD"];
+      # }
       "beeftornado/rmtree/brew-rmtree"
       "candid82/brew/joker"
       "fwartner/tap/mac-cleanup"
       "reattach-to-user-namespace"
       "yqrashawn/goku/goku"
-      {
-        name = "koekeishiya/formulae/yabai";
-        args = ["HEAD"];
-      }
     ];
   };
 }

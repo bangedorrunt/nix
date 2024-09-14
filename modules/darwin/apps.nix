@@ -6,19 +6,17 @@
 }: {
   homebrew = {
     casks = [
+      "alt-tab"
+      "aerospace"
       "betterdiscord-installer"
-      "bitwarden"
       "discord"
-      "element-nightly"
-      "firefox-developer-edition"
+      "element@nightly"
       "iina"
       "karabiner-elements"
-      "microsoft-edge-beta"
-      "neovide"
+      "microsoft-edge@beta"
       "openkey"
       "via"
-      "visual-studio-code-insiders"
-      "wezterm-nightly"
+      "wezterm@nightly"
     ];
   };
 }

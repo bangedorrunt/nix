@@ -15,75 +15,48 @@
   };
 
   inputs = {
-    # Package repo
-    stable.url = "github:nixos/nixpkgs/nixos-22.11";
+    stable.url = "github:nixos/nixpkgs/nixos-24.05";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     small.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    darwin.url = "github:LnL7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # System management
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
+    # system management
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-root.url = "github:srid/flake-root";
-    flake-registry = {
-      url = "github:NixOS/flake-registry";
-      flake = false;
-    };
-    nixos-generators = {
-      #url = "github:nix-community/nixos-generators";
-      url = "github:Mic92/nixos-generators/fedf7136f27490402fe8ab93e67fafae80513e9b";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-registry.url = "github:NixOS/flake-registry";
+    flake-registry.flake = false;
+    nixos-generators.url = "github:Mic92/nixos-generators/fedf7136f27490402fe8ab93e67fafae80513e9b";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
-    # Shell stuff
+    impermanence.url = "github:nix-community/impermanence";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.inputs.utils.follows = "flake-utils";
+    # shell stuff
     flake-utils.url = "github:numtide/flake-utils";
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    devshell.url = "github:numtide/devshell";
+    devshell.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     mission-control.url = "github:Platonic-Systems/mission-control";
-    # Editors
-    # emacs.url = "github:cmacrae/emacs";
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
-    };
+    # editors
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
-    self,
-    nixpkgs,
-    darwin,
     home-manager,
     flake-parts,
     flake-root,
-    flake-utils,
     treefmt-nix,
+    devshell,
     mission-control,
-    disko,
     ...
   } @ inputs: let
     # Extend nixpkgs.lib with custom lib and HM lib
@@ -111,6 +84,7 @@
         treefmt-nix.flakeModule
         flake-root.flakeModule
         mission-control.flakeModule
+        devshell.flakeModule
         flake-parts.flakeModules.easyOverlay
         hosts.configuration
         modules.devshells
@@ -133,21 +107,19 @@
             stable = import inputs.stable {system = prev.system;};
             small = import inputs.small {system = prev.system;};
           };
-          devshell = inputs.devshell.overlay;
-          # emacs = inputs.emacs.overlay;
-          neovim = inputs.neovim-nightly-overlay.overlay;
+          neovim = inputs.neovim-nightly.overlays.default;
         };
       };
-
       # REVIEW flake-part steal `self`, drop when this is fixed
-      _module.args._inputs = inputs // {inherit self;};
+      # _module.args._inputs = inputs // {inherit self;};
 
-      perSystem = {
-        inputs',
-        pkgs,
-        ...
-      }: {
+      # NOTE: for system and home configs, you do not use perSystem, full stop.
+      # it is used only for things that are system specific, but should be made
+      # available for any system in systems
+      perSystem = {inputs', ...}: {
         # make pkgs available to all `perSystem` functions
+        # this `legacyPackages` set is automatically created by
+        # the `easyOverlay` module and include our overlay
         _module.args.pkgs = inputs'.nixpkgs.legacyPackages;
         # make custom lib available to all `perSystem` functions
         _module.args.lib = lib;

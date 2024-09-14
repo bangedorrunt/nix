@@ -27,7 +27,7 @@
     inputs.darwin.lib.darwinSystem {
       inherit system;
       modules = baseModules ++ extraModules;
-      specialArgs = {inherit self inputs lib;};
+      specialArgs = {inherit self inputs lib nixpkgs;};
     };
 
   # Generate a base nixos configuration with the

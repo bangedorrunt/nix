@@ -1,0 +1,44 @@
+simplified_ui true
+default_layout "compact"
+keybinds clear-defaults=true {
+  normal {
+    bind "Ctrl o" { SwitchToMode "tmux"; }
+  }
+  tmux {
+    bind "Ctrl o" { SwitchToMode "Normal"; }
+    bind "Esc" { SwitchToMode "Normal"; }
+
+    bind "Ctrl u" { CloseFocus; SwitchToMode "Normal"; }
+    bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+    bind "d" { Detach; }
+    bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
+
+    bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+    bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+    bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+    bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+
+    bind "y" { NewPane "Down"; SwitchToMode "Normal"; }
+    bind "n" { NewPane "Right"; SwitchToMode "Normal"; }
+
+    bind "c" { NewTab; SwitchToMode "Normal"; }
+    bind "Ctrl l" { GoToNextTab; SwitchToMode "Normal"; }
+    bind "Ctrl h" { GoToPreviousTab; SwitchToMode "Normal"; }
+  }
+}
+theme "tokyonight_night"
+themes {
+  tokyonight_night {
+    fg "#c0caf5"
+    bg "#292e42"
+    black "#1a1b26"
+    red "#f7768e"
+    green "#9ece6a"
+    yellow "#e0af68"
+    blue "#7aa2f7"
+    magenta "#bb9af7"
+    cyan "#7dcfff"
+    white "#a9b1d6"
+    orange "#ff9e64"
+  }
+}}

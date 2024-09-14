@@ -43,7 +43,7 @@ with lib; {
       # look for a nixpkgs channel.
       stateVersion =
         if pkgs.stdenv.isDarwin
-        then "23.05"
+        then "24.05"
         else config.system.stateVersion;
       username = config.tdt.username;
       homeDirectory = config.tdt.user.home;

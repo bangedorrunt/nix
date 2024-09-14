@@ -16,7 +16,7 @@
     curlie
     delta
     direnv
-    exa
+    eza
     fd
     fzf
     fzy

@@ -5,7 +5,7 @@
                  :delay 135
                  :held 135
                  :alone 130}}
- ;; Create alias key for `:to`
+ ;; create alias key for `:to`
  :tos {:hyper {:key :left_control :modi {:mandatory [:left_command :left_shift :left_option]}}
        :app-switcher {:key :tab :modi [:left_command] :lazy true}}
 
@@ -15,11 +15,11 @@
              :toggle "osascript -e 'set appName to \"%s\"\nset startIt to false\ntell application \"System Events\"\n  if not (exists process appName) then\n    set startIt to true\n  else if frontmost of process appName then\n    set visible of process appName to false\n  else\n    set frontmost of process appName to true\n  end if\nend tell\nif startIt then\n  tell application appName to activate\nend if'"}
  :layers {}
  :simlayers {}
- ;; Main contains multiple manipulators
+ ;; main contains multiple manipulators
  :main [{:des "Hyper Layout"
-         :rules [;; Remap `caps_lock` key to hyper key, escape when pressed alone
+         :rules [;; remap `caps_lock` key to hyper key, escape when pressed alone
                  [:##caps_lock :hyper :!QMK {:alone :escape}]
-                 ;; Move like Vim
+                 ;; move like Vim
                  [:!!j :down_arrow]
                  [:!!k :up_arrow]
                  [:!!h :left_arrow]
@@ -53,48 +53,69 @@
                    :held {:set ["g-mode" 1] :repeat false}
                    :afterup {:set ["g-mode" 0]}}]
 
-                 ;; Reserved
+                 ;; reserved
                  ;; :s-mode
 
                  :d-mode
-                 ;;;;Yabai babe
-                 [:spacebar ["yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == \"bsp\" then \"float\" else \"bsp\" end')" [:notify-layout "Cycle Layout"]]]
-                 ;; Cycle through windows
-                 ;; SEE: https://github.com/koekeishiya/yabai/issues/203#issuecomment-700527407
-                 [:j "~/.config/yabai/cycle-backward.sh"]
-                 [:k "~/.config/yabai/cycle-forward.sh"]
-                 ;; Resize windows
-                 [:h "yabai -m window west --resize right:-40:0 2> /dev/null || yabai -m window --resize right:-40:0"]
-                 [:l "yabai -m window east --resize left:40:0 2> /dev/null || yabai -m window --resize left:40:0"]
-                 ;; Rotate tree
-                 [:o "yabai -m space --rotate 90"]
-                 ;; Mirror y axis
-                 ;; [:y "yabai -m space --mirror y-axis"]
-                 ;; Mirror x axis
-                 ;; [:x "yabai -m space --mirror x-axis"]
-                 ;; Split horizontal/vertical windows
-                 [:v "yabai -m window --toggle split"]
-                 ;; Move windows
-                 [:return_or_enter "~/.config/yabai/stack.sh west"]
-                 [:down_arrow "~/.config/yabai/stack.sh south"]
-                 [:left_arrow "~/.config/yabai/stack.sh west"]
-                 [:up_arrow "~/.config/yabai/stack.sh north"]
-                 [:right_arrow "~/.config/yabai/stack.sh east"]
-                 ;; Resize float windows
-                 [:9 "yabai -m window --grid 1:1:0:0:1:1"]
-                 [:8 "yabai -m window --grid 8:8:1:1:6:6"]
-                 [:7 "yabai -m window --grid 1:2:0:0:1:1"]
-                 [:0 "yabai -m window --grid 1:2:1:0:1:1"]
-                 ;; Quick focus spaces with Yabai
-                 [:p "yabai -m space --focus prev"]
-                 [:n "yabai -m space --focus next"]
-                 ;; Send windows and focus to spaces
-                 [:quote "yabai -m window --space next && yabai -m space --focus next"]
-                 [:semicolon "yabai -m window --space prev && yabai -m space --focus prev"]
-                 ;; Switch layouts
-                 [:b ["yabai -m space --layout bsp"]]
-                 [:s ["yabai -m space --layout stack"]]
-                 [:f ["yabai -m space --layout float"]]
+                 ;; ;;;;yabai babe
+                 ;; [:spacebar ["yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == \"bsp\" then \"float\" else \"bsp\" end')" [:notify-layout "Cycle Layout"]]]
+                 ;; ;; cycle through windows
+                 ;; ;; SEE: https://github.com/koekeishiya/yabai/issues/203#issuecomment-700527407
+                 ;; [:j "~/.config/yabai/cycle-backward.sh"]
+                 ;; [:k "~/.config/yabai/cycle-forward.sh"]
+                 ;; ;; resize windows
+                 ;; [:h "yabai -m window west --resize right:-40:0 2> /dev/null || yabai -m window --resize right:-40:0"]
+                 ;; [:l "yabai -m window east --resize left:40:0 2> /dev/null || yabai -m window --resize left:40:0"]
+                 ;; ;; rotate tree
+                 ;; [:o "yabai -m space --rotate 90"]
+                 ;; ;; mirror y axis
+                 ;; ;; [:y "yabai -m space --mirror y-axis"]
+                 ;; ;; mirror x axis
+                 ;; ;; [:x "yabai -m space --mirror x-axis"]
+                 ;; ;; split horizontal/vertical windows
+                 ;; [:v "yabai -m window --toggle split"]
+                 ;; ;; move windows
+                 ;; [:return_or_enter "~/.config/yabai/stack.sh west"]
+                 ;; [:down_arrow "~/.config/yabai/stack.sh south"]
+                 ;; [:left_arrow "~/.config/yabai/stack.sh west"]
+                 ;; [:up_arrow "~/.config/yabai/stack.sh north"]
+                 ;; [:right_arrow "~/.config/yabai/stack.sh east"]
+                 ;; ;; resize float windows
+                 ;; [:9 "yabai -m window --grid 1:1:0:0:1:1"]
+                 ;; [:8 "yabai -m window --grid 8:8:1:1:6:6"]
+                 ;; [:7 "yabai -m window --grid 1:2:0:0:1:1"]
+                 ;; [:0 "yabai -m window --grid 1:2:1:0:1:1"]
+                 ;; ;; quick focus spaces with Yabai
+                 ;; [:p "yabai -m space --focus prev"]
+                 ;; [:n "yabai -m space --focus next"]
+                 ;; ;; send windows and focus to spaces
+                 ;; [:quote "yabai -m window --space next && yabai -m space --focus next"]
+                 ;; [:semicolon "yabai -m window --space prev && yabai -m space --focus prev"]
+                 ;; ;; switch layouts
+                 ;; [:b ["yabai -m space --layout bsp"]]
+                 ;; [:s ["yabai -m space --layout stack"]]
+                 ;; [:f ["yabai -m space --layout float"]]
+
+                 ;;;; aerospace keybindings
+                 :d-mode
+                 ;; cycle layouts
+                 [:spacebar :!SOspacebar]
+                 ;; shrink and expand main pain
+                 [:hyphen :!SOhyphen]
+                 [:equal_sign :!SOequal_sign]
+                 ;; cycle focus window
+                 [:h :!Oh]
+                 [:j :!Oj]
+                 [:k :!Ok]
+                 [:l :!Ol]
+                 ;; move to space left or right
+                 [:p :!Tleft_arrow]
+                 [:n :!Tright_arrow]
+                 ;; Force window to be reevaluated
+                 [:z :!SOz]
+                 ;; Throw focused window to space left or right
+                 [:quote :!SOTright_arrow]
+                 [:semicolon :!SOTleft_arrow]
 
                  ;; ;;;; Amethyst keybindings
                  ;; :d-mode

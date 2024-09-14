@@ -21,7 +21,8 @@ fish_add_path /usr/local/sbin
 # NOTE `.nix-profile` symlink somehow point to invalid path
 # redirect `.nix-profile` to `/etc/static/profiles/per-user/brunetdragon`
 # so I don't have to manually add path
-# fish_add_path /etc/profiles/per-user/brunetdragon/bin
+fish_add_path /nix/var/nix/profiles/default/bin
+fish_add_path /etc/profiles/per-user/brunetdragon/bin
 
 set -Ux EDITOR nvim
 set -Ux SUDO_EDITOR $EDITOR
