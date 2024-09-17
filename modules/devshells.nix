@@ -1,21 +1,12 @@
 # TODO learn more about devshell
-ctx @ {
-  self,
-  config,
-  lib,
-  inputs,
-  ...
-}: {
+{...}: {
   perSystem = {
     pkgs,
     config,
-    system,
     ...
-  }: let
-    inherit (config.mission-control) installToDevShell;
-    inherit (pkgs) mkShellNoCC;
-  in {
-    devShells.default = installToDevShell (mkShellNoCC {
+  }: {
+    devShells.default = pkgs.mkShell {
+      inputsFrom = [config.mission-control.devShell];
       name = "setting-up-machines-nix-style";
       packages = with pkgs; [
         # Add your custom packages
@@ -23,6 +14,6 @@ ctx @ {
         pre-commit
         nil
       ];
-    });
+    };
   };
 }

@@ -20,19 +20,19 @@ jobs:
           - devShells.x86_64-darwin.default
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           # Shallow clones won't work
           fetch-depth: 0
       # - name: Cleanup disk
       #   uses: curoky/cleanup-disk-action@v2.0
       - name: Install Nix
-        uses: cachix/install-nix-action@v20
+        uses: cachix/install-nix-action@v27
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
       - name: Configure Cachix
-        uses: cachix/cachix-action@v12
+        uses: cachix/cachix-action@v15
         with:
           name: bangedorrunt
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
