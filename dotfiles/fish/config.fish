@@ -77,12 +77,6 @@ if command -qs fzf
 
 end
 
-if command -qs emacs
-    abbr e 'emacs -nw'
-    abbr emacs 'emacs -nw'
-    # alias f 'emacs -nw $(fzf)'
-end
-
 if command -qs nvim
     abbr vim nvim
     abbr vi nvim
