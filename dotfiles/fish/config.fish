@@ -45,6 +45,13 @@ set -gx CACHIX_AUTH_TOKEN eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmOGEwNTI5Ni1kNjUwLTQ1M
 set -x LC_ALL en_US.UTF-8
 set -x LC_CTYPE en_US.UTF-8
 
+# Cursor styles
+set -gx fish_vi_force_cursor 1
+set -gx fish_cursor_default block
+set -gx fish_cursor_insert line blink
+set -gx fish_cursor_visual block
+set -gx fish_cursor_replace_one underscore
+
 if command -qs fzf
     set -Ux FZF_DEFAULT_OPTS "\
     --color=bg+:#1e1e2e,bg:#14141f,spinner:#f5e0dc,hl:#f38ba8 \
@@ -92,8 +99,8 @@ abbr ... 'cd ../../'
 abbr .. 'cd ..'
 abbr . pwd
 abbr c clear
-abbr cp 'cp -i'
-abbr mv 'mv -i'
+abbr cp 'cp -riv'
+abbr mv 'mv -iv'
 abbr rm 'rm -rf'
 abbr mkdir 'mkdir -pv'
 abbr top vtop
@@ -134,9 +141,9 @@ end
 
 # Exa
 if command -qs exa
-    alias ls 'exa --color=always --group-directories-first'
-    alias la 'exa --color=always --group-directories-first --all'
-    alias ll 'exa --color=always --group-directories-first --all --long'
+    alias ls="eza --color=always --icons --group-directories-first"
+    alias la 'eza --color=always --icons --group-directories-first --all'
+    alias ll 'eza --color=always --icons --group-directories-first --all --long'
     abbr l ll
     # automatically call exa on cd
     functions --copy cd standard_cd

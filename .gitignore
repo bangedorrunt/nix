@@ -2,6 +2,7 @@
 flake.lock
 .direnv
 .vscode
+.lsp
 dotfiles/nvim-/**
 dotfiles/env
 dotfiles/karabiner/automatic_backups
