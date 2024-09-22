@@ -33,6 +33,7 @@ in {
         fnlfmt
         gh
         git
+        lazygit
         lua
         lua-language-server
         luajitPackages.fennel
@@ -42,6 +43,7 @@ in {
         neovim
         nixd
         pnpm
+        qmk
         shellcheck
         shfmt
         stylelint
