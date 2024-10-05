@@ -1,12 +1,11 @@
 {
   self,
   inputs,
-  _inputs,
   lib,
   withSystem,
   ...
 }: let
-  inherit (inputs) home-manager disko nixos-raspberrypi;
+  inherit (inputs) home-manager disko raspberry-pi-nix;
   inherit (lib.mine) rakeLeaves;
   hosts = rakeLeaves ../hosts;
   modules = rakeLeaves ../modules;
@@ -64,8 +63,7 @@ in {
       ({...}:
         mkNixosConfig {
           hardwareModules = [
-            nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-            nixos-raspberrypi.lib.inject-overlays
+            raspberry-pi-nix.nixosModules.raspberry-pi
             modules.nixos
           ];
           extraModules = [hosts."brunetdragon@pifi"];

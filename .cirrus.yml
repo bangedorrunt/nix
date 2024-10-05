@@ -1,19 +1,28 @@
-# global env values
+# Global env values
 env:
+  # Use Cirrus Encrypted
+  GITHUB_TOKEN: ENCRYPTED[!69e0c87f7be7f8ec9a5cac161606d2b762fd6f9e7aa4155888093eb54c03b1d4ac0ce932007c8bb7967b22ee933e0be5!]
   CACHIX_AUTH_TOKEN: ENCRYPTED[6ec41bc0a9aa1bb9677031de8d8b250b327028dca92b197809e7478c773570c5172e4827e5fbb6e1a7fef5546994c09b]
   CACHIX_USER: bangedorrunt
   CIRRUS_SHELL: bash -il
   DARWIN_BUILD_IMAGE: ghcr.io/cirruslabs/macos-runner:sonoma
-  LINUX_BUILD_IMAGE: nixos/nix:latest
+  LINUX_BUILD_IMAGE: nixpkgs/cachix-flakes:latest
   NIX_INSTALLER_NO_CONFIRM: "true"
-  NIX_INSTALLER_TAG: "v0.19.1"
+  NIX_INSTALLER_EXTRA_CONF: |
+    access-tokens = github.com=${GITHUB_TOKEN}
+    extra-substituters = https://nix-community.cachix.org https://bangedorrunt.cachix.org https://devenv.cachix.org
+    extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= bangedorrunt.cachix.org-1:5SFYJPXVbo9clgdN+2C8T6bJUYh1WOLKsPzzIsOOWyA= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+    trusted-users = root admin @sudo @wheel
   NIX_BUILD_FLAGS: -j auto --accept-flake-config
 
 build_template: &BUILD_TEMPLATE
   only_if: $CIRRUS_BRANCH == $CIRRUS_DEFAULT_BRANCH || $CIRRUS_TAG != "" || $CIRRUS_PR != "" || $CIRRUS_BUILD_SOURCE == ""
   name: build_${CIRRUS_OS}_${ARCH}
   timeout_in: 120m
-  configure_cachix_script: cachix use $CACHIX_USER 
+  install_cachix_script: |
+    nix-env -iA cachix -f https://cachix.org/api/v1/install
+    cachix --version
+  configure_cachix_script: cachix use $CACHIX_USER
   build_script: cachix watch-exec $CACHIX_USER -- nix build $NIX_BUILD_FLAGS $OUTPUTS --system ${ARCH}-${CIRRUS_OS} --show-trace
 
 build_darwin_profiles_task:
@@ -24,20 +33,23 @@ build_darwin_profiles_task:
         ARCH: x86_64
         OUTPUTS:
           - .#darwinConfigurations."brunetdragon@macintel".config.system.build.toplevel
-          # - .#devShells.x86_64-darwin.default
   install_rosetta_script: softwareupdate --install-rosetta --agree-to-license
   install_nix_script: curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
   install_cachix_script: nix profile install --impure github:nixos/nixpkgs/nixpkgs-unstable#cachix
   trust_user_script: echo "trusted-users = root admin" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
   <<: *BUILD_TEMPLATE
 
-build_pifi_profiles_task:
+build_nixos_profiles_task:
   matrix:
-    - container:
+    - arm_container:
         image: $LINUX_BUILD_IMAGE
       env:
-        ARCH: arm64
+        ARCH: aarch64
         USER: root
         OUTPUTS:
           - .#nixosConfigurations."brunetdragon@pifi".config.system.build.toplevel
+  configure_flake_script: |
+    set +m
+    echo "experimental-features = nix-command flakes" | tee -a /etc/nix/nix.conf
+    echo "$NIX_INSTALLER_EXTRA_CONF" | tee -a /etc/nix/nix.conf
   <<: *BUILD_TEMPLATE

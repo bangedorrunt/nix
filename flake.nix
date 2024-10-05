@@ -6,13 +6,11 @@
       "https://cachix.cachix.org"
       "https://cache.nixos.org"
       "https://nix-community.cachix.org/"
-      "https://nixos-raspberrypi.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
   };
 
@@ -34,7 +32,7 @@
     flake-registry.flake = false;
     nixos-generators.url = "github:Mic92/nixos-generators/fedf7136f27490402fe8ab93e67fafae80513e9b";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
+    raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     impermanence.url = "github:nix-community/impermanence";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";

@@ -1,4 +1,8 @@
-{...}: {
+{lib, ...}: {
+  fileSystems."/" = {
+    device = lib.mkForce "/dev/nvme0n1";
+    fsType = lib.mkForce "btrfs";
+  };
   # btrfs subvolumes
   disko.devices = {
     disk = {

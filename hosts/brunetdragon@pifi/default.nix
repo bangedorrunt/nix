@@ -1,7 +1,7 @@
 {...}: {
   imports = [
-    ./boot.nix
-    ./disk.nix
+    # ./boot.nix
+    # ./disk.nix
     ./system.nix
     ./pkgs.nix
   ];

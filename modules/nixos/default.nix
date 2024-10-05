@@ -4,6 +4,6 @@
     ./minimal-docs.nix
     ./openssh.nix
     # ./server.nix
-    ./tailscale.nix
+    # ./tailscale.nix
   ];
 }

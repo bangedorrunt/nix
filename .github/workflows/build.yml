@@ -16,7 +16,6 @@ jobs:
           # - ubuntu-latest
           - macos-latest
         output:
-          # - devShells.x86_64-linux.default
           - devShells.x86_64-darwin.default
     runs-on: ${{ matrix.os }}
     steps:
@@ -24,18 +23,17 @@ jobs:
         with:
           # Shallow clones won't work
           fetch-depth: 0
-      # - name: Cleanup disk
-      #   uses: curoky/cleanup-disk-action@v2.0
       - name: Install Nix
-        uses: cachix/install-nix-action@v29
+        uses: DeterminateSystems/nix-installer-action@main
         with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure Cachix
         uses: cachix/cachix-action@v15
         with:
           name: bangedorrunt
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - name: Magic Cachix
+        uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Build flake output
         run: nix build -v .#${{ matrix.output }}
 
