@@ -119,28 +119,21 @@ end
 # Git
 if command -qs git
     alias g git
-    abbr -a gcl git clone
-    abbr -a gst git status
-    abbr -a gsts git status --short
-    abbr -a gb git branch
-    abbr -a gsw git switch
-    abbr -a gswc git switch --create
-    abbr -a gco git checkout
-    abbr -a gcob git checkout -b
-    abbr -a ga git add
-    abbr -a gd git diff
-    abbr -a gds git diff --staged
-    abbr -a gc git commit
-    abbr -a gl git pull
-    abbr -a gp git push
-    abbr -a gr git restore
-    abbr -a grs git restore --staged
-    abbr -a gwa git worktree add
-    abbr -a gwp git worktree prune
+    alias lazygit "TERM=xterm-256color command lazygit"
+    abbr gg lazygit
+    abbr gl 'hub l --color | devmoji --log --color | less -rXF'
+    abbr gs "hub st"
+    abbr gb "hub checkout -b"
+    abbr gc "hub commit"
+    abbr gpr "hub pr checkout"
+    abbr gm "hub branch -l main | rg main > /dev/null 2>&1 && hub checkout main || hub checkout master"
+    abbr gcp "hub commit -p"
+    abbr gpp "hub push"
+    abbr gp "hub pull"
 end
 
 # Exa
-if command -qs exa
+if command -qs eza
     alias ls="eza --color=always --icons --group-directories-first"
     alias la 'eza --color=always --icons --group-directories-first --all'
     alias ll 'eza --color=always --icons --group-directories-first --all --long'
@@ -151,6 +144,11 @@ if command -qs exa
         standard_cd $argv; and exa -G --color auto -a -s type
     end
 end
+
+if command -qs zoxide
+  zoxide init fish --cmd j | source
+end
+
 # macOS
 alias disableani 'defaults write com.apple.finder DisableAllAnimations -bool true'
 alias disablekeys 'defaults write -g ApplePressAndHoldEnabled -bool false'
@@ -160,8 +158,4 @@ alias hide 'defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 alias show 'defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
 alias rmds 'fd -H -I \.DS\_Store -x rm -v'
 alias rmconflict 'fd --hidden conflicted ~/Dropbox'
-alias wezup 'brew upgrade --cask wez/wezterm/wezterm-nightly --no-quarantine --greedy-latest'
 alias wezfont 'wezterm ls-fonts --list-system'
-alias nixup '\
-      nix build .#brunetdragon@x86_64-darwin && \
-      ./result/sw/bin/darwin-rebuild switch --flake .#brunetdragon@x86_64-darwin'

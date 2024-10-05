@@ -56,11 +56,6 @@ export FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --exclude node_modules --e
 
 alias f='nvim $(fzf)'
 
-# fnm
-# ---
-export PATH="/Users/brunetdragon/Library/Application Support/fnm:$PATH"
-eval "`fnm env`"
-
 # Zoxide
 # ------
 eval "$(zoxide init zsh --cmd j)"
