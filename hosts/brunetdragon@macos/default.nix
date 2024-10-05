@@ -1,8 +1,6 @@
 {
   config,
   lib,
-  pkgs,
-  inputs,
   ...
 }: let
   HOME_DIR = config.tdt.user.home;
@@ -10,14 +8,14 @@
 in {
   imports = [../../modules/darwin];
 
-  # NOTE until mkOutOfStoreSymLink is fixed, used activation script instead
+  # NOTE: until mkOutOfStoreSymLink is fixed, used activation script instead
   # tdt.modules.shared.dotfiles = true;
   tdt.modules.shared.pkgs.dev.enable = true;
 
-  # Use script at system context
+  # use script at system context
   # system.activationScripts.postUserActivation.text = ''
 
-  # Use script at hm context
+  # use script at hm context
   hm.home.activation.symDotfiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     echo ":: -> Running dotfiles activationScript..."
 

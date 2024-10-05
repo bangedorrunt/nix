@@ -1,8 +1,6 @@
 {
   self,
-  inputs,
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -36,7 +34,7 @@ with builtins; {
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
       ];
-      trusted-public-keys = [
+      extra-trusted-public-keys = [
         "bangedorrunt.cachix.org-1:5SFYJPXVbo9clgdN+2C8T6bJUYh1WOLKsPzzIsOOWyA="
         "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="

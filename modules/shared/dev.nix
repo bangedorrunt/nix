@@ -31,8 +31,10 @@ in {
         dockerfile-language-server-nodejs
         eslint_d
         fnlfmt
+        fnm
         gh
         git
+        hub
         lazygit
         lua
         lua-language-server
@@ -56,7 +58,7 @@ in {
         vscode-langservers-extracted # HTML, CSS, JSON LSPs
         yaml-language-server
         yarn
-        zellij
+        zoxide
       ];
     };
 }

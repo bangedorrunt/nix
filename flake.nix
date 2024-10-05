@@ -2,15 +2,17 @@
   description = "Nix Configurations";
 
   nixConfig = {
-    substituters = [
+    trusted-substituters = [
       "https://cachix.cachix.org"
       "https://cache.nixos.org"
       "https://nix-community.cachix.org/"
+      "https://nixos-raspberrypi.cachix.org"
     ];
-    trusted-public-keys = [
+    extra-trusted-public-keys = [
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
   };
 
@@ -24,7 +26,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # system management
+    # System
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-root.url = "github:srid/flake-root";
@@ -32,20 +34,18 @@
     flake-registry.flake = false;
     nixos-generators.url = "github:Mic92/nixos-generators/fedf7136f27490402fe8ab93e67fafae80513e9b";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi";
     impermanence.url = "github:nix-community/impermanence";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
-    deploy-rs.inputs.utils.follows = "flake-utils";
-    # shell stuff
+    # Shell
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    # TODO use just-flake
     mission-control.url = "github:Platonic-Systems/mission-control";
-    # editors
+    # Editors
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -113,7 +113,7 @@
       # REVIEW flake-part steal `self`, drop when this is fixed
       # _module.args._inputs = inputs // {inherit self;};
 
-      # NOTE: for system and home configs, you do not use perSystem, full stop.
+      # NOTE for system and home configs, you do not use perSystem, full stop.
       # it is used only for things that are system specific, but should be made
       # available for any system in systems
       perSystem = {inputs', ...}: {

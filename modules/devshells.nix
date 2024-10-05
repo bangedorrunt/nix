@@ -12,7 +12,8 @@
         # Add your custom packages
         alejandra
         pre-commit
-        nil
+        nixd
+        mkpasswd
       ];
     };
   };

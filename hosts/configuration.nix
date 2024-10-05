@@ -6,7 +6,7 @@
   withSystem,
   ...
 }: let
-  inherit (inputs) home-manager disko;
+  inherit (inputs) home-manager disko nixos-raspberrypi;
   inherit (lib.mine) rakeLeaves;
   hosts = rakeLeaves ../hosts;
   modules = rakeLeaves ../modules;
@@ -51,28 +51,24 @@
     };
 in {
   flake.darwinConfigurations = {
-    "brunetdragon@x86_64-darwin" =
+    "brunetdragon@macintel" =
       withSystem "x86_64-darwin"
-      ({
-        pkgs,
-        system,
-        ...
-      }:
+      ({...}:
         mkDarwinConfig {
-          extraModules = [hosts."brunetdragon@x86_64-darwin"];
+          extraModules = [hosts."brunetdragon@macos"];
         });
   };
   flake.nixosConfigurations = {
-    "brunetdragon@x86_64-linux" =
-      withSystem "x86_64-linux"
-      ({
-        pkgs,
-        system,
-        ...
-      }:
+    "brunetdragon@pifi" =
+      withSystem "aarch64-linux"
+      ({...}:
         mkNixosConfig {
-          hardwareModules = [modules.nixos];
-          extraModules = [hosts."brunetdragon@x86_64-linux"];
+          hardwareModules = [
+            nixos-raspberrypi.nixosModules.raspberry-pi-5.base
+            nixos-raspberrypi.lib.inject-overlays
+            modules.nixos
+          ];
+          extraModules = [hosts."brunetdragon@pifi"];
         });
   };
 
@@ -80,6 +76,8 @@ in {
   # build steps:
   # nix --extra-experimental-features 'nix-command flakes' build .\#brunetdragon@x86_64-darwin
   # ./result/sw/bin/darwin-rebuild switch --flake .\#brunetdragon@x86_64-darwin
-  flake."brunetdragon@x86_64-darwin" =
-    self.darwinConfigurations."brunetdragon@x86_64-darwin".config.system.build.toplevel;
+  flake."brunetdragon@macintel" =
+    self.darwinConfigurations."brunetdragon@macintel".config.system.build.toplevel;
+  flake."brunetdragon@pifi" =
+    self.nixosConfigurations."brunetdragon@pifi".config.system.build.toplevel;
 }
